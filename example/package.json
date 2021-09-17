@@ -10,10 +10,14 @@
     "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
   },
   "dependencies": {
+    "axios": "^0.21.4",
+    "jsoneditor": "^9.5.5",
+    "jsoneditor-react": "^3.1.1",
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
-    "react-scripts": "link:../node_modules/react-scripts",
-    "react-importer": "link:.."
+    "react-importer": "link:..",
+    "react-json-editor-viewer": "^1.0.7",
+    "react-scripts": "link:../node_modules/react-scripts"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
