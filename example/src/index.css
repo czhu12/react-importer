@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300;1,400;1,500&display=swap');
+
 body {
   margin: 0;
   padding: 0;
@@ -8,7 +10,27 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1 {
+  font-family: 'Karla';
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.header {
+  text-align: center;
+  font-family: "Karla";
+  margin-bottom: 40px;
+}
+
+.header .main {
+  margin-bottom: 20px;
+  font-weight: "bold";
+  font-size: 4em;
+}
+.header .subtext {
+  margin-bottom: 20px;
+  font-weight: "thin";
+  font-size: 1.5em;
 }

@@ -11,6 +11,11 @@ const App = () => {
   }
   return (
     <div style={{marginTop: '50px', marginBottom: '50px'}}>
+      <div className="header">
+        <div className="main">React Importer</div>
+        <div className="subtext" style={{fontFamily: "Karla", fontWeight: "thin", fontSize: "1.5em"}}>A Modern CSV Importer in React</div>
+      </div>
+
       <Importer
         fields={[
           {
