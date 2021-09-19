@@ -15,17 +15,20 @@ const headerMappings = {
   0: {
     columnIndex: 0,
     selectedField: { value: 'name' },
-    name: 'Name'
+    name: 'Name',
+    confirmed: true
   },
   1: {
     columnIndex: 1,
     selectedField: { value: 'email' },
-    name: 'Email'
+    name: 'Email',
+    confirmed: true
   },
   2: {
     columnIndex: 2,
     selectedField: { value: 'phone_number' },
-    name: 'Phone Number'
+    name: 'Phone Number',
+    confirmed: false
   }
 }
 
@@ -41,11 +44,11 @@ describe('formatData', () => {
 
     expect(output[0].name).toEqual('chris')
     expect(output[0].email).toEqual('chris@example.com')
-    expect(output[0].phone_number).toEqual('555-555-5555')
+    expect(output[0].phone_number).toEqual(undefined)
 
     expect(output[1].name).toEqual('jason')
     expect(output[1].email).toEqual('jason@gmail.com')
-    expect(output[1].phone_number).toEqual('555-555-5556')
+    expect(output[1].phone_number).toEqual(undefined)
   })
 })
 

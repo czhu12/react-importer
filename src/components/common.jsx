@@ -260,6 +260,8 @@ export const Button = styled.button`
       color = '#e74c3c';
     } else if (props.variant === "secondary") {
       color = '#7f8c8d';
+    } else if (props.variant === "warning") {
+      color = '#e67e22';
     }
 
     if (props.disabled) {

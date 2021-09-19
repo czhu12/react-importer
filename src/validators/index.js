@@ -1,3 +1,5 @@
+import { fieldIsRequired } from '../utils'
+
 export class Validator {
   constructor(definition) {
     this.definition = definition
@@ -72,7 +74,7 @@ export class RegexValidator extends Validator {
     if (!matches) {
       return {
         valid: false,
-        message: "This value is invalid" || this.definition.error,
+        message: 'This value is invalid' || this.definition.error,
         errorType: 'regex'
       }
     }
@@ -163,7 +165,7 @@ export const applyValidation = (formattedData, fields) => {
   const validationResult = new ValidationResult()
   fields.forEach((field) => {
     formattedData.forEach((row, rowIndex) => {
-      if (!(field.key in row)) {
+      if (!(field.key in row) && !fieldIsRequired(field)) {
         return
       }
       const value = row[field.key]

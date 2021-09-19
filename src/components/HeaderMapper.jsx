@@ -68,8 +68,9 @@ const HeaderMapper = ({ parsed, fields, statistics, headerMappings, setHeaderMap
           </Col>
           <Col>
             <Align right>
-              <Button disabled={hasMissingRequiredFields} onClick={onComplete} variant="primary">
-                Review
+              <Button onClick={onComplete} variant={hasMissingRequiredFields ? "danger" : "primary"}>
+                {hasMissingRequiredFields && "Proceed Anyways"}
+                {!hasMissingRequiredFields && "Review"}
               </Button>
             </Align>
           </Col>

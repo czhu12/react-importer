@@ -33,6 +33,7 @@ describe('RequiredValidator', () => {
     const validator = Validator.buildFromDefinition({ validate: 'required' })
     expect(validator.isValid(1).valid).toEqual(true)
     expect(validator.isValid('2').valid).toEqual(true)
+    expect(validator.isValid('').valid).toEqual(false)
     expect(validator.isValid(null).valid).toEqual(false)
   })
 })
@@ -80,17 +81,20 @@ describe('applyValidation', () => {
     0: {
       columnIndex: 0,
       selectedField: { value: 'name' },
-      name: 'Name'
+      name: 'Name',
+      confirmed: true
     },
     1: {
       columnIndex: 1,
       selectedField: { value: 'email' },
-      name: 'Email'
+      name: 'Email',
+      confirmed: true
     },
     2: {
       columnIndex: 2,
       selectedField: { value: 'phone_number' },
-      name: 'Phone Number'
+      name: 'Phone Number',
+      confirmed: true
     }
   }
 
@@ -155,5 +159,14 @@ describe('applyValidation', () => {
     expect(validationResult.hasError('phone_number', 0)).toEqual(false)
     expect(validationResult.hasError('phone_number', 1)).toEqual(true)
     expect(validationResult.hasError('phone_number', 2)).toEqual(false)
+  })
+
+  it('validates required columns', () => {
+    const validationResult = applyValidation(
+      [{}, {}],
+      [{ key: 'name', validators: [{ validate: 'required' }] }]
+    )
+    expect(validationResult.hasError('name', 0)).toEqual(true)
+    expect(validationResult.hasError('name', 1)).toEqual(true)
   })
 })
