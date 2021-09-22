@@ -107,7 +107,7 @@ const HeaderMapperRow = ({options, header, examples, headerMapping, setHeaderMap
         </Col>
         <Col spaceBetween verticallyCenter>
           <div>
-            <svg style={{margin: "0 10px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#2ecc71" className="bi bi-check-lg" viewBox="0 0 16 16">
+            <svg style={{margin: "-2px 10px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#2ecc71" className="bi bi-check-lg" viewBox="0 0 16 16">
               <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
             </svg>
             Confirmed
@@ -130,7 +130,7 @@ const HeaderMapperRow = ({options, header, examples, headerMapping, setHeaderMap
         </Col>
         <Col spaceBetween verticallyCenter>
           <div>
-            <svg style={{margin: "0 10px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+            <svg style={{margin: "-2px 10px"}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye-slash-fill" viewBox="0 0 16 16">
               <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z" />
               <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" />
             </svg>
