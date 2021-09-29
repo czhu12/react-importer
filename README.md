@@ -4,6 +4,8 @@
 
 [![NPM](https://img.shields.io/npm/v/react-importer.svg)](https://www.npmjs.com/package/react-importer) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+![Demo](https://github.com/czhu12/react-importer/raw/master/example/public/demo.gif)
+
 ## Install
 
 ```bash
