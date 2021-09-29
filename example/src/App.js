@@ -6,9 +6,10 @@ import 'jsoneditor-react/es/editor.min.css';
 import 'react-importer/dist/index.css'
 
 const App = () => {
-  const [value, setValue] = useState(null);
+  const [ready, setReady] = useState(false);
   const onComplete = (data) => {
-    setValue(data);
+    console.log(data);
+    setReady(true);
   }
   const content = `<Importer
   fields={[
@@ -25,7 +26,9 @@ const App = () => {
     },
     { label: "State", key: "state" },
   ]}
-  onComplete={onComplete}
+  onComplete={(data) => {
+    console.log(data)
+  }}
 />`
   return (
     <div>
@@ -85,17 +88,9 @@ const App = () => {
             ]}
             onComplete={onComplete}
           />
-          {value && (
+          {ready && (
             <div style={{ margin: "0 auto", maxWidth: "1200px" }}>
-              <h4>Output</h4>
-              <Editor
-                mode='code'
-                navigationBar={false}
-                statusBar={false}
-                mainMenuBar={false}
-                value={value}
-                onChange={v => setValue(v)}
-              />
+              <h4>Check the console for the output!</h4>
             </div>
           )}
         </div>
