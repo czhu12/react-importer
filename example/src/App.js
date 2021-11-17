@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Importer from 'react-importer'
-import { JsonEditor as Editor } from 'jsoneditor-react';
 
 import 'jsoneditor-react/es/editor.min.css';
 import 'react-importer/dist/index.css'
@@ -46,6 +45,7 @@ const App = () => {
         <div className="content">
           <h1>Building a CSV uploader is hard.</h1>
           <div>Tired of people uploading invalid data into your application? Or writing custom import scripts that keep breaking?</div>
+          <div><b>React Importer</b> solves that for you.</div>
         </div>
 
         <div className="content">

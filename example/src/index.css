@@ -185,3 +185,9 @@ pre[class*="language-"] {
   color: #9a6e3a;
   background: inherit !important;
 }
+
+@media (min-width: 1200px) {
+	.container{
+			max-width: 800px;
+	}
+}
