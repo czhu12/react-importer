@@ -44,8 +44,8 @@ const App = () => {
 
         <div className="content">
           <h1>Building a CSV uploader is hard.</h1>
-          <div>Tired of people uploading invalid data into your application? Or writing custom import scripts that keep breaking?</div>
-          <div><b>React Importer</b> solves that for you.</div>
+          <p>Tired of people uploading invalid data into your application? Or writing custom import scripts that keep breaking?</p>
+          <p><b>React Importer</b> solves that for you.</p>
         </div>
 
         <div className="content">
