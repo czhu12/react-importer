@@ -1,6 +1,6 @@
 # react-importer
 
-> A modern importer written in React
+> A modern CSV importer written in React
 
 [![NPM](https://img.shields.io/npm/v/react-importer.svg)](https://www.npmjs.com/package/react-importer) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
