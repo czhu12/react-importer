@@ -36,6 +36,14 @@ npm install --save react-importer
 />
 ```
 
+## Roadmap
+* Bugfixes for % rows extracted
+* Support existing data
+* Add support for callbacks
+* Add support for themeing
+* Animated progress bar
+* Completion page summary
+
 ## License
 
 MIT © [czhu12](https://github.com/czhu12)

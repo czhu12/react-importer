@@ -94,7 +94,14 @@ const App = () => {
             </div>
           )}
         </div>
+
       </div>
+      <footer>
+        <div className="container">
+          <p><i>"I'm so sick of building CSV importers"</i></p>
+          <p>- Me</p>
+        </div>
+      </footer>
     </div>
   )
 };

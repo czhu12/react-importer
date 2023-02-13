@@ -43,11 +43,10 @@ const Importer = ({ theme, onComplete, fields }) => {
 
   const setFile = (file) => {
     Papa.parse(file, {
+      skipEmptyLines: true,
       complete: (newParsed) => {
         setParsed(newParsed)
-        setHeaderMappings(
-          buildSuggestedHeaderMappings(fields, newParsed.data[0])
-        )
+        setHeaderMappings(buildSuggestedHeaderMappings(fields, newParsed.data[0]))
         setCurrentStep(1)
       }
     })

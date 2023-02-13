@@ -5,6 +5,7 @@ export const isUndefinedOrNull = (a) => {
 export const isPresent = (a) => !isUndefinedOrNull(a)
 
 export const formatData = (headerMappings, data) => {
+  console.log(headerMappings);
   const output = []
   for (let rowIndex = 1; rowIndex < data.length; rowIndex++) {
     const item = {}
@@ -12,7 +13,7 @@ export const formatData = (headerMappings, data) => {
     Object.keys(headerMappings).forEach((k) => {
       const headerMapping = headerMappings[k]
       const columnIndex = headerMapping.columnIndex
-      if (headerMapping.selectedField && headerMapping.confirmed) {
+      if (headerMapping.selectedField) {
         item[headerMapping.selectedField.value] = row[columnIndex]
       }
     })

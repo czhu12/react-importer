@@ -147,6 +147,13 @@ export class ValidationResult {
   }
 }
 
+const hasData = (row) => {
+  const data = { ...row }
+  delete data.rowIndex;
+  const values = Object.values(data);
+  return values.length > 0;
+}
+
 export const applyValidation = (formattedData, fields) => {
   const validatorsByFieldKey = {}
   fields.forEach((field) => {
@@ -165,6 +172,9 @@ export const applyValidation = (formattedData, fields) => {
   const validationResult = new ValidationResult()
   fields.forEach((field) => {
     formattedData.forEach((row, rowIndex) => {
+      if (!hasData(row)) {
+        return;
+      }
       if (!(field.key in row) && !fieldIsRequired(field)) {
         return
       }

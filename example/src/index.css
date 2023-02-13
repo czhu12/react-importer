@@ -191,3 +191,13 @@ pre[class*="language-"] {
 			max-width: 800px;
 	}
 }
+
+footer {
+	height: 200px;
+	background-color: #263E52;
+	color: rgb(254,255,254);
+	font-size: 1.2em;
+	font-weight: 300;
+	padding-top: 100px;
+	padding-bottom: 100px;
+}
