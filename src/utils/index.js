@@ -5,7 +5,6 @@ export const isUndefinedOrNull = (a) => {
 export const isPresent = (a) => !isUndefinedOrNull(a)
 
 export const formatData = (headerMappings, data) => {
-  console.log(headerMappings);
   const output = []
   for (let rowIndex = 1; rowIndex < data.length; rowIndex++) {
     const item = {}
