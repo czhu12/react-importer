@@ -149,9 +149,9 @@ export class ValidationResult {
 
 const hasData = (row) => {
   const data = { ...row }
-  delete data.rowIndex;
-  const values = Object.values(data);
-  return values.length > 0;
+  delete data.rowIndex
+  const values = Object.values(data)
+  return values.length > 0
 }
 
 export const applyValidation = (formattedData, fields) => {
@@ -173,7 +173,7 @@ export const applyValidation = (formattedData, fields) => {
   fields.forEach((field) => {
     formattedData.forEach((row, rowIndex) => {
       if (!hasData(row)) {
-        return;
+        return
       }
       if (!(field.key in row) && !fieldIsRequired(field)) {
         return
