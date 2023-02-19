@@ -107,7 +107,7 @@ describe('applyValidation', () => {
         {
           validate: 'regex_matches',
           regex:
-            /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+            /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, //eslint-disable-line
           error: 'Must be a valid email'
         },
         { validate: 'required' },
@@ -163,7 +163,7 @@ describe('applyValidation', () => {
 
   it('validates required columns', () => {
     const validationResult = applyValidation(
-      [{}, {}],
+      [{ email: 'czhu12@gmail.com' }, { email: 'czhu13@gmail.com' }],
       [{ key: 'name', validators: [{ validate: 'required' }] }]
     )
     expect(validationResult.hasError('name', 0)).toEqual(true)

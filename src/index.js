@@ -46,7 +46,9 @@ const Importer = ({ theme, onComplete, fields }) => {
       skipEmptyLines: true,
       complete: (newParsed) => {
         setParsed(newParsed)
-        setHeaderMappings(buildSuggestedHeaderMappings(fields, newParsed.data[0]))
+        setHeaderMappings(
+          buildSuggestedHeaderMappings(fields, newParsed.data[0])
+        )
         setCurrentStep(1)
       }
     })
@@ -164,7 +166,7 @@ const Importer = ({ theme, onComplete, fields }) => {
               }}
               onSubmit={() => {
                 onComplete(buildFinalData(formattedData, validationResult))
-                setCurrentStep(3);
+                setCurrentStep(3)
               }}
               setRowData={(row, index) => {
                 const newFormattedData = [...formattedData]
@@ -173,9 +175,7 @@ const Importer = ({ theme, onComplete, fields }) => {
               }}
             />
           )}
-          {currentStep === 3 && (
-            <Completed formattedData={formattedData} />
-          )}
+          {currentStep === 3 && <Completed formattedData={formattedData} />}
         </Container>
       </Root>
     </ThemeContext.Provider>
