@@ -4,21 +4,19 @@ import styled from 'styled-components'
 import { Button, Row, Col, Align, Card, Padded, Margin, TextStyled } from './common'
 
 
-const StyledDiv = styled.div`
-  // Some styling here
-`
-
 const FileUploader = ({ setFile }) => {
-  const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
+  const {acceptedFiles, getRootProps, getInputProps, isDragAccept} = useDropzone();
 
   useEffect(() => {
     if (acceptedFiles.length > 0) {
       setFile(acceptedFiles[0])
     }
   }, [acceptedFiles]);
+  console.log(isDragAccept);
 
+  const backgroundColor = isDragAccept ? "rgb(236, 240, 241)" : "rgb(250, 250, 250)";
   return (
-    <Card {...getRootProps()} style={{cursor: 'pointer', backgroundColor: "rgb(250, 250, 250)"}}>
+    <Card {...getRootProps()} style={{cursor: 'pointer', backgroundColor: backgroundColor}}>
       <Padded padding="30px">
         <input {...getInputProps()} />
         <Margin margin="0 0 30px 0">

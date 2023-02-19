@@ -4,9 +4,9 @@ import Header from './components/Header'
 import FileUploader from './components/FileUploader'
 import HeaderMapper from './components/HeaderMapper'
 import DataEditor from './components/DataEditor'
+import Completed from './components/Completed'
 import {
   fieldIsRequired,
-  fillInRequiredRows,
   formatData,
   buildSuggestedHeaderMappings,
   buildFinalData
@@ -164,6 +164,7 @@ const Importer = ({ theme, onComplete, fields }) => {
               }}
               onSubmit={() => {
                 onComplete(buildFinalData(formattedData, validationResult))
+                setCurrentStep(3);
               }}
               setRowData={(row, index) => {
                 const newFormattedData = [...formattedData]
@@ -171,6 +172,9 @@ const Importer = ({ theme, onComplete, fields }) => {
                 setFormattedData(newFormattedData)
               }}
             />
+          )}
+          {currentStep === 3 && (
+            <Completed formattedData={formattedData} />
           )}
         </Container>
       </Root>

@@ -6,7 +6,7 @@ import { Button, Margin, Align, Row, Col } from './common';
 import { filterEmptyRows, isPresent } from '../utils';
 
 
-const DataEditor = ({ formattedData, fields, onSubmit, onBack, validationResult, setRowData }) => {
+const DataEditor = ({ formattedData, fields, onSubmit, onBack, validationResult, setRowData, statistics }) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
   const validationRef = useRef(validationResult);
@@ -57,18 +57,31 @@ const DataEditor = ({ formattedData, fields, onSubmit, onBack, validationResult,
     setRowData(params.data, params.rowIndex);
   }
 
-  const shouldShowSubmit = () => {
-    const hasData = filterEmptyRows(formattedData).length > 0;
-    return hasData;
+  const hasData = () => {
+    return filterEmptyRows(formattedData).length > 0;
   }
 
+  const hasErrors = Object.keys(validationResult.errorsByFieldKeyByRowIndex).length > 0
   return (
     <div>
       <Margin margin="20px 0">
-        <input checked={onlyShowErrors} onChange={(e) => {
-          setOnlyShowErrors(e.target.checked);
-        }} type="checkbox" name="row-errors" id="row-errors" />
-        <label style={{marginLeft: '10px'}} htmlFor="row-errors">Only show rows with errors</label>
+        {(!hasData() || hasErrors) && (
+          <div>
+            <input checked={onlyShowErrors} onChange={(e) => {
+              setOnlyShowErrors(e.target.checked);
+            }} type="checkbox" name="row-errors" id="row-errors" />
+            <label style={{marginLeft: '10px'}} htmlFor="row-errors">Only show rows with errors</label>
+          </div>
+        )}
+        {hasData() && !hasErrors && (
+          <div style={{color: "#2ecc71", fontWeight: "bold", display: "flex", alignItems: "center"}}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+              <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+            </svg>
+
+            All rows pass validation!
+          </div>
+        )}
       </Margin>
       <div style={{height: 500, width: '100%'}} className="ag-theme-alpine">
         <AgGridReact
@@ -115,7 +128,7 @@ const DataEditor = ({ formattedData, fields, onSubmit, onBack, validationResult,
           </Col>
           <Col>
             <Align right>
-              {shouldShowSubmit() && (
+              {hasData() && (
                 <Button onClick={onSubmit}>
                   {validationResult.hasErrors() && "Upload Rows Without Errors"}
                   {!validationResult.hasErrors() && "Upload"}
