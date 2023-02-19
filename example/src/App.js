@@ -10,7 +10,9 @@ const App = () => {
     console.log(data);
     setReady(true);
   }
-  const content = `<Importer
+  const content = `import Importer from 'react-importer'
+
+<Importer
   fields={[
     {
       label: "Name", key: "name", validators: [

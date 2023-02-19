@@ -28,6 +28,8 @@ npm install --save react-importer
 ### Usage
 
 ```jsx
+import Importer from 'react-importer'
+
 <Importer
   fields={[
     {
