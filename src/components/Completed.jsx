@@ -15,8 +15,8 @@ const Completed = ({formattedData}) => {
           </svg>
         </div>
 
-        <h2>Success</h2>
-        <h3>{formattedData.length} rows processed</h3>
+        <h2 style={{fontSize: "2em"}}>Success</h2>
+        <h3 style={{color: "#95a5a6"}}>{formattedData.length} row{formattedData.length === 1 ? "" : "s"} processed</h3>
       </Margin>
     </div>
   );
