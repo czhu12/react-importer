@@ -10,6 +10,7 @@ Contents
  * [Demo](#demo)
  * [Installation](#installation)
  * [Usage](#usage)
+ * [Documentation](#documentation)
  * [Roadmap](#roadmap)
 
 ### Why?
@@ -48,13 +49,15 @@ npm install --save react-importer
 />
 ```
 
+### Documentation
+(TODO)
+
 ### Roadmap
 * Make readme and documentation better
 * Support existing data
 * Add support for callbacks
 * Add support for themeing
 * Animated progress bar
-* Completion page summary
 
 ## License
 
