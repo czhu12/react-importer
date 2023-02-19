@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 export const Container = styled.div`
   margin: 0 auto;
@@ -280,4 +280,29 @@ export const Button = styled.button`
       `;
     }
   }}
+`
+const rotate = keyframes`
+  from {
+    stroke-dashoffset: 360;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+`
+
+
+export const CircleProgress = styled.circle`
+  stroke-dasharray: 360;
+  stroke-dashoffset: 0;
+  stroke: #2ecc71;
+  animation: ${rotate} 1s ease-out;
+
+  fill: none;
+  stroke-width: 5px;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  cx: 50;
+  cy: 50;
+  r: 45;
 `

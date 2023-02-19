@@ -174,8 +174,7 @@ const Importer = ({ theme, onComplete, fields }) => {
             />
           )}
           {currentStep === 3 && (
-            <Completed
-            />
+            <Completed formattedData={formattedData} />
           )}
         </Container>
       </Root>

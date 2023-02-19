@@ -14,7 +14,7 @@ const FileUploader = ({ setFile }) => {
   }, [acceptedFiles]);
   console.log(isDragAccept);
 
-  const backgroundColor = isDragAccept ? "rgb(250, 250, 250)" : ""
+  const backgroundColor = isDragAccept ? "rgb(236, 240, 241)" : "rgb(250, 250, 250)";
   return (
     <Card {...getRootProps()} style={{cursor: 'pointer', backgroundColor: backgroundColor}}>
       <Padded padding="30px">
