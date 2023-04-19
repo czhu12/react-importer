@@ -1,4 +1,5 @@
 import { fieldIsRequired } from '../utils'
+import { eachWithObject } from '../utils/functional'
 
 export class Validator {
   constructor(definition) {
@@ -155,17 +156,11 @@ const hasData = (row) => {
 }
 
 export const applyValidation = (formattedData, fields) => {
-  const validatorsByFieldKey = {}
-  fields.forEach((field) => {
-    validatorsByFieldKey[field.key] = []
-    if (!field.validators) {
-      return
-    }
-
+  const validatorsByFieldKey = eachWithObject(fields, (field, obj) => {
+    obj[field.key] = []
+    if (!field.validators) return
     field.validators.forEach((validatorDefinition) => {
-      validatorsByFieldKey[field.key].push(
-        Validator.buildFromDefinition(validatorDefinition)
-      )
+      obj[field.key].push(Validator.buildFromDefinition(validatorDefinition))
     })
   })
 

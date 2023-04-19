@@ -1,8 +1,11 @@
 import {
+  applyTransformations,
   PhoneNumberTransformer,
   StateCodeTransformer,
   PostalCodeTransformer
 } from './'
+
+describe('applyTransformations', () => {})
 
 describe('PhoneNumberTransformer', () => {
   it('corrects phone number', () => {

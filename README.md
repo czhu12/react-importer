@@ -33,8 +33,13 @@ import Importer from 'react-importer'
 <Importer
   fields={[
     {
-      label: "Name", key: "name", validators: [
+      label: "Name",
+      key: "name",
+      validators: [
         { validate: "required" },
+      ],
+      transformers: [
+        { transform: "lower_case" },
       ]
     },
     {

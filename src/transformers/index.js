@@ -1,16 +1,25 @@
-import { has } from '../utils/functional'
+import { eachWithObject, has } from '../utils/functional'
 import { STATE_TO_CODES } from './utils'
 
-export class Transformer {
-  parse(value) {
-    return value
-  }
+export const applyTransformations = (data, fields) => {
+  const transformersByFieldKey = eachWithObject(fields, (field, obj) => {
+    obj[field.key] = []
+    if (!field.transformers) return
+    field.transformers.forEach((transformerDefinition) => {
+      obj[field.key].push(
+        Transformer.buildFromDefinition(transformerDefinition)
+      )
+    })
+  })
+}
 
+export class Transformer {
   static buildFromDefinition(definition) {
     const mapping = {
       phone_number: PhoneNumberTransformer,
       postal_code: PostalCodeTransformer,
-      state_code: StateCodeTransformer
+      state_code: StateCodeTransformer,
+      lower_case: TransformerFactory((s) => s.toLowerCase())
     }
     if (!(definition.transformer in mapping)) {
       throw new Error(`Missing validator for ${definition.transformer}`)
