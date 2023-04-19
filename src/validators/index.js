@@ -241,3 +241,21 @@ export const computeStatistics = (
   })
   return { statisticsByFieldKey, total: formattedData.length }
 }
+
+export class PostalCodeValidator extends Validator {
+  constructor() {
+    super({ regex: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/ })
+  }
+}
+
+export class PhoneNumberValidator extends Validator {
+  constructor() {
+    super({ regex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ })
+  }
+}
+
+export class EmailValidator extends RegexValidator {
+  constructor() {
+    super({ regex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ })
+  }
+}

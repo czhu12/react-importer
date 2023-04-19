@@ -50,7 +50,10 @@ export const buildSuggestedHeaderMappings = (fields, headers) => {
       }
     }
   })
-  // create header mappings (columnIndex => {columnIndex, name: inputHeader, selectedField: {value: '', label: ''}})
+  /*
+    create header mappings
+    (columnIndex => {columnIndex, name: inputHeader, selectedField: {value: '', label: ''}})
+  */
   return headerMappings
 }
 
