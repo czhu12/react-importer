@@ -1,5 +1,5 @@
+import { hasData, eachWithObject } from '../utils/functional'
 import { fieldIsRequired } from '../utils'
-import { eachWithObject } from '../utils/functional'
 
 export class Validator {
   constructor(definition) {
@@ -146,13 +146,6 @@ export class ValidationResult {
     rowIndex = rowIndex.toString()
     return this.errorsByFieldKeyByRowIndex[fieldKey][rowIndex]
   }
-}
-
-const hasData = (row) => {
-  const data = { ...row }
-  delete data.rowIndex
-  const values = Object.values(data)
-  return values.length > 0
 }
 
 export const applyValidation = (formattedData, fields) => {

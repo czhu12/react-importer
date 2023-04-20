@@ -1,9 +1,10 @@
-import { eachWithObject, has } from '../utils/functional'
+import { eachWithObject, has, hasData } from '../utils/functional'
 import { STATE_TO_CODES } from './utils'
 
-export const applyTransformations = (data, fields) => {
-  const transformersByFieldKey = eachWithObject(fields, (field, obj) => {
-    obj[field.key] = []
+export const applyTransformations = (formattedData, fields) => {
+  const newData = [...formattedData]
+  const pipelineByFieldKey = eachWithObject(fields, (field, obj) => {
+    obj[field.key] = new Pipeline()
     if (!field.transformers) return
     field.transformers.forEach((transformerDefinition) => {
       obj[field.key].push(
@@ -11,6 +12,41 @@ export const applyTransformations = (data, fields) => {
       )
     })
   })
+
+  fields.forEach((field) => {
+    const pipeline = pipelineByFieldKey[field.key]
+    newData.forEach((row) => {
+      if (!hasData(row)) {
+        return
+      }
+      if (!(field.key in row)) {
+        return
+      }
+
+      row[field.key] = pipeline.transform(row[field.key])
+    })
+  })
+
+  return newData
+}
+
+export class Pipeline {
+  // Series of transformations
+  constructor(steps = []) {
+    this.steps = steps
+  }
+
+  push(step) {
+    this.steps.push(step)
+  }
+
+  transform(value) {
+    let current = value
+    this.steps.forEach((step) => {
+      current = step.transform(current)
+    })
+    return current
+  }
 }
 
 export class Transformer {
@@ -19,7 +55,7 @@ export class Transformer {
       phone_number: PhoneNumberTransformer,
       postal_code: PostalCodeTransformer,
       state_code: StateCodeTransformer,
-      lower_case: TransformerFactory((s) => s.toLowerCase())
+      lower_case: (s) => s.toLowerCase()
     }
     if (!(definition.transformer in mapping)) {
       throw new Error(`Missing validator for ${definition.transformer}`)
@@ -28,7 +64,7 @@ export class Transformer {
     return new FoundValidator(definition)
   }
 
-  format(value) {
+  transform(value) {
     const newValue = this.parse(value)
     if (newValue) return newValue
     return value

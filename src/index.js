@@ -92,7 +92,7 @@ const reducer = (state, action) => {
       }
     case 'CELL_CHANGED':
       const copy = [...state.formattedData]
-      copy[action.payload.index] = row
+      copy[action.payload.index] = action.payload.row
       return {
         ...state,
         ...computeMetadata(copy, state.fields, state.headerMappings),
@@ -157,7 +157,7 @@ const Importer = ({ theme, onComplete, fields }) => {
     .map((h) => h.selectedField.value)
 
   const unselectedFields = fields.filter((filter) => {
-    return usedFilters.indexOf(filter.key) < 0
+    return usedFilters.indexOf(filter.key) === -1
   })
 
   const headers = Object.keys(headerMappings)

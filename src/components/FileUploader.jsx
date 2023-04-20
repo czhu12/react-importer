@@ -12,7 +12,6 @@ const FileUploader = ({ setFile }) => {
       setFile(acceptedFiles[0])
     }
   }, [acceptedFiles]);
-  console.log(isDragAccept);
 
   const backgroundColor = isDragAccept ? "rgb(236, 240, 241)" : "rgb(250, 250, 250)";
   return (

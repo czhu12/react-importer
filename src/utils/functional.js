@@ -13,3 +13,10 @@ export function eachWithObject(collection, callback) {
   })
   return obj
 }
+
+export function hasData(row) {
+  const data = { ...row }
+  delete data.rowIndex
+  const values = Object.values(data)
+  return values.length > 0
+}
