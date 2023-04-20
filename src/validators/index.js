@@ -1,3 +1,5 @@
+/* eslint-disable */
+import { hasData, eachWithObject } from '../utils/functional'
 import { fieldIsRequired } from '../utils'
 
 export class Validator {
@@ -147,25 +149,12 @@ export class ValidationResult {
   }
 }
 
-const hasData = (row) => {
-  const data = { ...row }
-  delete data.rowIndex
-  const values = Object.values(data)
-  return values.length > 0
-}
-
 export const applyValidation = (formattedData, fields) => {
-  const validatorsByFieldKey = {}
-  fields.forEach((field) => {
-    validatorsByFieldKey[field.key] = []
-    if (!field.validators) {
-      return
-    }
-
+  const validatorsByFieldKey = eachWithObject(fields, (field, obj) => {
+    obj[field.key] = []
+    if (!field.validators) return
     field.validators.forEach((validatorDefinition) => {
-      validatorsByFieldKey[field.key].push(
-        Validator.buildFromDefinition(validatorDefinition)
-      )
+      obj[field.key].push(Validator.buildFromDefinition(validatorDefinition))
     })
   })
 
@@ -240,4 +229,22 @@ export const computeStatistics = (
     )
   })
   return { statisticsByFieldKey, total: formattedData.length }
+}
+
+export class PostalCodeValidator extends Validator {
+  constructor() {
+    super({ regex: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/ })
+  }
+}
+
+export class PhoneNumberValidator extends Validator {
+  constructor() {
+    super({ regex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ })
+  }
+}
+
+export class EmailValidator extends RegexValidator {
+  constructor() {
+    super({ regex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ })
+  }
 }

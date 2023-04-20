@@ -25,7 +25,11 @@ const App = () => {
         { validate: "unique", error: "This email is not unique" },
       ]
     },
-    { label: "State", key: "state" },
+    {
+      label: "State", key: "state", transformers: [
+        { transformer: "state_code" }
+      ]
+    },
   ]}
   onComplete={(data) => {
     console.log(data)
@@ -86,7 +90,11 @@ const App = () => {
                 ]
               },
               { label: "City", key: "city" },
-              { label: "State", key: "state" },
+              {
+                label: "State", key: "state", transformers: [
+                  { transformer: "state_code" }
+                ]
+              },
             ]}
             onComplete={onComplete}
           />

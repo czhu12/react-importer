@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useReducer } from 'react'
 import Papa from 'papaparse'
 import Header from './components/Header'
 import FileUploader from './components/FileUploader'
@@ -18,61 +18,131 @@ import {
   computeStatistics,
   ValidationResult
 } from './validators'
+import { applyTransformations } from './transformers'
+
+function buildInitialState(inject) {
+  return {
+    ...inject,
+    currentStep: 0,
+    parsed: null,
+    formattedData: [],
+    statistics: {
+      statisticsByFieldKey: {},
+      total: null
+    },
+    headerMappings: {},
+    validationResult: new ValidationResult()
+  }
+}
+
+const computeMetadata = (formattedData, fields, headerMappings) => {
+  const newValidationResult = applyValidation(formattedData, fields)
+  const newStatistics = computeStatistics(
+    formattedData,
+    headerMappings,
+    newValidationResult
+  )
+  return {
+    validationResult: newValidationResult,
+    statistics: newStatistics
+  }
+}
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'RESTART':
+      return buildInitialState({ fields: state.fields })
+    case 'DECREMENT_STEP':
+      return { ...state, currentStep: state.currentStep - 1 }
+    case 'COMPLETED_MAPPINGS': {
+      const transformedFormattedData = applyTransformations(
+        state.formattedData,
+        state.fields
+      )
+      return {
+        ...state,
+        formattedData: transformedFormattedData,
+        currentStep: state.currentStep + 1
+      }
+    }
+    case 'FILE_PARSED': {
+      const automaticHeaderMappings = buildSuggestedHeaderMappings(
+        state.fields,
+        action.payload.parsed.data[0]
+      )
+      const formattedData = formatData(
+        automaticHeaderMappings,
+        action.payload.parsed.data
+      )
+      return {
+        ...state,
+        ...computeMetadata(
+          formattedData,
+          state.fields,
+          automaticHeaderMappings
+        ),
+        parsed: action.payload.parsed,
+        headerMappings: automaticHeaderMappings,
+        formattedData,
+        currentStep: 1
+      }
+    }
+    case 'HEADER_MAPPINGS_CHANGED': {
+      const newFormattedData = formatData(
+        action.payload.headerMappings,
+        state.parsed.data
+      )
+      return {
+        ...state,
+        ...computeMetadata(
+          newFormattedData,
+          state.fields,
+          action.payload.headerMappings
+        ),
+        headerMappings: action.payload.headerMappings,
+        formattedData: newFormattedData
+      }
+    }
+    case 'CELL_CHANGED': {
+      const copy = [...state.formattedData]
+      copy[action.payload.index] = action.payload.row
+      return {
+        ...state,
+        ...computeMetadata(copy, state.fields, state.headerMappings),
+        formattedData: copy
+      }
+    }
+    case 'COMPLETE':
+      return { ...state, currentStep: 3 }
+    default:
+      return state
+  }
+}
 
 const Importer = ({ theme, onComplete, fields }) => {
-  const [currentStep, setCurrentStep] = useState(0)
-  const [parsed, setParsed] = useState(null)
-  const [formattedData, setFormattedData] = useState([])
-  const [statistics, setStatistics] = useState({
-    statisticsByFieldKey: {},
-    total: null
-  })
-  const [headerMappings, setHeaderMappings] = useState({})
-  const [validationResult, setValidationResult] = useState(
-    new ValidationResult()
-  )
+  const [
+    {
+      currentStep,
+      parsed,
+      formattedData,
+      statistics,
+      headerMappings,
+      validationResult
+    },
+    dispatch
+  ] = useReducer(reducer, buildInitialState({ fields }))
 
   const restart = () => {
-    setCurrentStep(0)
-    setParsed(null)
-    setFormattedData([])
-    setStatistics({ statisticsByFieldKey: {}, total: null })
-    setHeaderMappings({})
-    setValidationResult(new ValidationResult())
+    dispatch({ type: 'RESTART' })
   }
 
   const setFile = (file) => {
     Papa.parse(file, {
       skipEmptyLines: true,
       complete: (newParsed) => {
-        setParsed(newParsed)
-        setHeaderMappings(
-          buildSuggestedHeaderMappings(fields, newParsed.data[0])
-        )
-        setCurrentStep(1)
+        dispatch({ type: 'FILE_PARSED', payload: { parsed: newParsed } })
       }
     })
   }
-
-  useEffect(() => {
-    if (parsed && parsed.data) {
-      const newFormattedData = formatData(headerMappings, parsed.data)
-      setFormattedData(newFormattedData)
-    }
-  }, [headerMappings])
-
-  useEffect(() => {
-    if (formattedData.length > 0) {
-      const newValidationResult = applyValidation(formattedData, fields)
-      setValidationResult(newValidationResult)
-      const newStatistics = computeStatistics(
-        formattedData,
-        headerMappings,
-        newValidationResult
-      )
-      setStatistics(newStatistics)
-    }
-  }, [formattedData])
 
   const rowData = []
   for (let i = 0; i < 100; i++) {
@@ -85,7 +155,7 @@ const Importer = ({ theme, onComplete, fields }) => {
     .map((h) => h.selectedField.value)
 
   const unselectedFields = fields.filter((filter) => {
-    return usedFilters.indexOf(filter.key) < 0
+    return usedFilters.indexOf(filter.key) === -1
   })
 
   const headers = Object.keys(headerMappings)
@@ -133,9 +203,10 @@ const Importer = ({ theme, onComplete, fields }) => {
                   onComplete(buildFinalData(formattedData, validationResult))
                 }}
                 setRowData={(row, index) => {
-                  const newRowData = [...rowData]
-                  newRowData[index] = row
-                  setFormattedData(newRowData)
+                  dispatch({
+                    type: 'CELL_CHANGED',
+                    payload: { index: index, row: row }
+                  })
                 }}
               />
             </div>
@@ -147,10 +218,15 @@ const Importer = ({ theme, onComplete, fields }) => {
               fields={unselectedFields}
               headerMappings={headerMappings}
               missingRequiredFields={missingRequiredFields}
-              setHeaderMappings={setHeaderMappings}
+              setHeaderMappings={(newHeaderMappings) => {
+                dispatch({
+                  type: 'HEADER_MAPPINGS_CHANGED',
+                  payload: { headerMappings: newHeaderMappings }
+                })
+              }}
               restart={restart}
               onComplete={() => {
-                setCurrentStep(2)
+                dispatch({ type: 'COMPLETED_MAPPINGS' })
               }}
             />
           )}
@@ -162,16 +238,17 @@ const Importer = ({ theme, onComplete, fields }) => {
               headerMappings={headerMappings}
               validationResult={validationResult}
               onBack={() => {
-                setCurrentStep(1)
+                dispatch({ type: 'DECREMENT_STEP' })
               }}
               onSubmit={() => {
+                dispatch({ type: 'COMPLETE' })
                 onComplete(buildFinalData(formattedData, validationResult))
-                setCurrentStep(3)
               }}
               setRowData={(row, index) => {
-                const newFormattedData = [...formattedData]
-                newFormattedData[index] = row
-                setFormattedData(newFormattedData)
+                dispatch({
+                  type: 'CELL_CHANGED',
+                  payload: { index: index, row: row }
+                })
               }}
             />
           )}
