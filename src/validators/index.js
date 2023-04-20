@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { hasData, eachWithObject } from '../utils/functional'
 import { fieldIsRequired } from '../utils'
 

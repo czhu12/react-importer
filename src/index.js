@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useReducer } from 'react'
 import Papa from 'papaparse'
 import Header from './components/Header'
 import FileUploader from './components/FileUploader'
@@ -53,17 +53,18 @@ const reducer = (state, action) => {
       return buildInitialState({ fields: state.fields })
     case 'DECREMENT_STEP':
       return { ...state, currentStep: state.currentStep - 1 }
-    case 'COMPLETED_MAPPINGS':
+    case 'COMPLETED_MAPPINGS': {
       const transformedFormattedData = applyTransformations(
         state.formattedData,
-        state.fields,
+        state.fields
       )
       return {
         ...state,
         formattedData: transformedFormattedData,
         currentStep: state.currentStep + 1
       }
-    case 'FILE_PARSED':
+    }
+    case 'FILE_PARSED': {
       const automaticHeaderMappings = buildSuggestedHeaderMappings(
         state.fields,
         action.payload.parsed.data[0]
@@ -84,7 +85,8 @@ const reducer = (state, action) => {
         formattedData,
         currentStep: 1
       }
-    case 'HEADER_MAPPINGS_CHANGED':
+    }
+    case 'HEADER_MAPPINGS_CHANGED': {
       const newFormattedData = formatData(
         action.payload.headerMappings,
         state.parsed.data
@@ -99,7 +101,8 @@ const reducer = (state, action) => {
         headerMappings: action.payload.headerMappings,
         formattedData: newFormattedData
       }
-    case 'CELL_CHANGED':
+    }
+    case 'CELL_CHANGED': {
       const copy = [...state.formattedData]
       copy[action.payload.index] = action.payload.row
       return {
@@ -107,6 +110,7 @@ const reducer = (state, action) => {
         ...computeMetadata(copy, state.fields, state.headerMappings),
         formattedData: copy
       }
+    }
     case 'COMPLETE':
       return { ...state, currentStep: 3 }
     default:
