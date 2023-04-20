@@ -18,6 +18,7 @@ import {
   computeStatistics,
   ValidationResult
 } from './validators'
+import { applyTransformations } from './transformers'
 
 function buildInitialState(inject) {
   return {
@@ -52,8 +53,16 @@ const reducer = (state, action) => {
       return buildInitialState({ fields: state.fields })
     case 'DECREMENT_STEP':
       return { ...state, currentStep: state.currentStep - 1 }
-    case 'INCREMENT_STEP':
-      return { ...state, currentStep: state.currentStep + 1 }
+    case 'COMPLETED_MAPPINGS':
+      const transformedFormattedData = applyTransformations(
+        state.formattedData,
+        state.fields,
+      )
+      return {
+        ...state,
+        formattedData: transformedFormattedData,
+        currentStep: state.currentStep + 1
+      }
     case 'FILE_PARSED':
       const automaticHeaderMappings = buildSuggestedHeaderMappings(
         state.fields,
@@ -72,7 +81,7 @@ const reducer = (state, action) => {
         ),
         parsed: action.payload.parsed,
         headerMappings: automaticHeaderMappings,
-        formattedData: formattedData,
+        formattedData,
         currentStep: 1
       }
     case 'HEADER_MAPPINGS_CHANGED':
@@ -130,21 +139,6 @@ const Importer = ({ theme, onComplete, fields }) => {
       }
     })
   }
-
-  /*
-  useEffect(() => {
-    if (formattedData.length > 0) {
-      const newValidationResult = applyValidation(formattedData, fields)
-      setValidationResult(newValidationResult)
-      const newStatistics = computeStatistics(
-        formattedData,
-        headerMappings,
-        newValidationResult
-      )
-      setStatistics(newStatistics)
-    }
-  }, [formattedData])
-  */
 
   const rowData = []
   for (let i = 0; i < 100; i++) {
@@ -228,7 +222,7 @@ const Importer = ({ theme, onComplete, fields }) => {
               }}
               restart={restart}
               onComplete={() => {
-                dispatch({ type: 'INCREMENT_STEP' })
+                dispatch({ type: 'COMPLETED_MAPPINGS' })
               }}
             />
           )}
