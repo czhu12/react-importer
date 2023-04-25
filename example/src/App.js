@@ -6,7 +6,13 @@ import 'react-importer/dist/index.css'
 
 const App = () => {
   const [ready, setReady] = useState(false);
-  const onComplete = (data) => {
+  const onComplete = async (data, onProgress) => {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    onProgress(20)
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    onProgress(50)
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    onProgress(100)
     console.log(data);
     setReady(true);
   }

@@ -19,12 +19,16 @@ import {
   ValidationResult
 } from './validators'
 import { applyTransformations } from './transformers'
+import { delay } from './utils/timing'
 
 function buildInitialState(inject) {
   return {
     ...inject,
     currentStep: 0,
     parsed: null,
+    pending: true,
+    progress: 40,
+    failed: false,
     formattedData: [],
     statistics: {
       statisticsByFieldKey: {},
@@ -62,6 +66,13 @@ const reducer = (state, action) => {
         ...state,
         formattedData: transformedFormattedData,
         currentStep: state.currentStep + 1
+      }
+    }
+    case 'SET_CURRENT_STEP': {
+      const currentStep = action.payload.currentStep;
+      return {
+        ...state,
+        currentStep,
       }
     }
     case 'FILE_PARSED': {
@@ -111,8 +122,12 @@ const reducer = (state, action) => {
         formattedData: copy
       }
     }
+    case 'PENDING':
+      return { ...state, currentStep: 3, pending: true, progress: 0 }
     case 'COMPLETE':
-      return { ...state, currentStep: 3 }
+      return { ...state, currentStep: 3, pending: false, progress: 100 }
+    case 'FAILED':
+      return { ...state, currentStep: 3, failed: true }
     default:
       return state
   }
@@ -126,7 +141,10 @@ const Importer = ({ theme, onComplete, fields }) => {
       formattedData,
       statistics,
       headerMappings,
-      validationResult
+      validationResult,
+      pending,
+      progress,
+      failed,
     },
     dispatch
   ] = useReducer(reducer, buildInitialState({ fields }))
@@ -177,6 +195,24 @@ const Importer = ({ theme, onComplete, fields }) => {
     return headers.indexOf(f.key) >= 0 || fieldIsRequired(f)
   })
 
+  const submitWrapper = async () => {
+    dispatch({ type: 'PENDING' })
+    try {
+      await onComplete(
+        buildFinalData(formattedData, validationResult),
+        (progress) => {
+          dispatch({ type: 'PROGRESS', payload: { progress: progress }})
+        }
+      )
+    } catch(e) {
+      dispatch({ type: 'FAILED' })
+      return
+    }
+    dispatch({ type: 'PROGRESS', payload: { progress: 100 } })
+    await delay(100)
+    dispatch({ type: 'COMPLETE' })
+  }
+
   return (
     <ThemeContext.Provider>
       <Root>
@@ -184,6 +220,15 @@ const Importer = ({ theme, onComplete, fields }) => {
           <Header
             steps={['Upload', 'Match', 'Review', 'Complete']}
             currentStep={currentStep}
+            onClick={(step) => {
+              if (step === "Upload") {
+                restart()
+              } else if (step === "Match") {
+                dispatch({ type: 'RESTART', payload: { currentStep: 1 } })
+              } else if (step === "Review") {
+                dispatch({ type: 'RESTART', payload: { currentStep: 2 } })
+              }
+            }}
           />
           {currentStep === 0 && (
             <div>
@@ -199,9 +244,7 @@ const Importer = ({ theme, onComplete, fields }) => {
                 fields={fields}
                 headerMappings={headerMappings}
                 validationResult={validationResult}
-                onSubmit={() => {
-                  onComplete(buildFinalData(formattedData, validationResult))
-                }}
+                onSubmit={submitWrapper}
                 setRowData={(row, index) => {
                   dispatch({
                     type: 'CELL_CHANGED',
@@ -240,10 +283,7 @@ const Importer = ({ theme, onComplete, fields }) => {
               onBack={() => {
                 dispatch({ type: 'DECREMENT_STEP' })
               }}
-              onSubmit={() => {
-                dispatch({ type: 'COMPLETE' })
-                onComplete(buildFinalData(formattedData, validationResult))
-              }}
+              onSubmit={submitWrapper}
               setRowData={(row, index) => {
                 dispatch({
                   type: 'CELL_CHANGED',
@@ -252,7 +292,14 @@ const Importer = ({ theme, onComplete, fields }) => {
               }}
             />
           )}
-          {currentStep === 3 && <Completed formattedData={formattedData} />}
+          {currentStep === 3 && (
+            <Completed
+              formattedData={formattedData}
+              pending={pending}
+              progress={progress}
+              failed={failed}
+            />
+          )}
         </Container>
       </Root>
     </ThemeContext.Provider>

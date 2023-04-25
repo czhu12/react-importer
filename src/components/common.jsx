@@ -290,6 +290,37 @@ const rotate = keyframes`
   }
 `
 
+//const spin = keyframes`
+//  from {
+//    stroke-dashoffset: 200;
+//  }
+//  to {
+//    stroke-dashoffset: 0;
+//  }
+//`
+
+
+export const PendingProgress = styled.circle`
+  ${props => {
+    let styles = {};
+    styles['r'] = props.radius || 45;
+    styles['stroke-dasharray'] = styles['r'] * 2 * Math.PI;
+    const inverseProgress = (1 - (props.progress / 100))
+    styles['stroke-dashoffset'] = (inverseProgress * styles['stroke-dasharray']) || (styles['stroke-dasharray']);
+    return styles
+  }}
+
+  stroke: #2ecc71;
+  transition: all 1s ease;
+
+  fill: none;
+  stroke-width: 5px;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  cx: 50;
+  cy: 50;
+`
 
 export const CircleProgress = styled.circle`
   stroke-dasharray: 360;

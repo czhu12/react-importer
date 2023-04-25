@@ -19,6 +19,23 @@ describe('Validator.buildFromDefinition', () => {
   })
 })
 
+describe('CustomValidator', () => {
+  it('works with function', () => {
+    const validator = Validator.buildFromDefinition({
+      validate: 'custom',
+      validateFn: (item) => {
+        if (!Number.isInteger(item)) {
+          return { message: 'Must be an integer' }
+        }
+      },
+      key: 'is_int'
+    })
+    expect(validator.isValid('a').valid).toEqual(false)
+    expect(validator.isValid(2).valid).toEqual(true)
+    expect(validator.isValid('1').valid).toEqual(false)
+  })
+})
+
 describe('UniqueValidator', () => {
   it('validates uniqueness', () => {
     const validator = Validator.buildFromDefinition({ validate: 'unique' })

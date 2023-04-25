@@ -16,13 +16,40 @@ export class Validator {
       regex_matches: RegexValidator,
       required: RequiredValidator,
       unique: UniqueValidator,
-      is_integer: IntegerValidator
+      is_integer: IntegerValidator,
+      custom: CustomValidator
     }
     if (!(definition.validate in mapping)) {
       throw new Error(`Missing validator for ${definition.validate}`)
     }
     const FoundValidator = mapping[definition.validate]
     return new FoundValidator(definition)
+  }
+}
+
+export class CustomValidator extends Validator {
+  constructor(definition) {
+    super(definition)
+    const { key, validateFn } = definition
+    this.key = key
+    this.validateFn = validateFn
+  }
+
+  isValid(fieldValue) {
+    const result = this.validateFn(fieldValue)
+    console.log(result);
+    console.log(result);
+    console.log(result);
+    console.log(result);
+    console.log(result);
+    console.log(result);
+    console.log(result);
+    const valid = !!!result
+    return {
+      valid: valid,
+      message: result?.message || this.definition.error,
+      errorType: result?.key || this.key
+    }
   }
 }
 

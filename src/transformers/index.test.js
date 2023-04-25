@@ -3,7 +3,8 @@ import {
   applyTransformations,
   PhoneNumberTransformer,
   StateCodeTransformer,
-  PostalCodeTransformer
+  PostalCodeTransformer,
+  CustomTransformer
 } from './'
 
 const fields = [
@@ -28,6 +29,17 @@ describe('applyTransformations', () => {
       fields
     )
     expect(data[0].phone_number).toEqual('5555555555')
+  })
+})
+
+describe('CustomTransformer', () => {
+  it('can apply transformations', () => {
+    const transformer = new CustomTransformer({
+      key: 'add_one',
+      transformFn: (item) => item + 1
+    })
+
+    expect(transformer.transform(1)).toEqual(2)
   })
 })
 

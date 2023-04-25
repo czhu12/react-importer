@@ -55,7 +55,7 @@ export class Transformer {
       phone_number: PhoneNumberTransformer,
       postal_code: PostalCodeTransformer,
       state_code: StateCodeTransformer,
-      lower_case: (s) => s.toLowerCase()
+      custom: CustomTransformer
     }
     if (!(definition.transformer in mapping)) {
       throw new Error(`Missing validator for ${definition.transformer}`)
@@ -68,6 +68,15 @@ export class Transformer {
     const newValue = this.parse(value)
     if (newValue) return newValue
     return value
+  }
+}
+
+export class CustomTransformer extends Transformer {
+  constructor(definition) {
+    super(definition)
+    const { key, transformFn } = definition
+    this.key = key
+    this.parse = transformFn
   }
 }
 

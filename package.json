@@ -1,6 +1,6 @@
 {
   "name": "react-importer",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React Importer",
   "author": "czhu12",
   "license": "MIT",
@@ -54,6 +54,7 @@
     "ag-grid-community": "^26.0.0",
     "ag-grid-react": "^26.0.0",
     "papaparse": "^5.3.1",
+    "react-circular-progressbar": "^2.1.0",
     "react-dropzone": "^11.4.0",
     "react-select": "^4.3.1",
     "styled-components": "^5.3.1"
