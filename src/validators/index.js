@@ -39,7 +39,7 @@ export class MultiIncludesValidator extends Validator {
   isValid(fieldValue) {
     const values = fieldValue.split(this.delimiter)
     // If any of the values are not in the list of valid values, then the field is invalid
-    if (values.some((value) => !this.values.includes(value.trim()))) {
+    if (values.some((value) => this.values.indexOf(value.trim()) === -1)) {
       return {
         valid: false,
         message: this.definition.error || 'This value is not valid',
@@ -56,7 +56,7 @@ export class IncludesValidator extends Validator {
   }
 
   isValid(fieldValue) {
-    if (!this.values.includes(fieldValue)) {
+    if (this.values.indexOf(fieldValue) === -1) {
       return {
         valid: false,
         message: this.definition.error || 'This value is not valid',

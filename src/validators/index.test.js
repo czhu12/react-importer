@@ -19,7 +19,7 @@ describe('Validator.buildFromDefinition', () => {
   })
 })
 
-describe('MultiIncludesValidator', () => {
+describe('IncludesValidator', () => {
   it('correctly validates', () => {
     const validator = Validator.buildFromDefinition({
       validate: 'includes',
