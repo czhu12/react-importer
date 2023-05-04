@@ -59,7 +59,7 @@ export class Transformer {
       custom: CustomTransformer
     }
     if (!(definition.transformer in mapping)) {
-      throw new Error(`Missing validator for ${definition.transformer}`)
+      throw new Error(`Missing validator for ${definition.transformer}. Valid transformer options are ${Object.keys(mapping).join(", ")}`)
     }
     const FoundValidator = mapping[definition.transformer]
     return new FoundValidator(definition)

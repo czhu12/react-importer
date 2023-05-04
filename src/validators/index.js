@@ -22,7 +22,7 @@ export class Validator {
       custom: CustomValidator
     }
     if (!(definition.validate in mapping)) {
-      throw new Error(`Missing validator for ${definition.validate}`)
+      throw new Error(`Missing validator for ${definition.validate}. Valid validator options are ${Object.keys(mapping).join(", ")}`)
     }
     const FoundValidator = mapping[definition.validate]
     return new FoundValidator(definition)
