@@ -38,10 +38,10 @@ const Uploading = ({progress, pending}) => {
           )}
         </CircularProgressbarWithChildren>
       </div>
-      {!pending && (
+      {pending && (
         <h2 style={{fontSize: "2em"}}>Uploading</h2>
       )}
-      {pending && (
+      {!pending && (
         <h2 style={{fontSize: "2em"}}>Success</h2>
       )}
     </Margin>

@@ -4,7 +4,8 @@ import {
   PhoneNumberTransformer,
   StateCodeTransformer,
   PostalCodeTransformer,
-  CustomTransformer
+  CustomTransformer,
+  StripTransformer
 } from './'
 
 const fields = [
@@ -40,6 +41,14 @@ describe('CustomTransformer', () => {
     })
 
     expect(transformer.transform(1)).toEqual(2)
+  })
+})
+
+describe('StripTransformer', () => {
+  it('can apply transformations', () => {
+    const transformer = new StripTransformer()
+
+    expect(transformer.transform(' a ')).toEqual('a')
   })
 })
 

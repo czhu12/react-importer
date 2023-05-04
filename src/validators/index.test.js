@@ -19,6 +19,32 @@ describe('Validator.buildFromDefinition', () => {
   })
 })
 
+describe('MultiIncludesValidator', () => {
+  it('correctly validates', () => {
+    const validator = Validator.buildFromDefinition({
+      validate: 'includes',
+      values: ['a', 'b', 'c']
+    })
+    expect(validator.isValid('a').valid).toEqual(true)
+    expect(validator.isValid('a, b, c').valid).toEqual(false)
+    expect(validator.isValid('a,b,c').valid).toEqual(false)
+    expect(validator.isValid('d').valid).toEqual(false)
+  })
+})
+
+describe('MultiIncludesValidator', () => {
+  it('correctly validates', () => {
+    const validator = Validator.buildFromDefinition({
+      validate: 'multi_includes',
+      values: ['a', 'b', 'c']
+    })
+    expect(validator.isValid('a').valid).toEqual(true)
+    expect(validator.isValid('a, b, c').valid).toEqual(true)
+    expect(validator.isValid('a,b,c').valid).toEqual(true)
+    expect(validator.isValid('d').valid).toEqual(false)
+  })
+})
+
 describe('CustomValidator', () => {
   it('works with function', () => {
     const validator = Validator.buildFromDefinition({

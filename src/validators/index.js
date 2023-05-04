@@ -16,6 +16,8 @@ export class Validator {
       regex_matches: RegexValidator,
       required: RequiredValidator,
       unique: UniqueValidator,
+      includes: IncludesValidator,
+      multi_includes: MultiIncludesValidator,
       is_integer: IntegerValidator,
       custom: CustomValidator
     }
@@ -24,6 +26,44 @@ export class Validator {
     }
     const FoundValidator = mapping[definition.validate]
     return new FoundValidator(definition)
+  }
+}
+
+export class MultiIncludesValidator extends Validator {
+  constructor(definition) {
+    super(definition)
+    this.delimiter = definition.delimiter || /[,|]/
+    this.values = definition.values
+  }
+
+  isValid(fieldValue) {
+    const values = fieldValue.split(this.delimiter)
+    // If any of the values are not in the list of valid values, then the field is invalid
+    if (values.some((value) => !this.values.includes(value.trim()))) {
+      return {
+        valid: false,
+        message: this.definition.error || 'This value is not valid',
+        errorType: 'includes'
+      }
+    }
+    return { valid: true }
+  }
+}
+export class IncludesValidator extends Validator {
+  constructor(definition) {
+    super(definition)
+    this.values = definition.values
+  }
+
+  isValid(fieldValue) {
+    if (!this.values.includes(fieldValue)) {
+      return {
+        valid: false,
+        message: this.definition.error || 'This value is not valid',
+        errorType: 'includes'
+      }
+    }
+    return { valid: true }
   }
 }
 
@@ -37,13 +77,6 @@ export class CustomValidator extends Validator {
 
   isValid(fieldValue) {
     const result = this.validateFn(fieldValue)
-    console.log(result);
-    console.log(result);
-    console.log(result);
-    console.log(result);
-    console.log(result);
-    console.log(result);
-    console.log(result);
     const valid = !!!result
     return {
       valid: valid,

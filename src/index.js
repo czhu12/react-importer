@@ -27,7 +27,7 @@ function buildInitialState(inject) {
     currentStep: 0,
     parsed: null,
     pending: true,
-    progress: 40,
+    progress: 0,
     failed: false,
     formattedData: [],
     statistics: {
@@ -69,10 +69,10 @@ const reducer = (state, action) => {
       }
     }
     case 'SET_CURRENT_STEP': {
-      const currentStep = action.payload.currentStep;
+      const currentStep = action.payload.currentStep
       return {
         ...state,
-        currentStep,
+        currentStep
       }
     }
     case 'FILE_PARSED': {
@@ -122,6 +122,8 @@ const reducer = (state, action) => {
         formattedData: copy
       }
     }
+    case 'PROGRESS':
+      return { ...state, progress: action.payload.progress }
     case 'PENDING':
       return { ...state, currentStep: 3, pending: true, progress: 0 }
     case 'COMPLETE':
@@ -144,7 +146,7 @@ const Importer = ({ theme, onComplete, fields }) => {
       validationResult,
       pending,
       progress,
-      failed,
+      failed
     },
     dispatch
   ] = useReducer(reducer, buildInitialState({ fields }))
@@ -201,15 +203,16 @@ const Importer = ({ theme, onComplete, fields }) => {
       await onComplete(
         buildFinalData(formattedData, validationResult),
         (progress) => {
-          dispatch({ type: 'PROGRESS', payload: { progress: progress }})
+          dispatch({ type: 'PROGRESS', payload: { progress: progress } })
         }
       )
-    } catch(e) {
+    } catch (e) {
       dispatch({ type: 'FAILED' })
       return
     }
+    await delay(400)
     dispatch({ type: 'PROGRESS', payload: { progress: 100 } })
-    await delay(100)
+    await delay(200)
     dispatch({ type: 'COMPLETE' })
   }
 
@@ -221,11 +224,11 @@ const Importer = ({ theme, onComplete, fields }) => {
             steps={['Upload', 'Match', 'Review', 'Complete']}
             currentStep={currentStep}
             onClick={(step) => {
-              if (step === "Upload") {
+              if (step === 'Upload') {
                 restart()
-              } else if (step === "Match") {
+              } else if (step === 'Match') {
                 dispatch({ type: 'RESTART', payload: { currentStep: 1 } })
-              } else if (step === "Review") {
+              } else if (step === 'Review') {
                 dispatch({ type: 'RESTART', payload: { currentStep: 2 } })
               }
             }}

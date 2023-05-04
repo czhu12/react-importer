@@ -55,6 +55,7 @@ export class Transformer {
       phone_number: PhoneNumberTransformer,
       postal_code: PostalCodeTransformer,
       state_code: StateCodeTransformer,
+      strip: StripTransformer,
       custom: CustomTransformer
     }
     if (!(definition.transformer in mapping)) {
@@ -68,6 +69,12 @@ export class Transformer {
     const newValue = this.parse(value)
     if (newValue) return newValue
     return value
+  }
+}
+
+export class StripTransformer extends Transformer {
+  parse(value) {
+    return value.trim()
   }
 }
 
