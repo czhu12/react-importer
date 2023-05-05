@@ -1,22 +1,11 @@
 import React, { useState } from 'react';
-import Importer from 'react-importer'
+import Importer, {THEME_SIGNAL, THEME_FRESCA, THEME_DEFAULT} from 'react-importer'
 
 import 'jsoneditor-react/es/editor.min.css';
 import 'react-importer/dist/index.css'
 
-const App = () => {
-  const [ready, setReady] = useState(false);
-  const onComplete = async (data, onProgress) => {
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    onProgress(20)
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    onProgress(50)
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    onProgress(100)
-    console.log(data);
-    setReady(true);
-  }
-  const content = `import Importer from 'react-importer'
+const ALL_THEMES = [THEME_DEFAULT, THEME_SIGNAL, THEME_FRESCA]
+const CONTENT = `import Importer from 'react-importer'
 
 <Importer
   fields={[
@@ -41,6 +30,37 @@ const App = () => {
     console.log(data)
   }}
 />`
+
+const ThemeCard = ({theme, onClick}) => {
+  return <div className="theme-card" onClick={onClick}>
+    <div style={{display: 'flex', flexDirection: 'row'}}>
+      <div className="theme-color" style={{backgroundColor: theme.colors.primary}}></div>
+      <div className="theme-color" style={{backgroundColor: theme.colors.success}}></div>
+    </div>
+
+    <div style={{display: 'flex', flexDirection: 'row'}}>
+      <div className="theme-color" style={{backgroundColor: theme.colors.danger}}></div>
+      <div className="theme-color" style={{backgroundColor: theme.colors.info}}></div>
+      <div className="theme-color" style={{backgroundColor: theme.colors.warning}}></div>
+      <div className="theme-color" style={{backgroundColor: theme.colors.light}}></div>
+    </div>
+  </div>
+}
+const App = () => {
+  const [ready, setReady] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState(null);
+
+  const onComplete = async (data, onProgress) => {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    onProgress(20)
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    onProgress(50)
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    onProgress(100)
+    console.log(data);
+    setReady(true);
+  }
+  console.log(ALL_THEMES)
   return (
     <div>
       <div className="container">
@@ -65,7 +85,7 @@ const App = () => {
           <div>
             <pre>
               <code className="language-jsx">
-                {content}
+                {CONTENT}
               </code>
             </pre>
           </div>
@@ -74,6 +94,7 @@ const App = () => {
         <div className="content">
           <h1>Want to see a demo? Try uploading <a href="data.csv">this file</a>.</h1>
           <Importer
+            theme={{...ALL_THEMES[currentTheme]}}
             fields={[
               {
                 label: "Name", key: "name", validators: [
@@ -109,6 +130,23 @@ const App = () => {
               <h4>Check the console for the output!</h4>
             </div>
           )}
+        </div>
+        <div className="content">
+          <h1>Feel free to customize the theme</h1>
+          <div className="theme-wrapper">
+            <ThemeCard
+              theme={THEME_DEFAULT}
+              onClick={() => setCurrentTheme(0)}
+            />
+            <ThemeCard
+              theme={THEME_FRESCA}
+              onClick={() => setCurrentTheme(1)}
+            />
+            <ThemeCard
+              theme={THEME_SIGNAL}
+              onClick={() => setCurrentTheme(2)}
+            />
+          </div>
         </div>
 
       </div>

@@ -201,3 +201,36 @@ footer {
 	padding-top: 100px;
 	padding-bottom: 100px;
 }
+
+.theme-wrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.theme-card:first-child {
+	margin-left: 0 !important;
+}
+.theme-card:last-child {
+	margin-right: 0 !important;
+}
+
+.theme-card:hover {
+	background-color: #eee;
+	transition: all 0.3s ease-out;
+}
+.theme-card {
+	cursor: pointer;
+	flex-grow: 1;
+	padding: 10px;
+	margin: 0 10px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+	border-radius: 10px;
+}
+
+.theme-card .theme-color {
+	flex-grow: 1;
+	margin: 2px;
+	border-radius: 5px;
+	height: 40px;
+}

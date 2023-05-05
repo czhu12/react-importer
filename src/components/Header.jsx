@@ -19,7 +19,7 @@ const BreadcrumbItem = styled.span`
     if (props.past) {
       return css`
         font-weight: bold;
-        color: #2ecc71;
+        color: ${props => props.theme.colors.success};
       `
     }
   }};

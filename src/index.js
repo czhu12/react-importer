@@ -9,9 +9,10 @@ import {
   fieldIsRequired,
   formatData,
   buildSuggestedHeaderMappings,
-  buildFinalData
+  buildFinalData,
+  mergeDeep
 } from './utils'
-import { ThemeContext } from './contexts'
+import { ThemeProvider } from 'styled-components'
 import { Root, Margin, Container } from './components/common'
 import {
   applyValidation,
@@ -20,6 +21,8 @@ import {
 } from './validators'
 import { applyTransformations } from './transformers'
 import { delay } from './utils/timing'
+import { THEME_DEFAULT } from './themes'
+export * from './themes'
 
 function buildInitialState(inject) {
   return {
@@ -216,8 +219,10 @@ const Importer = ({ theme, onComplete, fields }) => {
     dispatch({ type: 'COMPLETE' })
   }
 
+  const finalTheme = mergeDeep({}, THEME_DEFAULT, theme)
+  console.log(theme?.colors?.primary, finalTheme.colors.primary)
   return (
-    <ThemeContext.Provider>
+    <ThemeProvider theme={finalTheme}>
       <Root>
         <Container>
           <Header
@@ -305,7 +310,7 @@ const Importer = ({ theme, onComplete, fields }) => {
           )}
         </Container>
       </Root>
-    </ThemeContext.Provider>
+    </ThemeProvider>
   )
 }
 

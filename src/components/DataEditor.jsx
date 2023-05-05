@@ -4,6 +4,7 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { Button, Margin, Align, Row, Col } from './common';
 import { filterEmptyRows, isPresent } from '../utils';
+import { useTheme } from 'styled-components';
 
 
 const DataEditor = ({ formattedData, fields, onSubmit, onBack, validationResult, setRowData, statistics }) => {
@@ -62,6 +63,7 @@ const DataEditor = ({ formattedData, fields, onSubmit, onBack, validationResult,
   }
 
   const hasErrors = Object.keys(validationResult.errorsByFieldKeyByRowIndex).length > 0
+  const theme = useTheme();
   return (
     <div>
       <Margin margin="20px 0">
@@ -74,7 +76,7 @@ const DataEditor = ({ formattedData, fields, onSubmit, onBack, validationResult,
           </div>
         )}
         {hasData() && !hasErrors && (
-          <div style={{color: "#2ecc71", fontWeight: "bold", display: "flex", alignItems: "center"}}>
+          <div style={{color: theme.colors.success, fontWeight: "bold", display: "flex", alignItems: "center"}}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
               <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
             </svg>

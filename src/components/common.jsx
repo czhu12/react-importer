@@ -9,10 +9,10 @@ export const TextStyled = styled.div`
   ${props => {
     let styles = {};
     if (props.muted) {
-      styles['color'] = "#7f8c8d";
+      styles['color'] = props.theme.colors.secondary;
     }
     if (props.danger) {
-      styles['color'] = "#e74c3c";
+      styles['color'] = props.theme.colors.danger;
     }
     if (props.bold) {
       styles['fontWeight'] = "bold";
@@ -253,15 +253,15 @@ export const Button = styled.button`
   border-radius: 5px;
 
   ${props => {
-    let color = "#2980b9";
+    let color = props.theme.colors.primary;
     if (props.variant === 'success') {
-      color = 'green';
+      color = props.theme.colors.success;
     } else if (props.variant === 'danger') {
-      color = '#e74c3c';
+      color = props.theme.colors.danger;
     } else if (props.variant === "secondary") {
-      color = '#7f8c8d';
+      color = props.theme.colors.secondary;
     } else if (props.variant === "warning") {
-      color = '#e67e22';
+      color = props.theme.colors.warning;
     }
 
     if (props.disabled) {
@@ -290,16 +290,6 @@ const rotate = keyframes`
   }
 `
 
-//const spin = keyframes`
-//  from {
-//    stroke-dashoffset: 200;
-//  }
-//  to {
-//    stroke-dashoffset: 0;
-//  }
-//`
-
-
 export const PendingProgress = styled.circle`
   ${props => {
     let styles = {};
@@ -310,7 +300,7 @@ export const PendingProgress = styled.circle`
     return styles
   }}
 
-  stroke: #2ecc71;
+  stroke: ${props => props.theme.colors.success};
   transition: all 1s ease;
 
   fill: none;
@@ -325,7 +315,7 @@ export const PendingProgress = styled.circle`
 export const CircleProgress = styled.circle`
   stroke-dasharray: 360;
   stroke-dashoffset: 0;
-  stroke: #2ecc71;
+  stroke: ${props => props.theme.colors.success};
   animation: ${rotate} 1s ease-out;
 
   fill: none;
