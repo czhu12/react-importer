@@ -48,5 +48,5 @@ export const STATE_TO_CODES = [
   ['Washington', 'WA'],
   ['West Virginia', 'WV'],
   ['Wisconsin', 'WI'],
-  ['Wyoming', 'WY']
-]
+  ['Wyoming', 'WY'],
+];
