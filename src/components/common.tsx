@@ -15,8 +15,8 @@ export const TextStyled = styled.div<{
       color: props.danger
         ? props.theme.colors.danger
         : props.muted
-        ? props.theme.colors.secondary
-        : undefined,
+          ? props.theme.colors.secondary
+          : undefined,
       fontWeight: props.bold ? 'bold' : undefined,
     };
   }}
