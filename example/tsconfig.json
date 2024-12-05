@@ -5,11 +5,10 @@
     "jsx": "react",
     "strict": true,
     "declaration": true,
-    "declarationMap": true,
     "declarationDir": "dist",
     "esModuleInterop": true,
     "moduleResolution": "node",
     "isolatedModules": true
   },
-  "include": ["src/**/*"]
+  "include": ["src"]
 }

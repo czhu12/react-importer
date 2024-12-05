@@ -3,10 +3,11 @@ import Importer, {
   THEME_SIGNAL,
   THEME_FRESCA,
   THEME_DEFAULT,
+  ImporterOutputField,
+  ImporterTheme,
 } from 'react-importer';
 
 import 'jsoneditor-react/es/editor.min.css';
-import 'react-importer/dist/index.css';
 
 const ALL_THEMES = [THEME_DEFAULT, THEME_SIGNAL, THEME_FRESCA];
 const CONTENT = `import Importer from 'react-importer'
@@ -35,7 +36,13 @@ const CONTENT = `import Importer from 'react-importer'
   }}
 />`;
 
-const ThemeCard = ({ theme, onClick }) => {
+const ThemeCard = ({
+  theme,
+  onClick,
+}: {
+  theme: ImporterTheme;
+  onClick: () => void;
+}) => {
   return (
     <div className="theme-card" onClick={onClick}>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -72,9 +79,12 @@ const ThemeCard = ({ theme, onClick }) => {
 };
 const App = () => {
   const [ready, setReady] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState(null);
+  const [currentTheme, setCurrentTheme] = useState(0);
 
-  const onComplete = async (data, onProgress) => {
+  const onComplete = async (
+    data: ImporterOutputField[],
+    onProgress: (progress: number) => void
+  ) => {
     await new Promise((resolve) => setTimeout(resolve, 200));
     onProgress(20);
     await new Promise((resolve) => setTimeout(resolve, 200));
