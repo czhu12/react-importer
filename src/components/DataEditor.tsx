@@ -43,7 +43,7 @@ const DataEditor = ({
     setGridApi(params.api);
   };
 
-  const [onlyShowErrors, _setOnlyShowErrors] = useState(false);
+  const [onlyShowErrors, setOnlyShowErrors] = useState(false);
   const computeCellStyle = (params: CellClassParams) => {
     if (
       isPresent(params.colDef.field) &&
@@ -59,8 +59,8 @@ const DataEditor = ({
     return null;
   };
 
-  const setOnlyShowErrors = (newValue: boolean) => {
-    _setOnlyShowErrors(newValue);
+  const onSetOnlyShowErrors = (newValue: boolean) => {
+    setOnlyShowErrors(newValue);
     let newRowData;
     if (newValue) {
       const rowIndexesWithErrors = validationResult.rowIndexesWithErrors();
@@ -96,7 +96,7 @@ const DataEditor = ({
             <input
               checked={onlyShowErrors}
               onChange={(e) => {
-                setOnlyShowErrors(e.target.checked);
+                onSetOnlyShowErrors(e.target.checked);
               }}
               type="checkbox"
               name="row-errors"

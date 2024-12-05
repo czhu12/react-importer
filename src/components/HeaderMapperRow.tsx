@@ -23,10 +23,10 @@ const MappingStatistics = ({
   const total = fieldStatistics.total;
   const counts = fieldStatistics.statistics?.counts;
   const errorTypeCounts = fieldStatistics.statistics?.errorTypeCounts;
+  const theme = useTheme();
   if (!counts || !errorTypeCounts || !total) {
     return <div />;
   }
-  const theme = useTheme();
   return (
     <div>
       {selectedField && (

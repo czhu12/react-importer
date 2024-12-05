@@ -46,6 +46,30 @@ const Failed = () => {
   );
 };
 
+const SuccessIcon = () => {
+  const theme = useTheme();
+  return (
+    <svg
+      style={{
+        position: 'absolute',
+        margin: 'auto',
+        top: '0',
+        bottom: '0',
+        left: '0',
+        right: '0',
+      }}
+      xmlns="http://www.w3.org/2000/svg"
+      width="64"
+      height="64"
+      fill={theme.colors.success}
+      className="bi bi-check-lg"
+      viewBox="0 0 16 16"
+    >
+      <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+    </svg>
+  );
+};
+
 const Uploading = ({
   progress,
   pending,
@@ -87,30 +111,6 @@ const Uploading = ({
         {!pending && <h2 style={{ fontSize: '2em' }}>Success</h2>}
       </Margin>
     </div>
-  );
-};
-
-const SuccessIcon = () => {
-  const theme = useTheme();
-  return (
-    <svg
-      style={{
-        position: 'absolute',
-        margin: 'auto',
-        top: '0',
-        bottom: '0',
-        left: '0',
-        right: '0',
-      }}
-      xmlns="http://www.w3.org/2000/svg"
-      width="64"
-      height="64"
-      fill={theme.colors.success}
-      className="bi bi-check-lg"
-      viewBox="0 0 16 16"
-    >
-      <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
-    </svg>
   );
 };
 

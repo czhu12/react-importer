@@ -26,8 +26,8 @@ export class Validator {
   }
 
   isValid(
-    fieldValue: ImporterOutputFieldType,
-    row: ImporterFormattedData
+    _fieldValue: ImporterOutputFieldType,
+    _row: ImporterFormattedData
   ): ImporterValidatorOutput {
     throw new Error('Not Implemented');
   }
@@ -61,6 +61,7 @@ export class Validator {
 
 export class MultiIncludesValidator extends Validator {
   delimiter: string | RegExp;
+
   values: ImporterOutputFieldType[];
 
   constructor(definition: MultiIncludesValidatorDefinition) {
@@ -111,6 +112,7 @@ export class IncludesValidator extends Validator {
 
 export class CustomValidator extends Validator {
   key?: string;
+
   validateFn: (
     fieldValue: ImporterOutputFieldType,
     row: ImporterFormattedData
@@ -125,9 +127,10 @@ export class CustomValidator extends Validator {
 
   isValid(fieldValue: ImporterOutputFieldType, row: ImporterFormattedData) {
     const result = this.validateFn(fieldValue, row);
-    const valid = !!!result;
+    const valid = result == null || (result?.valid ?? false);
+
     return {
-      valid: valid,
+      valid,
       message: result?.message || this.definition.error,
       errorType: result?.errorType || this.key,
     };

@@ -99,7 +99,7 @@ export class Transformer {
     return value;
   }
 
-  parse(value: ImporterOutputFieldType): ImporterOutputFieldType | undefined {
+  parse(_value: ImporterOutputFieldType): ImporterOutputFieldType | undefined {
     throw new Error('Not Implemented');
   }
 }
@@ -112,6 +112,7 @@ export class StripTransformer extends Transformer {
 
 export class CustomTransformer extends Transformer {
   key: string;
+
   parse: (value: ImporterOutputFieldType) => ImporterOutputFieldType;
 
   constructor(definition: CustomTransformerDefinition) {
