@@ -1,7 +1,6 @@
 import { ParseResult } from 'papaparse';
 import { ValidationResult } from '../validators';
 
-// TODO THIS BRANCH: This about separating the types into their own files - like reducer, valdations, etc
 export interface ImporterState {
   fields: ImporterField[];
   currentStep: number;
@@ -48,7 +47,6 @@ export interface ImporterField {
   transformers?: ImporterTransformerDefinition[];
 }
 
-// TODO THIS BRANCH: Should it be narrowed down from any?
 export type ImporterOutputFieldType = string;
 
 export interface ImporterOutputField {
@@ -96,7 +94,6 @@ export type ImporterAction =
   | { type: 'COMPLETE' }
   | { type: 'FAILED' };
 
-// TODO THIS BRANCH: Should we allow more fields?
 export interface ImporterTheme {
   colors: {
     primary: string;
@@ -118,7 +115,7 @@ export type ValidationResultError = {
 export interface ImporterValidatorOutput {
   valid: boolean;
   message?: string;
-  errorType?: string; // TODO THIS BRANCH: Should it be something more specific?
+  errorType?: string;
 }
 
 export type ImporterValidatorType =

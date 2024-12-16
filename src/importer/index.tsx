@@ -28,6 +28,8 @@ interface Props {
   ) => Promise<void>;
 }
 
+const HEADER_STEPS = ['Upload', 'Match', 'Review', 'Complete'];
+
 const Importer = ({ theme, onComplete, fields }: Props) => {
   const [
     {
@@ -116,18 +118,24 @@ const Importer = ({ theme, onComplete, fields }: Props) => {
       <Root>
         <Container>
           <Header
-            steps={['Upload', 'Match', 'Review', 'Complete']}
+            steps={HEADER_STEPS}
             currentStep={currentStep}
             onClick={(step) => {
-              // TODO THIS BRANCH: We probably shouldn't allow going forward in steps
+              const stepIndex = HEADER_STEPS.indexOf(step);
+
+              if (
+                stepIndex < 0 ||
+                stepIndex >= currentStep ||
+                step === 'Complete'
+              ) {
+                return;
+              }
+
               if (step === 'Upload') {
                 restart();
               } else if (step === 'Match') {
-                // TODO THIS BRANCH: Reducer doesn't accept currentStep in RESTART
-                dispatch({ type: 'RESTART' /*payload: { currentStep: 1 }*/ });
-              } else if (step === 'Review') {
-                // TODO THIS BRANCH: Reducer doesn't accept currentStep in RESTART
-                dispatch({ type: 'RESTART' /*payload: { currentStep: 2 }*/ });
+                // We can only go to Match from Review, so decrementing step should be enough
+                dispatch({ type: 'DECREMENT_STEP' });
               }
             }}
           />

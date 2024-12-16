@@ -20,6 +20,7 @@ const BreadcrumbItem = styled.span<{ active?: boolean; past?: boolean }>`
       return css`
         font-weight: bold;
         color: ${(props) => props.theme.colors.success};
+        cursor: pointer;
       `;
     }
   }};
