@@ -31,15 +31,15 @@ const Aligned = styled.svg`
   fill: grey;
 `;
 
-const Header = ({
+function Header<T>({
   steps,
   currentStep,
   onClick,
 }: {
-  steps: string[];
+  steps: readonly T[];
   currentStep: number;
-  onClick: (step: string) => void;
-}) => {
+  onClick: (step: T) => void;
+}) {
   return (
     <TextEnd id="csv-importer-nav-header">
       {steps.map((step, index) => {
@@ -53,7 +53,7 @@ const Header = ({
             $active={active}
             onClick={() => onClick(step)}
           >
-            {step}
+            {`${step}`}
             {!last && (
               <Aligned
                 xmlns="http://www.w3.org/2000/svg"
@@ -74,6 +74,6 @@ const Header = ({
       })}
     </TextEnd>
   );
-};
+}
 
 export default Header;

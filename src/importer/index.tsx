@@ -28,7 +28,7 @@ interface Props {
   ) => Promise<void>;
 }
 
-const HEADER_STEPS = ['Upload', 'Match', 'Review', 'Complete'];
+const HEADER_STEPS = ['Upload', 'Match', 'Review', 'Complete'] as const;
 
 const Importer = ({ theme, onComplete, fields }: Props) => {
   const [
@@ -122,18 +122,23 @@ const Importer = ({ theme, onComplete, fields }: Props) => {
             currentStep={currentStep}
             onClick={(step) => {
               const stepIndex = HEADER_STEPS.indexOf(step);
+              const currentStepValue = HEADER_STEPS[currentStep];
+
+              if (step === 'Upload') {
+                restart();
+                return;
+              }
 
               if (
                 stepIndex < 0 ||
                 stepIndex >= currentStep ||
-                step === 'Complete'
+                step === 'Complete' ||
+                currentStepValue === 'Complete'
               ) {
                 return;
               }
 
-              if (step === 'Upload') {
-                restart();
-              } else if (step === 'Match') {
+              if (step === 'Match') {
                 // We can only go to Match from Review, so decrementing step should be enough
                 dispatch({ type: 'DECREMENT_STEP' });
               }
