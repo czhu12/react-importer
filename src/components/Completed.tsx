@@ -12,7 +12,7 @@ const Failed = () => {
   const theme = useTheme();
   return (
     <div>
-      <Margin margin="60px" style={{ textAlign: 'center' }}>
+      <Margin $margin="60px" style={{ textAlign: 'center' }}>
         <div
           style={{
             width: '100px',
@@ -82,7 +82,7 @@ const Uploading = ({
 
   return (
     <div>
-      <Margin margin="60px" style={{ textAlign: 'center' }}>
+      <Margin $margin="60px" style={{ textAlign: 'center' }}>
         <div
           style={{
             width: '100px',

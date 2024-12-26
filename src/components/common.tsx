@@ -6,18 +6,18 @@ export const Container = styled.div`
 `;
 
 export const TextStyled = styled.div<{
-  muted?: boolean;
-  danger?: boolean;
-  bold?: boolean;
+  $muted?: boolean;
+  $danger?: boolean;
+  $bold?: boolean;
 }>`
   ${(props) => {
     return {
-      color: props.danger
+      color: props.$danger
         ? props.theme.colors.danger
-        : props.muted
+        : props.$muted
           ? props.theme.colors.secondary
           : undefined,
-      fontWeight: props.bold ? 'bold' : undefined,
+      fontWeight: props.$bold ? 'bold' : undefined,
     };
   }}
 `;
@@ -178,13 +178,13 @@ export const Card = styled.div`
   border-radius: 5px;
 `;
 
-export const Align = styled.div<{ right?: boolean; center?: boolean }>`
+export const Align = styled.div<{ $right?: boolean; $center?: boolean }>`
   ${(props) => {
-    if (props.right) {
+    if (props.$right) {
       return css`
         text-align: right;
       `;
-    } else if (props.center) {
+    } else if (props.$center) {
       return css`
         text-align: center;
       `;
@@ -192,18 +192,18 @@ export const Align = styled.div<{ right?: boolean; center?: boolean }>`
   }}
 `;
 
-export const Margin = styled.div<{ margin: string }>`
+export const Margin = styled.div<{ $margin: string }>`
   ${(props) => {
     return css`
-      margin: ${props.margin};
+      margin: ${props.$margin};
     `;
   }}
 `;
 
-export const Padded = styled.div<{ padding: string }>`
+export const Padded = styled.div<{ $padding: string }>`
   ${(props) => {
     return css`
-      padding: ${props.padding};
+      padding: ${props.$padding};
     `;
   }}
 `;
@@ -223,24 +223,24 @@ export const Row = styled.div`
 `;
 
 export const Col = styled.div<{
-  flex?: CSSProperties['flex'];
-  verticallyCenter?: boolean;
-  spaceBetween?: boolean;
+  $flex?: CSSProperties['flex'];
+  $verticallyCenter?: boolean;
+  $spaceBetween?: boolean;
 }>`
   ${(props) => {
     return {
-      flex: props.flex ?? 1,
+      flex: props.$flex ?? 1,
       display:
-        props.verticallyCenter || props.spaceBetween ? 'flex' : undefined,
-      alignItems: props.verticallyCenter ? 'center' : undefined,
-      justifyContent: props.spaceBetween ? 'space-between' : undefined,
+        props.$verticallyCenter || props.$spaceBetween ? 'flex' : undefined,
+      alignItems: props.$verticallyCenter ? 'center' : undefined,
+      justifyContent: props.$spaceBetween ? 'space-between' : undefined,
     };
   }}
 `;
 
 export const Button = styled.button<{
-  variant?: 'primary' | 'success' | 'danger' | 'secondary' | 'warning';
-  outline?: boolean;
+  $variant?: 'primary' | 'success' | 'danger' | 'secondary' | 'warning';
+  $outline?: boolean;
 }>`
   border: none;
   padding: 10px 20px;
@@ -253,20 +253,20 @@ export const Button = styled.button<{
 
   ${(props) => {
     let color = props.theme.colors.primary;
-    if (props.variant === 'success') {
+    if (props.$variant === 'success') {
       color = props.theme.colors.success;
-    } else if (props.variant === 'danger') {
+    } else if (props.$variant === 'danger') {
       color = props.theme.colors.danger;
-    } else if (props.variant === 'secondary') {
+    } else if (props.$variant === 'secondary') {
       color = props.theme.colors.secondary;
-    } else if (props.variant === 'warning') {
+    } else if (props.$variant === 'warning') {
       color = props.theme.colors.warning;
     }
 
     if (props.disabled) {
       color += 'bb';
     }
-    if (props.outline) {
+    if (props.$outline) {
       return css`
         border: 1px solid ${color};
         color: ${color};
@@ -290,13 +290,13 @@ const rotate = keyframes`
 `;
 
 export const PendingProgress = styled.circle<{
-  radius: number;
-  progress?: number;
+  $radius: number;
+  $progress?: number;
 }>`
   ${(props) => {
-    const radius = props.radius || 45;
+    const radius = props.$radius || 45;
     const strokeDasharray = radius * 2 * Math.PI;
-    const inverseProgress = 1 - (props.progress || 0) / 100;
+    const inverseProgress = 1 - (props.$progress || 0) / 100;
     const strokeDashoffset = inverseProgress * strokeDasharray;
 
     return {

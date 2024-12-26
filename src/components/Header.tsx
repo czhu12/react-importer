@@ -6,17 +6,17 @@ const TextEnd = styled.section`
   margin-bottom: 20px;
 `;
 
-const BreadcrumbItem = styled.span<{ active?: boolean; past?: boolean }>`
+const BreadcrumbItem = styled.span<{ $active?: boolean; $past?: boolean }>`
   font-weight: thin;
   margin-left: 20px;
   ${(props) => {
-    if (props.active) {
+    if (props.$active) {
       return css`
         font-weight: bold;
       `;
     }
 
-    if (props.past) {
+    if (props.$past) {
       return css`
         font-weight: bold;
         color: ${(props) => props.theme.colors.success};
@@ -49,8 +49,8 @@ const Header = ({
         return (
           <BreadcrumbItem
             key={index}
-            past={past}
-            active={active}
+            $past={past}
+            $active={active}
             onClick={() => onClick(step)}
           >
             {step}

@@ -71,13 +71,13 @@ const HeaderMapper = ({
           />
         );
       })}
-      <Margin margin="20px 0">
-        <Align right>
+      <Margin $margin="20px 0">
+        <Align $right>
           {hasMissingRequiredFields &&
             missingRequiredFields.map((f) => {
               return (
                 <div key={f.label}>
-                  <TextStyled style={{ marginBottom: '15px' }} danger bold>
+                  <TextStyled style={{ marginBottom: '15px' }} $danger $bold>
                     Missing mapping for {f.label}
                     <svg
                       style={{ marginLeft: '10px' }}
@@ -97,15 +97,15 @@ const HeaderMapper = ({
         </Align>
         <Row>
           <Col>
-            <Button onClick={restart} outline>
+            <Button onClick={restart} $outline>
               Back
             </Button>
           </Col>
           <Col>
-            <Align right>
+            <Align $right>
               <Button
                 onClick={onComplete}
-                variant={hasMissingRequiredFields ? 'danger' : 'primary'}
+                $variant={hasMissingRequiredFields ? 'danger' : 'primary'}
               >
                 {hasMissingRequiredFields && 'Proceed Anyways'}
                 {!hasMissingRequiredFields && 'Review'}

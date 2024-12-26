@@ -90,7 +90,7 @@ const DataEditor = ({
 
   return (
     <div>
-      <Margin margin="20px 0">
+      <Margin $margin="20px 0">
         {(!hasData() || hasErrors) && (
           <div>
             <input
@@ -179,17 +179,17 @@ const DataEditor = ({
           })}
         </AgGridReact>
       </div>
-      <Margin margin="20px 0">
+      <Margin $margin="20px 0">
         <Row>
           <Col>
             {onBack && (
-              <Button onClick={onBack} outline>
+              <Button onClick={onBack} $outline>
                 Back
               </Button>
             )}
           </Col>
           <Col>
-            <Align right>
+            <Align $right>
               {hasData() && (
                 <Button onClick={onSubmit}>
                   {validationResult.hasErrors() && 'Upload Rows Without Errors'}

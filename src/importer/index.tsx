@@ -142,7 +142,7 @@ const Importer = ({ theme, onComplete, fields }: Props) => {
           {currentStep === 0 && (
             <div>
               <FileUploader setFile={setFile} />
-              <Margin margin="40px 0 10px 0">
+              <Margin $margin="40px 0 10px 0">
                 <h6>Or just manually enter your data</h6>
               </Margin>
               <DataEditor
