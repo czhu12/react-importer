@@ -1,10 +1,14 @@
 {
   "singleQuote": true,
-  "jsxSingleQuote": true,
-  "semi": false,
-  "tabWidth": 2,
-  "bracketSpacing": true,
-  "jsxBracketSameLine": false,
-  "arrowParens": "always",
-  "trailingComma": "none"
+  "semi": true,
+  "printWidth": 80,
+  "trailingComma": "es5",
+  "overrides": [
+    {
+      "files": "src/**/*.tsx src/**/*.ts",
+      "options": {
+        "parser": "typescript"
+      }
+    }
+  ]
 }

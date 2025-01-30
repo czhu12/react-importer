@@ -5,73 +5,73 @@ import {
   StateCodeTransformer,
   PostalCodeTransformer,
   CustomTransformer,
-  StripTransformer
-} from './'
+  StripTransformer,
+} from './';
 
 const fields = [
   {
     label: 'Phone Number',
     key: 'phone_number',
-    transformers: [{ transformer: 'phone_number' }]
-  }
-]
+    transformers: [{ transformer: 'phone_number' }],
+  },
+];
 describe('Pipeline', () => {
   it('can run a series of transformations', () => {
-    const pipeline = new Pipeline()
-    pipeline.push(new PhoneNumberTransformer())
-    expect(pipeline.transform('555-555-5555')).toEqual('5555555555')
-  })
-})
+    const pipeline = new Pipeline();
+    pipeline.push(new PhoneNumberTransformer());
+    expect(pipeline.transform('555-555-5555')).toEqual('5555555555');
+  });
+});
 
 describe('applyTransformations', () => {
   it('can apply transformations', () => {
     const data = applyTransformations(
       [{ phone_number: '555-555-5555' }],
       fields
-    )
-    expect(data[0].phone_number).toEqual('5555555555')
-  })
-})
+    );
+    expect(data[0].phone_number).toEqual('5555555555');
+  });
+});
 
 describe('CustomTransformer', () => {
   it('can apply transformations', () => {
     const transformer = new CustomTransformer({
       key: 'add_one',
-      transformFn: (item) => item + 1
-    })
+      transformFn: (item) => item + 1,
+    });
 
-    expect(transformer.transform(1)).toEqual(2)
-  })
-})
+    expect(transformer.transform(1)).toEqual(2);
+  });
+});
 
 describe('StripTransformer', () => {
   it('can apply transformations', () => {
-    const transformer = new StripTransformer()
+    const transformer = new StripTransformer();
 
-    expect(transformer.transform(' a ')).toEqual('a')
-  })
-})
+    expect(transformer.transform(' a ')).toEqual('a');
+  });
+});
 
 describe('PhoneNumberTransformer', () => {
   it('corrects phone number', () => {
-    const transformer = new PhoneNumberTransformer()
-    expect(transformer.transform('555-555-5555')).toEqual('5555555555')
-    expect(transformer.transform('5555555555')).toEqual('5555555555')
-  })
-})
+    const transformer = new PhoneNumberTransformer();
+    expect(transformer.transform('555-555-5555')).toEqual('5555555555');
+    expect(transformer.transform('5555555555')).toEqual('5555555555');
+  });
+});
 
 describe('StateCodeTransformer', () => {
   it('re-maps state code', () => {
-    const transformer = new StateCodeTransformer()
-    expect(transformer.transform('california')).toEqual('CA')
-    expect(transformer.transform('California')).toEqual('CA')
-  })
-})
+    const transformer = new StateCodeTransformer();
+    expect(transformer.transform('california')).toEqual('CA');
+    expect(transformer.transform('California')).toEqual('CA');
+  });
+});
 
 describe('PostalCodeTransformer', () => {
   it('corrects hyphenated postal codes', () => {
-    const transformer = new PostalCodeTransformer()
-    expect(transformer.transform('12345-6789')).toEqual('12345')
-    expect(transformer.transform('12345')).toEqual('12345')
-  })
-})
+    const transformer = new PostalCodeTransformer();
+    expect(transformer.transform('12345-6789')).toEqual('12345');
+    expect(transformer.transform('12345')).toEqual('12345');
+  });
+});
