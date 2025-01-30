@@ -188,7 +188,6 @@ export const Root = ({ children }: { children?: ReactNode }) => {
         width: 'auto',
         wordSpacing: 'normal',
         zIndex: 'auto',
-        all: 'initial',
       }}
     >
       {children}
