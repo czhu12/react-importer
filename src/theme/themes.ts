@@ -1,4 +1,4 @@
-import { ImporterTheme } from './types';
+import { ImporterTheme } from '../types';
 
 // From https://themestr.app/builder
 export const THEME_DEFAULT: ImporterTheme = {

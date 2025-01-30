@@ -5,11 +5,9 @@ import FileUploader from '../components/FileUploader';
 import HeaderMapper from '../components/HeaderMapper';
 import DataEditor from '../components/DataEditor';
 import Completed from '../components/Completed';
-import { fieldIsRequired, buildFinalData, mergeDeep } from '../utils';
-import { ThemeProvider } from 'styled-components';
+import { fieldIsRequired, buildFinalData } from '../utils';
 import { Root, Margin, Container } from '../components/common';
 import { delay } from '../utils/timing';
-import { THEME_DEFAULT } from '../themes';
 import { buildInitialState, reducer } from './reducer';
 import {
   ImporterField,
@@ -18,6 +16,7 @@ import {
   ImporterOutputFieldType,
   ImporterTheme,
 } from '../types';
+import { ThemeProvider } from '../theme/ThemeProvider';
 
 interface Props {
   fields: ImporterField[];
@@ -111,10 +110,8 @@ const Importer = ({ theme, onComplete, fields }: Props) => {
     dispatch({ type: 'COMPLETE' });
   };
 
-  const finalTheme = mergeDeep({}, THEME_DEFAULT, theme);
-
   return (
-    <ThemeProvider theme={finalTheme}>
+    <ThemeProvider theme={theme}>
       <Root>
         <Container>
           <Header
@@ -147,7 +144,7 @@ const Importer = ({ theme, onComplete, fields }: Props) => {
           {currentStep === 0 && (
             <div>
               <FileUploader setFile={setFile} />
-              <Margin $margin="40px 0 10px 0">
+              <Margin margin="40px 0 10px 0">
                 <h6>Or just manually enter your data</h6>
               </Margin>
               <DataEditor

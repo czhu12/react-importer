@@ -4,7 +4,6 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { Button, Margin, Align, Row, Col } from './common';
 import { filterEmptyRows, isPresent } from '../utils';
-import { useTheme } from 'styled-components';
 import {
   CellClassParams,
   CellValueChangedEvent,
@@ -13,6 +12,7 @@ import {
 } from 'ag-grid-community';
 import { ImporterField, ImporterFormattedData } from '../types';
 import { ValidationResult } from '../validators';
+import { useTheme } from '../theme/ThemeProvider';
 
 const DataEditor = ({
   formattedData,
@@ -90,7 +90,7 @@ const DataEditor = ({
 
   return (
     <div>
-      <Margin $margin="20px 0">
+      <Margin margin="20px 0">
         {(!hasData() || hasErrors) && (
           <div>
             <input
@@ -179,17 +179,17 @@ const DataEditor = ({
           })}
         </AgGridReact>
       </div>
-      <Margin $margin="20px 0">
+      <Margin margin="20px 0">
         <Row>
           <Col>
             {onBack && (
-              <Button onClick={onBack} $outline>
+              <Button onClick={onBack} outline>
                 Back
               </Button>
             )}
           </Col>
           <Col>
-            <Align $right>
+            <Align right>
               {hasData() && (
                 <Button onClick={onSubmit}>
                   {validationResult.hasErrors() && 'Upload Rows Without Errors'}
