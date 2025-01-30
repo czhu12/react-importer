@@ -1,13 +1,13 @@
 import React from 'react';
 import Select from 'react-select';
 import { Card, Margin, Button, Row, Col, Padded, Table } from './common';
-import { useTheme } from 'styled-components';
 import {
   ImporterFieldStatistics,
   ImporterHeaderMappingEntry,
   ImporterHeaderMappingEntrySelectedField,
   ImporterOutputFieldType,
 } from '../types';
+import { useTheme } from '../theme/ThemeProvider';
 
 const percentage = (a: number, b: number) => {
   return Math.round((a / b) * 100 * 10) / 10;
@@ -118,11 +118,11 @@ const HeaderMapperSelection = ({
 }) => {
   return (
     <div>
-      <Margin $margin="20px 0">
+      <Margin margin="20px 0">
         <Row>
-          <Col $verticallyCenter $spaceBetween>
-            <Margin $margin="0 10px">{header.slice(0, 30)}</Margin>
-            <Padded $padding="0 20px">
+          <Col verticallyCenter spaceBetween>
+            <Margin margin="0 10px">{header.slice(0, 30)}</Margin>
+            <Padded padding="0 20px">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -195,9 +195,9 @@ const HeaderMapperRow = ({
       <Row>
         <Col>
           <Row>
-            <Col $verticallyCenter $spaceBetween>
-              <Margin $margin="0 10px">{header.slice(0, 30)}</Margin>
-              <Padded $padding="0 20px">
+            <Col verticallyCenter spaceBetween>
+              <Margin margin="0 10px">{header.slice(0, 30)}</Margin>
+              <Padded padding="0 20px">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -218,7 +218,7 @@ const HeaderMapperRow = ({
             </Col>
           </Row>
         </Col>
-        <Col $spaceBetween $verticallyCenter>
+        <Col spaceBetween verticallyCenter>
           <div>
             <svg
               style={{ margin: '-2px 10px' }}
@@ -250,10 +250,10 @@ const HeaderMapperRow = ({
   } else if (headerMapping.ignored) {
     block = (
       <Row>
-        <Col $verticallyCenter>
-          <Margin $margin="0 10px">{header}</Margin>
+        <Col verticallyCenter>
+          <Margin margin="0 10px">{header}</Margin>
         </Col>
-        <Col $spaceBetween $verticallyCenter>
+        <Col spaceBetween verticallyCenter>
           <div>
             <svg
               style={{ margin: '-2px 10px' }}
@@ -306,7 +306,7 @@ const HeaderMapperRow = ({
         </Col>
         <Col>
           <Padded
-            $padding="20px 0 0 20px"
+            padding="20px 0 0 20px"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -326,7 +326,7 @@ const HeaderMapperRow = ({
               {headerMapping.selectedField && (
                 <Button
                   style={{ marginRight: '10px' }}
-                  $variant="success"
+                  variant="success"
                   onClick={() => {
                     setHeaderMapping({ ...headerMapping, confirmed: true });
                   }}
@@ -335,8 +335,8 @@ const HeaderMapperRow = ({
                 </Button>
               )}
               <Button
-                $variant="secondary"
-                $outline
+                variant="secondary"
+                outline
                 onClick={() => {
                   setHeaderMapping({ ...headerMapping, ignored: true });
                 }}
@@ -350,7 +350,7 @@ const HeaderMapperRow = ({
     );
   }
   return (
-    <Margin $margin="20px 0">
+    <Margin margin="20px 0">
       <Card>{block}</Card>
     </Margin>
   );

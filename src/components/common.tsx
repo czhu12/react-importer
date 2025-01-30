@@ -1,335 +1,366 @@
-import styled, { css, CSSProperties, keyframes } from 'styled-components';
+import React, { CSSProperties, ReactNode } from 'react';
+import { useTheme } from '../theme/ThemeProvider';
 
-export const Container = styled.div`
-  margin: 0 auto;
-  max-width: 1200px;
-`;
+export const Container = ({ children }: { children?: ReactNode }) => {
+  const componentStyle: CSSProperties = {
+    margin: '0 auto',
+    maxWidth: '1200px',
+  };
 
-export const TextStyled = styled.div<{
-  $muted?: boolean;
-  $danger?: boolean;
-  $bold?: boolean;
-}>`
-  ${(props) => {
-    return {
-      color: props.$danger
-        ? props.theme.colors.danger
-        : props.$muted
-          ? props.theme.colors.secondary
-          : undefined,
-      fontWeight: props.$bold ? 'bold' : undefined,
-    };
-  }}
-`;
-export const Root = styled.div`
-  animation: none;
-  animation-delay: 0;
-  animation-direction: normal;
-  animation-duration: 0;
-  animation-fill-mode: none;
-  animation-iteration-count: 1;
-  animation-name: none;
-  animation-play-state: running;
-  animation-timing-function: ease;
-  backface-visibility: visible;
-  background: 0;
-  background-attachment: scroll;
-  background-clip: border-box;
-  background-color: transparent;
-  background-image: none;
-  background-origin: padding-box;
-  background-position: 0 0;
-  background-position-x: 0;
-  background-position-y: 0;
-  background-repeat: repeat;
-  background-size: auto auto;
-  border: 0;
-  border-style: none;
-  border-width: medium;
-  border-color: inherit;
-  border-bottom: 0;
-  border-bottom-color: inherit;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom-style: none;
-  border-bottom-width: medium;
-  border-collapse: separate;
-  border-image: none;
-  border-left: 0;
-  border-left-color: inherit;
-  border-left-style: none;
-  border-left-width: medium;
-  border-radius: 0;
-  border-right: 0;
-  border-right-color: inherit;
-  border-right-style: none;
-  border-right-width: medium;
-  border-spacing: 0;
-  border-top: 0;
-  border-top-color: inherit;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-top-style: none;
-  border-top-width: medium;
-  bottom: auto;
-  box-shadow: none;
-  box-sizing: content-box;
-  caption-side: top;
-  clear: none;
-  clip: auto;
-  color: inherit;
-  columns: auto;
-  column-count: auto;
-  column-fill: balance;
-  column-gap: normal;
-  column-rule: medium none currentColor;
-  column-rule-color: currentColor;
-  column-rule-style: none;
-  column-rule-width: none;
-  column-span: 1;
-  column-width: auto;
-  content: normal;
-  counter-increment: none;
-  counter-reset: none;
-  cursor: auto;
-  direction: ltr;
-  display: inline;
-  empty-cells: show;
-  float: none;
-  font: normal;
-  font-family: inherit;
-  font-size: 16px !important;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: normal;
-  height: auto;
-  hyphens: none;
-  left: auto;
-  letter-spacing: normal;
-  line-height: normal;
-  list-style: none;
-  list-style-image: none;
-  list-style-position: outside;
-  list-style-type: disc;
-  margin: 0;
-  margin-bottom: 0;
-  margin-left: 0;
-  margin-right: 0;
-  margin-top: 0;
-  max-height: none;
-  max-width: none;
-  min-height: 0;
-  min-width: 0;
-  opacity: 1;
-  orphans: 0;
-  outline: 0;
-  outline-color: invert;
-  outline-style: none;
-  outline-width: medium;
-  overflow: visible;
-  overflow-x: visible;
-  overflow-y: visible;
-  padding: 0;
-  padding-bottom: 0;
-  padding-left: 0;
-  padding-right: 0;
-  padding-top: 0;
-  page-break-after: auto;
-  page-break-before: auto;
-  page-break-inside: auto;
-  perspective: none;
-  perspective-origin: 50% 50%;
-  position: static;
-  right: auto;
-  tab-size: 8;
-  table-layout: auto;
-  text-align: inherit;
-  text-align-last: auto;
-  text-decoration: none;
-  text-decoration-color: inherit;
-  text-decoration-line: none;
-  text-decoration-style: solid;
-  text-indent: 0;
-  text-shadow: none;
-  text-transform: none;
-  top: auto;
-  transform: none;
-  transform-style: flat;
-  transition: none;
-  transition-delay: 0s;
-  transition-duration: 0s;
-  transition-property: none;
-  transition-timing-function: ease;
-  unicode-bidi: normal;
-  vertical-align: baseline;
-  visibility: visible;
-  white-space: normal;
-  widows: 0;
-  width: auto;
-  word-spacing: normal;
-  z-index: auto;
-  all: initial;
-  all: unset;
-`;
+  return <div style={componentStyle}>{children}</div>;
+};
 
-export const Card = styled.div`
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  padding: 10px;
-  border-radius: 5px;
-`;
+export const TextStyled = ({
+  muted,
+  danger,
+  bold,
+  children,
+  style,
+}: {
+  children?: ReactNode;
+  bold?: boolean;
+  danger?: boolean;
+  muted?: boolean;
+  style?: CSSProperties;
+}) => {
+  const theme = useTheme();
 
-export const Align = styled.div<{ $right?: boolean; $center?: boolean }>`
-  ${(props) => {
-    if (props.$right) {
-      return css`
-        text-align: right;
-      `;
-    } else if (props.$center) {
-      return css`
-        text-align: center;
-      `;
-    }
-  }}
-`;
+  const componentStyle: CSSProperties = {
+    color: danger
+      ? theme.colors.danger
+      : muted
+        ? theme.colors.secondary
+        : undefined,
+    fontWeight: bold ? 'bold' : undefined,
+    ...style,
+  };
 
-export const Margin = styled.div<{ $margin: string }>`
-  ${(props) => {
-    return css`
-      margin: ${props.$margin};
-    `;
-  }}
-`;
+  return <div style={componentStyle}>{children}</div>;
+};
 
-export const Padded = styled.div<{ $padding: string }>`
-  ${(props) => {
-    return css`
-      padding: ${props.$padding};
-    `;
-  }}
-`;
+export const Root = ({ children }: { children?: ReactNode }) => {
+  return (
+    <div
+      style={{
+        animation: 'none',
+        animationDelay: '0',
+        animationDirection: 'normal',
+        animationDuration: '0',
+        animationFillMode: 'none',
+        animationIterationCount: '1',
+        animationName: 'none',
+        animationPlayState: 'running',
+        animationTimingFunction: 'ease',
+        backfaceVisibility: 'visible',
+        background: '0',
+        backgroundAttachment: 'scroll',
+        backgroundClip: 'border-box',
+        backgroundColor: 'transparent',
+        backgroundImage: 'none',
+        backgroundOrigin: 'padding-box',
+        backgroundPosition: '0 0',
+        backgroundPositionX: '0',
+        backgroundPositionY: '0',
+        backgroundRepeat: 'repeat',
+        backgroundSize: 'auto auto',
+        border: '0',
+        borderStyle: 'none',
+        borderWidth: 'medium',
+        borderColor: 'inherit',
+        borderBottom: '0',
+        borderBottomColor: 'inherit',
+        borderBottomLeftRadius: '0',
+        borderBottomRightRadius: '0',
+        borderBottomStyle: 'none',
+        borderBottomWidth: 'medium',
+        borderCollapse: 'separate',
+        borderImage: 'none',
+        borderLeft: '0',
+        borderLeftColor: 'inherit',
+        borderLeftStyle: 'none',
+        borderLeftWidth: 'medium',
+        borderRadius: '0',
+        borderRight: '0',
+        borderRightColor: 'inherit',
+        borderRightStyle: 'none',
+        borderRightWidth: 'medium',
+        borderSpacing: '0',
+        borderTop: '0',
+        borderTopColor: 'inherit',
+        borderTopLeftRadius: '0',
+        borderTopRightRadius: '0',
+        borderTopStyle: 'none',
+        borderTopWidth: 'medium',
+        bottom: 'auto',
+        boxShadow: 'none',
+        boxSizing: 'content-box',
+        captionSide: 'top',
+        clear: 'none',
+        clip: 'auto',
+        color: 'inherit',
+        columns: 'auto',
+        columnCount: 'auto',
+        columnFill: 'balance',
+        columnGap: 'normal',
+        columnRule: 'medium none currentColor',
+        columnRuleColor: 'currentColor',
+        columnRuleStyle: 'none',
+        columnRuleWidth: 'none',
+        columnSpan: 'inherit',
+        columnWidth: 'auto',
+        content: 'normal',
+        counterIncrement: 'none',
+        counterReset: 'none',
+        cursor: 'auto',
+        direction: 'ltr',
+        display: 'inline',
+        emptyCells: 'show',
+        float: 'none',
+        font: 'normal',
+        fontFamily: 'inherit',
+        fontSize: '16px !important',
+        fontStyle: 'normal',
+        fontVariant: 'normal',
+        fontWeight: 'normal',
+        height: 'auto',
+        hyphens: 'none',
+        left: 'auto',
+        letterSpacing: 'normal',
+        lineHeight: 'normal',
+        listStyle: 'none',
+        listStyleImage: 'none',
+        listStylePosition: 'outside',
+        listStyleType: 'disc',
+        margin: '0',
+        marginBottom: '0',
+        marginLeft: '0',
+        marginRight: '0',
+        marginTop: '0',
+        maxHeight: 'none',
+        maxWidth: 'none',
+        minHeight: '0',
+        minWidth: '0',
+        opacity: '1',
+        orphans: 'inherit',
+        outline: '0',
+        outlineColor: 'invert',
+        outlineStyle: 'none',
+        outlineWidth: 'medium',
+        overflow: 'visible',
+        overflowX: 'visible',
+        overflowY: 'visible',
+        padding: '0',
+        paddingBottom: '0',
+        paddingLeft: '0',
+        paddingRight: '0',
+        paddingTop: '0',
+        pageBreakAfter: 'auto',
+        pageBreakBefore: 'auto',
+        pageBreakInside: 'auto',
+        perspective: 'none',
+        perspectiveOrigin: '50% 50%',
+        position: 'static',
+        right: 'auto',
+        tabSize: '8',
+        tableLayout: 'auto',
+        textAlign: 'inherit',
+        textAlignLast: 'auto',
+        textDecoration: 'none',
+        textDecorationColor: 'inherit',
+        textDecorationLine: 'none',
+        textDecorationStyle: 'solid',
+        textIndent: '0',
+        textShadow: 'none',
+        textTransform: 'none',
+        top: 'auto',
+        transform: 'none',
+        transformStyle: 'flat',
+        transition: 'none',
+        transitionDelay: '0s',
+        transitionDuration: '0s',
+        transitionProperty: 'none',
+        transitionTimingFunction: 'ease',
+        unicodeBidi: 'normal',
+        verticalAlign: 'baseline',
+        visibility: 'visible',
+        whiteSpace: 'normal',
+        widows: 'inherit',
+        width: 'auto',
+        wordSpacing: 'normal',
+        zIndex: 'auto',
+        all: 'unset',
+      }}
+    >
+      {children}
+    </div>
+  );
+};
 
-export const Table = styled.table`
-  border: 1px solid #aaa;
-  width: 100%;
-  th,
-  td {
-    border: 1px solid #aaa;
+export const Card = ({
+  children,
+  style,
+  ...props
+}: {
+  children?: ReactNode;
+  style?: CSSProperties;
+}) => {
+  const componentStyle: React.CSSProperties = {
+    boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+    padding: '10px',
+    borderRadius: '5px',
+    ...style,
+  };
+
+  return (
+    <div style={componentStyle} {...props}>
+      {children}
+    </div>
+  );
+};
+
+export const Align = ({
+  right,
+  center,
+  children,
+}: {
+  right?: boolean;
+  center?: boolean;
+  children?: ReactNode;
+}) => {
+  const componentStyle: React.CSSProperties = {
+    textAlign: right ? 'right' : center ? 'center' : 'initial',
+  };
+
+  return <div style={componentStyle}>{children}</div>;
+};
+
+export const Margin = ({
+  margin,
+  style,
+  children,
+}: {
+  margin: string;
+  style?: CSSProperties;
+  children?: ReactNode;
+}) => {
+  const componentStyle: React.CSSProperties = {
+    margin,
+    ...style,
+  };
+
+  return <div style={componentStyle}>{children}</div>;
+};
+
+export const Padded = ({
+  padding,
+  style,
+  children,
+}: {
+  padding: string;
+  style?: CSSProperties;
+  children?: ReactNode;
+}) => {
+  const componentStyle: React.CSSProperties = {
+    padding,
+    ...style,
+  };
+
+  return <div style={componentStyle}>{children}</div>;
+};
+
+export const Table = ({
+  children,
+}: {
+  children?: ReactNode;
+  style?: CSSProperties;
+}) => {
+  const componentStyle: React.CSSProperties = {
+    border: '1px solid #aaa',
+    width: '100%',
+  };
+
+  return <table style={componentStyle}>{children}</table>;
+};
+
+export const Row = ({ children }: { children?: ReactNode }) => {
+  const componentStyle: React.CSSProperties = {
+    flexDirection: 'row',
+    display: 'flex',
+  };
+
+  return <div style={componentStyle}>{children}</div>;
+};
+
+export const Col = ({
+  children,
+  flex,
+  verticallyCenter,
+  spaceBetween,
+}: {
+  children?: ReactNode;
+  flex?: CSSProperties['flex'];
+  verticallyCenter?: boolean;
+  spaceBetween?: boolean;
+}) => {
+  const componentStyle: React.CSSProperties = {
+    flex: flex ?? 1,
+    display: verticallyCenter || spaceBetween ? 'flex' : undefined,
+    alignItems: verticallyCenter ? 'center' : undefined,
+    justifyContent: spaceBetween ? 'space-between' : undefined,
+  };
+
+  return <div style={componentStyle}>{children}</div>;
+};
+
+export const Button = ({
+  children,
+  variant,
+  disabled,
+  outline,
+  onClick,
+  style,
+}: {
+  children?: ReactNode;
+  variant?: 'primary' | 'success' | 'danger' | 'secondary' | 'warning';
+  outline?: boolean;
+  disabled?: boolean;
+  onClick?: () => void;
+  style?: CSSProperties;
+}) => {
+  const theme = useTheme();
+
+  let color = theme.colors.primary;
+  if (variant === 'success') {
+    color = theme.colors.success;
+  } else if (variant === 'danger') {
+    color = theme.colors.danger;
+  } else if (variant === 'secondary') {
+    color = theme.colors.secondary;
+  } else if (variant === 'warning') {
+    color = theme.colors.warning;
   }
-`;
 
-export const Row = styled.div`
-  flex-direction: row;
-  display: flex;
-`;
-
-export const Col = styled.div<{
-  $flex?: CSSProperties['flex'];
-  $verticallyCenter?: boolean;
-  $spaceBetween?: boolean;
-}>`
-  ${(props) => {
-    return {
-      flex: props.$flex ?? 1,
-      display:
-        props.$verticallyCenter || props.$spaceBetween ? 'flex' : undefined,
-      alignItems: props.$verticallyCenter ? 'center' : undefined,
-      justifyContent: props.$spaceBetween ? 'space-between' : undefined,
-    };
-  }}
-`;
-
-export const Button = styled.button<{
-  $variant?: 'primary' | 'success' | 'danger' | 'secondary' | 'warning';
-  $outline?: boolean;
-}>`
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  font-weight: bold;
-  border-radius: 5px;
-
-  ${(props) => {
-    let color = props.theme.colors.primary;
-    if (props.$variant === 'success') {
-      color = props.theme.colors.success;
-    } else if (props.$variant === 'danger') {
-      color = props.theme.colors.danger;
-    } else if (props.$variant === 'secondary') {
-      color = props.theme.colors.secondary;
-    } else if (props.$variant === 'warning') {
-      color = props.theme.colors.warning;
-    }
-
-    if (props.disabled) {
-      color += 'bb';
-    }
-    if (props.$outline) {
-      return css`
-        border: 1px solid ${color};
-        color: ${color};
-      `;
-    } else {
-      return css`
-        color: white;
-        background-color: ${color};
-        border: 1px solid ${color};
-      `;
-    }
-  }}
-`;
-const rotate = keyframes`
-  from {
-    stroke-dashoffset: 360;
+  if (disabled) {
+    color += 'bb';
   }
-  to {
-    stroke-dashoffset: 0;
-  }
-`;
 
-export const PendingProgress = styled.circle<{
-  $radius: number;
-  $progress?: number;
-}>`
-  ${(props) => {
-    const radius = props.$radius || 45;
-    const strokeDasharray = radius * 2 * Math.PI;
-    const inverseProgress = 1 - (props.$progress || 0) / 100;
-    const strokeDashoffset = inverseProgress * strokeDasharray;
+  const componentStyle: React.CSSProperties = {
+    padding: '10px 20px',
+    textAlign: 'center',
+    textDecoration: 'none',
+    display: 'inline-block',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    borderRadius: '5px',
+    color: outline ? color : 'white',
+    border: `1px solid ${color}`,
+    backgroundColor: outline ? undefined : color,
+    ...style,
+  };
 
-    return {
-      r: radius,
-      strokeDasharray,
-      strokeDashoffset,
-    };
-  }}
-
-  stroke: ${(props) => props.theme.colors.success};
-  transition: all 1s ease;
-
-  fill: none;
-  stroke-width: 5px;
-  stroke-linecap: round;
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-  cx: 50;
-  cy: 50;
-`;
-
-export const CircleProgress = styled.circle`
-  stroke-dasharray: 360;
-  stroke-dashoffset: 0;
-  stroke: ${(props) => props.theme.colors.success};
-  animation: ${rotate} 1s ease-out;
-
-  fill: none;
-  stroke-width: 5px;
-  stroke-linecap: round;
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-  cx: 50;
-  cy: 50;
-  r: 45;
-`;
+  return (
+    <div style={componentStyle} onClick={onClick}>
+      {children}
+    </div>
+  );
+};

@@ -1,5 +1,5 @@
 import Importer from './importer';
-export * from './themes';
+export * from './theme/themes';
 export * from './types';
 
 export default Importer;
