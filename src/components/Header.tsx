@@ -3,9 +3,9 @@ import { useTheme } from '../theme/ThemeProvider';
 
 function TextEnd({ children, id }: { children?: ReactNode; id: string }) {
   return (
-    <div id={id} style={{ textAlign: 'right', marginBottom: '20px' }}>
+    <section id={id} style={{ textAlign: 'right', marginBottom: '20px' }}>
       {children}
-    </div>
+    </section>
   );
 }
 
@@ -23,11 +23,9 @@ function BreadcrumbItem({
   const theme = useTheme();
 
   const computedStyle: CSSProperties = {
-    fontWeight: 'normal',
+    fontWeight: active ? 'bold' : past ? 'bold' : 'lighter',
     marginLeft: '20px',
-    ...(active && { fontWeight: 'bold' }),
     ...(past && {
-      fontWeight: 'bold',
       color: theme.colors.success,
       cursor: 'pointer',
     }),
