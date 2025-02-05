@@ -65,7 +65,6 @@
     "papaparse": "^5.4.1",
     "react-circular-progressbar": "^2.1.0",
     "react-dropzone": "^14.3.5",
-    "react-select": "^5.8.3",
-    "styled-components": "^6.1.13"
+    "react-select": "^5.8.3"
   }
 }
