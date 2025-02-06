@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'preact/compat';
 import { FileWithPath, useDropzone } from 'react-dropzone';
 import {
   Button,

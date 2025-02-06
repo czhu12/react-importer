@@ -1,0 +1,20 @@
+{
+  "name": "example-preact",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "preact": "^10.25.4",
+    "react-importer": "file:.."
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.1",
+    "typescript": "~5.7.2",
+    "vite": "^6.1.0"
+  }
+}

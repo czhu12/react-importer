@@ -1,4 +1,3 @@
-import React from 'react';
 import HeaderMapperRow from './HeaderMapperRow';
 import { Button, Align, Margin, TextStyled, Col, Row } from './common';
 import {

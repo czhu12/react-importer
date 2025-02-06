@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import { useReducer } from 'preact/compat';
 import Papa from 'papaparse';
 import Header from '../components/Header';
 import FileUploader from '../components/FileUploader';
@@ -10,26 +10,15 @@ import { Root, Margin, Container } from '../components/common';
 import { delay } from '../utils/timing';
 import { buildInitialState, reducer } from './reducer';
 import {
-  ImporterField,
+  ImporterDefinition,
   ImporterFormattedData,
-  ImporterOutputField,
   ImporterOutputFieldType,
-  ImporterTheme,
 } from '../types';
 import { ThemeProvider } from '../theme/ThemeProvider';
 
-interface Props {
-  fields: ImporterField[];
-  theme: ImporterTheme;
-  onComplete: (
-    data: ImporterOutputField[],
-    onProgress: (progress: number) => void
-  ) => Promise<void>;
-}
-
 const HEADER_STEPS = ['Upload', 'Match', 'Review', 'Complete'] as const;
 
-const Importer = ({ theme, onComplete, fields }: Props) => {
+const Importer = ({ theme, onComplete, fields }: ImporterDefinition) => {
   const [
     {
       currentStep,

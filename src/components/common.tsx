@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'preact/compat';
 import { useTheme } from '../theme/ThemeProvider';
 
 export const Container = ({ children }: { children?: ReactNode }) => {

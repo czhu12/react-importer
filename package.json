@@ -5,33 +5,25 @@
   "author": "czhu12",
   "license": "MIT",
   "repository": "czhu12/react-importer",
-  "main": "dist/index.js",
-  "module": "dist/index.modern.js",
+  "type": "module",
+  "main": "dist/mindex.cjs.js",
+  "module": "dist/index.es.js",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
-  "engines": {
-    "node": ">=10"
-  },
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs --dts",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs --dts",
-    "prepare": "run-s build",
-    "test": "run-s test:unit test:lint test:build",
-    "test:build": "run-s build",
-    "test:lint": "eslint .",
-    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
-    "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build",
-    "pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx,json}\""
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "watch": "tsc -b && vite build --watch",
+    "preview": "vite preview",
+    "prepare": "tsc --emitDeclarationOnly",
+    "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
-    "react": "^16.0.0 || ^17.0.0 || ^18.0.0"
+    "preact": "^10.25.4"
   },
   "devDependencies": {
+    "@preact/preset-vite": "^2.10.1",
     "@types/papaparse": "5.3.15",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
     "@typescript-eslint/eslint-plugin": "5.57.1",
     "@typescript-eslint/parser": "5.57.1",
     "cross-env": "^7.0.2",
@@ -44,17 +36,13 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "6.7.1",
     "eslint-plugin-prettier": "5.2.1",
-    "eslint-plugin-react": "7.32.2",
-    "eslint-plugin-react-hooks": "4.6.0",
-    "eslint-plugin-react-refresh": "0.3.4",
     "gh-pages": "^2.2.0",
-    "microbundle-crl": "^0.13.10",
     "npm-run-all": "^4.1.5",
+    "preact-render-to-string": "^6.5.13",
     "prettier": "^3.4.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "^5.0.1",
-    "typescript": "^5.7.2"
+    "typescript": "~5.7.2",
+    "vite": "^6.1.0",
+    "vite-plugin-dts": "^4.5.0"
   },
   "files": [
     "dist"

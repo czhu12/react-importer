@@ -1,4 +1,3 @@
-import React from 'react';
 import Select from 'react-select';
 import { Card, Margin, Button, Row, Col, Padded, Table } from './common';
 import {

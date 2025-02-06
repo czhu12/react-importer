@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'preact/hooks';
 import Importer, {
   THEME_SIGNAL,
   THEME_FRESCA,

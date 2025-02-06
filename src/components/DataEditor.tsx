@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'preact/compat';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
@@ -96,7 +96,7 @@ const DataEditor = ({
             <input
               checked={onlyShowErrors}
               onChange={(e) => {
-                onSetOnlyShowErrors(e.target.checked);
+                onSetOnlyShowErrors((e.target as HTMLInputElement).checked);
               }}
               type="checkbox"
               name="row-errors"
