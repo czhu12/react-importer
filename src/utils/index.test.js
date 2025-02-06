@@ -5,6 +5,7 @@ import {
   filterInvalidRows,
   fieldIsRequired,
 } from './';
+import { describe, it, expect } from 'vitest';
 import { ValidationResult } from '../validators';
 const fields = [
   { label: 'Full Name', key: 'name' },
