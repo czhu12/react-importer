@@ -267,27 +267,12 @@ export const Padded = ({
   return <div style={componentStyle}>{children}</div>;
 };
 
-export const Table = ({
-  children,
-}: {
-  children?: ReactNode;
-  style?: CSSProperties;
-}) => {
-  const componentStyle: React.CSSProperties = {
-    border: '1px solid #aaa',
-    width: '100%',
-  };
-
-  return <table style={componentStyle}>{children}</table>;
+export const Table = ({ children }: { children?: ReactNode }) => {
+  return <table className="w-100 border border-black">{children}</table>;
 };
 
 export const Row = ({ children }: { children?: ReactNode }) => {
-  const componentStyle: React.CSSProperties = {
-    flexDirection: 'row',
-    display: 'flex',
-  };
-
-  return <div style={componentStyle}>{children}</div>;
+  return <div className="flex flex-row">{children}</div>;
 };
 
 export const Col = ({

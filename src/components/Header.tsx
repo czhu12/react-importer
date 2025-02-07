@@ -1,14 +1,6 @@
 import { CSSProperties, ReactNode } from 'preact/compat';
 import { useTheme } from '../theme/ThemeProvider';
 
-function TextEnd({ children, id }: { children?: ReactNode; id: string }) {
-  return (
-    <section id={id} style={{ textAlign: 'right', marginBottom: '20px' }}>
-      {children}
-    </section>
-  );
-}
-
 function BreadcrumbItem({
   active,
   past,
@@ -66,7 +58,7 @@ function Header<T>({
   onClick: (step: T) => void;
 }) {
   return (
-    <TextEnd id="csv-importer-nav-header">
+    <div className="flex justify-end mb-3">
       {steps.map((step, index) => {
         const past = currentStep > index;
         const active = currentStep === index;
@@ -78,12 +70,14 @@ function Header<T>({
             active={active}
             onClick={() => onClick(step)}
           >
-            {`${step}`}
-            {!last && <RightIcon />}
+            <div className="flex items-center">
+              {`${step}`}
+              {!last && <RightIcon />}
+            </div>
           </BreadcrumbItem>
         );
       })}
-    </TextEnd>
+    </div>
   );
 }
 

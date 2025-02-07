@@ -218,7 +218,7 @@ const HeaderMapperRow = ({
           </Row>
         </Col>
         <Col spaceBetween verticallyCenter>
-          <div>
+          <div className="flex ml-3 items-center">
             <svg
               style={{ margin: '-2px 10px' }}
               xmlns="http://www.w3.org/2000/svg"
@@ -253,7 +253,7 @@ const HeaderMapperRow = ({
           <Margin margin="0 10px">{header}</Margin>
         </Col>
         <Col spaceBetween verticallyCenter>
-          <div>
+          <div className="flex ml-3 items-center">
             <svg
               style={{ margin: '-2px 10px' }}
               xmlns="http://www.w3.org/2000/svg"
