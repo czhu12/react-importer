@@ -1,4 +1,5 @@
 import {
+  ImporterOutputFieldType,
   ImporterTransformerDefinition,
   ImporterValidatorDefinition,
 } from '../types';
@@ -7,10 +8,10 @@ import {
 export interface SheetDefinition {
   id: string;
   name: string;
-  fields: SheetFieldDefinition[];
+  columns: SheetColumnDefinition[];
 }
 
-export interface SheetFieldDefinition {
+export interface SheetColumnDefinition {
   key: string;
   label: string;
   type: SheetFieldType;
@@ -22,17 +23,7 @@ export interface SheetFieldDefinition {
 export type SheetFieldType = 'string';
 
 // --------- Sheet State Types ---------
-export type SheetFieldData = 'string';
-
-export interface SheetData {
-  [key: string]: SheetFieldData;
-}
-
-export interface SheetDataRow {
-  valid: boolean;
-  values: SheetData;
-}
-
 export interface SheetState {
-  rows: SheetDataRow[];
+  sheetId: string;
+  rows: Record<string, ImporterOutputFieldType>[]; // key being column id
 }

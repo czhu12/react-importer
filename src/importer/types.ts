@@ -1,110 +1,77 @@
-import { ParseResult } from 'papaparse';
 import {
   ImporterTheme,
-  ImporterTransformerDefinition,
-  ImporterValidatorDefinition,
+  ImporterValidationError,
+  ParsedFile,
+  SheetDefinition,
+  SheetState,
+  MappedData,
+  OnDataColumnsMappedCallback,
+  FileWithPath,
+  ColumnMapping,
 } from '../types';
-import { ValidationResult } from '../validators';
 
 // --------- Importer Definition Types ---------
-export interface ImporterField {
-  key: string;
-  label: string;
-  validators?: ImporterValidatorDefinition[];
-  transformers?: ImporterTransformerDefinition[];
-}
 
 export interface ImporterDefinition {
-  fields: ImporterField[];
+  sheets: SheetDefinition[];
+  // TODO: This probably needs to be some predefined list of themes to pick from
   theme: ImporterTheme;
+  // Called after the columns are mapped to sheet definitions by the user
+  onDataColumnsMapped?: OnDataColumnsMappedCallback;
   onComplete: (
-    data: ImporterOutputField[],
+    data: SheetState[],
     onProgress: (progress: number) => void
   ) => Promise<void>;
 }
 
+/**
+ * initial - user can select to either upload a file or input data manually
+ * mapping - user is mapping the columns from the file to the sheet columns
+ * preview - user is reviewing the data to be imported or is imputing data manually
+ * export  - user is exporting the data - during/after the onComplete callback
+ * completed - the import process is completed
+ * failed - the import process failed
+ */
+export type ImporterMode =
+  | 'initial'
+  | 'mapping'
+  | 'preview'
+  | 'export'
+  | 'completed'
+  | 'failed';
+
 export interface ImporterState {
-  fields: ImporterField[];
-  currentStep: number;
-  progress: number;
-  pending: boolean;
-  failed: boolean;
-  validationResult: ValidationResult;
-  statistics: ImporterStatistics;
-  headerMappings: ImporterHeaderMappings;
-  parsed: ParsedFile | null;
-  formattedData: ImporterFormattedData[];
-}
-
-export type ParsedFile = ParseResult<ImporterOutputFieldType[]>;
-
-export type ImporterFormattedData = Omit<
-  Record<string, ImporterOutputFieldType>,
-  'rowIndex'
-> & {
-  rowIndex?: number;
-};
-
-export interface ImporterHeaderMappings {
-  [key: string]: ImporterHeaderMappingEntry;
-}
-
-export interface ImporterHeaderMappingEntrySelectedField {
-  label: string;
-  value: string;
-}
-
-export interface ImporterHeaderMappingEntry {
-  columnIndex: number;
-  name: string | null;
-  ignored?: boolean;
-  confirmed?: boolean;
-  selectedField: ImporterHeaderMappingEntrySelectedField | null;
+  currentSheetId: string;
+  mode: ImporterMode;
+  validationErrors: ImporterValidationError[];
+  sheetData: SheetState[];
+  parsedFile?: ParsedFile;
+  columnMappings?: ColumnMapping[];
+  importProgress?: number;
 }
 
 export type ImporterOutputFieldType = string;
 
-export interface ImporterOutputField {
-  [key: string]: ImporterOutputFieldType;
-}
-
-export type ImporterFieldStatisicErrorCount = {
-  [key: string]: number;
-  total: number;
-};
-
-export interface ImporterFieldStatistic {
-  counts?: {
-    isNull: number;
-  };
-  errorTypeCounts?: ImporterFieldStatisicErrorCount;
-}
-
-export interface ImporterStatistics {
-  total: number | null;
-  statisticsByFieldKey: Record<string, ImporterFieldStatistic>;
-}
-
-export interface ImporterFieldStatistics {
-  total: number | null;
-  statistics: ImporterFieldStatistic | undefined;
-}
-
 export type ImporterAction =
-  | { type: 'RESTART' }
-  | { type: 'DECREMENT_STEP' }
-  | { type: 'COMPLETED_MAPPINGS' }
-  | { type: 'SET_CURRENT_STEP'; payload: { currentStep: number } }
-  | { type: 'FILE_PARSED'; payload: { parsed: ParsedFile } }
+  | { type: 'ENTER_DATA_MANUALLY' } // Changes the mode to 'preview'
+  | { type: 'FILE_UPLOADED'; payload: { file: FileWithPath } } // Calls Papa.parse and dispatches FILE_PARSED
+  | { type: 'FILE_PARSED'; payload: { parsed: ParsedFile } } // Sets the parsed file and changes the mode to 'mapping'
+  | { type: 'COLUMN_MAPPING_CHANGED'; payload: { mappings: ColumnMapping[] } } // Sets the proper mappings
+  | { type: 'DATA_MAPPED'; payload: { mappedData: MappedData } } // Sets mapped data as sheetData, optionally runs onDataColumnsMapped callback calls validations, changes the mode to 'preview'
   | {
-      type: 'HEADER_MAPPINGS_CHANGED';
-      payload: { headerMappings: ImporterHeaderMappings };
-    }
+      type: 'DATA_VALIDATED';
+      payload: { validationErrors: ImporterValidationError[] };
+    } // Sets validation errors
   | {
       type: 'CELL_CHANGED';
-      payload: { index: number; row: ImporterFormattedData };
-    }
-  | { type: 'PROGRESS'; payload: { progress: number } }
-  | { type: 'PENDING' }
-  | { type: 'COMPLETE' }
-  | { type: 'FAILED' };
+      payload: {
+        sheetId: string;
+        rowIndex: number;
+        columnId: string;
+        value: ImporterOutputFieldType;
+      };
+    } // Searches for the cell and changes the value, calls validations
+  | { type: 'IMPORT' } // Calls onComplete callback with state.sheetData
+  | { type: 'PROGRESS'; payload: { progress: number } } // Updates importProgress
+  | { type: 'COMPLETED' } // Changes the mode to 'completed'
+  | { type: 'FAILED' }; // Changes the mode to 'failed' when importing failed

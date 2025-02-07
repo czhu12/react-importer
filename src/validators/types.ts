@@ -1,13 +1,10 @@
-import { ImporterFormattedData, ImporterOutputFieldType } from '../types';
+import { ImporterOutputFieldType, SheetState } from '../types';
 
-export type ValidationResultError = {
-  [key: string]: ImporterValidatorOutput[];
-};
-
-export interface ImporterValidatorOutput {
-  valid: boolean;
-  message?: string;
-  errorType?: string;
+export interface ImporterValidationError {
+  sheetId: string;
+  rowIndex: number;
+  columnId: string;
+  message: string;
 }
 
 export type ImporterValidatorType =
@@ -55,6 +52,6 @@ export interface CustomValidatorDefinition
   key: string;
   validateFn: (
     fieldValue: ImporterOutputFieldType,
-    row: ImporterFormattedData
-  ) => ImporterValidatorOutput;
+    data: SheetState
+  ) => ImporterValidationError | null;
 }
