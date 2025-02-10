@@ -1,4 +1,4 @@
-import { ImporterOutputFieldType, SheetState } from '../types';
+import { ImporterOutputFieldType, SheetRow } from '../types';
 
 export interface ImporterValidationError {
   sheetId: string;
@@ -6,6 +6,8 @@ export interface ImporterValidationError {
   columnId: string;
   message: string;
 }
+
+export type ImporterValidatorOutput = string | null | undefined;
 
 export type ImporterValidatorType =
   | 'regex_matches'
@@ -52,6 +54,6 @@ export interface CustomValidatorDefinition
   key: string;
   validateFn: (
     fieldValue: ImporterOutputFieldType,
-    data: SheetState
-  ) => ImporterValidationError | null;
+    row: SheetRow
+  ) => ImporterValidatorOutput;
 }

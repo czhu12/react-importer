@@ -6,8 +6,8 @@ import {
   SheetState,
   MappedData,
   OnDataColumnsMappedCallback,
-  FileWithPath,
   ColumnMapping,
+  SheetRow,
 } from '../types';
 
 // --------- Importer Definition Types ---------
@@ -28,7 +28,7 @@ export interface ImporterDefinition {
  * initial - user can select to either upload a file or input data manually
  * mapping - user is mapping the columns from the file to the sheet columns
  * preview - user is reviewing the data to be imported or is imputing data manually
- * export  - user is exporting the data - during/after the onComplete callback
+ * submit  - user is submitting the data - during/after the onComplete callback
  * completed - the import process is completed
  * failed - the import process failed
  */
@@ -36,7 +36,7 @@ export type ImporterMode =
   | 'initial'
   | 'mapping'
   | 'preview'
-  | 'export'
+  | 'submit'
   | 'completed'
   | 'failed';
 
@@ -47,14 +47,25 @@ export interface ImporterState {
   sheetData: SheetState[];
   parsedFile?: ParsedFile;
   columnMappings?: ColumnMapping[];
-  importProgress?: number;
+  importProgress: number;
 }
 
 export type ImporterOutputFieldType = string;
 
+export interface CellChangedPayload {
+  sheetId: string;
+  rowIndex: number;
+  value: SheetRow;
+}
+
 export type ImporterAction =
-  | { type: 'ENTER_DATA_MANUALLY' } // Changes the mode to 'preview'
-  | { type: 'FILE_UPLOADED'; payload: { file: FileWithPath } } // Calls Papa.parse and dispatches FILE_PARSED
+  | {
+      type: 'ENTER_DATA_MANUALLY';
+      payload: {
+        sheetDefinitions: SheetDefinition[];
+        amountOfEmptyRowsToAdd: number;
+      };
+    } // Changes the mode to 'preview'
   | { type: 'FILE_PARSED'; payload: { parsed: ParsedFile } } // Sets the parsed file and changes the mode to 'mapping'
   | { type: 'COLUMN_MAPPING_CHANGED'; payload: { mappings: ColumnMapping[] } } // Sets the proper mappings
   | { type: 'DATA_MAPPED'; payload: { mappedData: MappedData } } // Sets mapped data as sheetData, optionally runs onDataColumnsMapped callback calls validations, changes the mode to 'preview'
@@ -64,14 +75,9 @@ export type ImporterAction =
     } // Sets validation errors
   | {
       type: 'CELL_CHANGED';
-      payload: {
-        sheetId: string;
-        rowIndex: number;
-        columnId: string;
-        value: ImporterOutputFieldType;
-      };
+      payload: CellChangedPayload;
     } // Searches for the cell and changes the value, calls validations
-  | { type: 'IMPORT' } // Calls onComplete callback with state.sheetData
+  | { type: 'SUBMIT' } // Calls onComplete callback with state.sheetData, changes mode to 'submit'
   | { type: 'PROGRESS'; payload: { progress: number } } // Updates importProgress
   | { type: 'COMPLETED' } // Changes the mode to 'completed'
   | { type: 'FAILED' }; // Changes the mode to 'failed' when importing failed

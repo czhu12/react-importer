@@ -3,8 +3,8 @@ import Importer, {
   THEME_SIGNAL,
   THEME_FRESCA,
   THEME_DEFAULT,
-  ImporterOutputField,
   ImporterTheme,
+  SheetState,
 } from 'react-importer';
 import 'react-importer/dist/react-importer.css';
 
@@ -81,7 +81,7 @@ const App = () => {
   const [currentTheme, setCurrentTheme] = useState(0);
 
   const onComplete = async (
-    data: ImporterOutputField[],
+    data: SheetState[],
     onProgress: (progress: number) => void
   ) => {
     await new Promise((resolve) => setTimeout(resolve, 200));
@@ -141,35 +141,45 @@ const App = () => {
           </h1>
           <Importer
             theme={{ ...ALL_THEMES[currentTheme] }}
-            fields={[
+            sheets={[
               {
-                label: 'Name',
-                key: 'name',
-                validators: [{ validate: 'required' }],
-              },
-              {
-                label: 'Email',
-                key: 'email',
-                validators: [
-                  { validate: 'required' },
-                  { validate: 'unique', error: 'This email is not unique' },
+                id: 'sheet_1',
+                label: 'Sheet 1',
+                columns: [
                   {
-                    validate: 'regex_matches',
-                    regex:
-                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    label: 'Name',
+                    id: 'name',
+                    type: 'string',
+                    validators: [{ validate: 'required' }],
+                  },
+                  {
+                    label: 'Email',
+                    id: 'email',
+                    type: 'string',
+                    validators: [
+                      { validate: 'required' },
+                      { validate: 'unique', error: 'This email is not unique' },
+                      {
+                        validate: 'regex_matches',
+                        regex:
+                          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      },
+                    ],
+                  },
+                  {
+                    label: 'Phone Number',
+                    id: 'phone_number',
+                    type: 'string',
+                    validators: [{ validate: 'required' }],
+                  },
+                  { label: 'City', id: 'city', type: 'string' },
+                  {
+                    label: 'State',
+                    id: 'state',
+                    type: 'string',
+                    transformers: [{ transformer: 'state_code' }],
                   },
                 ],
-              },
-              {
-                label: 'Phone Number',
-                key: 'phone_number',
-                validators: [{ validate: 'required' }],
-              },
-              { label: 'City', key: 'city' },
-              {
-                label: 'State',
-                key: 'state',
-                transformers: [{ transformer: 'state_code' }],
               },
             ]}
             onComplete={onComplete}

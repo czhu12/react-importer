@@ -1,10 +1,7 @@
 import { SheetState } from '../types';
 
 export type MappedSheetData = SheetState;
-
-export interface MappedData {
-  sheets: MappedSheetData[];
-}
+export type MappedData = MappedSheetData[];
 
 export interface ColumnMapping {
   csvColumnName: string;
@@ -16,4 +13,14 @@ export type OnDataColumnsMappedCallback = (data: MappedData) => MappedData;
 
 export interface MapperState {
   columnMappings: ColumnMapping[];
+}
+
+export interface MapperOptionValue {
+  sheetId: string;
+  sheetColumnId: string;
+}
+
+export interface MapperOption {
+  label: string;
+  value: MapperOptionValue;
 }

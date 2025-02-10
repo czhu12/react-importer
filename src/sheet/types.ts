@@ -7,12 +7,12 @@ import {
 // --------- Sheet Definition Types ---------
 export interface SheetDefinition {
   id: string;
-  name: string;
+  label: string;
   columns: SheetColumnDefinition[];
 }
 
 export interface SheetColumnDefinition {
-  key: string;
+  id: string;
   label: string;
   type: SheetFieldType;
   validators?: ImporterValidatorDefinition[];
@@ -21,9 +21,10 @@ export interface SheetColumnDefinition {
 
 // TODO: Add reference type
 export type SheetFieldType = 'string';
+export type SheetRow = Record<string, ImporterOutputFieldType>;
 
 // --------- Sheet State Types ---------
 export interface SheetState {
   sheetId: string;
-  rows: Record<string, ImporterOutputFieldType>[]; // key being column id
+  rows: SheetRow[]; // key being column id
 }

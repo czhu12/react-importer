@@ -1,11 +1,11 @@
-import { Margin } from './common';
 import {
   CircularProgressbarWithChildren,
   buildStyles,
 } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { hexToRgb } from '../utils';
-import { useTheme } from '../theme/ThemeProvider';
+import { hexToRgb } from '../../utils';
+import { useTheme } from '../../theme/ThemeProvider';
+import { Margin } from '../../components';
 
 const Failed = () => {
   const theme = useTheme();
@@ -113,19 +113,15 @@ const Uploading = ({
   );
 };
 
-const Completed = ({
-  progress,
-  pending,
-  failed,
-}: {
+interface Props {
   progress: number;
   pending?: boolean;
   failed?: boolean;
-}) => {
+}
+
+export default function Completed({ progress, pending, failed }: Props) {
   if (failed) {
     return <Failed />;
   }
   return <Uploading progress={progress} pending={pending} />;
-};
-
-export default Completed;
+}

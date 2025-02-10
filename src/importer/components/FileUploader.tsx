@@ -1,22 +1,22 @@
 import { useEffect } from 'preact/compat';
 import { FileWithPath, useDropzone } from 'react-dropzone';
+import { useTheme } from '../../theme/ThemeProvider';
 import {
-  Button,
-  Row,
-  Col,
-  Align,
   Card,
   Padded,
   Margin,
   TextStyled,
-} from './common';
-import { useTheme } from '../theme/ThemeProvider';
+  Row,
+  Col,
+  Align,
+  Button,
+} from '../../components';
 
 interface Props {
   setFile: (file: FileWithPath) => void;
 }
 
-const FileUploader = ({ setFile }: Props) => {
+export default function FileUploader({ setFile }: Props) {
   const { acceptedFiles, getRootProps, getInputProps, isDragAccept } =
     useDropzone();
 
@@ -79,6 +79,4 @@ const FileUploader = ({ setFile }: Props) => {
       </Padded>
     </Card>
   );
-};
-
-export default FileUploader;
+}

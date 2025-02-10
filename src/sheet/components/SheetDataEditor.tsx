@@ -2,53 +2,71 @@ import { useEffect, useRef, useState } from 'preact/compat';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import { Button, Margin, Align, Row, Col } from './common';
-import { filterEmptyRows, isPresent } from '../utils';
+
+import { filterEmptyRows, isPresent } from '../../utils';
 import {
   CellClassParams,
   CellValueChangedEvent,
+  ColDef,
   GridApi,
   GridReadyEvent,
 } from 'ag-grid-community';
-import { ImporterField, ImporterFormattedData } from '../types';
-import { ValidationResult } from '../validators';
-import { useTheme } from '../theme/ThemeProvider';
 
-const DataEditor = ({
-  formattedData,
-  fields,
-  onSubmit,
-  onBack,
-  validationResult,
-  setRowData,
-}: {
-  formattedData: ImporterFormattedData[];
-  fields: ImporterField[];
+import { useTheme } from '../../theme/ThemeProvider';
+import Margin from '../../components/Margin';
+import Row from '../../components/Row';
+import Col from '../../components/Col';
+import Button from '../../components/Button';
+import Align from '../../components/Align';
+import { SheetDefinition, SheetState } from '../types';
+import { CellChangedPayload, ImporterValidationError } from '../../types';
+
+interface Props {
+  sheetDefinition: SheetDefinition;
+  data: SheetState;
   onSubmit: () => void;
-  onBack?: () => void;
-  validationResult: ValidationResult;
-  setRowData: (data: ImporterFormattedData, rowIndex: number) => void;
-}) => {
+  sheetValidationErrors: ImporterValidationError[];
+  setRowData: (payload: CellChangedPayload) => void;
+}
+
+export default function SheetDataEditor({
+  sheetDefinition,
+  data,
+  onSubmit,
+  sheetValidationErrors,
+  setRowData,
+}: Props) {
+  const [onlyShowErrors, setOnlyShowErrors] = useState(false);
   const [gridApi, setGridApi] = useState<GridApi | null>(null);
-  const validationRef = useRef(validationResult);
-  validationRef.current = validationResult;
+  const validationRef = useRef(sheetValidationErrors);
+  validationRef.current = sheetValidationErrors;
 
   useEffect(() => {
     setTimeout(() => {
       gridApi?.redrawRows();
     }, 0);
-  }, [validationResult]);
+  }, [sheetValidationErrors]);
 
   const onGridReady = (params: GridReadyEvent) => {
     setGridApi(params.api);
   };
 
-  const [onlyShowErrors, setOnlyShowErrors] = useState(false);
+  function cellErrors(colDef: ColDef, rowIndex: number) {
+    return validationRef.current.filter(
+      (validation) =>
+        validation.columnId == colDef.field && validation.rowIndex === rowIndex
+    );
+  }
+
+  function hasCellErrors(colDef: ColDef, rowIndex: number) {
+    return cellErrors(colDef, rowIndex).length > 0;
+  }
+
   const computeCellStyle = (params: CellClassParams) => {
     if (
       isPresent(params.colDef.field) &&
       isPresent(params.data.rowIndex) &&
-      validationRef.current.hasError(params.colDef.field!, params.data.rowIndex)
+      hasCellErrors(params.colDef, params.data.rowIndex)
     ) {
       return {
         color: 'rgba(192, 57, 43, 1.0)',
@@ -63,12 +81,11 @@ const DataEditor = ({
     setOnlyShowErrors(newValue);
     let newRowData;
     if (newValue) {
-      const rowIndexesWithErrors = validationResult.rowIndexesWithErrors();
-      newRowData = formattedData.filter((_, index) =>
-        rowIndexesWithErrors.has(index)
+      newRowData = data.rows.filter((_, index) =>
+        sheetValidationErrors.some((error) => error.rowIndex === index)
       );
     } else {
-      newRowData = formattedData;
+      newRowData = data.rows;
     }
     gridApi?.setRowData(newRowData);
   };
@@ -76,15 +93,18 @@ const DataEditor = ({
   const onCellValueChanged = (params: CellValueChangedEvent) => {
     // Change the data and revalidate the entire dataset.
     // Because some validations are global validations.
-    setRowData(params.data, params.rowIndex as number);
+    setRowData({
+      sheetId: sheetDefinition.id,
+      value: params.data,
+      rowIndex: params.rowIndex as number,
+    });
   };
 
   const hasData = () => {
-    return filterEmptyRows(formattedData).length > 0;
+    return filterEmptyRows(data).length > 0;
   };
 
-  const hasErrors =
-    Object.keys(validationResult.errorsByFieldKeyByRowIndex).length > 0;
+  const hasErrors = sheetValidationErrors.length > 0;
 
   const theme = useTheme();
 
@@ -133,7 +153,7 @@ const DataEditor = ({
       <div style={{ height: 500, width: '100%' }} className="ag-theme-alpine">
         <AgGridReact
           onCellValueChanged={onCellValueChanged}
-          rowData={formattedData}
+          rowData={data.rows}
           tooltipShowDelay={0}
           defaultColDef={{
             flex: 1,
@@ -142,14 +162,14 @@ const DataEditor = ({
           }}
           onGridReady={onGridReady}
         >
-          {fields.map((field) => {
+          {sheetDefinition.columns.map((column) => {
             return (
               <AgGridColumn
                 resizable
                 cellStyle={computeCellStyle}
-                key={field.key}
-                headerName={field.label}
-                field={field.key}
+                key={column.id}
+                headerName={column.label}
+                field={column.id}
                 tooltipValueGetter={(params) => {
                   const rowIndex = params.rowIndex;
                   if (
@@ -157,17 +177,12 @@ const DataEditor = ({
                     'field' in params.colDef &&
                     params.colDef.field
                   ) {
-                    const columnName = params.colDef.field;
-
                     if (rowIndex == null) {
                       return '';
                     }
 
-                    if (validationRef.current.hasError(columnName, rowIndex)) {
-                      const errors = validationRef.current.getErrors(
-                        columnName,
-                        rowIndex
-                      );
+                    const errors = cellErrors(params.colDef, rowIndex);
+                    if (errors.length > 0) {
                       return errors.map((e) => e.message).join(', ');
                     }
                   }
@@ -182,26 +197,12 @@ const DataEditor = ({
       <Margin margin="20px 0">
         <Row>
           <Col>
-            {onBack && (
-              <Button onClick={onBack} outline>
-                Back
-              </Button>
-            )}
-          </Col>
-          <Col>
             <Align right>
-              {hasData() && (
-                <Button onClick={onSubmit}>
-                  {validationResult.hasErrors() && 'Upload Rows Without Errors'}
-                  {!validationResult.hasErrors() && 'Upload'}
-                </Button>
-              )}
+              {hasData() && <Button onClick={onSubmit}>Upload</Button>}
             </Align>
           </Col>
         </Row>
       </Margin>
     </div>
   );
-};
-
-export default DataEditor;
+}
