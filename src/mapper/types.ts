@@ -11,7 +11,7 @@ export interface ColumnMapping {
 
 export type OnDataColumnsMappedCallback = (
   data: MappedData
-) => Promise<MappedData>;
+) => Promise<MappedData> | MappedData;
 
 export interface MapperState {
   columnMappings: ColumnMapping[];
