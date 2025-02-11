@@ -1,4 +1,5 @@
 import { formatData } from '../utils';
+import { describe, it, expect } from 'vitest';
 import {
   Validator,
   RegexValidator,
@@ -179,12 +180,14 @@ describe('applyValidation', () => {
       headerMappings,
       validationResult
     );
-    expect(statistics.total).toEqual(3);
-    expect(statistics.statisticsByFieldKey.name.counts.isNull).toEqual(1);
-    expect(statistics.statisticsByFieldKey.email.counts.isNull).toEqual(0);
-    expect(statistics.statisticsByFieldKey.phone_number.counts.isNull).toEqual(
-      0
-    );
+    it('Correctly computes statistics', () => {
+      expect(statistics.total).toEqual(3);
+      expect(statistics.statisticsByFieldKey.name.counts.isNull).toEqual(1);
+      expect(statistics.statisticsByFieldKey.email.counts.isNull).toEqual(0);
+      expect(
+        statistics.statisticsByFieldKey.phone_number.counts.isNull
+      ).toEqual(0);
+    });
   });
 
   it('runs validations correctly', () => {

@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useContext } from 'react';
+import { createContext, ReactNode, useContext } from 'preact/compat';
 import { ImporterTheme } from '../types';
 import { THEME_DEFAULT } from './themes';
 
