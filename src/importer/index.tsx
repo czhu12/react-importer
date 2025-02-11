@@ -93,14 +93,10 @@ export default function Importer({
         : mappedData;
 
     dispatch({ type: 'DATA_MAPPED', payload: { mappedData: newMappedData } });
-
-    // TODO THIS BRANCH: Run validations
   }
 
   function onCellChanged(payload: CellChangedPayload) {
     dispatch({ type: 'CELL_CHANGED', payload: payload });
-
-    // TODO THIS BRANCH: Run validations
   }
 
   async function onSubmit() {

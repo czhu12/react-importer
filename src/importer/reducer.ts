@@ -1,7 +1,9 @@
 import { ImporterAction, ImporterState, SheetDefinition } from '../types';
+import { applyValidations } from '../validators';
 
 function buildInitialState(sheetDefinitions: SheetDefinition[]): ImporterState {
   return {
+    sheetDefinitions,
     currentSheetId: sheetDefinitions[0].id,
     mode: 'initial',
     validationErrors: [],
@@ -39,12 +41,10 @@ const reducer = (
         ...state,
         sheetData: action.payload.mappedData,
         mode: 'preview',
-      };
-    }
-    case 'DATA_VALIDATED': {
-      return {
-        ...state,
-        validationErrors: action.payload.validationErrors,
+        validationErrors: applyValidations(
+          state.sheetDefinitions,
+          action.payload.mappedData
+        ),
       };
     }
     case 'CELL_CHANGED': {
@@ -65,6 +65,7 @@ const reducer = (
       return {
         ...state,
         sheetData: newData,
+        validationErrors: applyValidations(state.sheetDefinitions, newData),
       };
     }
     case 'SUBMIT':

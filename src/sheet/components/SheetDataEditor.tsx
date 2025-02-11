@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'preact/compat';
+import { useEffect, useState } from 'preact/compat';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
@@ -38,44 +38,27 @@ export default function SheetDataEditor({
 }: Props) {
   const [onlyShowErrors, setOnlyShowErrors] = useState(false);
   const [gridApi, setGridApi] = useState<GridApi | null>(null);
-  const validationRef = useRef(sheetValidationErrors);
-  validationRef.current = sheetValidationErrors;
 
   useEffect(() => {
     setTimeout(() => {
       gridApi?.redrawRows();
     }, 0);
-  }, [sheetValidationErrors]);
+  }, [sheetValidationErrors, gridApi]);
 
   const onGridReady = (params: GridReadyEvent) => {
     setGridApi(params.api);
   };
 
   function cellErrors(colDef: ColDef, rowIndex: number) {
-    return validationRef.current.filter(
+    return sheetValidationErrors.filter(
       (validation) =>
-        validation.columnId == colDef.field && validation.rowIndex === rowIndex
+        validation.columnId === colDef.field && validation.rowIndex === rowIndex
     );
   }
 
   function hasCellErrors(colDef: ColDef, rowIndex: number) {
     return cellErrors(colDef, rowIndex).length > 0;
   }
-
-  const computeCellStyle = (params: CellClassParams) => {
-    if (
-      isPresent(params.colDef.field) &&
-      isPresent(params.data.rowIndex) &&
-      hasCellErrors(params.colDef, params.data.rowIndex)
-    ) {
-      return {
-        color: 'rgba(192, 57, 43, 1.0)',
-        backgroundColor: 'rgba(231, 76, 60, 0.3)',
-        border: '1px solid rgba(192, 57, 43, 1.0)',
-      };
-    }
-    return null;
-  };
 
   const onSetOnlyShowErrors = (newValue: boolean) => {
     setOnlyShowErrors(newValue);
@@ -91,14 +74,20 @@ export default function SheetDataEditor({
   };
 
   const onCellValueChanged = (params: CellValueChangedEvent) => {
-    // Change the data and revalidate the entire dataset.
-    // Because some validations are global validations.
     setRowData({
       sheetId: sheetDefinition.id,
       value: params.data,
       rowIndex: params.rowIndex as number,
     });
   };
+
+  function displayCelleError(params: CellClassParams) {
+    return (
+      isPresent(params.colDef?.field) &&
+      isPresent(params.rowIndex) &&
+      hasCellErrors(params.colDef, params.rowIndex)
+    );
+  }
 
   const hasData = () => {
     return filterEmptyRows(data).length > 0;
@@ -166,7 +155,9 @@ export default function SheetDataEditor({
             return (
               <AgGridColumn
                 resizable
-                cellStyle={computeCellStyle}
+                cellClassRules={{
+                  'cell-error': displayCelleError,
+                }}
                 key={column.id}
                 headerName={column.label}
                 field={column.id}

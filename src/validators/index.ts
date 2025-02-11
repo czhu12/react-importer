@@ -37,6 +37,7 @@ function validateSheet(
 
       validators.forEach((v) => {
         const result = v.isValid(value, row);
+
         if (result != null) {
           validationErrors.push({
             sheetId: sheetDefinition.id,
@@ -52,7 +53,7 @@ function validateSheet(
   return validationErrors;
 }
 
-export function applyValidation(
+export function applyValidations(
   sheetDefinitions: SheetDefinition[],
   sheetStates: SheetState[]
 ) {

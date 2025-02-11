@@ -41,6 +41,7 @@ export type ImporterMode =
   | 'failed';
 
 export interface ImporterState {
+  sheetDefinitions: SheetDefinition[];
   currentSheetId: string;
   mode: ImporterMode;
   validationErrors: ImporterValidationError[];
@@ -69,10 +70,6 @@ export type ImporterAction =
   | { type: 'FILE_PARSED'; payload: { parsed: ParsedFile } } // Sets the parsed file and changes the mode to 'mapping'
   | { type: 'COLUMN_MAPPING_CHANGED'; payload: { mappings: ColumnMapping[] } } // Sets the proper mappings
   | { type: 'DATA_MAPPED'; payload: { mappedData: MappedData } } // Sets mapped data as sheetData, optionally runs onDataColumnsMapped callback calls validations, changes the mode to 'preview'
-  | {
-      type: 'DATA_VALIDATED';
-      payload: { validationErrors: ImporterValidationError[] };
-    } // Sets validation errors
   | {
       type: 'CELL_CHANGED';
       payload: CellChangedPayload;
