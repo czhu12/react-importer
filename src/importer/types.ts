@@ -74,6 +74,7 @@ export type ImporterAction =
       type: 'CELL_CHANGED';
       payload: CellChangedPayload;
     } // Searches for the cell and changes the value, calls validations
+  | { type: 'SHEET_CHANGED'; payload: { sheetId: string } } // Calls onComplete callback with state.sheetData, changes mode to 'submit'
   | { type: 'SUBMIT' } // Calls onComplete callback with state.sheetData, changes mode to 'submit'
   | { type: 'PROGRESS'; payload: { progress: number } } // Updates importProgress
   | { type: 'COMPLETED' } // Changes the mode to 'completed'

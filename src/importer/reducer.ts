@@ -68,6 +68,8 @@ const reducer = (
         validationErrors: applyValidations(state.sheetDefinitions, newData),
       };
     }
+    case 'SHEET_CHANGED':
+      return { ...state, currentSheetId: action.payload.sheetId };
     case 'SUBMIT':
       return { ...state, mode: 'submit' };
     case 'PROGRESS':

@@ -14,17 +14,12 @@ import {
 
 import { useTheme } from '../../theme/ThemeProvider';
 import Margin from '../../components/Margin';
-import Row from '../../components/Row';
-import Col from '../../components/Col';
-import Button from '../../components/Button';
-import Align from '../../components/Align';
 import { SheetDefinition, SheetState } from '../types';
 import { CellChangedPayload, ImporterValidationError } from '../../types';
 
 interface Props {
   sheetDefinition: SheetDefinition;
   data: SheetState;
-  onSubmit: () => void;
   sheetValidationErrors: ImporterValidationError[];
   setRowData: (payload: CellChangedPayload) => void;
 }
@@ -32,7 +27,6 @@ interface Props {
 export default function SheetDataEditor({
   sheetDefinition,
   data,
-  onSubmit,
   sheetValidationErrors,
   setRowData,
 }: Props) {
@@ -186,15 +180,6 @@ export default function SheetDataEditor({
           })}
         </AgGridReact>
       </div>
-      <Margin margin="20px 0">
-        <Row>
-          <Col>
-            <Align right>
-              {hasData() && <Button onClick={onSubmit}>Upload</Button>}
-            </Align>
-          </Col>
-        </Row>
-      </Margin>
     </div>
   );
 }

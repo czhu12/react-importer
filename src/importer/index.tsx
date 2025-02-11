@@ -20,6 +20,8 @@ import { filterEmptyRows } from '../utils';
 import { applyTransformations } from '../transformers';
 import { buildSuggestedHeaderMappings } from '../mapper/utils';
 import { NUMBER_OF_EMPTY_ROWS_FOR_MANUAL_DATA_INPUT } from '../constants';
+import SheetsSwitcher from '../sheet/components/SheetsSwitcher';
+import SubmitButton from './components/SubmitButton';
 
 export default function Importer({
   theme,
@@ -145,15 +147,24 @@ export default function Importer({
             />
           )}
           {mode === 'preview' && (
-            <SheetDataEditor
-              data={currentSheetData!}
-              sheetDefinition={currentSheetDefinition!}
-              sheetValidationErrors={validationErrors.filter(
-                (error) => error.sheetId === currentSheetDefinition?.id
-              )}
-              onSubmit={onSubmit}
-              setRowData={onCellChanged}
-            />
+            <>
+              <SheetsSwitcher
+                activeSheetId={currentSheetId}
+                sheetDefinitions={sheets}
+                onSheetChange={(sheetId) =>
+                  dispatch({ type: 'SHEET_CHANGED', payload: { sheetId } })
+                }
+              />
+              <SheetDataEditor
+                data={currentSheetData!}
+                sheetDefinition={currentSheetDefinition!}
+                sheetValidationErrors={validationErrors.filter(
+                  (error) => error.sheetId === currentSheetDefinition?.id
+                )}
+                setRowData={onCellChanged}
+              />
+              <SubmitButton onSubmit={onSubmit} />
+            </>
           )}
           {['submit', 'failed', 'completed'].includes(mode) && (
             <Completed

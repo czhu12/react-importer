@@ -181,6 +181,24 @@ const App = () => {
                   },
                 ],
               },
+              {
+                id: 'companies',
+                label: 'Companies',
+                columns: [
+                  {
+                    label: 'Company',
+                    id: 'company',
+                    type: 'string',
+                    validators: [{ validate: 'required' }],
+                  },
+                  {
+                    label: 'Industry',
+                    id: 'industry',
+                    type: 'string',
+                    validators: [{ validate: 'required' }],
+                  },
+                ],
+              },
             ]}
             onComplete={onComplete}
           />
