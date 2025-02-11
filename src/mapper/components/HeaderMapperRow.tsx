@@ -5,14 +5,14 @@ import HeaderMapperSelection from './HeaderMapperSelection';
 
 interface Props {
   csvHeader: string;
-  options: MapperOption[];
+  mappingSelectionOptions: MapperOption[];
   examples: ImporterOutputFieldType[];
   currentMapping: ColumnMapping | null;
   setMapping: (mapping: ColumnMapping | null) => void;
 }
 
 export default function HeaderMapperRow({
-  options,
+  mappingSelectionOptions,
   csvHeader,
   examples,
   currentMapping,
@@ -21,7 +21,7 @@ export default function HeaderMapperRow({
   const currentHeaderOption =
     currentMapping == null
       ? null
-      : (options.find(
+      : (mappingSelectionOptions.find(
           (option) =>
             option.value.sheetId === currentMapping.sheetId &&
             option.value.sheetColumnId === currentMapping.sheetColumnId
@@ -33,7 +33,7 @@ export default function HeaderMapperRow({
         <Row>
           <Col>
             <HeaderMapperSelection
-              options={options}
+              mappingSelectionOptions={mappingSelectionOptions}
               csvHeader={csvHeader}
               examples={examples}
               currentMapping={currentHeaderOption}

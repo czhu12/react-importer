@@ -16,6 +16,10 @@ import {
 import { ThemeProvider } from '../theme/ThemeProvider';
 import { parseCsv } from '../parser';
 import { getMappedData } from '../mapper';
+import { filterEmptyRows } from '../utils';
+import { applyTransformations } from '../transformers';
+import { buildSuggestedHeaderMappings } from '../mapper/utils';
+import { NUMBER_OF_EMPTY_ROWS_FOR_MANUAL_DATA_INPUT } from '../constants';
 
 export default function Importer({
   theme,
@@ -28,6 +32,7 @@ export default function Importer({
       mode,
       currentSheetId,
       sheetData,
+      columnMappings,
       parsedFile,
       validationErrors,
       importProgress,
@@ -48,6 +53,16 @@ export default function Importer({
       file,
       onCompleted: (newParsed) => {
         dispatch({ type: 'FILE_PARSED', payload: { parsed: newParsed } });
+
+        dispatch({
+          type: 'COLUMN_MAPPING_CHANGED',
+          payload: {
+            mappings: buildSuggestedHeaderMappings(
+              sheets,
+              newParsed.meta.fields! // TODO THIS BRANCH: Check why it can be undefined
+            ),
+          },
+        });
       },
     });
   }
@@ -55,16 +70,26 @@ export default function Importer({
   function onEnterDataManually() {
     dispatch({
       type: 'ENTER_DATA_MANUALLY',
-      payload: { sheetDefinitions: sheets, amountOfEmptyRowsToAdd: 100 },
+      payload: {
+        sheetDefinitions: sheets,
+        amountOfEmptyRowsToAdd: NUMBER_OF_EMPTY_ROWS_FOR_MANUAL_DATA_INPUT,
+      },
     });
   }
 
-  function onMappingsSet(mappings: ColumnMapping[]) {
-    const mappedData = getMappedData(sheets, mappings, parsedFile!);
+  function onMappingsChanged(mappings: ColumnMapping[]) {
+    dispatch({
+      type: 'COLUMN_MAPPING_CHANGED',
+      payload: { mappings },
+    });
+  }
+
+  async function onMappingsSet() {
+    const mappedData = getMappedData(sheets, columnMappings ?? [], parsedFile!);
 
     const newMappedData =
       onDataColumnsMapped != null
-        ? onDataColumnsMapped(mappedData)
+        ? await onDataColumnsMapped(mappedData)
         : mappedData;
 
     dispatch({ type: 'DATA_MAPPED', payload: { mappedData: newMappedData } });
@@ -81,8 +106,13 @@ export default function Importer({
   async function onSubmit() {
     dispatch({ type: 'SUBMIT' });
     try {
-      // TODO THIS BRANCH: Should we filter empty / invalid data?
-      await onComplete(sheetData, (progress) => {
+      // TODO THIS BRANCH: Should we filter invalid data?
+      const data = applyTransformations(
+        sheets,
+        sheetData.map((d) => ({ ...d, rows: filterEmptyRows(d) }))
+      );
+
+      await onComplete(data, (progress) => {
         dispatch({ type: 'PROGRESS', payload: { progress } });
       });
     } catch (e) {
@@ -113,6 +143,8 @@ export default function Importer({
             <HeaderMapper
               parsed={parsedFile!}
               sheetDefinitions={sheets}
+              currentMapping={columnMappings ?? []}
+              onMappingsChanged={onMappingsChanged}
               onMappingsSet={onMappingsSet}
             />
           )}

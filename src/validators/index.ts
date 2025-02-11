@@ -3,6 +3,7 @@ import { fieldIsRequired } from '../utils';
 import { ImporterValidationError } from './types';
 import { SheetColumnDefinition, SheetDefinition, SheetState } from '../types';
 import { Validator } from './validator_definitions/base';
+import { buildValidatorFromDefinition } from './validator_definitions';
 
 function validateSheet(
   sheetDefinition: SheetDefinition,
@@ -18,7 +19,7 @@ function validateSheet(
     if (!columnDefinition.validators) return;
     columnDefinition.validators.forEach((validatorDefinition) => {
       obj[columnDefinition.id].push(
-        Validator.buildFromDefinition(validatorDefinition)
+        buildValidatorFromDefinition(validatorDefinition)
       );
     });
   });

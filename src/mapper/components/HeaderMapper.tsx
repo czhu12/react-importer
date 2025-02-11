@@ -1,36 +1,41 @@
-import { useState } from 'preact/hooks';
 import { Button, Align, Margin, Col, Row } from '../../components';
 import { ColumnMapping, ParsedFile, SheetDefinition } from '../../types';
+import {
+  calculateMappingExamples,
+  calculateNewMappingsForCsvColumnMapingChanged,
+} from '../utils';
 import HeaderMapperRow from './HeaderMapperRow';
-import { buildSuggestedHeaderMappings } from '../utils';
 
 interface Props {
   parsed: ParsedFile;
   sheetDefinitions: SheetDefinition[];
-  onMappingsSet: (mappings: ColumnMapping[]) => void;
+  currentMapping: ColumnMapping[];
+  onMappingsChanged: (mappings: ColumnMapping[]) => void;
+  onMappingsSet: () => void;
 }
 
 export default function HeaderMapper({
   parsed,
   sheetDefinitions,
+  currentMapping,
+  onMappingsChanged,
   onMappingsSet,
 }: Props) {
   const data = parsed.data;
   const csvHeaders = parsed.meta.fields!; // TODO THIS BRANCH: Check why it can be undefined
-  const options = sheetDefinitions.flatMap((sheetDefinition) => {
-    return sheetDefinition.columns.map((column) => {
-      return {
-        label: `${sheetDefinition.label} - ${column.label}`,
-        value: {
-          sheetId: sheetDefinition.id,
-          sheetColumnId: column.id,
-        },
-      };
-    });
-  });
 
-  const [mappings, setMappings] = useState<ColumnMapping[]>(
-    buildSuggestedHeaderMappings(sheetDefinitions, csvHeaders)
+  const mappingSelectionOptions = sheetDefinitions.flatMap(
+    (sheetDefinition) => {
+      return sheetDefinition.columns.map((column) => {
+        return {
+          label: `${sheetDefinition.label} - ${column.label}`,
+          value: {
+            sheetId: sheetDefinition.id,
+            sheetColumnId: column.id,
+          },
+        };
+      });
+    }
   );
 
   return (
@@ -39,30 +44,27 @@ export default function HeaderMapper({
         <h5>{parsed.data.length - 1} Rows Imported</h5>
       </div>
       {csvHeaders.map((header, columnIndex) => {
-        const examples = data.slice(1, 4).map((d) => d[header]);
-        const currentMapping =
-          mappings.find((mapping) => mapping.csvColumnName === header) ?? null;
+        const examples = calculateMappingExamples(data, header);
+        const headerMapping =
+          currentMapping.find((mapping) => mapping.csvColumnName === header) ??
+          null;
 
         return (
           <HeaderMapperRow
             key={columnIndex}
             csvHeader={header}
             examples={examples}
-            currentMapping={currentMapping}
+            currentMapping={headerMapping}
             setMapping={(headerMapping) => {
-              const newMappings =
-                headerMapping == null
-                  ? mappings.filter((m) => m.csvColumnName !== header)
-                  : mappings.map((mapping) => {
-                      if (mapping.csvColumnName === header) {
-                        return headerMapping;
-                      }
-                      return mapping;
-                    });
+              const newMappings = calculateNewMappingsForCsvColumnMapingChanged(
+                currentMapping,
+                header,
+                headerMapping
+              );
 
-              setMappings(newMappings);
+              onMappingsChanged(newMappings);
             }}
-            options={options}
+            mappingSelectionOptions={mappingSelectionOptions}
           />
         );
       })}
@@ -73,7 +75,7 @@ export default function HeaderMapper({
           </Col>
           <Col>
             <Align right>
-              <Button onClick={() => onMappingsSet(mappings)}>Confirm</Button>
+              <Button onClick={onMappingsSet}>Confirm</Button>
             </Align>
           </Col>
         </Row>

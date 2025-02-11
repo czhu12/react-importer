@@ -9,7 +9,9 @@ export interface ColumnMapping {
   sheetColumnId: string;
 }
 
-export type OnDataColumnsMappedCallback = (data: MappedData) => MappedData;
+export type OnDataColumnsMappedCallback = (
+  data: MappedData
+) => Promise<MappedData>;
 
 export interface MapperState {
   columnMappings: ColumnMapping[];

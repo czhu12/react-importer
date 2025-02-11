@@ -7,7 +7,7 @@ interface Props {
   examples: ImporterOutputFieldType[];
   currentMapping: MapperOption | null;
   setMapping: (header: MapperOption | null) => void;
-  options: MapperOption[];
+  mappingSelectionOptions: MapperOption[];
 }
 
 export default function HeaderMapperSelection({
@@ -15,7 +15,7 @@ export default function HeaderMapperSelection({
   examples,
   setMapping,
   currentMapping,
-  options,
+  mappingSelectionOptions,
 }: Props) {
   return (
     <div>
@@ -44,7 +44,7 @@ export default function HeaderMapperSelection({
               isClearable
               isSearchable
               value={currentMapping}
-              options={options}
+              options={mappingSelectionOptions}
               onChange={setMapping}
             />
           </Col>

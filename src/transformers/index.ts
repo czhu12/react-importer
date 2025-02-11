@@ -6,6 +6,7 @@ import {
   SheetState,
 } from '../types';
 import { eachWithObject, hasData } from '../utils/functional';
+import { buildTransformerFromDefinition } from './transformer_definitions';
 import { Transformer } from './transformer_definitions/base';
 
 function transformSheet(
@@ -21,7 +22,7 @@ function transformSheet(
       if (!columnDefinition.transformers) return;
       columnDefinition.transformers.forEach((transformerDefinition) => {
         obj[columnDefinition.id].push(
-          Transformer.buildFromDefinition(transformerDefinition)
+          buildTransformerFromDefinition(transformerDefinition)
         );
       });
     }
