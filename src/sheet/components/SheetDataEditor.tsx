@@ -155,6 +155,7 @@ export default function SheetDataEditor({
             return (
               <AgGridColumn
                 resizable
+                sortable
                 cellClassRules={{
                   'cell-error': displayCelleError,
                 }}
