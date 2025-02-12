@@ -11,19 +11,32 @@ export interface SheetDefinition {
   columns: SheetColumnDefinition[];
 }
 
-export interface SheetColumnDefinition {
+export type SheetColumnDefinition =
+  | SheetColumnStringDefinition
+  | SheetColumnReferenceDefinition;
+
+interface SheetColumnBaseDefinition {
   id: string;
   label: string;
-  type: SheetFieldType;
   validators?: ImporterValidatorDefinition[];
   transformers?: ImporterTransformerDefinition[];
 }
 
-// TODO: Add reference type
-export type SheetFieldType = 'string';
-export type SheetRow = Record<string, ImporterOutputFieldType>;
+interface SheetColumnStringDefinition extends SheetColumnBaseDefinition {
+  type: 'string';
+}
+
+interface SheetColumnReferenceDefinition extends SheetColumnBaseDefinition {
+  type: 'reference';
+  typeArguments: {
+    sheetId: string;
+    sheetColumnId: string;
+  };
+}
 
 // --------- Sheet State Types ---------
+export type SheetRow = Record<string, ImporterOutputFieldType>;
+
 export interface SheetState {
   sheetId: string;
   rows: SheetRow[]; // key being column id

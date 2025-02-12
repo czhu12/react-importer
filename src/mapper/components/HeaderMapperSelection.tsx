@@ -1,5 +1,4 @@
-import Select from 'react-select';
-import { Col, Margin, Padded, Row, Table } from '../../components';
+import { Col, Margin, Padded, Row, Table, Select } from '../../components';
 import { ImporterOutputFieldType, MapperOption } from '../../types';
 
 interface Props {
@@ -41,8 +40,9 @@ export default function HeaderMapperSelection({
           </Col>
           <Col>
             <Select
-              isClearable
-              isSearchable
+              // TODO THIS BRANCH: Add back the following props
+              // isClearable
+              // isSearchable
               value={currentMapping}
               options={mappingSelectionOptions}
               onChange={setMapping}
