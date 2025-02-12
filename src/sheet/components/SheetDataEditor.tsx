@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'preact/compat';
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import { AgGridReact } from 'ag-grid-react';
+
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 import { filterEmptyRows, isPresent } from '../../utils';
 import {
+  AllCommunityModule,
+  ModuleRegistry,
   CellClassParams,
   CellValueChangedEvent,
   ColDef,
@@ -13,8 +16,10 @@ import {
 } from 'ag-grid-community';
 
 import { useTheme } from '../../theme/ThemeProvider';
-import { SheetDefinition, SheetState } from '../types';
+import { SheetDefinition, SheetState, SheetRow } from '../types';
 import { CellChangedPayload, ImporterValidationError } from '../../types';
+
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 interface Props {
   sheetDefinition: SheetDefinition;
@@ -31,6 +36,12 @@ export default function SheetDataEditor({
 }: Props) {
   const [onlyShowErrors, setOnlyShowErrors] = useState(false);
   const [gridApi, setGridApi] = useState<GridApi | null>(null);
+
+  const rowData = data.rows.filter(
+    (_, index) =>
+      !onlyShowErrors ||
+      sheetValidationErrors.some((error) => error.rowIndex === index)
+  );
 
   useEffect(() => {
     setTimeout(() => {
@@ -52,19 +63,6 @@ export default function SheetDataEditor({
   function hasCellErrors(colDef: ColDef, rowIndex: number) {
     return cellErrors(colDef, rowIndex).length > 0;
   }
-
-  const onSetOnlyShowErrors = (newValue: boolean) => {
-    setOnlyShowErrors(newValue);
-    let newRowData;
-    if (newValue) {
-      newRowData = data.rows.filter((_, index) =>
-        sheetValidationErrors.some((error) => error.rowIndex === index)
-      );
-    } else {
-      newRowData = data.rows;
-    }
-    gridApi?.setRowData(newRowData);
-  };
 
   const onCellValueChanged = (params: CellValueChangedEvent) => {
     setRowData({
@@ -98,7 +96,7 @@ export default function SheetDataEditor({
             <input
               checked={onlyShowErrors}
               onChange={(e) => {
-                onSetOnlyShowErrors((e.target as HTMLInputElement).checked);
+                setOnlyShowErrors((e.target as HTMLInputElement).checked);
               }}
               type="checkbox"
               name="row-errors"
@@ -133,9 +131,9 @@ export default function SheetDataEditor({
         )}
       </div>
       <div style={{ height: 500, width: '100%' }} className="ag-theme-alpine">
-        <AgGridReact
+        <AgGridReact<SheetRow>
           onCellValueChanged={onCellValueChanged}
-          rowData={data.rows}
+          rowData={rowData}
           tooltipShowDelay={0}
           defaultColDef={{
             flex: 1,
@@ -143,41 +141,36 @@ export default function SheetDataEditor({
             editable: true,
           }}
           onGridReady={onGridReady}
-        >
-          {sheetDefinition.columns.map((column) => {
-            return (
-              <AgGridColumn
-                resizable
-                sortable
-                cellClassRules={{
-                  'cell-error': displayCelleError,
-                }}
-                key={column.id}
-                headerName={column.label}
-                field={column.id}
-                tooltipValueGetter={(params) => {
-                  const rowIndex = params.rowIndex;
-                  if (
-                    params.colDef &&
-                    'field' in params.colDef &&
-                    params.colDef.field
-                  ) {
-                    if (rowIndex == null) {
-                      return '';
-                    }
-
-                    const errors = cellErrors(params.colDef, rowIndex);
-                    if (errors.length > 0) {
-                      return errors.map((e) => e.message).join(', ');
-                    }
-                  }
-
+          columnDefs={sheetDefinition.columns.map((column) => ({
+            resizable: true,
+            sortable: true,
+            cellClassRules: {
+              'cell-error': displayCelleError,
+            },
+            key: column.id,
+            headerName: column.label,
+            field: column.id,
+            tooltipValueGetter: (params) => {
+              const rowIndex = params.rowIndex;
+              if (
+                params.colDef &&
+                'field' in params.colDef &&
+                params.colDef.field
+              ) {
+                if (rowIndex == null) {
                   return '';
-                }}
-              />
-            );
-          })}
-        </AgGridReact>
+                }
+
+                const errors = cellErrors(params.colDef, rowIndex);
+                if (errors.length > 0) {
+                  return errors.map((e) => e.message).join(', ');
+                }
+              }
+
+              return '';
+            },
+          }))}
+        />
       </div>
     </div>
   );
