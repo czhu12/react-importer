@@ -1,13 +1,7 @@
 import { useEffect } from 'preact/compat';
 import { FileWithPath, useDropzone } from 'react-dropzone';
 import { useTheme } from '../../theme/ThemeProvider';
-import {
-  Card,
-  TextStyled,
-  Row,
-  Col,
-  Button,
-} from '../../components';
+import { Card, TextStyled, Row, Col, Button } from '../../components';
 
 interface Props {
   setFile: (file: FileWithPath) => void;
@@ -67,7 +61,7 @@ export default function FileUploader({ setFile }: Props) {
           </Col>
           <Col flex="1">
             <div className="text-right">
-              <Button variant="secondary" outline>
+              <Button variant="tertiary">
                 Browse Files
               </Button>
             </div>

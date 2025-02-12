@@ -71,7 +71,7 @@ export default function HeaderMapper({
       <div className="my-5">
         <Row>
           <Col>
-            <Button outline>Back</Button>
+            <Button variant="secondary" outline>Back</Button>
           </Col>
           <Col>
             <div className="text-right">
