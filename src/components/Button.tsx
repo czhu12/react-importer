@@ -73,7 +73,8 @@ const buttonStyles = cva('text-center inline-block font-bold', {
     {
       variant: 'warning',
       disabled: false,
-      className: 'hover:bg-orange-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600',
+      className:
+        'hover:bg-orange-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600',
     },
   ],
   defaultVariants: {
