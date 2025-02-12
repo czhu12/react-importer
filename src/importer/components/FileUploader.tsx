@@ -3,12 +3,9 @@ import { FileWithPath, useDropzone } from 'react-dropzone';
 import { useTheme } from '../../theme/ThemeProvider';
 import {
   Card,
-  Padded,
-  Margin,
   TextStyled,
   Row,
   Col,
-  Align,
   Button,
 } from '../../components';
 
@@ -35,11 +32,11 @@ export default function FileUploader({ setFile }: Props) {
       {...getRootProps()}
       style={{ cursor: 'pointer', backgroundColor: backgroundColor }}
     >
-      <Padded padding="30px">
+      <div className="p-7.5">
         <input {...getInputProps()} />
-        <Margin margin="0 0 30px 0">
+        <div className="mb-7.5">
           <TextStyled muted>Pick a file</TextStyled>
-        </Margin>
+        </div>
         <Row>
           <Col flex="3">
             <Row>
@@ -69,14 +66,14 @@ export default function FileUploader({ setFile }: Props) {
             </Row>
           </Col>
           <Col flex="1">
-            <Align right>
+            <div className="text-right">
               <Button variant="secondary" outline>
                 Browse Files
               </Button>
-            </Align>
+            </div>
           </Col>
         </Row>
-      </Padded>
+      </div>
     </Card>
   );
 }

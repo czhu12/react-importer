@@ -5,42 +5,39 @@ import {
 import 'react-circular-progressbar/dist/styles.css';
 import { hexToRgb } from '../../utils';
 import { useTheme } from '../../theme/ThemeProvider';
-import { Margin } from '../../components';
 
 const Failed = () => {
   const theme = useTheme();
   return (
-    <div>
-      <Margin margin="60px" style={{ textAlign: 'center' }}>
-        <div
+    <div className="text-center m-15">
+      <div
+        style={{
+          width: '100px',
+          height: '100px',
+          margin: '0 auto',
+          position: 'relative',
+        }}
+      >
+        <svg
           style={{
-            width: '100px',
-            height: '100px',
-            margin: '0 auto',
-            position: 'relative',
+            position: 'absolute',
+            margin: 'auto',
+            top: '0',
+            bottom: '0',
+            left: '0',
+            right: '0',
           }}
+          xmlns="http://www.w3.org/2000/svg"
+          width="64"
+          height="64"
+          fill={theme.colors.danger}
+          className="bi bi-x-lg"
+          viewBox="0 0 16 16"
         >
-          <svg
-            style={{
-              position: 'absolute',
-              margin: 'auto',
-              top: '0',
-              bottom: '0',
-              left: '0',
-              right: '0',
-            }}
-            xmlns="http://www.w3.org/2000/svg"
-            width="64"
-            height="64"
-            fill={theme.colors.danger}
-            className="bi bi-x-lg"
-            viewBox="0 0 16 16"
-          >
-            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-          </svg>
-        </div>
-        <h2 style={{ fontSize: '2em' }}>Something went wrong</h2>
-      </Margin>
+          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+        </svg>
+      </div>
+      <h2 style={{ fontSize: '2em' }}>Something went wrong</h2>
     </div>
   );
 };
@@ -80,35 +77,33 @@ const Uploading = ({
   const rgb = hexToRgb(theme.colors.success);
 
   return (
-    <div>
-      <Margin margin="60px" style={{ textAlign: 'center' }}>
-        <div
-          style={{
-            width: '100px',
-            height: '100px',
-            margin: '0 auto',
-            position: 'relative',
-          }}
+    <div className="m-15 text-center">
+      <div
+        style={{
+          width: '100px',
+          height: '100px',
+          margin: '0 auto',
+          position: 'relative',
+        }}
+      >
+        <CircularProgressbarWithChildren
+          value={progress}
+          strokeWidth={5}
+          styles={buildStyles({
+            // Colors
+            pathColor: `rgba(${rgb?.r ?? 0}, ${rgb?.g ?? 0}, ${rgb?.b ?? 0}, ${progress / 100})`,
+          })}
         >
-          <CircularProgressbarWithChildren
-            value={progress}
-            strokeWidth={5}
-            styles={buildStyles({
-              // Colors
-              pathColor: `rgba(${rgb?.r ?? 0}, ${rgb?.g ?? 0}, ${rgb?.b ?? 0}, ${progress / 100})`,
-            })}
-          >
-            {!pending && <SuccessIcon />}
-            {pending && (
-              <div>
-                <b style={{ fontSize: '1.2em' }}>{progress}%</b>
-              </div>
-            )}
-          </CircularProgressbarWithChildren>
-        </div>
-        {pending && <h2 style={{ fontSize: '2em' }}>Uploading</h2>}
-        {!pending && <h2 style={{ fontSize: '2em' }}>Success</h2>}
-      </Margin>
+          {!pending && <SuccessIcon />}
+          {pending && (
+            <div>
+              <b style={{ fontSize: '1.2em' }}>{progress}%</b>
+            </div>
+          )}
+        </CircularProgressbarWithChildren>
+      </div>
+      {pending && <h2 style={{ fontSize: '2em' }}>Uploading</h2>}
+      {!pending && <h2 style={{ fontSize: '2em' }}>Success</h2>}
     </div>
   );
 };

@@ -1,10 +1,7 @@
-export { default as Align } from './Align';
 export { default as Button } from './Button';
 export { default as Card } from './Card';
 export { default as Col } from './Col';
 export { default as Container } from './Container';
-export { default as Margin } from './Margin';
-export { default as Padded } from './Padded';
 export { default as Root } from './Root';
 export { default as Row } from './Row';
 export { default as Table } from './Table';

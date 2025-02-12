@@ -1,4 +1,4 @@
-import { Button, Align, Margin, Col, Row } from '../../components';
+import { Button, Col, Row } from '../../components';
 import { ColumnMapping, ParsedFile, SheetDefinition } from '../../types';
 import {
   calculateMappingExamples,
@@ -68,18 +68,18 @@ export default function HeaderMapper({
           />
         );
       })}
-      <Margin margin="20px 0">
+      <div className="my-5">
         <Row>
           <Col>
             <Button outline>Back</Button>
           </Col>
           <Col>
-            <Align right>
+            <div className="text-right">
               <Button onClick={onMappingsSet}>Confirm</Button>
-            </Align>
+            </div>
           </Col>
         </Row>
-      </Margin>
+      </div>
     </div>
   );
 }

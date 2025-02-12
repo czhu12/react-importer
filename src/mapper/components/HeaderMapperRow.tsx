@@ -1,4 +1,4 @@
-import { Card, Margin, Row, Col } from '../../components';
+import { Card, Row, Col } from '../../components';
 import { ImporterOutputFieldType } from '../../types';
 import { ColumnMapping, MapperOption } from '../types';
 import HeaderMapperSelection from './HeaderMapperSelection';
@@ -28,7 +28,7 @@ export default function HeaderMapperRow({
         ) ?? null);
 
   return (
-    <Margin margin="20px 0">
+    <div className="my-5">
       <Card>
         <Row>
           <Col>
@@ -48,6 +48,6 @@ export default function HeaderMapperRow({
           </Col>
         </Row>
       </Card>
-    </Margin>
+    </div>
   );
 }
