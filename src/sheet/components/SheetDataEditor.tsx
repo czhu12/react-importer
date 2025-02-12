@@ -1,26 +1,23 @@
-import { useEffect, useState } from 'preact/compat';
-import { AgGridReact } from 'ag-grid-react';
-
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
-
-import { filterEmptyRows, isPresent } from '../../utils';
+import { useMemo, useState } from 'preact/compat';
 import {
-  AllCommunityModule,
-  ModuleRegistry,
-  CellClassParams,
-  CellValueChangedEvent,
-  ColDef,
-  GridApi,
-  GridReadyEvent,
-} from 'ag-grid-community';
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 
+import { filterEmptyRows } from '../../utils';
 import { useTheme } from '../../theme/ThemeProvider';
 import Margin from '../../components/Margin';
 import { SheetDefinition, SheetState, SheetRow } from '../types';
-import { CellChangedPayload, ImporterValidationError } from '../../types';
+import {
+  CellChangedPayload,
+  ImporterOutputFieldType,
+  ImporterValidationError,
+} from '../../types';
+import SheetDataEditorCell from './SheetDataEditorCell';
 
-ModuleRegistry.registerModules([AllCommunityModule]);
+const columnHelper = createColumnHelper<SheetRow>();
 
 interface Props {
   sheetDefinition: SheetDefinition;
@@ -36,63 +33,70 @@ export default function SheetDataEditor({
   setRowData,
 }: Props) {
   const [onlyShowErrors, setOnlyShowErrors] = useState(false);
-  const [gridApi, setGridApi] = useState<GridApi | null>(null);
 
-  const rowData = data.rows.filter(
-    (_, index) =>
-      !onlyShowErrors ||
-      sheetValidationErrors.some((error) => error.rowIndex === index)
+  const rowData = useMemo(
+    () =>
+      data.rows.filter(
+        (_, index) =>
+          !onlyShowErrors ||
+          sheetValidationErrors.some((error) => error.rowIndex === index)
+      ),
+    [data, onlyShowErrors, sheetValidationErrors]
   );
 
-  useEffect(() => {
-    setTimeout(() => {
-      gridApi?.redrawRows();
-    }, 0);
-  }, [sheetValidationErrors, gridApi]);
+  const columns = useMemo(
+    () =>
+      sheetDefinition.columns.map((column) =>
+        columnHelper.accessor(column.id, {
+          header: column.label,
+        })
+      ),
+    [sheetDefinition]
+  );
 
-  const onGridReady = (params: GridReadyEvent) => {
-    setGridApi(params.api);
-  };
+  const table = useReactTable<SheetRow>({
+    data: rowData,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
-  function cellErrors(colDef: ColDef, rowIndex: number) {
-    return sheetValidationErrors.filter(
-      (validation) =>
-        validation.columnId === colDef.field && validation.rowIndex === rowIndex
-    );
-  }
+  const onCellValueChanged = (
+    rowIndex: number,
+    columnId: string,
+    value: ImporterOutputFieldType
+  ) => {
+    const rowValue = { ...data.rows[rowIndex] };
+    rowValue[columnId] = value;
 
-  function hasCellErrors(colDef: ColDef, rowIndex: number) {
-    return cellErrors(colDef, rowIndex).length > 0;
-  }
-
-  const onCellValueChanged = (params: CellValueChangedEvent) => {
     setRowData({
       sheetId: sheetDefinition.id,
-      value: params.data,
-      rowIndex: params.rowIndex as number,
+      value: rowValue,
+      rowIndex,
     });
   };
 
-  function displayCelleError(params: CellClassParams) {
-    return (
-      isPresent(params.colDef?.field) &&
-      isPresent(params.rowIndex) &&
-      hasCellErrors(params.colDef, params.rowIndex)
+  function cellErrors(columnId: string, rowIndex: number) {
+    return sheetValidationErrors.filter(
+      (validation) =>
+        validation.columnId === columnId && validation.rowIndex === rowIndex
     );
   }
 
-  const hasData = () => {
-    return filterEmptyRows(data).length > 0;
-  };
+  function hasCellErrors(columnId: string, rowIndex: number) {
+    return cellErrors(columnId, rowIndex).length > 0;
+  }
 
+  const hasData = filterEmptyRows(data).length > 0;
   const hasErrors = sheetValidationErrors.length > 0;
 
   const theme = useTheme();
 
+  const displayOnlyShowErrorsCheckbox = !hasData || hasErrors;
+
   return (
     <div>
       <Margin margin="20px 0">
-        {(!hasData() || hasErrors) && (
+        {displayOnlyShowErrorsCheckbox && (
           <div>
             <input
               checked={onlyShowErrors}
@@ -108,14 +112,12 @@ export default function SheetDataEditor({
             </label>
           </div>
         )}
-        {hasData() && !hasErrors && (
+        {!displayOnlyShowErrorsCheckbox && (
           <div
             style={{
               color: theme.colors.success,
-              fontWeight: 'bold',
-              display: 'flex',
-              alignItems: 'center',
             }}
+            className="font-bold flex items-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -131,47 +133,59 @@ export default function SheetDataEditor({
           </div>
         )}
       </Margin>
-      <div style={{ height: 500, width: '100%' }} className="ag-theme-alpine">
-        <AgGridReact<SheetRow>
-          onCellValueChanged={onCellValueChanged}
-          rowData={rowData}
-          tooltipShowDelay={0}
-          defaultColDef={{
-            flex: 1,
-            minWidth: 100,
-            editable: true,
-          }}
-          onGridReady={onGridReady}
-          columnDefs={sheetDefinition.columns.map((column) => ({
-            resizable: true,
-            sortable: true,
-            cellClassRules: {
-              'cell-error': displayCelleError,
-            },
-            key: column.id,
-            headerName: column.label,
-            field: column.id,
-            tooltipValueGetter: (params) => {
-              const rowIndex = params.rowIndex;
-              if (
-                params.colDef &&
-                'field' in params.colDef &&
-                params.colDef.field
-              ) {
-                if (rowIndex == null) {
-                  return '';
-                }
 
-                const errors = cellErrors(params.colDef, rowIndex);
-                if (errors.length > 0) {
-                  return errors.map((e) => e.message).join(', ');
-                }
-              }
+      <div className="overflow-x-auto max-h-[80vh]">
+        <table className="min-w-full divide-y divide-gray-300">
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    className="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sticky top-0 bg-white"
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
 
-              return '';
-            },
-          }))}
-        />
+          <tbody className="divide-y divide-gray-200">
+            {table.getRowModel().rows.map((row, rowIndex) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell, cellIndex) => {
+                  const columnId = sheetDefinition.columns[cellIndex].id;
+
+                  return (
+                    <td
+                      key={cell.id}
+                      // TODO: Perhaps we might need some more fency tooltip?
+                      title={cellErrors(columnId, rowIndex)
+                        .map((e) => e.message)
+                        .join(', ')}
+                      className={`py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 
+                      ${hasCellErrors(columnId, rowIndex) ? 'bg-red-100' : ''}
+                    `}
+                    >
+                      <SheetDataEditorCell
+                        value={cell.getValue() as ImporterOutputFieldType}
+                        onUpdated={(value) =>
+                          onCellValueChanged(rowIndex, columnId, value)
+                        }
+                      />
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
