@@ -30,11 +30,11 @@ const buttonStyles = cva('text-center inline-block font-bold', {
       warning: 'shadow-xs bg-orange-600 text-white',
     },
     size: {
-      xs: 'px-2 py-1 rounded-sm',
-      sm: 'px-2.5 py-1.5 rounded-md',
-      md: 'px-3 py-2 rounded-md',
-      lg: 'px-3.5 py-2.5 rounded-md',
-      xl: 'px-4 py-3 rounded-md',
+      xs: 'px-2 py-2.5 rounded-sm text-sm',
+      sm: 'px-2.5 py-3 rounded-md',
+      md: 'px-3 py-3.5 rounded-md',
+      lg: 'px-3.5 py-4 rounded-md',
+      xl: 'px-4 py-4.5 rounded-md',
     },
     disabled: {
       true: 'opacity-50 cursor-not-allowed pointer-events-none',
@@ -77,7 +77,7 @@ const buttonStyles = cva('text-center inline-block font-bold', {
     },
   ],
   defaultVariants: {
-    size: 'lg',
+    size: 'md',
     variant: 'primary',
     disabled: false,
   },
