@@ -17,6 +17,7 @@ export default function SheetDataEditorCell({ value, onUpdated }: Props) {
   }, [editMode]);
 
   const valueEmpty = value == null || value.trim() === '';
+  // Use non-breaking space to keep the cell height
   const nonEmptyValue = valueEmpty ? '\u00A0' : value;
 
   if (!editMode) {
