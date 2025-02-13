@@ -4,7 +4,7 @@ import { SheetColumnDefinition, SheetDefinition, SheetState } from '../types';
 import { Validator } from './validator_definitions/base';
 import { buildValidatorFromDefinition } from './validator_definitions';
 
-function fieldIsRequired(columnDefinition: SheetColumnDefinition) {
+export function fieldIsRequired(columnDefinition: SheetColumnDefinition) {
   if (columnDefinition.validators && columnDefinition.validators.length > 0) {
     const isRequired = columnDefinition.validators.find(
       (v) => v.validate === 'required'
