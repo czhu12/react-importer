@@ -5,6 +5,7 @@ import {
   SheetState,
 } from '../../types';
 import { Select } from '../../components';
+import { isEmptyCell } from '../../utils';
 
 interface Props {
   columnDefinition: SheetColumnDefinition;
@@ -53,10 +54,12 @@ export default function SheetDataEditorCell({
     const referenceSheetData = allData.find(
       (data) => data.sheetId === referenceArguments.sheetId
     );
+
     const referenceData =
-      referenceSheetData?.rows?.map(
-        (row) => row[referenceArguments.sheetColumnId]
-      ) ?? [];
+      referenceSheetData?.rows
+        ?.map((row) => row[referenceArguments.sheetColumnId])
+        ?.filter((c) => !isEmptyCell(c)) ?? [];
+
     const selectOptions = referenceData.map((value) => ({
       label: value,
       value,
@@ -65,8 +68,10 @@ export default function SheetDataEditorCell({
     return (
       <Select
         options={selectOptions}
-        value={{ value, label: value }}
-        onChange={(option) => updateValue(option?.value ?? '')}
+        value={value}
+        onChange={(value) =>
+          updateValue((value as ImporterOutputFieldType) ?? '')
+        }
       />
     );
   }

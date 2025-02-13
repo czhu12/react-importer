@@ -7,7 +7,9 @@ export const isUndefinedOrNull = (a: any) => {
 export const isPresent = (a: any) => !isUndefinedOrNull(a);
 
 export const filterEmptyRows = (state: SheetState) => {
-  return state.rows.filter(
-    (d) => Object.keys(d).filter((k) => k !== 'rowIndex').length > 0
-  );
+  return state.rows.filter((d) => Object.keys(d).length > 0);
+};
+
+export const isEmptyCell = (value: any) => {
+  return isUndefinedOrNull(value) || value === '';
 };

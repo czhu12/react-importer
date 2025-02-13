@@ -20,13 +20,13 @@ export function getMappedData(
     data.map((row) => {
       const newRow: SheetRow = {};
 
-      Object.keys(row).forEach((csvColumnName) => {
+      sheetDefinition.columns.forEach((column) => {
         const mapping = sheetMappings.find(
-          (mapping) => mapping.csvColumnName === csvColumnName
+          (mapping) => mapping.sheetColumnId === column.id
         );
 
         if (mapping != null) {
-          newRow[mapping.sheetColumnId] = row[csvColumnName];
+          newRow[mapping.sheetColumnId] = row[mapping.csvColumnName];
         }
       });
 

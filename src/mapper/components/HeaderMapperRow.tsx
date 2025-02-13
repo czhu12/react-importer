@@ -1,31 +1,32 @@
 import { Card, Row, Col } from '../../components';
 import { ImporterOutputFieldType } from '../../types';
-import { ColumnMapping, MapperOption } from '../types';
+import { ColumnMapping, MapperOption, MapperOptionValue } from '../types';
 import HeaderMapperSelection from './HeaderMapperSelection';
 
 interface Props {
   csvHeader: string;
   mappingSelectionOptions: MapperOption[];
   examples: ImporterOutputFieldType[];
-  currentMapping: ColumnMapping | null;
-  setMapping: (mapping: ColumnMapping | null) => void;
+  currentMappings: ColumnMapping[];
+  setMappings: (mappings: MapperOptionValue[] | null) => void;
 }
 
 export default function HeaderMapperRow({
   mappingSelectionOptions,
   csvHeader,
   examples,
-  currentMapping,
-  setMapping,
+  currentMappings,
+  setMappings,
 }: Props) {
-  const currentHeaderOption =
-    currentMapping == null
-      ? null
-      : (mappingSelectionOptions.find(
-          (option) =>
-            option.value.sheetId === currentMapping.sheetId &&
-            option.value.sheetColumnId === currentMapping.sheetColumnId
-        ) ?? null);
+  const currentHeaderOptions = mappingSelectionOptions
+    .filter((option) =>
+      currentMappings.some(
+        (mapping) =>
+          mapping.sheetId === option.value.sheetId &&
+          mapping.sheetColumnId === option.value.sheetColumnId
+      )
+    )
+    .map((option) => option.value);
 
   return (
     <div className="my-5">
@@ -36,14 +37,8 @@ export default function HeaderMapperRow({
               mappingSelectionOptions={mappingSelectionOptions}
               csvHeader={csvHeader}
               examples={examples}
-              currentMapping={currentHeaderOption}
-              setMapping={(newMappingOption) => {
-                setMapping(
-                  newMappingOption == null
-                    ? null
-                    : { ...newMappingOption.value, csvColumnName: csvHeader }
-                );
-              }}
+              currentMappings={currentHeaderOptions}
+              setMappings={setMappings}
             />
           </Col>
         </Row>

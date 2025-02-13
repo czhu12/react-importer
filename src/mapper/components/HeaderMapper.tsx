@@ -45,21 +45,22 @@ export default function HeaderMapper({
       </div>
       {csvHeaders.map((header, columnIndex) => {
         const examples = calculateMappingExamples(data, header);
-        const headerMapping =
-          currentMapping.find((mapping) => mapping.csvColumnName === header) ??
-          null;
+        const headerMappings =
+          currentMapping.filter(
+            (mapping) => mapping.csvColumnName === header
+          ) ?? [];
 
         return (
           <HeaderMapperRow
             key={columnIndex}
             csvHeader={header}
             examples={examples}
-            currentMapping={headerMapping}
-            setMapping={(headerMapping) => {
+            currentMappings={headerMappings}
+            setMappings={(headerMappings) => {
               const newMappings = calculateNewMappingsForCsvColumnMapingChanged(
                 currentMapping,
                 header,
-                headerMapping
+                headerMappings
               );
 
               onMappingsChanged(newMappings);
@@ -71,7 +72,9 @@ export default function HeaderMapper({
       <div className="my-5">
         <Row>
           <Col>
-            <Button variant="secondary" outline>Back</Button>
+            <Button variant="secondary" outline>
+              Back
+            </Button>
           </Col>
           <Col>
             <div className="text-right">
