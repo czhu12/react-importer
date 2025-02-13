@@ -1,4 +1,4 @@
-import { Align, Button, Col, Margin, Row } from '../../components';
+import { Button, Col, Row } from '../../components';
 
 interface Props {
   onSubmit: () => void;
@@ -6,14 +6,14 @@ interface Props {
 
 export default function SubmitButton({ onSubmit }: Props) {
   return (
-    <Margin margin="20px 0">
+    <div className="my-5">
       <Row>
         <Col>
-          <Align right>
+          <div className="text-right">
             <Button onClick={onSubmit}>Upload</Button>
-          </Align>
+          </div>
         </Col>
       </Row>
-    </Margin>
+    </div>
   );
 }

@@ -8,7 +8,6 @@ import {
 
 import { filterEmptyRows } from '../../utils';
 import { useTheme } from '../../theme/ThemeProvider';
-import Margin from '../../components/Margin';
 import { SheetDefinition, SheetState, SheetRow } from '../types';
 import {
   CellChangedPayload,
@@ -95,7 +94,7 @@ export default function SheetDataEditor({
 
   return (
     <div>
-      <Margin margin="20px 0">
+      <div className="my-5">
         {displayOnlyShowErrorsCheckbox && (
           <div>
             <input
@@ -132,7 +131,7 @@ export default function SheetDataEditor({
             All rows pass validation!
           </div>
         )}
-      </Margin>
+      </div>
 
       <div className="overflow-x-auto max-h-[80vh]">
         <table className="min-w-full divide-y divide-gray-300">
