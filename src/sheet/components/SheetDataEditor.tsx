@@ -156,10 +156,12 @@ export default function SheetDataEditor({
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {table.getRowModel().rows.map((row, rowIndex) => (
+            {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell, cellIndex) => {
                   const columnId = sheetDefinition.columns[cellIndex].id;
+                  // TODO: Check if it works correctly for 2 idneitcal rows
+                  const rowIndex = data.rows.indexOf(row.original);
 
                   return (
                     <td
