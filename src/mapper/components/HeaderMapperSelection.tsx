@@ -1,4 +1,4 @@
-import { Col, Margin, Padded, Row, Table, Select } from '../../components';
+import { Col, Row, Table, Select } from '../../components';
 import { ImporterOutputFieldType, MapperOption } from '../../types';
 
 interface Props {
@@ -18,11 +18,11 @@ export default function HeaderMapperSelection({
 }: Props) {
   return (
     <div>
-      <Margin margin="20px 0">
+      <div className="my-5">
         <Row>
           <Col verticallyCenter spaceBetween>
-            <Margin margin="0 10px">{csvHeader.slice(0, 30)}</Margin>
-            <Padded padding="0 20px">
+            <div className="mx-2.5">{csvHeader.slice(0, 30)}</div>
+            <div className="mx-5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -36,7 +36,7 @@ export default function HeaderMapperSelection({
                   d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
                 />
               </svg>
-            </Padded>
+            </div>
           </Col>
           <Col>
             <Select
@@ -49,7 +49,7 @@ export default function HeaderMapperSelection({
             />
           </Col>
         </Row>
-      </Margin>
+      </div>
       <Table>
         <tbody>
           {examples.map((e, idx) => {

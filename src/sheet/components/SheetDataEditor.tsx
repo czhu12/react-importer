@@ -16,7 +16,6 @@ import {
 } from 'ag-grid-community';
 
 import { useTheme } from '../../theme/ThemeProvider';
-import Margin from '../../components/Margin';
 import { SheetDefinition, SheetState, SheetRow } from '../types';
 import { CellChangedPayload, ImporterValidationError } from '../../types';
 
@@ -91,7 +90,7 @@ export default function SheetDataEditor({
 
   return (
     <div>
-      <Margin margin="20px 0">
+      <div className="my-5">
         {(!hasData() || hasErrors) && (
           <div>
             <input
@@ -130,7 +129,7 @@ export default function SheetDataEditor({
             All rows pass validation!
           </div>
         )}
-      </Margin>
+      </div>
       <div style={{ height: 500, width: '100%' }} className="ag-theme-alpine">
         <AgGridReact<SheetRow>
           onCellValueChanged={onCellValueChanged}

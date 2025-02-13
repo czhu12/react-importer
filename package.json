@@ -56,6 +56,7 @@
     "@heroicons/react": "^2.2.0",
     "ag-grid-community": "^33.1.0",
     "ag-grid-react": "^33.1.0",
+    "cva": "npm:class-variance-authority@^0.7.1",
     "papaparse": "^5.4.1",
     "react-dropzone": "^14.3.5"
   }

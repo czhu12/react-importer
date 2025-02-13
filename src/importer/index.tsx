@@ -4,7 +4,7 @@ import FileUploader from './components/FileUploader';
 import HeaderMapper from '../mapper/components/HeaderMapper';
 import SheetDataEditor from '../sheet/components/SheetDataEditor';
 import Completed from './components/Completed';
-import { Root, Margin, Container } from '../components';
+import { Root, Container } from '../components';
 import { delay } from '../utils/timing';
 import { buildInitialState, reducer } from './reducer';
 import {
@@ -130,11 +130,11 @@ export default function Importer({
           {mode === 'initial' && (
             <div>
               <FileUploader setFile={onFileUploaded} />
-              <Margin margin="40px 0 10px 0">
+              <div className="mt-10 mb-2.5">
                 <h6 onClick={onEnterDataManually}>
                   Or just manually enter your data
                 </h6>
-              </Margin>
+              </div>
             </div>
           )}
           {mode === 'mapping' && (
