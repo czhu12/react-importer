@@ -20,14 +20,14 @@ interface Props {
 const buttonStyles = cva('text-center inline-block font-bold', {
   variants: {
     variant: {
-      primary: 'shadow-xs bg-sky-700  text-white',
+      primary: 'shadow-xs bg-primary text-white',
       secondary:
-        'bg-white text-sky-700 ring-1 shadow-xs ring-sky-700 ring-inset',
+        'bg-white text-primary ring-1 shadow-xs ring-bg-primary ring-inset',
       tertiary:
         'bg-white text-gray-500 ring-1 shadow-xs ring-gray-300 ring-inset',
-      success: 'shadow-xs bg-emerald-500 text-white',
-      danger: 'shadow-xs bg-red-600 text-white',
-      warning: 'shadow-xs bg-orange-600 text-white',
+      success: 'shadow-xs bg-success text-white',
+      danger: 'shadow-xs bg-danger text-white',
+      warning: 'shadow-xs bg-warning text-white',
     },
     size: {
       xs: 'px-2 py-2.5 rounded-sm text-sm',

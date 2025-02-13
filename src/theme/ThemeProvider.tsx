@@ -1,21 +1,29 @@
-import { createContext, ReactNode, useContext } from 'preact/compat';
-import { ImporterTheme } from '../types';
-import { THEME_DEFAULT } from './themes';
-
-const ThemeContext = createContext<ImporterTheme>(THEME_DEFAULT);
+import { ReactNode, useEffect } from 'preact/compat';
+import { ThemeVariant } from '../types';
 
 interface ThemeProviderProps {
-  theme?: ImporterTheme;
+  theme?: ThemeVariant;
   children: ReactNode;
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
-  theme = THEME_DEFAULT,
+  theme,
   children,
 }) => {
+
+  useEffect(() => {
+    if (theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
+    } else {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      }
+    }
+  }, [theme]);
+
   return (
-    <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
+    <>{children}</>
   );
 };
-
-export const useTheme = () => useContext(ThemeContext);

@@ -15,7 +15,6 @@ import {
   GridReadyEvent,
 } from 'ag-grid-community';
 
-import { useTheme } from '../../theme/ThemeProvider';
 import { SheetDefinition, SheetState, SheetRow } from '../types';
 import { CellChangedPayload, ImporterValidationError } from '../../types';
 
@@ -86,8 +85,6 @@ export default function SheetDataEditor({
 
   const hasErrors = sheetValidationErrors.length > 0;
 
-  const theme = useTheme();
-
   return (
     <div>
       <div className="my-5">
@@ -110,7 +107,8 @@ export default function SheetDataEditor({
         {hasData() && !hasErrors && (
           <div
             style={{
-              color: theme.colors.success,
+              // TODO: Check that this color is applied correctly
+              color: 'bg-success',
               fontWeight: 'bold',
               display: 'flex',
               alignItems: 'center',

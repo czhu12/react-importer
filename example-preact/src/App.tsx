@@ -1,14 +1,14 @@
 import { useState } from 'preact/hooks';
 import Importer, {
-  THEME_SIGNAL,
-  THEME_FRESCA,
+  THEME_ONE,
+  THEME_TWO,
   THEME_DEFAULT,
   ImporterTheme,
   SheetState,
 } from 'react-importer';
 import 'react-importer/dist/react-importer.css';
 
-const ALL_THEMES = [THEME_DEFAULT, THEME_SIGNAL, THEME_FRESCA];
+const ALL_THEMES = [THEME_DEFAULT, THEME_ONE, THEME_TWO];
 const CONTENT = `import Importer from 'react-importer'
 
 <Importer
@@ -46,31 +46,25 @@ const ThemeCard = ({
     <div className="theme-card" onClick={onClick}>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <div
-          className="theme-color"
-          style={{ backgroundColor: theme.colors.primary }}
+          className={`theme-color ${theme.colors.primary}`}
         ></div>
         <div
-          className="theme-color"
-          style={{ backgroundColor: theme.colors.success }}
+          className={`theme-color ${theme.colors.success}`}
         ></div>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <div
-          className="theme-color"
-          style={{ backgroundColor: theme.colors.danger }}
+          className={`theme-color ${theme.colors.danger}`}
         ></div>
         <div
-          className="theme-color"
-          style={{ backgroundColor: theme.colors.info }}
+          className={`theme-color ${theme.colors.info}`}
         ></div>
         <div
-          className="theme-color"
-          style={{ backgroundColor: theme.colors.warning }}
+          className={`theme-color ${theme.colors.warning}`}
         ></div>
         <div
-          className="theme-color"
-          style={{ backgroundColor: theme.colors.light }}
+          className={`theme-color ${theme.colors.tertiary}`}
         ></div>
       </div>
     </div>
@@ -140,7 +134,7 @@ const App = () => {
             Want to see a demo? Try uploading <a href="data.csv">this file</a>.
           </h1>
           <Importer
-            theme={{ ...ALL_THEMES[currentTheme] }}
+            theme={ALL_THEMES[currentTheme]?.theme}
             sheets={[
               {
                 id: 'sheet_1',
@@ -216,11 +210,11 @@ const App = () => {
               onClick={() => setCurrentTheme(0)}
             />
             <ThemeCard
-              theme={THEME_FRESCA}
+              theme={THEME_ONE}
               onClick={() => setCurrentTheme(1)}
             />
             <ThemeCard
-              theme={THEME_SIGNAL}
+              theme={THEME_TWO}
               onClick={() => setCurrentTheme(2)}
             />
           </div>

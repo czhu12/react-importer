@@ -1,7 +1,6 @@
 import { useEffect } from 'preact/compat';
 import { FileWithPath, useDropzone } from 'react-dropzone';
-import { useTheme } from '../../theme/ThemeProvider';
-import { Card, TextStyled, Row, Col, Button } from '../../components';
+import { Card, Row, Col, Button } from '../../components';
 
 interface Props {
   setFile: (file: FileWithPath) => void;
@@ -20,7 +19,6 @@ export default function FileUploader({ setFile }: Props) {
   const backgroundColor = isDragAccept
     ? 'rgb(236, 240, 241)'
     : 'rgb(250, 250, 250)';
-  const theme = useTheme();
   return (
     <Card
       {...getRootProps()}
@@ -28,8 +26,8 @@ export default function FileUploader({ setFile }: Props) {
     >
       <div className="p-7.5">
         <input {...getInputProps()} />
-        <div className="mb-7.5">
-          <TextStyled muted>Pick a file</TextStyled>
+        <div className="text-secondary mb-7.5">
+          Pick a file
         </div>
         <Row>
           <Col flex="3">
@@ -40,8 +38,7 @@ export default function FileUploader({ setFile }: Props) {
                   xmlns="http://www.w3.org/2000/svg"
                   width="48"
                   height="48"
-                  fill={theme.colors.secondary}
-                  className="bi bi-cloud-arrow-up"
+                  className="bi bi-cloud-arrow-up fill-secondary"
                   viewBox="0 0 16 16"
                 >
                   <path
@@ -55,13 +52,28 @@ export default function FileUploader({ setFile }: Props) {
                 <h5 style={{ marginBottom: '10px' }}>
                   Drag and drop your file here
                 </h5>
-                <TextStyled muted>Limit 20MB • CSV</TextStyled>
+                <div className="text-secondary">Limit 20MB • CSV</div>
               </Col>
             </Row>
           </Col>
           <Col flex="1">
             <div className="text-right">
+              <Button variant="primary">
+                Browse Files
+              </Button>
+              <Button variant="secondary">
+                Browse Files
+              </Button>
               <Button variant="tertiary">
+                Browse Files
+              </Button>
+              <Button variant="success">
+                Browse Files
+              </Button>
+              <Button variant="danger">
+                Browse Files
+              </Button>
+              <Button variant="warning">
                 Browse Files
               </Button>
             </div>
