@@ -1,12 +1,24 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { ImporterOutputFieldType } from '../../types';
+import {
+  ImporterOutputFieldType,
+  SheetColumnDefinition,
+  SheetState,
+} from '../../types';
+import { Select } from '../../components';
 
 interface Props {
+  columnDefinition: SheetColumnDefinition;
   value: ImporterOutputFieldType;
   onUpdated: (value: ImporterOutputFieldType) => void;
+  allData: SheetState[];
 }
 
-export default function SheetDataEditorCell({ value, onUpdated }: Props) {
+export default function SheetDataEditorCell({
+  columnDefinition,
+  value,
+  onUpdated,
+  allData,
+}: Props) {
   const [editMode, setEditMode] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -34,6 +46,29 @@ export default function SheetDataEditorCell({ value, onUpdated }: Props) {
   function updateValue(value: string) {
     setEditMode(false);
     onUpdated(value ?? '');
+  }
+
+  if (columnDefinition.type === 'reference') {
+    const referenceArguments = columnDefinition.typeArguments;
+    const referenceSheetData = allData.find(
+      (data) => data.sheetId === referenceArguments.sheetId
+    );
+    const referenceData =
+      referenceSheetData?.rows?.map(
+        (row) => row[referenceArguments.sheetColumnId]
+      ) ?? [];
+    const selectOptions = referenceData.map((value) => ({
+      label: value,
+      value,
+    }));
+
+    return (
+      <Select
+        options={selectOptions}
+        value={{ value, label: value }}
+        onChange={(option) => updateValue(option?.value ?? '')}
+      />
+    );
   }
 
   return (

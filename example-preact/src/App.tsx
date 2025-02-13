@@ -197,6 +197,16 @@ const App = () => {
                     type: 'string',
                     validators: [{ validate: 'required' }],
                   },
+                  {
+                    label: 'Name',
+                    id: 'name',
+                    type: 'reference',
+                    typeArguments: {
+                      sheetId: 'sheet_1',
+                      sheetColumnId: 'name',
+                    },
+                    validators: [{ validate: 'required' }],
+                  },
                 ],
               },
             ]}

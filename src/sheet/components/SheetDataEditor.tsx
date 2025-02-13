@@ -21,6 +21,7 @@ const columnHelper = createColumnHelper<SheetRow>();
 interface Props {
   sheetDefinition: SheetDefinition;
   data: SheetState;
+  allData: SheetState[];
   sheetValidationErrors: ImporterValidationError[];
   setRowData: (payload: CellChangedPayload) => void;
 }
@@ -28,6 +29,7 @@ interface Props {
 export default function SheetDataEditor({
   sheetDefinition,
   data,
+  allData,
   sheetValidationErrors,
   setRowData,
 }: Props) {
@@ -175,6 +177,12 @@ export default function SheetDataEditor({
                     `}
                     >
                       <SheetDataEditorCell
+                        columnDefinition={
+                          sheetDefinition.columns.find(
+                            (c) => c.id === columnId
+                          )!
+                        }
+                        allData={allData}
                         value={cell.getValue() as ImporterOutputFieldType}
                         onUpdated={(value) =>
                           onCellValueChanged(rowIndex, columnId, value)
