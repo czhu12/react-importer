@@ -1,17 +1,6 @@
-import {
-  formatData,
-  buildSuggestedHeaderMappings,
-  filterEmptyRows,
-  filterInvalidRows,
-  fieldIsRequired,
-} from './';
+import { formatData, filterEmptyRows } from './';
 import { describe, it, expect } from 'vitest';
-import { ValidationResult } from '../validators';
-const fields = [
-  { label: 'Full Name', key: 'name' },
-  { label: 'Email', key: 'email' },
-  { label: 'Phone Number', key: 'phone_number' },
-];
+
 const headerMappings = {
   0: {
     columnIndex: 0,
@@ -59,102 +48,14 @@ describe('formatData', () => {
   });
 });
 
-describe('buildSuggestedHeaderMappings', () => {
-  it('creates suggested header mappings', () => {
-    const suggestedHeaderMappings = buildSuggestedHeaderMappings(
-      fields,
-      data[0]
-    );
-    const phoneNumberMapping = Object.values(suggestedHeaderMappings).find(
-      (headerMapping) => headerMapping.name === 'Phone Number'
-    );
-    expect(phoneNumberMapping.selectedField.value).toEqual('phone_number');
-
-    const emailMapping = Object.values(suggestedHeaderMappings).find(
-      (headerMapping) => headerMapping.name === 'Email'
-    );
-    expect(emailMapping.selectedField.value).toEqual('email');
-
-    const nameMapping = Object.values(suggestedHeaderMappings).find(
-      (headerMapping) => headerMapping.name === 'Name'
-    );
-    expect(nameMapping.selectedField.value).toEqual('name');
-  });
-});
-
 describe('filterEmptyRows', () => {
   it('it filters out empty rows', () => {
     expect(
-      filterEmptyRows([
-        { rowIndex: 0, key: 'hello' },
-        { rowIndex: 1 },
-        { rowIndex: 2 },
-      ]).length
+      filterEmptyRows({
+        rows: [{ key: 'hello' }, {}, {}],
+      }).length
     ).toEqual(1);
-    expect(
-      filterEmptyRows([{ rowIndex: 0 }, { rowIndex: 1 }, { rowIndex: 2 }])
-        .length
-    ).toEqual(0);
-    expect(filterEmptyRows([]).length).toEqual(0);
-  });
-});
-
-describe('filterInvalidRows', () => {
-  it('it filters out invalid rows', () => {
-    const validationResult = new ValidationResult();
-    validationResult.addError('email', 0, {});
-    expect(
-      filterInvalidRows(
-        [
-          { rowIndex: 0, email: 'hello' }, // This row is invalid
-          { rowIndex: 1 },
-          { rowIndex: 2 },
-        ],
-        validationResult
-      ).length
-    ).toEqual(0);
-  });
-});
-
-describe('buildFinalData', () => {
-  it('it builds a final set of data that filters out invalid and empty rows', () => {
-    const validationResult = new ValidationResult();
-    validationResult.addError('email', 0, {});
-    expect(
-      filterInvalidRows(
-        [
-          { rowIndex: 0, email: 'hello' }, // This row is invalid
-          { rowIndex: 1, email: 'chris@example.com' }, // This row is invalid
-          { rowIndex: 2 },
-          { rowIndex: 3 },
-        ],
-        validationResult
-      ).length
-    ).toEqual(1);
-  });
-});
-
-describe('fieldIsRequired', () => {
-  it('returns true if field is required', () => {
-    const field = {
-      label: 'Test Group ID',
-      key: 'test_group_id',
-      validators: [{ validate: 'required' }, { validate: 'unique' }],
-    };
-    expect(fieldIsRequired(field)).toEqual(true);
-  });
-
-  it('returns true if field has no validators', () => {
-    const field = { label: 'Test Group ID', key: 'test_group_id' };
-    expect(fieldIsRequired(field)).toEqual(false);
-  });
-
-  it('returns true if field has empty validators', () => {
-    const field = {
-      label: 'Test Group ID',
-      key: 'test_group_id',
-      validators: [],
-    };
-    expect(fieldIsRequired(field)).toEqual(false);
+    expect(filterEmptyRows({ rows: [{}, {}, {}] }).length).toEqual(0);
+    expect(filterEmptyRows({ rows: [] }).length).toEqual(0);
   });
 });

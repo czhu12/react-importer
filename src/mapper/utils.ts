@@ -1,5 +1,10 @@
 import { NUMBER_OF_EXAMPLES_IN_MAPPING } from '../constants';
-import { ColumnMapping, CSVParsedData, SheetDefinition } from '../types';
+import {
+  ColumnMapping,
+  CSVParsedData,
+  MapperOptionValue,
+  SheetDefinition,
+} from '../types';
 
 function buildSheetSuggestedHeaderMappings(
   sheet: SheetDefinition,
@@ -52,33 +57,30 @@ export const buildSuggestedHeaderMappings = (
 export function calculateNewMappingsForCsvColumnMapingChanged(
   currentMapping: ColumnMapping[],
   csvColumnName: string,
-  newMaping: ColumnMapping | null
-) {
-  if (newMaping == null) {
-    return currentMapping.filter((m) => m.csvColumnName !== csvColumnName);
+  newCsvColumnMaping: MapperOptionValue[] | null
+): ColumnMapping[] {
+  if (newCsvColumnMaping == null) {
+    return currentMapping;
   }
 
   // Make sure we don't allow dupplicate mappings for the same sheet column
   const currentFilteredMapping = currentMapping.filter(
-    (m) =>
-      m.sheetId !== newMaping.sheetId ||
-      m.sheetColumnId !== newMaping.sheetColumnId
+    (currentM) =>
+      newCsvColumnMaping.find(
+        (newM) =>
+          currentM.sheetId === newM.sheetId &&
+          currentM.sheetColumnId === newM.sheetColumnId
+      ) == null
   );
 
-  const existingMappingForCsvColumn = currentFilteredMapping.find(
-    (m) => m.csvColumnName === csvColumnName
+  const mappingsForOtherColumns = currentFilteredMapping.filter(
+    (m) => m.csvColumnName !== csvColumnName
   );
 
-  if (existingMappingForCsvColumn == null) {
-    return [...currentFilteredMapping, newMaping];
-  }
-
-  return currentFilteredMapping.map((mapping) => {
-    if (mapping.csvColumnName === csvColumnName) {
-      return newMaping;
-    }
-    return mapping;
-  });
+  return [
+    ...mappingsForOtherColumns,
+    ...newCsvColumnMaping.map((m) => ({ ...m, csvColumnName })),
+  ];
 }
 
 export function calculateMappingExamples(

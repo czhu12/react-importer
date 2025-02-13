@@ -1,4 +1,5 @@
 import { SheetDefinition } from '../types';
+import Tabs from '../../components/Tabs';
 
 interface Props {
   sheetDefinitions: SheetDefinition[];
@@ -12,21 +13,13 @@ export default function SheetsSwitcher({
   onSheetChange,
 }: Props) {
   return (
-    <div className="flex">
-      {sheetDefinitions.map((sheet, index) => (
-        <div key={sheet.id}>
-          <button
-            onClick={() => onSheetChange(sheet.id)}
-            className={activeSheetId === sheet.id ? 'underline' : ''}
-          >
-            {sheet.label}
-          </button>
-
-          {index !== sheetDefinitions.length - 1 && (
-            <span className="mx-3"> | </span>
-          )}
-        </div>
-      ))}
-    </div>
+    <Tabs
+      tabs={sheetDefinitions.map((sheet) => ({
+        label: sheet.label,
+        value: sheet.id,
+      }))}
+      activeTab={activeSheetId}
+      onTabChange={onSheetChange}
+    />
   );
 }

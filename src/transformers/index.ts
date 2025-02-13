@@ -2,7 +2,6 @@ import {
   ImporterOutputFieldType,
   SheetColumnDefinition,
   SheetDefinition,
-  SheetRow,
   SheetState,
 } from '../types';
 import { eachWithObject, hasData } from '../utils/functional';
@@ -13,8 +12,6 @@ function transformSheet(
   sheetDefinition: SheetDefinition,
   sheetData: SheetState
 ) {
-  const sheetRows: SheetRow[] = [];
-
   const pipelineByColumnId = eachWithObject<SheetColumnDefinition, Pipeline>(
     sheetDefinition.columns,
     (columnDefinition, obj) => {
@@ -44,7 +41,7 @@ function transformSheet(
     });
   });
 
-  return sheetRows;
+  return sheetData.rows;
 }
 
 export function applyTransformations(
@@ -68,7 +65,7 @@ export function applyTransformations(
   return newSheetStates;
 }
 
-class Pipeline {
+export class Pipeline {
   steps: Transformer[];
 
   // Series of transformations
