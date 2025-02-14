@@ -1,5 +1,7 @@
 # react-importer
 
+> A modern CSV importer written in React
+
 # TODOS
 
 - Notify progress & notify errors on import
