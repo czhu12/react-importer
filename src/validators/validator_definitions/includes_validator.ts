@@ -17,7 +17,9 @@ export class IncludesValidator extends Validator {
 
   isValid(fieldValue: ImporterOutputFieldType) {
     if (!this.values.includes(fieldValue)) {
-      return this.definition.error || 'This value is not valid';
+      return (
+        this.definition.error || 'Value is not in the list of allowed values'
+      );
     }
   }
 }

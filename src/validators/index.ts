@@ -1,8 +1,9 @@
 import { hasData, eachWithObject } from '../utils/functional';
-import { ImporterValidationError } from './types';
+import { ImporterValidationError, ImporterValidatorDefinition } from './types';
 import { SheetColumnDefinition, SheetDefinition, SheetState } from '../types';
 import { Validator } from './validator_definitions/base';
 import { buildValidatorFromDefinition } from './validator_definitions';
+import { extractReferenceColumnPossibleValues } from '../sheet/utils';
 
 export function fieldIsRequired(columnDefinition: SheetColumnDefinition) {
   if (columnDefinition.validators && columnDefinition.validators.length > 0) {
@@ -14,9 +15,38 @@ export function fieldIsRequired(columnDefinition: SheetColumnDefinition) {
   return false;
 }
 
+function automaticFieldValidators(
+  columnDefinition: SheetColumnDefinition,
+  allData: SheetState[]
+): ImporterValidatorDefinition[] {
+  const result: ImporterValidatorDefinition[] = [];
+
+  if (columnDefinition.type === 'enum') {
+    result.push({
+      values: columnDefinition.typeArguments.values.map((v) => v.value),
+      validate: 'includes',
+    });
+  }
+
+  if (columnDefinition.type === 'reference') {
+    const referenceData = extractReferenceColumnPossibleValues(
+      columnDefinition,
+      allData
+    );
+
+    result.push({
+      values: referenceData,
+      validate: 'includes',
+    });
+  }
+
+  return result;
+}
+
 function validateSheet(
   sheetDefinition: SheetDefinition,
-  sheetData: SheetState
+  sheetData: SheetState,
+  allData: SheetState[]
 ) {
   const validationErrors: ImporterValidationError[] = [];
 
@@ -25,8 +55,13 @@ function validateSheet(
     Validator[]
   >(sheetDefinition.columns, (columnDefinition, obj) => {
     obj[columnDefinition.id] = [];
-    if (!columnDefinition.validators) return;
-    columnDefinition.validators.forEach((validatorDefinition) => {
+
+    const validatorDefinitions = [
+      ...(columnDefinition.validators ?? []),
+      ...automaticFieldValidators(columnDefinition, allData),
+    ];
+
+    validatorDefinitions.forEach((validatorDefinition) => {
       obj[columnDefinition.id].push(
         buildValidatorFromDefinition(validatorDefinition)
       );
@@ -74,7 +109,7 @@ export function applyValidations(
     );
 
     if (sheetData) {
-      const errors = validateSheet(sheetDefinition, sheetData);
+      const errors = validateSheet(sheetDefinition, sheetData, sheetStates);
 
       validationErrors.push(...errors);
     }
