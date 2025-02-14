@@ -7,14 +7,14 @@ import {
 import { ChevronUpDownIcon } from '@heroicons/react/16/solid';
 import { CheckIcon } from '@heroicons/react/20/solid';
 
-interface Option<T> {
+export interface SelectOption<T> {
   label: string;
   value: T;
 }
 
 interface Props<T> {
   value: T[] | T | null;
-  options: Option<T>[];
+  options: SelectOption<T>[];
   onChange: (value: T[] | T | null) => void;
   multiple?: boolean;
   compareFunction?: (a: T, b: T) => boolean;
