@@ -44,7 +44,7 @@ export default function HeaderMapperSelection({
             </div>
           </Col>
           <Col>
-            <Select<MapperOptionValue>
+            <Select
               // TODO THIS BRANCH: Add back the following props
               // isClearable
               // isSearchable
