@@ -1,1 +1,24 @@
 @import "tailwindcss";
+
+.rubik {
+  font-family: 'Rubik', sans-serif;
+}
+.content {
+	@apply py-12 max-w-6xl mx-auto px-4;
+}
+
+footer {
+	@apply h-96 bg-[#263E52] text-[#f4f4f4] text-2xl font-light pt-40 pb-40;
+}
+
+.theme-card {
+	@apply w-96 h-96 bg-[#f4f4f4] rounded-lg shadow-lg;
+}
+
+.theme-card {
+	@apply hover:bg-[#eee] transition-all duration-300 cursor-pointer flex-grow p-4 m-2 rounded-lg shadow-lg;
+}
+
+.theme-card .theme-color {
+	@apply flex-grow m-2 rounded-lg h-40;
+}
