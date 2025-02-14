@@ -51,7 +51,8 @@ const buttonStyles = cva('text-center inline-block font-semibold', {
     {
       variant: 'secondary',
       disabled: false,
-      className: 'hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary',
+      className:
+        'hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary',
     },
     {
       variant: 'tertiary',

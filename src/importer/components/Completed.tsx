@@ -4,7 +4,7 @@ const CircularProgress = ({ progress }: { progress: number }) => {
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <svg className="w-24 h-24 mx-auto rotate-[-90deg]" width="100" height="100">
+    <svg className="mx-auto h-24 w-24 rotate-[-90deg]" width="100" height="100">
       <circle
         cx="50"
         cy="50"
@@ -22,7 +22,7 @@ const CircularProgress = ({ progress }: { progress: number }) => {
         strokeWidth="10"
         strokeDasharray={circumference}
         strokeDashoffset={offset}
-        className="transition-[stroke-dashoffset] duration-500 stroke-success"
+        className="stroke-success transition-[stroke-dashoffset] duration-500"
       />
     </svg>
   );
@@ -30,10 +30,10 @@ const CircularProgress = ({ progress }: { progress: number }) => {
 
 const Failed = () => {
   return (
-    <div className="text-center my-16">
-      <div className="w-24 h-24 mx-auto relative">
+    <div className="my-16 text-center">
+      <div className="relative mx-auto h-24 w-24">
         <svg
-          className="absolute inset-0 m-auto fill-danger"
+          className="fill-danger absolute inset-0 m-auto"
           xmlns="http://www.w3.org/2000/svg"
           width="64"
           height="64"
@@ -50,7 +50,7 @@ const Failed = () => {
 const SuccessIcon = () => {
   return (
     <svg
-      className="absolute inset-0 m-auto fill-success"
+      className="fill-success absolute inset-0 m-auto"
       xmlns="http://www.w3.org/2000/svg"
       width="64"
       height="64"
@@ -69,8 +69,8 @@ const Uploading = ({
   pending?: boolean;
 }) => {
   return (
-    <div className="text-center my-16">
-      <div className="w-24 h-24 mx-auto relative">
+    <div className="my-16 text-center">
+      <div className="relative mx-auto h-24 w-24">
         <CircularProgress progress={progress} />
         {!pending && <SuccessIcon />}
         {pending && (

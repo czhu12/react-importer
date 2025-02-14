@@ -106,6 +106,7 @@ const ThemeCard = ({
     </div>
   );
 };
+
 const App = () => {
   const [ready, setReady] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<ThemeVariant>('default');

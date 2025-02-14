@@ -111,9 +111,7 @@ export default function SheetDataEditor({
           </div>
         )}
         {!displayOnlyShowErrorsCheckbox && (
-          <div
-            className="font-bold flex items-center text-success"
-          >
+          <div className="text-success flex items-center font-bold">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -129,7 +127,7 @@ export default function SheetDataEditor({
         )}
       </div>
 
-      <div className="overflow-x-auto max-h-[80vh]">
+      <div className="max-h-[80vh] overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-300">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -137,7 +135,7 @@ export default function SheetDataEditor({
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sticky top-0 bg-white"
+                    className="sticky top-0 bg-white py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900"
                   >
                     {header.isPlaceholder
                       ? null
@@ -166,9 +164,7 @@ export default function SheetDataEditor({
                       title={cellErrors(columnId, rowIndex)
                         .map((e) => e.message)
                         .join(', ')}
-                      className={`py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 
-                      ${hasCellErrors(columnId, rowIndex) ? 'bg-red-100' : ''}
-                    `}
+                      className={`py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 ${hasCellErrors(columnId, rowIndex) ? 'bg-red-100' : ''} `}
                     >
                       <SheetDataEditorCell
                         columnDefinition={

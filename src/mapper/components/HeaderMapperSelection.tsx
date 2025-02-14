@@ -23,7 +23,7 @@ export default function HeaderMapperSelection({
 }: Props) {
   return (
     <div>
-      <div className="flex items-center my-5">
+      <div className="my-5 flex items-center">
         <div className="mx-2.5">{csvHeader.slice(0, 30)}</div>
         <div className="mx-5">
           <svg

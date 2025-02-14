@@ -26,9 +26,7 @@ export default function FileUploader({ setFile }: Props) {
     >
       <div className="p-7.5">
         <input {...getInputProps()} />
-        <div className="mb-7.5">
-          Pick a file
-        </div>
+        <div className="mb-7.5">Pick a file</div>
         <div className="flex">
           <div className="flex-3">
             <div className="flex">
@@ -58,9 +56,7 @@ export default function FileUploader({ setFile }: Props) {
           </div>
           <div className="flex-1">
             <div className="text-right">
-              <Button>
-                Browse Files
-              </Button>
+              <Button>Browse Files</Button>
             </div>
           </div>
         </div>

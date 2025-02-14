@@ -164,7 +164,7 @@ export default function Importer({
                 )}
                 setRowData={onCellChanged}
               />
-              <div className="text-right my-5">
+              <div className="my-5 text-right">
                 <Button onClick={onSubmit}>Upload</Button>
               </div>
             </>
