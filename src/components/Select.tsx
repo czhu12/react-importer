@@ -7,14 +7,15 @@ import {
 import { ChevronUpDownIcon } from '@heroicons/react/16/solid';
 import { CheckIcon } from '@heroicons/react/20/solid';
 
-interface Option<T> {
+export interface SelectOption<T> {
   label: string;
   value: T;
+  icon?: React.ReactNode;
 }
 
 interface Props<T> {
   value: T[] | T | null;
-  options: Option<T>[];
+  options: SelectOption<T>[];
   onChange: (value: T[] | T | null) => void;
   multiple?: boolean;
   compareFunction?: (a: T, b: T) => boolean;
@@ -70,8 +71,10 @@ export default function Select<T>({
             <ListboxOption
               key={option.value as string}
               value={option.value}
-              className="group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
+              className="flex items-center group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
             >
+              {option.icon}
+
               <span className="block truncate font-normal group-data-selected:font-semibold">
                 {option.label}
               </span>

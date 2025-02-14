@@ -154,6 +154,7 @@ export default function Importer({
                 onSheetChange={(sheetId) =>
                   dispatch({ type: 'SHEET_CHANGED', payload: { sheetId } })
                 }
+                validationErrors={validationErrors}
               />
               <SheetDataEditor
                 data={currentSheetData!}
