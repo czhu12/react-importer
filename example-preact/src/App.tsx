@@ -178,6 +178,7 @@ const App = () => {
                     label: 'State',
                     id: 'state',
                     type: 'string',
+                    isReadOnly: true,
                     transformers: [{ transformer: 'state_code' }],
                   },
                 ],
