@@ -22,12 +22,12 @@
     }
 
     [csv-importer-data-theme="theme-1"] {
-        --theme-color-primary: theme(colors.blue.600);
-        --theme-color-secondary: theme(colors.blue.400);
+        --theme-color-primary: theme(colors.blue.400);
+        --theme-color-secondary: theme(colors.purple.300);
         --theme-color-tertiary: theme(colors.blue.300);
-        --theme-color-success: theme(colors.green.600);
-        --theme-color-danger: theme(colors.red.600);
-        --theme-color-warning: theme(colors.yellow.500);
+        --theme-color-success: theme(colors.green.400);
+        --theme-color-danger: theme(colors.red.500);
+        --theme-color-warning: theme(colors.orange.400);
         --theme-color-info: theme(colors.sky.400);
     }
 

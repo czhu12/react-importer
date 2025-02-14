@@ -17,13 +17,13 @@ const THEME_DEFAULT: Theme = {
 
 const THEME_ONE: Theme = {
   colors: {
-    primary: '#2563eb',
-    secondary: '#60a5fa',
+    primary: '#42a5f5',
+    secondary: '#ce93d8',
     tertiary: '#93c5fd',
-    success: '#16a34a',
-    danger: '#dc2626',
-    warning: '#eab308',
-    info: '#38bdf8',
+    success: '#66bb6a',
+    danger: '#f44336',
+    warning: '#ffa726',
+    info: '#29b6f6',
   },
 };
 
