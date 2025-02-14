@@ -89,13 +89,12 @@ export default function Button2({
   variant,
   disabled,
   onClick,
-  style,
   size,
 }: Props) {
   const componentClassName = buttonStyles({ variant, disabled, size });
 
   return (
-    <div className={componentClassName} style={style} onClick={onClick}>
+    <div className={componentClassName} onClick={onClick}>
       {children}
     </div>
   );

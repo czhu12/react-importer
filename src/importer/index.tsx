@@ -13,7 +13,7 @@ import {
   FileWithPath,
   ImporterDefinition,
 } from '../types';
-import { ThemeProvider } from '../theme/ThemeProvider';
+import { ThemeSetter } from '../theme/ThemeSetter';
 import { parseCsv } from '../parser';
 import { getMappedData } from '../mapper';
 import { filterEmptyRows } from '../utils';
@@ -124,7 +124,7 @@ export default function Importer({
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeSetter theme={theme}>
       <Root>
         <Container>
           {mode === 'initial' && (
@@ -175,6 +175,6 @@ export default function Importer({
           )}
         </Container>
       </Root>
-    </ThemeProvider>
+    </ThemeSetter>
   );
 }

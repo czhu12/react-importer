@@ -58,22 +58,7 @@ export default function FileUploader({ setFile }: Props) {
           </Col>
           <Col flex="1">
             <div className="text-right">
-              <Button variant="primary">
-                Browse Files
-              </Button>
-              <Button variant="secondary">
-                Browse Files
-              </Button>
               <Button variant="tertiary">
-                Browse Files
-              </Button>
-              <Button variant="success">
-                Browse Files
-              </Button>
-              <Button variant="danger">
-                Browse Files
-              </Button>
-              <Button variant="warning">
                 Browse Files
               </Button>
             </div>

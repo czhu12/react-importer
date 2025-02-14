@@ -21,7 +21,7 @@
         --theme-color-info: theme(colors.sky.500);
     }
 
-    [data-theme="theme-1"] {
+    [csv-importer-data-theme="theme-1"] {
         --theme-color-primary: theme(colors.blue.600);
         --theme-color-secondary: theme(colors.blue.400);
         --theme-color-tertiary: theme(colors.blue.300);
@@ -31,7 +31,7 @@
         --theme-color-info: theme(colors.sky.400);
     }
 
-    [data-theme="theme-2"] {
+    [csv-importer-data-theme="theme-2"] {
         --theme-color-primary: theme(colors.slate.600);
         --theme-color-secondary: theme(colors.slate.400);
         --theme-color-tertiary: theme(colors.slate.300);
