@@ -176,6 +176,7 @@ const App = () => {
                         validate: 'regex_matches',
                         regex:
                           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        error: 'This email is not valid',
                       },
                     ],
                   },
@@ -208,6 +209,16 @@ const App = () => {
                     label: 'Industry',
                     id: 'industry',
                     type: 'string',
+                    validators: [{ validate: 'required' }],
+                  },
+                  {
+                    label: 'Name',
+                    id: 'name',
+                    type: 'reference',
+                    typeArguments: {
+                      sheetId: 'sheet_1',
+                      sheetColumnId: 'name',
+                    },
                     validators: [{ validate: 'required' }],
                   },
                 ],

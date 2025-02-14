@@ -1,19 +1,24 @@
 import { Col, Row, Table, Select } from '../../components';
-import { ImporterOutputFieldType, MapperOption } from '../../types';
+import {
+  ColumnMapping,
+  ImporterOutputFieldType,
+  MapperOption,
+  MapperOptionValue,
+} from '../../types';
 
 interface Props {
   csvHeader: string;
   examples: ImporterOutputFieldType[];
-  currentMapping: MapperOption | null;
-  setMapping: (header: MapperOption | null) => void;
+  currentMappings: MapperOptionValue[] | null;
+  setMappings: (header: MapperOptionValue[] | null) => void;
   mappingSelectionOptions: MapperOption[];
 }
 
 export default function HeaderMapperSelection({
   csvHeader,
   examples,
-  setMapping,
-  currentMapping,
+  setMappings,
+  currentMappings,
   mappingSelectionOptions,
 }: Props) {
   return (
@@ -39,13 +44,19 @@ export default function HeaderMapperSelection({
             </div>
           </Col>
           <Col>
-            <Select
+            <Select<MapperOptionValue>
               // TODO THIS BRANCH: Add back the following props
               // isClearable
               // isSearchable
-              value={currentMapping}
+              compareFunction={(a, b) =>
+                a.sheetColumnId === b.sheetColumnId && a.sheetId === b.sheetId
+              }
+              multiple
+              value={currentMappings}
               options={mappingSelectionOptions}
-              onChange={setMapping}
+              onChange={(mappings) =>
+                setMappings(mappings as ColumnMapping[] | null)
+              }
             />
           </Col>
         </Row>

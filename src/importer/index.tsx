@@ -157,6 +157,7 @@ export default function Importer({
               />
               <SheetDataEditor
                 data={currentSheetData!}
+                allData={sheetData}
                 sheetDefinition={currentSheetDefinition!}
                 sheetValidationErrors={validationErrors.filter(
                   (error) => error.sheetId === currentSheetDefinition?.id

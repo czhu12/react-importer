@@ -84,7 +84,7 @@ const buttonStyles = cva('text-center inline-block font-bold', {
   },
 });
 
-export default function Button2({
+export default function Button({
   children,
   variant,
   disabled,
