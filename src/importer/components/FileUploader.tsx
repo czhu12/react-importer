@@ -1,6 +1,6 @@
 import { useEffect } from 'preact/compat';
 import { FileWithPath, useDropzone } from 'react-dropzone';
-import { Card, Row, Col, Button } from '../../components';
+import { Card, Col, Button } from '../../components';
 
 interface Props {
   setFile: (file: FileWithPath) => void;
@@ -29,9 +29,9 @@ export default function FileUploader({ setFile }: Props) {
         <div className="text-secondary mb-7.5">
           Pick a file
         </div>
-        <Row>
+        <div className="flex">
           <Col flex="3">
-            <Row>
+            <div className="flex">
               <Col flex="1">
                 <svg
                   style={{ marginRight: '20px' }}
@@ -54,7 +54,7 @@ export default function FileUploader({ setFile }: Props) {
                 </h5>
                 <div className="text-secondary">Limit 20MB • CSV</div>
               </Col>
-            </Row>
+            </div>
           </Col>
           <Col flex="1">
             <div className="text-right">
@@ -63,7 +63,7 @@ export default function FileUploader({ setFile }: Props) {
               </Button>
             </div>
           </Col>
-        </Row>
+        </div>
       </div>
     </Card>
   );

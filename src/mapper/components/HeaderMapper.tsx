@@ -1,4 +1,4 @@
-import { Button, Col, Row } from '../../components';
+import { Button, Col } from '../../components';
 import { ColumnMapping, ParsedFile, SheetDefinition } from '../../types';
 import {
   calculateMappingExamples,
@@ -70,7 +70,7 @@ export default function HeaderMapper({
         );
       })}
       <div className="my-5">
-        <Row>
+        <div className="flex">
           <Col>
             <Button variant="secondary" outline>
               Back
@@ -81,7 +81,7 @@ export default function HeaderMapper({
               <Button onClick={onMappingsSet}>Confirm</Button>
             </div>
           </Col>
-        </Row>
+        </div>
       </div>
     </div>
   );

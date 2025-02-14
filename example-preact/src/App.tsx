@@ -111,7 +111,6 @@ const App = () => {
       <div className="container">
         <div className="header">
           <div className="main">
-            <div className="bg-sky-700">Hello</div>
             <svg
               style={{ marginRight: '20px' }}
               xmlns="http://www.w3.org/2000/svg"

@@ -1,4 +1,4 @@
-import { Col, Row, Table, Select } from '../../components';
+import { Col, Table, Select } from '../../components';
 import {
   ColumnMapping,
   ImporterOutputFieldType,
@@ -24,7 +24,7 @@ export default function HeaderMapperSelection({
   return (
     <div>
       <div className="my-5">
-        <Row>
+        <div className="flex">
           <Col verticallyCenter spaceBetween>
             <div className="mx-2.5">{csvHeader.slice(0, 30)}</div>
             <div className="mx-5">
@@ -59,7 +59,7 @@ export default function HeaderMapperSelection({
               }
             />
           </Col>
-        </Row>
+        </div>
       </div>
       <Table>
         <tbody>

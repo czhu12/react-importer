@@ -1,4 +1,4 @@
-import { Button, Col, Row } from '../../components';
+import { Button, Col } from '../../components';
 
 interface Props {
   onSubmit: () => void;
@@ -7,13 +7,13 @@ interface Props {
 export default function SubmitButton({ onSubmit }: Props) {
   return (
     <div className="my-5">
-      <Row>
+      <div className="flex">
         <Col>
           <div className="text-right">
             <Button onClick={onSubmit}>Upload</Button>
           </div>
         </Col>
-      </Row>
+      </div>
     </div>
   );
 }
