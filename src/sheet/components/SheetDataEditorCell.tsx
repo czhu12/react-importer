@@ -58,7 +58,8 @@ export default function SheetDataEditorCell({
     const referenceData =
       referenceSheetData?.rows
         ?.map((row) => row[referenceArguments.sheetColumnId])
-        ?.filter((c) => !isEmptyCell(c)) ?? [];
+        ?.filter((c) => !isEmptyCell(c))
+        ?.filter((c, index, allData) => allData.indexOf(c) === index) ?? []; // Remove duplicates
 
     const selectOptions = referenceData.map((value) => ({
       label: value,
