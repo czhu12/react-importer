@@ -75,15 +75,33 @@ const ThemeCard = ({
   return (
     <div className="theme-card" onClick={onClick}>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <div className="theme-color" style={{ backgroundColor: theme.colors.primary }}></div>
-        <div className="theme-color" style={{ backgroundColor: theme.colors.secondary }}></div>
+        <div
+          className="theme-color"
+          style={{ backgroundColor: theme.colors.primary }}
+        ></div>
+        <div
+          className="theme-color"
+          style={{ backgroundColor: theme.colors.secondary }}
+        ></div>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <div className="theme-color" style={{ backgroundColor: theme.colors.tertiary }}  ></div>
-        <div className="theme-color" style={{ backgroundColor: theme.colors.success }}></div>
-        <div className="theme-color" style={{ backgroundColor: theme.colors.warning }}></div>
-        <div className="theme-color" style={{ backgroundColor: theme.colors.danger }}></div>
+        <div
+          className="theme-color"
+          style={{ backgroundColor: theme.colors.tertiary }}
+        ></div>
+        <div
+          className="theme-color"
+          style={{ backgroundColor: theme.colors.success }}
+        ></div>
+        <div
+          className="theme-color"
+          style={{ backgroundColor: theme.colors.warning }}
+        ></div>
+        <div
+          className="theme-color"
+          style={{ backgroundColor: theme.colors.danger }}
+        ></div>
       </div>
     </div>
   );
