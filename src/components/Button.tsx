@@ -24,7 +24,7 @@ const buttonStyles = cva('text-center inline-block font-semibold', {
       secondary:
         'bg-white text-primary ring-1 shadow-xs ring-bg-primary ring-inset',
       tertiary:
-        'bg-white text-gray-500 ring-1 shadow-xs ring-gray-300 ring-inset',
+        'bg-white text-tertiary ring-1 shadow-xs ring-tertiary ring-inset',
       success: 'shadow-xs bg-success text-white',
       danger: 'shadow-xs bg-danger text-white',
       warning: 'shadow-xs bg-warning text-white',

@@ -58,7 +58,7 @@ export default function FileUploader({ setFile }: Props) {
           </div>
           <div className="flex-1">
             <div className="text-right">
-              <Button>
+              <Button variant="tertiary">
                 Browse Files
               </Button>
             </div>
