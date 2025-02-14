@@ -18,6 +18,7 @@ export type SheetColumnDefinition =
 interface SheetColumnBaseDefinition {
   id: string;
   label: string;
+  isReadOnly?: boolean;
   validators?: ImporterValidatorDefinition[];
   transformers?: ImporterTransformerDefinition[];
 }

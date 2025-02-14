@@ -32,11 +32,13 @@ export default function SheetDataEditorCell({
   const valueEmpty = value == null || value.trim() === '';
   // Use non-breaking space to keep the cell height
   const nonEmptyValue = valueEmpty ? '\u00A0' : value;
+  const readOnly = columnDefinition.isReadOnly;
 
   if (!editMode) {
     return (
       <div
-        onClick={(e) => e.detail > 1 && setEditMode(true)}
+        onClick={(e) => !readOnly && e.detail > 1 && setEditMode(true)}
+        title={readOnly ? 'Read only' : 'Double click to edit'}
         className="w-full h-full"
       >
         {nonEmptyValue}
