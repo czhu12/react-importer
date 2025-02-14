@@ -1,4 +1,4 @@
-import { Button, Col, Row } from '../../components';
+import { Button } from '../../components';
 import { ColumnMapping, ParsedFile, SheetDefinition } from '../../types';
 import {
   calculateMappingExamples,
@@ -69,19 +69,11 @@ export default function HeaderMapper({
           />
         );
       })}
-      <div className="my-5">
-        <Row>
-          <Col>
-            <Button variant="secondary" outline>
-              Back
-            </Button>
-          </Col>
-          <Col>
-            <div className="text-right">
-              <Button onClick={onMappingsSet}>Confirm</Button>
-            </div>
-          </Col>
-        </Row>
+      <div className="my-5 flex justify-between">
+        <Button variant="secondary" outline>
+          Back
+        </Button>
+        <Button onClick={onMappingsSet}>Confirm</Button>
       </div>
     </div>
   );

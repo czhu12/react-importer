@@ -1,16 +1,49 @@
 import { useState } from 'react';
 import Importer, {
-  THEME_SIGNAL,
-  THEME_FRESCA,
-  THEME_DEFAULT,
-  ImporterTheme,
   SheetState,
   MappedData,
   SheetRow,
+  ThemeVariant,
 } from 'react-importer';
 import 'react-importer/dist/react-importer.css';
+import { ImporterTheme } from './types';
 
-const ALL_THEMES = [THEME_DEFAULT, THEME_SIGNAL, THEME_FRESCA];
+const THEME_DEFAULT: ImporterTheme = {
+  colors: {
+    primary: '#0369a1',
+    secondary: '#0284c7',
+    tertiary: '#f59e0b',
+    success: '#10b981',
+    danger: '#dc2626',
+    warning: '#facc15',
+    info: '#0ea5e9',
+  },
+};
+
+const THEME_ONE: ImporterTheme = {
+  colors: {
+    primary: '#42a5f5',
+    secondary: '#ce93d8',
+    tertiary: '#93c5fd',
+    success: '#66bb6a',
+    danger: '#f44336',
+    warning: '#ffa726',
+    info: '#29b6f6',
+  },
+};
+
+const THEME_TWO: ImporterTheme = {
+  colors: {
+    primary: '#475569',
+    secondary: '#94a3b8',
+    tertiary: '#cbd5e1',
+    success: '#3f6212',
+    danger: '#b91c1c',
+    warning: '#ca8a04',
+    info: '#0369a1',
+  },
+};
+
 const CONTENT = `import Importer from 'react-importer'
 
 <Importer
@@ -53,18 +86,18 @@ const ThemeCard = ({
         ></div>
         <div
           className="theme-color"
-          style={{ backgroundColor: theme.colors.success }}
+          style={{ backgroundColor: theme.colors.secondary }}
         ></div>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <div
           className="theme-color"
-          style={{ backgroundColor: theme.colors.danger }}
+          style={{ backgroundColor: theme.colors.tertiary }}
         ></div>
         <div
           className="theme-color"
-          style={{ backgroundColor: theme.colors.info }}
+          style={{ backgroundColor: theme.colors.success }}
         ></div>
         <div
           className="theme-color"
@@ -72,15 +105,16 @@ const ThemeCard = ({
         ></div>
         <div
           className="theme-color"
-          style={{ backgroundColor: theme.colors.light }}
+          style={{ backgroundColor: theme.colors.danger }}
         ></div>
       </div>
     </div>
   );
 };
+
 const App = () => {
   const [ready, setReady] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState(0);
+  const [currentTheme, setCurrentTheme] = useState<ThemeVariant>('default');
 
   function mapData(data: MappedData) {
     return data.map((sheet) => {
@@ -132,7 +166,7 @@ const App = () => {
     console.log(data);
     setReady(true);
   };
-  console.log(ALL_THEMES);
+
   return (
     <div>
       <div className="container">
@@ -180,7 +214,7 @@ const App = () => {
           </h1>
           <Importer
             onDataColumnsMapped={mapData}
-            theme={{ ...ALL_THEMES[currentTheme] }}
+            theme={currentTheme}
             sheets={[
               {
                 id: 'immunizations',
@@ -239,15 +273,15 @@ const App = () => {
           <div className="theme-wrapper">
             <ThemeCard
               theme={THEME_DEFAULT}
-              onClick={() => setCurrentTheme(0)}
+              onClick={() => setCurrentTheme('default')}
             />
             <ThemeCard
-              theme={THEME_FRESCA}
-              onClick={() => setCurrentTheme(1)}
+              theme={THEME_ONE}
+              onClick={() => setCurrentTheme('theme-1')}
             />
             <ThemeCard
-              theme={THEME_SIGNAL}
-              onClick={() => setCurrentTheme(2)}
+              theme={THEME_TWO}
+              onClick={() => setCurrentTheme('theme-2')}
             />
           </div>
         </div>

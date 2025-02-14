@@ -1,1 +1,43 @@
 @import "tailwindcss";
+
+@theme {
+    --color-primary: var(--theme-color-primary);
+    --color-secondary: var(--theme-color-secondary);
+    --color-tertiary: var(--theme-color-tertiary);
+    --color-success: var(--theme-color-success);
+    --color-danger: var(--theme-color-danger);
+    --color-warning: var(--theme-color-warning);
+    --color-info: var(--theme-color-info);
+}
+
+@layer base {
+    :root {
+        --theme-color-primary: theme(colors.sky.700);
+        --theme-color-secondary: theme(colors.sky.600);
+        --theme-color-tertiary: theme(colors.amber.500);
+        --theme-color-success: theme(colors.emerald-500);
+        --theme-color-danger: theme(colors.red.600);
+        --theme-color-warning: theme(colors.yellow.400);
+        --theme-color-info: theme(colors.sky.500);
+    }
+
+    [csv-importer-data-theme="theme-1"] {
+        --theme-color-primary: theme(colors.blue.400);
+        --theme-color-secondary: theme(colors.purple.300);
+        --theme-color-tertiary: theme(colors.blue.300);
+        --theme-color-success: theme(colors.green.400);
+        --theme-color-danger: theme(colors.red.500);
+        --theme-color-warning: theme(colors.orange.400);
+        --theme-color-info: theme(colors.sky.400);
+    }
+
+    [csv-importer-data-theme="theme-2"] {
+        --theme-color-primary: theme(colors.slate.600);
+        --theme-color-secondary: theme(colors.slate.400);
+        --theme-color-tertiary: theme(colors.slate.300);
+        --theme-color-success: theme(colors.lime.700);
+        --theme-color-danger: theme(colors.red.700);
+        --theme-color-warning: theme(colors.yellow.600);
+        --theme-color-info: theme(colors.sky.700);
+    }
+}
