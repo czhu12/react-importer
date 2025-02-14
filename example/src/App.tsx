@@ -5,6 +5,8 @@ import Importer, {
   THEME_DEFAULT,
   ImporterTheme,
   SheetState,
+  MappedData,
+  SheetRow,
 } from 'react-importer';
 import 'react-importer/dist/react-importer.css';
 
@@ -80,6 +82,43 @@ const App = () => {
   const [ready, setReady] = useState(false);
   const [currentTheme, setCurrentTheme] = useState(0);
 
+  function mapData(data: MappedData) {
+    return data.map((sheet) => {
+      if (sheet.sheetId !== 'students') return sheet;
+
+      const studentsMap = new Map<string, string[]>();
+
+      sheet.rows.forEach((row) => {
+        const studentId = row['id'];
+        const studentName = row['name'];
+
+        if (!studentsMap.has(studentId)) {
+          studentsMap.set(studentId, [studentName]);
+        } else {
+          const currentNames = studentsMap.get(studentId) as string[];
+          if (!currentNames.includes(studentName)) {
+            currentNames.push(studentName);
+          }
+        }
+      });
+
+      const newRows: SheetRow[] = [];
+      studentsMap.forEach((names, id) => {
+        names.forEach((name) => {
+          newRows.push({
+            id,
+            name,
+          });
+        });
+      });
+
+      return {
+        ...sheet,
+        rows: newRows,
+      };
+    });
+  }
+
   const onComplete = async (
     data: SheetState[],
     onProgress: (progress: number) => void
@@ -140,44 +179,49 @@ const App = () => {
             Want to see a demo? Try uploading <a href="data.csv">this file</a>.
           </h1>
           <Importer
+            onDataColumnsMapped={mapData}
             theme={{ ...ALL_THEMES[currentTheme] }}
             sheets={[
               {
-                id: 'sheet_1',
-                label: 'Sheet 1',
+                id: 'immunizations',
+                label: 'Immunizations',
                 columns: [
                   {
-                    label: 'Name',
+                    label: 'Immunization name',
                     id: 'name',
                     type: 'string',
                     validators: [{ validate: 'required' }],
                   },
                   {
-                    label: 'Email',
-                    id: 'email',
+                    label: 'Student ID',
+                    id: 'student_id',
+                    type: 'reference',
+                    typeArguments: {
+                      sheetId: 'students',
+                      sheetColumnId: 'id',
+                    },
+                    validators: [{ validate: 'required' }],
+                  },
+                ],
+              },
+              {
+                id: 'students',
+                label: 'Students',
+                columns: [
+                  {
+                    label: 'Student id',
+                    id: 'id',
                     type: 'string',
                     validators: [
                       { validate: 'required' },
-                      { validate: 'unique', error: 'This email is not unique' },
-                      {
-                        validate: 'regex_matches',
-                        regex:
-                          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                      },
+                      { validate: 'unique' },
                     ],
                   },
                   {
-                    label: 'Phone Number',
-                    id: 'phone_number',
+                    label: 'Student name',
+                    id: 'name',
                     type: 'string',
                     validators: [{ validate: 'required' }],
-                  },
-                  { label: 'City', id: 'city', type: 'string' },
-                  {
-                    label: 'State',
-                    id: 'state',
-                    type: 'string',
-                    transformers: [{ transformer: 'state_code' }],
                   },
                 ],
               },
