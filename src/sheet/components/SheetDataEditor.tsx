@@ -112,10 +112,7 @@ export default function SheetDataEditor({
         )}
         {!displayOnlyShowErrorsCheckbox && (
           <div
-            style={{
-              color: 'bg-success',
-            }}
-            className="font-bold flex items-center"
+            className="font-bold flex items-center text-success"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
