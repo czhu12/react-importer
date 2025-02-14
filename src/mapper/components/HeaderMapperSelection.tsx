@@ -24,7 +24,7 @@ export default function HeaderMapperSelection({
   return (
     <div>
       <div className="my-5 flex items-center">
-        <div className="mx-2.5">{csvHeader.slice(0, 30)}</div>
+        <div className="mx-2.5 flex-1">{csvHeader.slice(0, 30)}</div>
         <div className="mx-5">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +41,7 @@ export default function HeaderMapperSelection({
           </svg>
         </div>
 
-        <div className="flex-1">
+        <div className="flex-4">
           <Select
             // TODO THIS BRANCH: Add back the following props
             // isClearable
