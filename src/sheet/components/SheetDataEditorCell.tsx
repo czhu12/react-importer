@@ -32,7 +32,7 @@ export default function SheetDataEditorCell({
         inputRef.current.focus();
       }
     }
-  }, [editMode, clearRowsSelection]);
+  }, [editMode]);
 
   const valueEmpty = value == null || value.trim() === '';
   // Use non-breaking space to keep the cell height
