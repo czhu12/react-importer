@@ -126,6 +126,7 @@ export default function SheetDataEditorTable({
                       onUpdated={(value) =>
                         onCellValueChanged(rowIndex, columnId, value)
                       }
+                      clearRowsSelection={() => setSelectedRows([])}
                     />
                   </td>
                 );
