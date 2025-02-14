@@ -1,7 +1,7 @@
 import { useState } from 'preact/hooks';
-import Importer, { SheetState } from 'react-importer';
+import Importer, { SheetState, ThemeVariant } from 'react-importer';
 import 'react-importer/dist/react-importer.css';
-import { ThemeVariant, ImporterTheme } from './types';
+import { ImporterTheme } from './types';
 
 const THEME_DEFAULT: ImporterTheme = {
   colors: {

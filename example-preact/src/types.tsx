@@ -9,5 +9,3 @@ export type ImporterTheme = {
     info: string;
   };
 };
-
-export type ThemeVariant = 'default' | 'theme-1' | 'theme-2';
