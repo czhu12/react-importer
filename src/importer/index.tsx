@@ -4,7 +4,7 @@ import FileUploader from './components/FileUploader';
 import HeaderMapper from '../mapper/components/HeaderMapper';
 import SheetDataEditor from '../sheet/components/SheetDataEditor';
 import Completed from './components/Completed';
-import { Root, Container } from '../components';
+import { Root } from '../components';
 import { delay } from '../utils/timing';
 import { buildInitialState, reducer } from './reducer';
 import {
@@ -130,59 +130,57 @@ export default function Importer({
   return (
     <ThemeSetter theme={theme}>
       <Root>
-        <Container>
-          {mode === 'initial' && (
-            <div>
-              <FileUploader setFile={onFileUploaded} />
-              <div className="mt-10 mb-2.5">
-                <h6 onClick={onEnterDataManually}>
-                  Or just manually enter your data
-                </h6>
-              </div>
+        {mode === 'initial' && (
+          <div>
+            <FileUploader setFile={onFileUploaded} />
+            <div className="mt-10 mb-2.5">
+              <h6 onClick={onEnterDataManually}>
+                Or just manually enter your data
+              </h6>
             </div>
-          )}
-          {mode === 'mapping' && (
-            <HeaderMapper
-              parsed={parsedFile!}
+          </div>
+        )}
+        {mode === 'mapping' && (
+          <HeaderMapper
+            parsed={parsedFile!}
+            sheetDefinitions={sheets}
+            currentMapping={columnMappings ?? []}
+            onMappingsChanged={onMappingsChanged}
+            onMappingsSet={onMappingsSet}
+          />
+        )}
+        {mode === 'preview' && (
+          <>
+            <SheetsSwitcher
+              activeSheetId={currentSheetId}
               sheetDefinitions={sheets}
-              currentMapping={columnMappings ?? []}
-              onMappingsChanged={onMappingsChanged}
-              onMappingsSet={onMappingsSet}
+              onSheetChange={(sheetId) =>
+                dispatch({ type: 'SHEET_CHANGED', payload: { sheetId } })
+              }
+              validationErrors={validationErrors}
             />
-          )}
-          {mode === 'preview' && (
-            <>
-              <SheetsSwitcher
-                activeSheetId={currentSheetId}
-                sheetDefinitions={sheets}
-                onSheetChange={(sheetId) =>
-                  dispatch({ type: 'SHEET_CHANGED', payload: { sheetId } })
-                }
-                validationErrors={validationErrors}
-              />
-              <SheetDataEditor
-                data={currentSheetData!}
-                allData={sheetData}
-                sheetDefinition={currentSheetDefinition!}
-                sheetValidationErrors={validationErrors.filter(
-                  (error) => error.sheetId === currentSheetDefinition?.id
-                )}
-                setRowData={onCellChanged}
-                removeRows={onRemoveRows}
-              />
-              <div className="my-5 text-right">
-                <Button onClick={onSubmit}>Upload</Button>
-              </div>
-            </>
-          )}
-          {['submit', 'failed', 'completed'].includes(mode) && (
-            <Completed
-              pending={mode === 'submit'}
-              progress={importProgress}
-              failed={mode === 'failed'}
+            <SheetDataEditor
+              data={currentSheetData!}
+              allData={sheetData}
+              sheetDefinition={currentSheetDefinition!}
+              sheetValidationErrors={validationErrors.filter(
+                (error) => error.sheetId === currentSheetDefinition?.id
+              )}
+              setRowData={onCellChanged}
+              removeRows={onRemoveRows}
             />
-          )}
-        </Container>
+            <div className="my-5 text-right">
+              <Button onClick={onSubmit}>Upload</Button>
+            </div>
+          </>
+        )}
+        {['submit', 'failed', 'completed'].includes(mode) && (
+          <Completed
+            pending={mode === 'submit'}
+            progress={importProgress}
+            failed={mode === 'failed'}
+          />
+        )}
       </Root>
     </ThemeSetter>
   );
