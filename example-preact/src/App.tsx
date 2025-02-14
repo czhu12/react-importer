@@ -1,9 +1,9 @@
 import { useState } from 'preact/hooks';
 import Importer, { SheetState } from 'react-importer';
 import 'react-importer/dist/react-importer.css';
-import { ThemeVariant, Theme } from './types';
+import { ThemeVariant, ImporterTheme } from './types';
 
-const THEME_DEFAULT: Theme = {
+const THEME_DEFAULT: ImporterTheme = {
   colors: {
     primary: '#0369a1',
     secondary: '#0284c7',
@@ -15,7 +15,7 @@ const THEME_DEFAULT: Theme = {
   },
 };
 
-const THEME_ONE: Theme = {
+const THEME_ONE: ImporterTheme = {
   colors: {
     primary: '#42a5f5',
     secondary: '#ce93d8',
@@ -27,7 +27,7 @@ const THEME_ONE: Theme = {
   },
 };
 
-const THEME_TWO: Theme = {
+const THEME_TWO: ImporterTheme = {
   colors: {
     primary: '#475569',
     secondary: '#94a3b8',
@@ -69,7 +69,7 @@ const ThemeCard = ({
   theme,
   onClick,
 }: {
-  theme: typeof THEME_DEFAULT;
+  theme: ImporterTheme;
   onClick: () => void;
 }) => {
   return (

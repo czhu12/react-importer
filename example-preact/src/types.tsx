@@ -1,4 +1,4 @@
-export type Theme = {
+export type ImporterTheme = {
   colors: {
     primary: string;
     secondary: string;

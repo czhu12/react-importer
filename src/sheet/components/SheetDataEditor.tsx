@@ -113,7 +113,6 @@ export default function SheetDataEditor({
         {!displayOnlyShowErrorsCheckbox && (
           <div
             style={{
-              // TODO: Check that this color is applied correctly
               color: 'bg-success',
             }}
             className="font-bold flex items-center"
