@@ -31,17 +31,13 @@ export default function HeaderMapperRow({
   return (
     <div className="my-5">
       <Card>
-        <div className="flex">
-          <div className="flex-1">
-            <HeaderMapperSelection
-              mappingSelectionOptions={mappingSelectionOptions}
-              csvHeader={csvHeader}
-              examples={examples}
-              currentMappings={currentHeaderOptions}
-              setMappings={setMappings}
-            />
-          </div>
-        </div>
+        <HeaderMapperSelection
+          mappingSelectionOptions={mappingSelectionOptions}
+          csvHeader={csvHeader}
+          examples={examples}
+          currentMappings={currentHeaderOptions}
+          setMappings={setMappings}
+        />
       </Card>
     </div>
   );

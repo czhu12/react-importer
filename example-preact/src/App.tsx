@@ -108,7 +108,7 @@ const ThemeCard = ({
 };
 const App = () => {
   const [ready, setReady] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState('default');
+  const [currentTheme, setCurrentTheme] = useState<ThemeVariant>('default');
 
   const onComplete = async (
     data: SheetState[],
@@ -170,7 +170,7 @@ const App = () => {
             Want to see a demo? Try uploading <a href="data.csv">this file</a>.
           </h1>
           <Importer
-            theme={currentTheme as ThemeVariant}
+            theme={currentTheme}
             sheets={[
               {
                 id: 'sheet_1',

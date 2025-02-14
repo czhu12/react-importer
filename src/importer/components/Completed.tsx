@@ -1,17 +1,7 @@
-const CircularProgress = ({
-  progress,
-  variant,
-}: {
-  progress: number;
-  variant: "success" | "info";
-}) => {
+const CircularProgress = ({ progress }: { progress: number }) => {
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (progress / 100) * circumference;
-  const variants = {
-    success: "stroke-success",
-    info: "stroke-info",
-  };
 
   return (
     <svg className="w-24 h-24 mx-auto rotate-[-90deg]" width="100" height="100">
@@ -32,7 +22,7 @@ const CircularProgress = ({
         strokeWidth="10"
         strokeDasharray={circumference}
         strokeDashoffset={offset}
-        className={`transition-[stroke-dashoffset] duration-500 ${variants[variant]}`}
+        className="transition-[stroke-dashoffset] duration-500 stroke-success"
       />
     </svg>
   );
@@ -81,7 +71,7 @@ const Uploading = ({
   return (
     <div className="text-center my-16">
       <div className="w-24 h-24 mx-auto relative">
-        <CircularProgress progress={progress} variant="success" />
+        <CircularProgress progress={progress} />
         {!pending && <SuccessIcon />}
         {pending && (
           <div className="absolute inset-0 flex items-center justify-center">

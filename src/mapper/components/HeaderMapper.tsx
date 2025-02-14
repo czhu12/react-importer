@@ -69,19 +69,11 @@ export default function HeaderMapper({
           />
         );
       })}
-      <div className="my-5">
-        <div className="flex">
-          <div className="flex-1">
-            <Button variant="secondary" outline>
-              Back
-            </Button>
-          </div>
-          <div className="flex-1">
-            <div className="text-right">
-              <Button onClick={onMappingsSet}>Confirm</Button>
-            </div>
-          </div>
-        </div>
+      <div className="my-5 flex justify-between">
+        <Button variant="secondary" outline>
+          Back
+        </Button>
+        <Button onClick={onMappingsSet}>Confirm</Button>
       </div>
     </div>
   );

@@ -21,8 +21,7 @@ import { applyTransformations } from '../transformers';
 import { buildSuggestedHeaderMappings } from '../mapper/utils';
 import { NUMBER_OF_EMPTY_ROWS_FOR_MANUAL_DATA_INPUT } from '../constants';
 import SheetsSwitcher from '../sheet/components/SheetsSwitcher';
-import SubmitButton from './components/SubmitButton';
-
+import { Button } from '../components';
 export default function Importer({
   theme,
   onComplete,
@@ -164,7 +163,9 @@ export default function Importer({
                 )}
                 setRowData={onCellChanged}
               />
-              <SubmitButton onSubmit={onSubmit} />
+              <div className="text-right my-5">
+                <Button onClick={onSubmit}>Upload</Button>
+              </div>
             </>
           )}
           {['submit', 'failed', 'completed'].includes(mode) && (
