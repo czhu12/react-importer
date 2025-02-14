@@ -42,7 +42,7 @@ export default function HeaderMapperSelection({
         </div>
 
         <div className="flex-1">
-          <Select<MapperOptionValue>
+          <Select
             // TODO THIS BRANCH: Add back the following props
             // isClearable
             // isSearchable

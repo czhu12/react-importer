@@ -208,6 +208,7 @@ const App = () => {
                     label: 'State',
                     id: 'state',
                     type: 'string',
+                    isReadOnly: true,
                     transformers: [{ transformer: 'state_code' }],
                   },
                 ],
@@ -225,7 +226,13 @@ const App = () => {
                   {
                     label: 'Industry',
                     id: 'industry',
-                    type: 'string',
+                    type: 'enum',
+                    typeArguments: {
+                      values: [
+                        { label: 'Tech', value: 'tech' },
+                        { label: 'Finance', value: 'finance' },
+                      ],
+                    },
                     validators: [{ validate: 'required' }],
                   },
                   {
