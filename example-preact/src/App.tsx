@@ -195,7 +195,13 @@ const App = () => {
                   {
                     label: 'Industry',
                     id: 'industry',
-                    type: 'string',
+                    type: 'enum',
+                    typeArguments: {
+                      values: [
+                        { label: 'Tech', value: 'tech' },
+                        { label: 'Finance', value: 'finance' },
+                      ],
+                    },
                     validators: [{ validate: 'required' }],
                   },
                   {

@@ -77,6 +77,21 @@ export default function SheetDataEditorCell({
     );
   }
 
+  if (columnDefinition.type === 'enum') {
+    const enumArguments = columnDefinition.typeArguments;
+    const selectOptions = enumArguments.values;
+
+    return (
+      <Select
+        options={selectOptions}
+        value={value}
+        onChange={(value) =>
+          updateValue((value as ImporterOutputFieldType) ?? '')
+        }
+      />
+    );
+  }
+
   return (
     <input
       ref={inputRef}
