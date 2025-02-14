@@ -9,11 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.0.6",
     "preact": "^10.25.4",
     "react-importer": "file:.."
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.10.1",
+    "tailwindcss": "^3.4.17",
     "typescript": "~5.7.2",
     "vite": "^6.1.0"
   }

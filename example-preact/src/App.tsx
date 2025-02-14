@@ -95,22 +95,13 @@ const App = () => {
   };
   console.log(ALL_THEMES);
   return (
-    <div>
-      <div className="container">
-        <div className="header">
-          <div className="main">
-            <svg
-              style={{ marginRight: '20px' }}
-              xmlns="http://www.w3.org/2000/svg"
-              width="58"
-              height="58"
-              fill="#3498db"
-              className="bi bi-file-spreadsheet"
-              viewBox="0 0 16 16"
-            >
-              <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM6.354 9.854a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 8.707V12.5a.5.5 0 0 1-1 0V8.707L6.354 9.854z" />
-            </svg>
-            React Importer - PREACT
+    <div className="min-h-screen w-full">
+      <div style={{
+        backgroundImage: 'radial-gradient(circle farthest-corner at 10% 20%, rgba(237,3,32,0.87) 20.8%, rgba(242,121,1,0.84) 74.4%)',
+      }}>
+        <div className="pt-24">
+          <div className="text-center text-5xl sm:text-6xl text-[#f9ffd9] tracking-tighter leading-1">
+            A modern CSV importer in React
           </div>
           <div className="subtext">A modern CSV importer in React.</div>
         </div>
