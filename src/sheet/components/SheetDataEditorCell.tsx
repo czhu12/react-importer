@@ -12,6 +12,7 @@ interface Props {
   value: ImporterOutputFieldType;
   onUpdated: (value: ImporterOutputFieldType) => void;
   allData: SheetState[];
+  clearRowsSelection: () => void;
 }
 
 export default function SheetDataEditorCell({
@@ -19,13 +20,17 @@ export default function SheetDataEditorCell({
   value,
   onUpdated,
   allData,
+  clearRowsSelection,
 }: Props) {
   const [editMode, setEditMode] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (editMode && inputRef.current) {
-      inputRef.current.focus();
+    if (editMode) {
+      clearRowsSelection();
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
     }
   }, [editMode]);
 
@@ -39,7 +44,7 @@ export default function SheetDataEditorCell({
       <div
         onClick={(e) => !readOnly && e.detail > 1 && setEditMode(true)}
         title={readOnly ? 'Read only' : 'Double click to edit'}
-        className="w-full h-full"
+        className="h-full w-full"
       >
         {nonEmptyValue}
       </div>
