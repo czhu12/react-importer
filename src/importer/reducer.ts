@@ -68,6 +68,25 @@ const reducer = (
         validationErrors: applyValidations(state.sheetDefinitions, newData),
       };
     }
+
+    case 'REMOVE_ROWS': {
+      return {
+        ...state,
+        sheetData: state.sheetData.map((sheet) => {
+          if (sheet.sheetId === action.payload.sheetId) {
+            return {
+              ...sheet,
+              rows: sheet.rows.filter(
+                (row) => !action.payload.rows.includes(row)
+              ),
+            };
+          }
+
+          return sheet;
+        }),
+      };
+    }
+
     case 'SHEET_CHANGED':
       return { ...state, currentSheetId: action.payload.sheetId };
     case 'SUBMIT':
