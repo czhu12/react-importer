@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Importer, {
   THEME_SIGNAL,
   THEME_FRESCA,
   THEME_DEFAULT,
-  ImporterOutputField,
   ImporterTheme,
+  SheetState,
 } from 'react-importer';
-
-import 'jsoneditor-react/es/editor.min.css';
+import 'react-importer/dist/react-importer.css';
 
 const ALL_THEMES = [THEME_DEFAULT, THEME_SIGNAL, THEME_FRESCA];
 const CONTENT = `import Importer from 'react-importer'
@@ -82,7 +81,7 @@ const App = () => {
   const [currentTheme, setCurrentTheme] = useState(0);
 
   const onComplete = async (
-    data: ImporterOutputField[],
+    data: SheetState[],
     onProgress: (progress: number) => void
   ) => {
     await new Promise((resolve) => setTimeout(resolve, 200));
@@ -111,7 +110,7 @@ const App = () => {
             >
               <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM6.354 9.854a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 8.707V12.5a.5.5 0 0 1-1 0V8.707L6.354 9.854z" />
             </svg>
-            React Importer
+            React Importer - REACT
           </div>
           <div className="subtext">A modern CSV importer in React.</div>
         </div>
@@ -142,35 +141,45 @@ const App = () => {
           </h1>
           <Importer
             theme={{ ...ALL_THEMES[currentTheme] }}
-            fields={[
+            sheets={[
               {
-                label: 'Name',
-                key: 'name',
-                validators: [{ validate: 'required' }],
-              },
-              {
-                label: 'Email',
-                key: 'email',
-                validators: [
-                  { validate: 'required' },
-                  { validate: 'unique', error: 'This email is not unique' },
+                id: 'sheet_1',
+                label: 'Sheet 1',
+                columns: [
                   {
-                    validate: 'regex_matches',
-                    regex:
-                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    label: 'Name',
+                    id: 'name',
+                    type: 'string',
+                    validators: [{ validate: 'required' }],
+                  },
+                  {
+                    label: 'Email',
+                    id: 'email',
+                    type: 'string',
+                    validators: [
+                      { validate: 'required' },
+                      { validate: 'unique', error: 'This email is not unique' },
+                      {
+                        validate: 'regex_matches',
+                        regex:
+                          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      },
+                    ],
+                  },
+                  {
+                    label: 'Phone Number',
+                    id: 'phone_number',
+                    type: 'string',
+                    validators: [{ validate: 'required' }],
+                  },
+                  { label: 'City', id: 'city', type: 'string' },
+                  {
+                    label: 'State',
+                    id: 'state',
+                    type: 'string',
+                    transformers: [{ transformer: 'state_code' }],
                   },
                 ],
-              },
-              {
-                label: 'Phone Number',
-                key: 'phone_number',
-                validators: [{ validate: 'required' }],
-              },
-              { label: 'City', key: 'city' },
-              {
-                label: 'State',
-                key: 'state',
-                transformers: [{ transformer: 'state_code' }],
               },
             ]}
             onComplete={onComplete}
@@ -202,7 +211,7 @@ const App = () => {
       <footer>
         <div className="container">
           <p>
-            <i>"I'm so sick of building CSV importers"</i>
+            <i>{"I'm so sick of building CSV importers"}</i>
           </p>
           <p>- Me</p>
         </div>

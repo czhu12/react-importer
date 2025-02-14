@@ -1,105 +1,118 @@
-import React, { useReducer } from 'react';
-import Papa from 'papaparse';
-import Header from '../components/Header';
-import FileUploader from '../components/FileUploader';
-import HeaderMapper from '../components/HeaderMapper';
-import DataEditor from '../components/DataEditor';
-import Completed from '../components/Completed';
-import { fieldIsRequired, buildFinalData } from '../utils';
-import { Root, Margin, Container } from '../components/common';
+import { useReducer } from 'preact/compat';
+
+import FileUploader from './components/FileUploader';
+import HeaderMapper from '../mapper/components/HeaderMapper';
+import SheetDataEditor from '../sheet/components/SheetDataEditor';
+import Completed from './components/Completed';
+import { Root, Container } from '../components';
 import { delay } from '../utils/timing';
 import { buildInitialState, reducer } from './reducer';
 import {
-  ImporterField,
-  ImporterFormattedData,
-  ImporterOutputField,
-  ImporterOutputFieldType,
-  ImporterTheme,
+  CellChangedPayload,
+  ColumnMapping,
+  FileWithPath,
+  ImporterDefinition,
 } from '../types';
 import { ThemeProvider } from '../theme/ThemeProvider';
+import { parseCsv } from '../parser';
+import { getMappedData } from '../mapper';
+import { filterEmptyRows } from '../utils';
+import { applyTransformations } from '../transformers';
+import { buildSuggestedHeaderMappings } from '../mapper/utils';
+import { NUMBER_OF_EMPTY_ROWS_FOR_MANUAL_DATA_INPUT } from '../constants';
+import SheetsSwitcher from '../sheet/components/SheetsSwitcher';
+import SubmitButton from './components/SubmitButton';
 
-interface Props {
-  fields: ImporterField[];
-  theme: ImporterTheme;
-  onComplete: (
-    data: ImporterOutputField[],
-    onProgress: (progress: number) => void
-  ) => Promise<void>;
-}
-
-const HEADER_STEPS = ['Upload', 'Match', 'Review', 'Complete'] as const;
-
-const Importer = ({ theme, onComplete, fields }: Props) => {
+export default function Importer({
+  theme,
+  onComplete,
+  sheets,
+  onDataColumnsMapped,
+}: ImporterDefinition) {
   const [
     {
-      currentStep,
-      parsed,
-      formattedData,
-      statistics,
-      headerMappings,
-      validationResult,
-      pending,
-      progress,
-      failed,
+      mode,
+      currentSheetId,
+      sheetData,
+      columnMappings,
+      parsedFile,
+      validationErrors,
+      importProgress,
     },
     dispatch,
-  ] = useReducer(reducer, buildInitialState(fields));
+  ] = useReducer(reducer, buildInitialState(sheets));
 
-  const restart = () => {
-    dispatch({ type: 'RESTART' });
-  };
+  const currentSheetData = sheetData.find(
+    (sheet) => sheet.sheetId === currentSheetId
+  );
 
-  const setFile = (file: File) => {
-    Papa.parse<ImporterOutputFieldType[]>(file, {
-      skipEmptyLines: true,
-      complete: (newParsed) => {
+  const currentSheetDefinition = sheets.find(
+    (sheet) => sheet.id === currentSheetId
+  );
+
+  function onFileUploaded(file: FileWithPath) {
+    parseCsv({
+      file,
+      onCompleted: (newParsed) => {
         dispatch({ type: 'FILE_PARSED', payload: { parsed: newParsed } });
+
+        dispatch({
+          type: 'COLUMN_MAPPING_CHANGED',
+          payload: {
+            mappings: buildSuggestedHeaderMappings(
+              sheets,
+              newParsed.meta.fields! // TODO THIS BRANCH: Check why it can be undefined
+            ),
+          },
+        });
       },
     });
-  };
-
-  const rowData = [];
-  for (let i = 0; i < 100; i++) {
-    rowData.push({ rowIndex: i });
   }
 
-  const usedFilters = Object.keys(headerMappings)
-    .map((h) => headerMappings[h])
-    .filter((h) => !h.ignored && h.selectedField)
-    .map((h) => h.selectedField!.value);
-
-  const unselectedFields = fields.filter((filter) => {
-    return usedFilters.indexOf(filter.key) === -1;
-  });
-
-  const headers = Object.keys(headerMappings)
-    .map((h) => headerMappings[h])
-    .filter((h) => h.confirmed && h.selectedField)
-    .map((h) => h.selectedField!.value);
-
-  const selectedFields = fields.filter((f) => {
-    return headers.indexOf(f.key) >= 0;
-  });
-
-  const missingRequiredFields = fields
-    .filter((f) => fieldIsRequired(f))
-    .filter((f) => {
-      return selectedFields.map((f) => f.key).indexOf(f.key) === -1;
+  function onEnterDataManually() {
+    dispatch({
+      type: 'ENTER_DATA_MANUALLY',
+      payload: {
+        sheetDefinitions: sheets,
+        amountOfEmptyRowsToAdd: NUMBER_OF_EMPTY_ROWS_FOR_MANUAL_DATA_INPUT,
+      },
     });
+  }
 
-  const finalSelectedFields = fields.filter((f) => {
-    return headers.indexOf(f.key) >= 0 || fieldIsRequired(f);
-  });
+  function onMappingsChanged(mappings: ColumnMapping[]) {
+    dispatch({
+      type: 'COLUMN_MAPPING_CHANGED',
+      payload: { mappings },
+    });
+  }
 
-  const submitWrapper = async () => {
-    dispatch({ type: 'PENDING' });
+  async function onMappingsSet() {
+    const mappedData = getMappedData(sheets, columnMappings ?? [], parsedFile!);
+
+    const newMappedData =
+      onDataColumnsMapped != null
+        ? await onDataColumnsMapped(mappedData)
+        : mappedData;
+
+    dispatch({ type: 'DATA_MAPPED', payload: { mappedData: newMappedData } });
+  }
+
+  function onCellChanged(payload: CellChangedPayload) {
+    dispatch({ type: 'CELL_CHANGED', payload: payload });
+  }
+
+  async function onSubmit() {
+    dispatch({ type: 'SUBMIT' });
     try {
-      await onComplete(
-        buildFinalData(formattedData, validationResult),
-        (progress) => {
-          dispatch({ type: 'PROGRESS', payload: { progress: progress } });
-        }
+      // TODO THIS BRANCH: Should we filter invalid data?
+      const data = applyTransformations(
+        sheets,
+        sheetData.map((d) => ({ ...d, rows: filterEmptyRows(d) }))
       );
+
+      await onComplete(data, (progress) => {
+        dispatch({ type: 'PROGRESS', payload: { progress } });
+      });
     } catch (e) {
       dispatch({ type: 'FAILED' });
       return;
@@ -107,107 +120,62 @@ const Importer = ({ theme, onComplete, fields }: Props) => {
     await delay(400);
     dispatch({ type: 'PROGRESS', payload: { progress: 100 } });
     await delay(200);
-    dispatch({ type: 'COMPLETE' });
-  };
+    dispatch({ type: 'COMPLETED' });
+  }
 
   return (
     <ThemeProvider theme={theme}>
       <Root>
         <Container>
-          <Header
-            steps={HEADER_STEPS}
-            currentStep={currentStep}
-            onClick={(step) => {
-              const stepIndex = HEADER_STEPS.indexOf(step);
-              const currentStepValue = HEADER_STEPS[currentStep];
-
-              if (step === 'Upload') {
-                restart();
-                return;
-              }
-
-              if (
-                stepIndex < 0 ||
-                stepIndex >= currentStep ||
-                step === 'Complete' ||
-                currentStepValue === 'Complete'
-              ) {
-                return;
-              }
-
-              if (step === 'Match') {
-                // We can only go to Match from Review, so decrementing step should be enough
-                dispatch({ type: 'DECREMENT_STEP' });
-              }
-            }}
-          />
-          {currentStep === 0 && (
+          {mode === 'initial' && (
             <div>
-              <FileUploader setFile={setFile} />
-              <Margin margin="40px 0 10px 0">
-                <h6>Or just manually enter your data</h6>
-              </Margin>
-              <DataEditor
-                formattedData={
-                  formattedData.length > 0
-                    ? formattedData
-                    : (rowData as ImporterFormattedData[])
-                }
-                fields={fields}
-                validationResult={validationResult}
-                onSubmit={submitWrapper}
-                setRowData={(row, index) => {
-                  dispatch({
-                    type: 'CELL_CHANGED',
-                    payload: { index: index, row: row },
-                  });
-                }}
-              />
+              <FileUploader setFile={onFileUploaded} />
+              <div className="mt-10 mb-2.5">
+                <h6 onClick={onEnterDataManually}>
+                  Or just manually enter your data
+                </h6>
+              </div>
             </div>
           )}
-          {currentStep === 1 && (
+          {mode === 'mapping' && (
             <HeaderMapper
-              statistics={statistics}
-              parsed={parsed!}
-              fields={unselectedFields}
-              headerMappings={headerMappings}
-              missingRequiredFields={missingRequiredFields}
-              setHeaderMappings={(newHeaderMappings) => {
-                dispatch({
-                  type: 'HEADER_MAPPINGS_CHANGED',
-                  payload: { headerMappings: newHeaderMappings },
-                });
-              }}
-              restart={restart}
-              onComplete={() => {
-                dispatch({ type: 'COMPLETED_MAPPINGS' });
-              }}
+              parsed={parsedFile!}
+              sheetDefinitions={sheets}
+              currentMapping={columnMappings ?? []}
+              onMappingsChanged={onMappingsChanged}
+              onMappingsSet={onMappingsSet}
             />
           )}
-          {currentStep === 2 && (
-            <DataEditor
-              formattedData={formattedData}
-              fields={finalSelectedFields}
-              validationResult={validationResult}
-              onBack={() => {
-                dispatch({ type: 'DECREMENT_STEP' });
-              }}
-              onSubmit={submitWrapper}
-              setRowData={(row, index) => {
-                dispatch({
-                  type: 'CELL_CHANGED',
-                  payload: { index: index, row: row },
-                });
-              }}
-            />
+          {mode === 'preview' && (
+            <>
+              <SheetsSwitcher
+                activeSheetId={currentSheetId}
+                sheetDefinitions={sheets}
+                onSheetChange={(sheetId) =>
+                  dispatch({ type: 'SHEET_CHANGED', payload: { sheetId } })
+                }
+              />
+              <SheetDataEditor
+                data={currentSheetData!}
+                allData={sheetData}
+                sheetDefinition={currentSheetDefinition!}
+                sheetValidationErrors={validationErrors.filter(
+                  (error) => error.sheetId === currentSheetDefinition?.id
+                )}
+                setRowData={onCellChanged}
+              />
+              <SubmitButton onSubmit={onSubmit} />
+            </>
           )}
-          {currentStep === 3 && (
-            <Completed pending={pending} progress={progress} failed={failed} />
+          {['submit', 'failed', 'completed'].includes(mode) && (
+            <Completed
+              pending={mode === 'submit'}
+              progress={importProgress}
+              failed={mode === 'failed'}
+            />
           )}
         </Container>
       </Root>
     </ThemeProvider>
   );
-};
-
-export default Importer;
+}

@@ -1,20 +1,13 @@
+import { applyTransformations, Pipeline } from './';
 import {
-  Pipeline,
-  applyTransformations,
   PhoneNumberTransformer,
   StateCodeTransformer,
   PostalCodeTransformer,
   CustomTransformer,
   StripTransformer,
-} from './';
+} from './transformer_definitions';
+import { describe, it, expect } from 'vitest';
 
-const fields = [
-  {
-    label: 'Phone Number',
-    key: 'phone_number',
-    transformers: [{ transformer: 'phone_number' }],
-  },
-];
 describe('Pipeline', () => {
   it('can run a series of transformations', () => {
     const pipeline = new Pipeline();
@@ -25,11 +18,26 @@ describe('Pipeline', () => {
 
 describe('applyTransformations', () => {
   it('can apply transformations', () => {
-    const data = applyTransformations(
-      [{ phone_number: '555-555-5555' }],
-      fields
-    );
-    expect(data[0].phone_number).toEqual('5555555555');
+    const sheetDefinitions = [
+      {
+        id: 'a',
+        label: 'Sheet A',
+        columns: [
+          {
+            type: 'string',
+            label: 'Phone Number',
+            id: 'phone_number',
+            transformers: [{ transformer: 'phone_number' }],
+          },
+        ],
+      },
+    ];
+
+    const data = applyTransformations(sheetDefinitions, [
+      { sheetId: 'a', rows: [{ phone_number: '555-555-5555' }] },
+    ]);
+
+    expect(data[0].rows[0].phone_number).toEqual('5555555555');
   });
 });
 

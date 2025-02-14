@@ -1,15 +1,14 @@
 import { formatData } from '../utils';
+import { describe, it, expect } from 'vitest';
+import { applyValidations, fieldIsRequired } from './';
 import {
-  Validator,
   RegexValidator,
-  applyValidation,
-  computeStatistics,
-  ValidationResult,
-} from './';
+  buildValidatorFromDefinition,
+} from './validator_definitions';
 
 describe('Validator.buildFromDefinition', () => {
   it('creates the correct validator', () => {
-    const validator = Validator.buildFromDefinition({
+    const validator = buildValidatorFromDefinition({
       validate: 'regex_matches',
       regex: '^(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,})$',
       error: 'Must be a valid email',
@@ -21,101 +20,74 @@ describe('Validator.buildFromDefinition', () => {
 
 describe('IncludesValidator', () => {
   it('correctly validates', () => {
-    const validator = Validator.buildFromDefinition({
+    const validator = buildValidatorFromDefinition({
       validate: 'includes',
       values: ['a', 'b', 'c'],
     });
-    expect(validator.isValid('a').valid).toEqual(true);
-    expect(validator.isValid('a, b, c').valid).toEqual(false);
-    expect(validator.isValid('a,b,c').valid).toEqual(false);
-    expect(validator.isValid('d').valid).toEqual(false);
+    expect(validator.isValid('a')).toEqual(undefined);
+    expect(validator.isValid('a, b, c')).toEqual('This value is not valid');
+    expect(validator.isValid('a,b,c')).toEqual('This value is not valid');
+    expect(validator.isValid('d')).toEqual('This value is not valid');
   });
 });
 
 describe('MultiIncludesValidator', () => {
   it('correctly validates', () => {
-    const validator = Validator.buildFromDefinition({
+    const validator = buildValidatorFromDefinition({
       validate: 'multi_includes',
       values: ['a', 'b', 'c'],
     });
-    expect(validator.isValid('a').valid).toEqual(true);
-    expect(validator.isValid('a, b, c').valid).toEqual(true);
-    expect(validator.isValid('a,b,c').valid).toEqual(true);
-    expect(validator.isValid('d').valid).toEqual(false);
+    expect(validator.isValid('a')).toEqual(undefined);
+    expect(validator.isValid('a, b, c')).toEqual(undefined);
+    expect(validator.isValid('a,b,c')).toEqual(undefined);
+    expect(validator.isValid('d')).toEqual('This value is not valid');
   });
 });
 
 describe('CustomValidator', () => {
   it('works with function', () => {
-    const validator = Validator.buildFromDefinition({
+    const validator = buildValidatorFromDefinition({
       validate: 'custom',
       validateFn: (item) => {
         if (!Number.isInteger(item)) {
-          return { message: 'Must be an integer' };
+          return 'Must be an integer';
         }
       },
       key: 'is_int',
     });
-    expect(validator.isValid('a').valid).toEqual(false);
-    expect(validator.isValid(2).valid).toEqual(true);
-    expect(validator.isValid('1').valid).toEqual(false);
+    expect(validator.isValid('a')).toEqual('Must be an integer');
+    expect(validator.isValid(2)).toEqual(undefined);
+    expect(validator.isValid('1')).toEqual('Must be an integer');
   });
 });
 
 describe('UniqueValidator', () => {
   it('validates uniqueness', () => {
-    const validator = Validator.buildFromDefinition({ validate: 'unique' });
-    expect(validator.isValid(1).valid).toEqual(true);
-    expect(validator.isValid(2).valid).toEqual(true);
-    expect(validator.isValid(1).valid).toEqual(false);
+    const validator = buildValidatorFromDefinition({ validate: 'unique' });
+    expect(validator.isValid(1)).toEqual(undefined);
+    expect(validator.isValid(2)).toEqual(undefined);
+    expect(validator.isValid(1)).toEqual('This value is not unique');
   });
 });
 
 describe('RequiredValidator', () => {
   it('validates required', () => {
-    const validator = Validator.buildFromDefinition({ validate: 'required' });
-    expect(validator.isValid(1).valid).toEqual(true);
-    expect(validator.isValid('2').valid).toEqual(true);
-    expect(validator.isValid('').valid).toEqual(false);
-    expect(validator.isValid(null).valid).toEqual(false);
+    const validator = buildValidatorFromDefinition({ validate: 'required' });
+    expect(validator.isValid(1)).toEqual(undefined);
+    expect(validator.isValid('2')).toEqual(undefined);
+    expect(validator.isValid('')).toEqual('This value is required');
+    expect(validator.isValid(null)).toEqual('This value is required');
   });
 });
 
 describe('IntegerValidator', () => {
   it('validates integer', () => {
-    const validator = Validator.buildFromDefinition({ validate: 'is_integer' });
-    expect(validator.isValid(0).valid).toEqual(true);
-    expect(validator.isValid(1).valid).toEqual(true);
-    expect(validator.isValid('2').valid).toEqual(true);
-    expect(validator.isValid(null).valid).toEqual(false);
-    expect(validator.isValid('hello').valid).toEqual(false);
-  });
-});
-
-describe('ValidationResult', () => {
-  const validationResult = new ValidationResult();
-  it('can add errors', () => {
-    validationResult.addError('name', 2, { message: 'whoops!' });
-    expect(validationResult.hasError('name', 2)).toEqual(true);
-    expect(validationResult.hasError('name', 1)).toEqual(false);
-    expect(validationResult.getErrors('name', 2)[0].message).toEqual('whoops!');
-  });
-
-  it('knows if there are any errors', () => {
-    const validationResult = new ValidationResult();
-    expect(validationResult.hasErrors()).toEqual(false);
-    validationResult.addError('name', 2, { message: 'whoops!' });
-    expect(validationResult.hasErrors()).toEqual(true);
-  });
-
-  it('can return rows with errors', () => {
-    validationResult.addError('name', 1, { message: 'whoops!' });
-    validationResult.addError('name', 2, { message: 'whoops!' });
-    validationResult.addError('name', 2, { message: 'whoops 2!' });
-    validationResult.addError('name', 3, { message: 'whoops!' });
-    expect([...validationResult.rowIndexesWithErrors()].sort()).toEqual([
-      1, 2, 3,
-    ]);
+    const validator = buildValidatorFromDefinition({ validate: 'is_integer' });
+    expect(validator.isValid(0)).toEqual(undefined);
+    expect(validator.isValid(1)).toEqual(undefined);
+    expect(validator.isValid('2')).toEqual(undefined);
+    expect(validator.isValid(null)).toEqual('This is not a valid number');
+    expect(validator.isValid('hello')).toEqual('This is not a valid number');
   });
 });
 
@@ -141,75 +113,143 @@ describe('applyValidation', () => {
     },
   };
 
-  const fields = [
-    { label: 'Full Name', key: 'name', validators: [{ validate: 'required' }] },
+  const sheetDefinitions = [
     {
-      label: 'Email',
-      key: 'email',
-      validators: [
+      id: 'a',
+      columns: [
         {
-          validate: 'regex_matches',
-          regex:
-            /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, //eslint-disable-line
-          error: 'Must be a valid email',
+          label: 'Full Name',
+          id: 'name',
+          validators: [{ validate: 'required' }],
         },
-        { validate: 'required' },
-        { validate: 'unique' },
+        {
+          label: 'Email',
+          id: 'email',
+          validators: [
+            {
+              validate: 'regex_matches',
+              regex:
+                /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, //eslint-disable-line
+              error: 'Must be a valid email',
+            },
+            { validate: 'required' },
+            { validate: 'unique' },
+          ],
+        },
+        {
+          label: 'Phone Number',
+          id: 'phone_number',
+          validators: [{ validate: 'unique' }],
+        },
       ],
-    },
-    {
-      label: 'Phone Number',
-      key: 'phone_number',
-      validators: [{ validate: 'unique' }],
     },
   ];
 
   const data = [
-    ['Name', 'Email', 'Phone Number'], // Headers
-    ['chris', 'chris@example.com', '555-555-5555'], // This row is fine
-    ['chris', 'chris@example.com', '555-555-5555'], // This phone number, email is not unique
-    [null, 'c.com', '556-555-5555'], // This email doesn't match regex, name is null
+    {
+      sheetId: 'a',
+      rows: [
+        {
+          name: 'chris',
+          email: 'chris@example.com',
+          phone_number: '555-555-5555',
+        }, // This row is fine
+        {
+          name: 'chris',
+          email: 'chris@example.com',
+          phone_number: '555-555-5555',
+        }, // This phone number, email is not unique
+        { name: null, email: 'c.com', phone_number: '556-555-5555' },
+      ], // This email doesn't match regex, name is null
+    },
   ];
 
-  describe('computeStatistics', () => {
-    const formattedData = formatData(headerMappings, data);
-    const validationResult = applyValidation(formattedData, fields);
-    const statistics = computeStatistics(
-      formattedData,
-      headerMappings,
-      validationResult
-    );
-    expect(statistics.total).toEqual(3);
-    expect(statistics.statisticsByFieldKey.name.counts.isNull).toEqual(1);
-    expect(statistics.statisticsByFieldKey.email.counts.isNull).toEqual(0);
-    expect(statistics.statisticsByFieldKey.phone_number.counts.isNull).toEqual(
-      0
-    );
-  });
-
   it('runs validations correctly', () => {
-    const formattedData = formatData(headerMappings, data);
-    const validationResult = applyValidation(formattedData, fields);
+    const validationErrors = applyValidations(sheetDefinitions, data);
 
-    expect(validationResult.hasError('name', 0)).toEqual(false);
-    expect(validationResult.hasError('name', 1)).toEqual(false);
-    expect(validationResult.hasError('name', 2)).toEqual(true);
+    expect(
+      validationErrors.find((e) => e.columnId === 'name' && e.rowIndex === 0)
+    ).toBeUndefined();
+    expect(
+      validationErrors.find((e) => e.columnId === 'name' && e.rowIndex === 1)
+    ).toBeUndefined();
+    expect(
+      validationErrors.find((e) => e.columnId === 'name' && e.rowIndex === 2)
+    ).not.toBeUndefined();
 
-    expect(validationResult.hasError('email', 0)).toEqual(false);
-    expect(validationResult.hasError('email', 1)).toEqual(true);
-    expect(validationResult.hasError('email', 2)).toEqual(true);
+    expect(
+      validationErrors.find((e) => e.columnId === 'email' && e.rowIndex === 0)
+    ).toBeUndefined();
+    expect(
+      validationErrors.find((e) => e.columnId === 'email' && e.rowIndex === 1)
+    ).not.toBeUndefined();
+    expect(
+      validationErrors.find((e) => e.columnId === 'email' && e.rowIndex === 2)
+    ).not.toBeUndefined();
 
-    expect(validationResult.hasError('phone_number', 0)).toEqual(false);
-    expect(validationResult.hasError('phone_number', 1)).toEqual(true);
-    expect(validationResult.hasError('phone_number', 2)).toEqual(false);
+    expect(
+      validationErrors.find(
+        (e) => e.columnId === 'phone_number' && e.rowIndex === 0
+      )
+    ).toBeUndefined();
+    expect(
+      validationErrors.find(
+        (e) => e.columnId === 'phone_number' && e.rowIndex === 1
+      )
+    ).not.toBeUndefined();
+    expect(
+      validationErrors.find(
+        (e) => e.columnId === 'phone_number' && e.rowIndex === 2
+      )
+    ).toBeUndefined();
   });
 
   it('validates required columns', () => {
-    const validationResult = applyValidation(
-      [{ email: 'czhu12@gmail.com' }, { email: 'czhu13@gmail.com' }],
-      [{ key: 'name', validators: [{ validate: 'required' }] }]
+    const validationErrors = applyValidations(
+      [
+        {
+          id: 'a',
+          columns: [{ id: 'name', validators: [{ validate: 'required' }] }],
+        },
+      ],
+      [
+        {
+          sheetId: 'a',
+          rows: [{ email: 'czhu12@gmail.com' }, { email: 'czhu13@gmail.com' }],
+        },
+      ]
     );
-    expect(validationResult.hasError('name', 0)).toEqual(true);
-    expect(validationResult.hasError('name', 1)).toEqual(true);
+
+    expect(
+      validationErrors.find((e) => e.columnId === 'name' && e.rowIndex === 0)
+    ).not.toBeUndefined();
+    expect(
+      validationErrors.find((e) => e.columnId === 'name' && e.rowIndex === 1)
+    ).not.toBeUndefined();
+  });
+});
+
+describe('fieldIsRequired', () => {
+  it('returns true if field is required', () => {
+    const field = {
+      label: 'Test Group ID',
+      key: 'test_group_id',
+      validators: [{ validate: 'required' }, { validate: 'unique' }],
+    };
+    expect(fieldIsRequired(field)).toEqual(true);
+  });
+
+  it('returns true if field has no validators', () => {
+    const field = { label: 'Test Group ID', key: 'test_group_id' };
+    expect(fieldIsRequired(field)).toEqual(false);
+  });
+
+  it('returns true if field has empty validators', () => {
+    const field = {
+      label: 'Test Group ID',
+      key: 'test_group_id',
+      validators: [],
+    };
+    expect(fieldIsRequired(field)).toEqual(false);
   });
 });

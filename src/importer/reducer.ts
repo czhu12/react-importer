@@ -1,50 +1,14 @@
-import { formatData, buildSuggestedHeaderMappings } from '../utils';
-import {
-  applyValidation,
-  computeStatistics,
-  ValidationResult,
-} from '../validators';
-import { applyTransformations } from '../transformers';
-import {
-  ImporterAction,
-  ImporterField,
-  ImporterFormattedData,
-  ImporterHeaderMappings,
-  ImporterState,
-} from '../types';
+import { ImporterAction, ImporterState, SheetDefinition } from '../types';
+import { applyValidations } from '../validators';
 
-const computeMetadata = (
-  formattedData: ImporterFormattedData[],
-  fields: ImporterField[],
-  headerMappings: ImporterHeaderMappings
-) => {
-  const newValidationResult = applyValidation(formattedData, fields);
-  const newStatistics = computeStatistics(
-    formattedData,
-    headerMappings,
-    newValidationResult
-  );
+function buildInitialState(sheetDefinitions: SheetDefinition[]): ImporterState {
   return {
-    validationResult: newValidationResult,
-    statistics: newStatistics,
-  };
-};
-
-function buildInitialState(fields: ImporterField[]): ImporterState {
-  return {
-    fields,
-    currentStep: 0,
-    parsed: null,
-    pending: true,
-    progress: 0,
-    failed: false,
-    formattedData: [],
-    statistics: {
-      statisticsByFieldKey: {},
-      total: null,
-    },
-    headerMappings: {},
-    validationResult: new ValidationResult(),
+    sheetDefinitions,
+    currentSheetId: sheetDefinitions[0].id,
+    mode: 'initial',
+    validationErrors: [],
+    sheetData: [],
+    importProgress: 0,
   };
 }
 
@@ -53,83 +17,67 @@ const reducer = (
   action: ImporterAction
 ): ImporterState => {
   switch (action.type) {
-    case 'RESTART':
-      return buildInitialState(state.fields);
-    case 'DECREMENT_STEP':
-      return { ...state, currentStep: state.currentStep - 1 };
-    case 'COMPLETED_MAPPINGS': {
-      const transformedFormattedData = applyTransformations(
-        state.formattedData,
-        state.fields
-      );
-      return {
-        ...state,
-        formattedData: transformedFormattedData,
-        currentStep: state.currentStep + 1,
-      };
-    }
-    case 'SET_CURRENT_STEP': {
-      const currentStep = action.payload.currentStep;
-      return {
-        ...state,
-        currentStep,
-      };
-    }
-    case 'FILE_PARSED': {
-      const automaticHeaderMappings = buildSuggestedHeaderMappings(
-        state.fields,
-        action.payload.parsed.data[0]
-      );
-      const formattedData = formatData(
-        automaticHeaderMappings,
-        action.payload.parsed.data
-      );
-      return {
-        ...state,
-        ...computeMetadata(
-          formattedData,
-          state.fields,
-          automaticHeaderMappings
+    case 'ENTER_DATA_MANUALLY': {
+      const emptyData = action.payload.sheetDefinitions.map((sheet) => ({
+        sheetId: sheet.id,
+        rows: Array.from(
+          { length: action.payload.amountOfEmptyRowsToAdd },
+          () => ({})
         ),
-        parsed: action.payload.parsed,
-        headerMappings: automaticHeaderMappings,
-        formattedData,
-        currentStep: 1,
-      };
+      }));
+
+      return { ...state, mode: 'preview', sheetData: emptyData };
     }
-    case 'HEADER_MAPPINGS_CHANGED': {
-      const newFormattedData = formatData(
-        action.payload.headerMappings,
-        state.parsed!.data
-      );
+    case 'FILE_PARSED':
+      return { ...state, parsedFile: action.payload.parsed, mode: 'mapping' };
+    case 'COLUMN_MAPPING_CHANGED': {
       return {
         ...state,
-        ...computeMetadata(
-          newFormattedData,
-          state.fields,
-          action.payload.headerMappings
+        columnMappings: action.payload.mappings,
+      };
+    }
+    case 'DATA_MAPPED': {
+      return {
+        ...state,
+        sheetData: action.payload.mappedData,
+        mode: 'preview',
+        validationErrors: applyValidations(
+          state.sheetDefinitions,
+          action.payload.mappedData
         ),
-        headerMappings: action.payload.headerMappings,
-        formattedData: newFormattedData,
       };
     }
     case 'CELL_CHANGED': {
-      const copy = [...state.formattedData];
-      copy[action.payload.index] = action.payload.row;
+      const currentData = state.sheetData;
+
+      const newData = currentData.map((sheet) => {
+        if (sheet.sheetId === action.payload.sheetId) {
+          const newRows = [...sheet.rows];
+
+          newRows[action.payload.rowIndex] = action.payload.value;
+
+          return { ...sheet, rows: newRows };
+        } else {
+          return sheet;
+        }
+      });
+
       return {
         ...state,
-        ...computeMetadata(copy, state.fields, state.headerMappings),
-        formattedData: copy,
+        sheetData: newData,
+        validationErrors: applyValidations(state.sheetDefinitions, newData),
       };
     }
+    case 'SHEET_CHANGED':
+      return { ...state, currentSheetId: action.payload.sheetId };
+    case 'SUBMIT':
+      return { ...state, mode: 'submit' };
     case 'PROGRESS':
-      return { ...state, progress: action.payload.progress };
-    case 'PENDING':
-      return { ...state, currentStep: 3, pending: true, progress: 0 };
-    case 'COMPLETE':
-      return { ...state, currentStep: 3, pending: false, progress: 100 };
+      return { ...state, importProgress: action.payload.progress };
+    case 'COMPLETED':
+      return { ...state, mode: 'completed' };
     case 'FAILED':
-      return { ...state, currentStep: 3, failed: true };
+      return { ...state, mode: 'failed' };
     default:
       return state;
   }
