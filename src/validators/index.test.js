@@ -25,9 +25,15 @@ describe('IncludesValidator', () => {
       values: ['a', 'b', 'c'],
     });
     expect(validator.isValid('a')).toEqual(undefined);
-    expect(validator.isValid('a, b, c')).toEqual('This value is not valid');
-    expect(validator.isValid('a,b,c')).toEqual('This value is not valid');
-    expect(validator.isValid('d')).toEqual('This value is not valid');
+    expect(validator.isValid('a, b, c')).toEqual(
+      'Value is not in the list of allowed values'
+    );
+    expect(validator.isValid('a,b,c')).toEqual(
+      'Value is not in the list of allowed values'
+    );
+    expect(validator.isValid('d')).toEqual(
+      'Value is not in the list of allowed values'
+    );
   });
 });
 
