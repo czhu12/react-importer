@@ -6,7 +6,6 @@ import {
 } from '@tanstack/react-table';
 
 import { filterEmptyRows } from '../../utils';
-import { useTheme } from '../../theme/ThemeProvider';
 import { SheetDefinition, SheetState, SheetRow } from '../types';
 import {
   CellChangedPayload,
@@ -95,8 +94,6 @@ export default function SheetDataEditor({
   const hasData = filterEmptyRows(data).length > 0;
   const hasErrors = sheetValidationErrors.length > 0;
 
-  const theme = useTheme();
-
   const displayOnlyShowErrorsCheckbox = !hasData || hasErrors;
 
   return (
@@ -116,12 +113,7 @@ export default function SheetDataEditor({
           </div>
         )}
         {!displayOnlyShowErrorsCheckbox && (
-          <div
-            style={{
-              color: theme.colors.success,
-            }}
-            className="flex items-center font-bold"
-          >
+          <div className="text-success flex items-center font-bold">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

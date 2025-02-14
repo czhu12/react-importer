@@ -29,7 +29,7 @@ export default function Tabs({ tabs, activeTab, onTabChange }: Props) {
                 className={`
                   ${
                     tab.value === activeTab
-                      ? 'border-indigo-500 text-indigo-600'
+                      ? 'border-primary text-primary'
                       : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                   }
                   border-b-2 px-1 py-4 text-sm font-medium whitespace-nowrap cursor-pointer flex items-center

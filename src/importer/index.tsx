@@ -14,7 +14,7 @@ import {
   ImporterDefinition,
   RemoveRowsPayload,
 } from '../types';
-import { ThemeProvider } from '../theme/ThemeProvider';
+import { ThemeSetter } from '../theme/ThemeSetter';
 import { parseCsv } from '../parser';
 import { getMappedData } from '../mapper';
 import { filterEmptyRows } from '../utils';
@@ -22,8 +22,7 @@ import { applyTransformations } from '../transformers';
 import { buildSuggestedHeaderMappings } from '../mapper/utils';
 import { NUMBER_OF_EMPTY_ROWS_FOR_MANUAL_DATA_INPUT } from '../constants';
 import SheetsSwitcher from '../sheet/components/SheetsSwitcher';
-import SubmitButton from './components/SubmitButton';
-
+import { Button } from '../components';
 export default function Importer({
   theme,
   onComplete,
@@ -129,7 +128,7 @@ export default function Importer({
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeSetter theme={theme}>
       <Root>
         <Container>
           {mode === 'initial' && (
@@ -171,7 +170,9 @@ export default function Importer({
                 setRowData={onCellChanged}
                 removeRows={onRemoveRows}
               />
-              <SubmitButton onSubmit={onSubmit} />
+              <div className="my-5 text-right">
+                <Button onClick={onSubmit}>Upload</Button>
+              </div>
             </>
           )}
           {['submit', 'failed', 'completed'].includes(mode) && (
@@ -183,6 +184,6 @@ export default function Importer({
           )}
         </Container>
       </Root>
-    </ThemeProvider>
+    </ThemeSetter>
   );
 }

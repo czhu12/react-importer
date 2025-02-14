@@ -1,18 +1,10 @@
-import { useTheme } from '../../theme/ThemeProvider';
-
-const CircularProgress = ({
-  progress,
-  color,
-}: {
-  progress: number;
-  color: string;
-}) => {
+const CircularProgress = ({ progress }: { progress: number }) => {
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <svg className="w-24 h-24 mx-auto rotate-[-90deg]" width="100" height="100">
+    <svg className="mx-auto h-24 w-24 rotate-[-90deg]" width="100" height="100">
       <circle
         cx="50"
         cy="50"
@@ -27,27 +19,24 @@ const CircularProgress = ({
         cy="50"
         r={radius}
         fill="transparent"
-        stroke={color}
         strokeWidth="10"
         strokeDasharray={circumference}
         strokeDashoffset={offset}
-        className="transition-[stroke-dashoffset] duration-500"
+        className="stroke-success transition-[stroke-dashoffset] duration-500"
       />
     </svg>
   );
 };
 
 const Failed = () => {
-  const theme = useTheme();
   return (
-    <div className="text-center my-16">
-      <div className="w-24 h-24 mx-auto relative">
+    <div className="my-16 text-center">
+      <div className="relative mx-auto h-24 w-24">
         <svg
-          className="absolute inset-0 m-auto"
+          className="fill-danger absolute inset-0 m-auto"
           xmlns="http://www.w3.org/2000/svg"
           width="64"
           height="64"
-          fill={theme.colors.danger}
           viewBox="0 0 16 16"
         >
           <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
@@ -59,14 +48,12 @@ const Failed = () => {
 };
 
 const SuccessIcon = () => {
-  const theme = useTheme();
   return (
     <svg
-      className="absolute inset-0 m-auto"
+      className="fill-success absolute inset-0 m-auto"
       xmlns="http://www.w3.org/2000/svg"
       width="64"
       height="64"
-      fill={theme.colors.success}
       viewBox="0 0 16 16"
     >
       <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
@@ -81,12 +68,10 @@ const Uploading = ({
   progress: number;
   pending?: boolean;
 }) => {
-  const theme = useTheme();
-
   return (
-    <div className="text-center my-16">
-      <div className="w-24 h-24 mx-auto relative">
-        <CircularProgress progress={progress} color={theme.colors.success} />
+    <div className="my-16 text-center">
+      <div className="relative mx-auto h-24 w-24">
+        <CircularProgress progress={progress} />
         {!pending && <SuccessIcon />}
         {pending && (
           <div className="absolute inset-0 flex items-center justify-center">
