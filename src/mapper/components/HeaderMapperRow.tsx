@@ -1,4 +1,4 @@
-import { Card, Col } from '../../components';
+import { Card } from '../../components';
 import { ImporterOutputFieldType } from '../../types';
 import { ColumnMapping, MapperOption, MapperOptionValue } from '../types';
 import HeaderMapperSelection from './HeaderMapperSelection';
@@ -32,7 +32,7 @@ export default function HeaderMapperRow({
     <div className="my-5">
       <Card>
         <div className="flex">
-          <Col>
+          <div className="flex-1">
             <HeaderMapperSelection
               mappingSelectionOptions={mappingSelectionOptions}
               csvHeader={csvHeader}
@@ -40,7 +40,7 @@ export default function HeaderMapperRow({
               currentMappings={currentHeaderOptions}
               setMappings={setMappings}
             />
-          </Col>
+          </div>
         </div>
       </Card>
     </div>

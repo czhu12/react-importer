@@ -1,4 +1,4 @@
-import { Col, Table, Select } from '../../components';
+import { Select } from '../../components';
 import {
   ColumnMapping,
   ImporterOutputFieldType,
@@ -25,7 +25,7 @@ export default function HeaderMapperSelection({
     <div>
       <div className="my-5">
         <div className="flex">
-          <Col verticallyCenter spaceBetween>
+          <div className="flex items-center justify-between">
             <div className="mx-2.5">{csvHeader.slice(0, 30)}</div>
             <div className="mx-5">
               <svg
@@ -42,8 +42,8 @@ export default function HeaderMapperSelection({
                 />
               </svg>
             </div>
-          </Col>
-          <Col>
+          </div>
+          <div className="flex-1">
             <Select<MapperOptionValue>
               // TODO THIS BRANCH: Add back the following props
               // isClearable
@@ -58,10 +58,10 @@ export default function HeaderMapperSelection({
                 setMappings(mappings as ColumnMapping[] | null)
               }
             />
-          </Col>
+          </div>
         </div>
       </div>
-      <Table>
+      <table className="w-full border border-black">
         <tbody>
           {examples.map((e, idx) => {
             return (
@@ -80,7 +80,7 @@ export default function HeaderMapperSelection({
             );
           })}
         </tbody>
-      </Table>
+      </table>
     </div>
   );
 }
