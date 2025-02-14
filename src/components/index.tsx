@@ -7,3 +7,5 @@ export { default as Row } from './Row';
 export { default as Table } from './Table';
 export { default as TextStyled } from './TextStyled';
 export { default as Select } from './Select';
+export { default as Checkbox } from './Checkbox';
+export { default as ConfirmationModal } from './ConfirmationModal';

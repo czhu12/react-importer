@@ -12,6 +12,7 @@ import {
   ColumnMapping,
   FileWithPath,
   ImporterDefinition,
+  RemoveRowsPayload,
 } from '../types';
 import { ThemeProvider } from '../theme/ThemeProvider';
 import { parseCsv } from '../parser';
@@ -98,7 +99,11 @@ export default function Importer({
   }
 
   function onCellChanged(payload: CellChangedPayload) {
-    dispatch({ type: 'CELL_CHANGED', payload: payload });
+    dispatch({ type: 'CELL_CHANGED', payload });
+  }
+
+  function onRemoveRows(payload: RemoveRowsPayload) {
+    dispatch({ type: 'REMOVE_ROWS', payload });
   }
 
   async function onSubmit() {
@@ -164,6 +169,7 @@ export default function Importer({
                   (error) => error.sheetId === currentSheetDefinition?.id
                 )}
                 setRowData={onCellChanged}
+                removeRows={onRemoveRows}
               />
               <SubmitButton onSubmit={onSubmit} />
             </>
