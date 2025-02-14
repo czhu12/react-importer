@@ -10,6 +10,7 @@ import { CheckIcon } from '@heroicons/react/20/solid';
 export interface SelectOption<T> {
   label: string;
   value: T;
+  icon?: React.ReactNode;
 }
 
 interface Props<T> {
@@ -70,8 +71,10 @@ export default function Select<T>({
             <ListboxOption
               key={option.value as string}
               value={option.value}
-              className="group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
+              className="flex items-center group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
             >
+              {option.icon}
+
               <span className="block truncate font-normal group-data-selected:font-semibold">
                 {option.label}
               </span>
