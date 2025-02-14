@@ -70,20 +70,23 @@ const reducer = (
     }
 
     case 'REMOVE_ROWS': {
+      const newData = state.sheetData.map((sheet) => {
+        if (sheet.sheetId === action.payload.sheetId) {
+          return {
+            ...sheet,
+            rows: sheet.rows.filter(
+              (row) => !action.payload.rows.includes(row)
+            ),
+          };
+        }
+
+        return sheet;
+      });
+
       return {
         ...state,
-        sheetData: state.sheetData.map((sheet) => {
-          if (sheet.sheetId === action.payload.sheetId) {
-            return {
-              ...sheet,
-              rows: sheet.rows.filter(
-                (row) => !action.payload.rows.includes(row)
-              ),
-            };
-          }
-
-          return sheet;
-        }),
+        sheetData: newData,
+        validationErrors: applyValidations(state.sheetDefinitions, newData),
       };
     }
 
