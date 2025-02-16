@@ -1,12 +1,1 @@
-export interface ImporterTheme {
-  colors: {
-    primary: string;
-    secondary: string;
-    success: string;
-    danger: string;
-    info: string;
-    warning: string;
-    light: string;
-    dark: string;
-  };
-}
+export type ThemeVariant = 'default' | 'theme-1' | 'theme-2';

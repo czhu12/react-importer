@@ -12,6 +12,7 @@ interface Props {
   value: ImporterOutputFieldType;
   onUpdated: (value: ImporterOutputFieldType) => void;
   allData: SheetState[];
+  clearRowsSelection: () => void;
 }
 
 export default function SheetDataEditorCell({
@@ -19,25 +20,31 @@ export default function SheetDataEditorCell({
   value,
   onUpdated,
   allData,
+  clearRowsSelection,
 }: Props) {
   const [editMode, setEditMode] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (editMode && inputRef.current) {
-      inputRef.current.focus();
+    if (editMode) {
+      clearRowsSelection();
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
     }
   }, [editMode]);
 
   const valueEmpty = value == null || value.trim() === '';
   // Use non-breaking space to keep the cell height
   const nonEmptyValue = valueEmpty ? '\u00A0' : value;
+  const readOnly = columnDefinition.isReadOnly;
 
   if (!editMode) {
     return (
       <div
-        onClick={(e) => e.detail > 1 && setEditMode(true)}
-        className="w-full h-full"
+        onClick={(e) => !readOnly && e.detail > 1 && setEditMode(true)}
+        title={readOnly ? 'Read only' : 'Double click to edit'}
+        className="h-full w-full"
       >
         {nonEmptyValue}
       </div>
@@ -58,12 +65,28 @@ export default function SheetDataEditorCell({
     const referenceData =
       referenceSheetData?.rows
         ?.map((row) => row[referenceArguments.sheetColumnId])
-        ?.filter((c) => !isEmptyCell(c)) ?? [];
+        ?.filter((c) => !isEmptyCell(c))
+        ?.filter((c, index, allData) => allData.indexOf(c) === index) ?? []; // Remove duplicates
 
     const selectOptions = referenceData.map((value) => ({
       label: value,
       value,
     }));
+
+    return (
+      <Select
+        options={selectOptions}
+        value={value}
+        onChange={(value) =>
+          updateValue((value as ImporterOutputFieldType) ?? '')
+        }
+      />
+    );
+  }
+
+  if (columnDefinition.type === 'enum') {
+    const enumArguments = columnDefinition.typeArguments;
+    const selectOptions = enumArguments.values;
 
     return (
       <Select

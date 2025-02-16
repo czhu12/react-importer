@@ -12,6 +12,10 @@ footer {
 	@apply h-96 bg-[#263E52] text-[#f4f4f4] text-2xl font-light pt-40 pb-40;
 }
 
+.theme-wrapper {
+	@apply flex flex-wrap;
+}
+
 .theme-card {
 	@apply w-40 h-40 bg-[#f4f4f4] rounded-lg shadow-lg;
 }

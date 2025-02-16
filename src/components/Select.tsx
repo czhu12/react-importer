@@ -7,14 +7,15 @@ import {
 import { ChevronUpDownIcon } from '@heroicons/react/16/solid';
 import { CheckIcon } from '@heroicons/react/20/solid';
 
-interface Option<T> {
+export interface SelectOption<T> {
   label: string;
   value: T;
+  icon?: React.ReactNode;
 }
 
 interface Props<T> {
   value: T[] | T | null;
-  options: Option<T>[];
+  options: SelectOption<T>[];
   onChange: (value: T[] | T | null) => void;
   multiple?: boolean;
   compareFunction?: (a: T, b: T) => boolean;
@@ -49,7 +50,7 @@ export default function Select<T>({
 
   return (
     <Listbox value={value} onChange={handleChange} multiple={multiple}>
-      <div className="relative mt-2">
+      <div className="relative">
         <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
           <span className="col-start-1 row-start-1 truncate pr-6">
             {selectedOptions.length > 0
@@ -70,8 +71,10 @@ export default function Select<T>({
             <ListboxOption
               key={option.value as string}
               value={option.value}
-              className="group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
+              className="flex items-center group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
             >
+              {option.icon}
+
               <span className="block truncate font-normal group-data-selected:font-semibold">
                 {option.label}
               </span>

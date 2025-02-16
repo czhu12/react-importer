@@ -1,5 +1,5 @@
 import {
-  ImporterTheme,
+  ThemeVariant,
   ImporterValidationError,
   ParsedFile,
   SheetDefinition,
@@ -15,7 +15,7 @@ import {
 export interface ImporterDefinition {
   sheets: SheetDefinition[];
   // TODO: This probably needs to be some predefined list of themes to pick from
-  theme: ImporterTheme;
+  theme: ThemeVariant;
   // Called after the columns are mapped to sheet definitions by the user
   onDataColumnsMapped?: OnDataColumnsMappedCallback;
   onComplete: (
@@ -59,6 +59,11 @@ export interface CellChangedPayload {
   value: SheetRow;
 }
 
+export interface RemoveRowsPayload {
+  sheetId: string;
+  rows: SheetRow[];
+}
+
 export type ImporterAction =
   | {
       type: 'ENTER_DATA_MANUALLY';
@@ -74,6 +79,10 @@ export type ImporterAction =
       type: 'CELL_CHANGED';
       payload: CellChangedPayload;
     } // Searches for the cell and changes the value, calls validations
+  | {
+      type: 'REMOVE_ROWS';
+      payload: RemoveRowsPayload;
+    } // Removes rows from the sheetData
   | { type: 'SHEET_CHANGED'; payload: { sheetId: string } } // Calls onComplete callback with state.sheetData, changes mode to 'submit'
   | { type: 'SUBMIT' } // Calls onComplete callback with state.sheetData, changes mode to 'submit'
   | { type: 'PROGRESS'; payload: { progress: number } } // Updates importProgress

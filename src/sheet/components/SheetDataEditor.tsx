@@ -1,20 +1,21 @@
-import { useMemo, useState } from 'preact/compat';
+import { useEffect, useMemo, useState } from 'preact/compat';
 import {
   createColumnHelper,
-  flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 
 import { filterEmptyRows } from '../../utils';
-import { useTheme } from '../../theme/ThemeProvider';
 import { SheetDefinition, SheetState, SheetRow } from '../types';
 import {
   CellChangedPayload,
   ImporterOutputFieldType,
   ImporterValidationError,
+  RemoveRowsPayload,
 } from '../../types';
-import SheetDataEditorCell from './SheetDataEditorCell';
+import { Checkbox, ConfirmationModal } from '../../components';
+import SheetDataEditorTable from './SheetDataEditorTable';
+import { TrashIcon } from '@heroicons/react/24/outline';
 
 const columnHelper = createColumnHelper<SheetRow>();
 
@@ -24,6 +25,7 @@ interface Props {
   allData: SheetState[];
   sheetValidationErrors: ImporterValidationError[];
   setRowData: (payload: CellChangedPayload) => void;
+  removeRows: (payload: RemoveRowsPayload) => void;
 }
 
 export default function SheetDataEditor({
@@ -32,8 +34,16 @@ export default function SheetDataEditor({
   allData,
   sheetValidationErrors,
   setRowData,
+  removeRows,
 }: Props) {
+  const [selectedRows, setSelectedRows] = useState<SheetRow[]>([]);
   const [onlyShowErrors, setOnlyShowErrors] = useState(false);
+  const [removeConfirmationModalOpen, setRemoveConfirmationModalOpen] =
+    useState(false);
+
+  useEffect(() => {
+    setSelectedRows([]); // On changing sheets
+  }, [sheetDefinition]);
 
   const rowData = useMemo(
     () =>
@@ -61,11 +71,16 @@ export default function SheetDataEditor({
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const onCellValueChanged = (
+  function onRemoveRows() {
+    removeRows({ rows: selectedRows, sheetId: sheetDefinition.id });
+    setSelectedRows([]);
+  }
+
+  function onCellValueChanged(
     rowIndex: number,
     columnId: string,
     value: ImporterOutputFieldType
-  ) => {
+  ) {
     const rowValue = { ...data.rows[rowIndex] };
     rowValue[columnId] = value;
 
@@ -74,52 +89,31 @@ export default function SheetDataEditor({
       value: rowValue,
       rowIndex,
     });
-  };
-
-  function cellErrors(columnId: string, rowIndex: number) {
-    return sheetValidationErrors.filter(
-      (validation) =>
-        validation.columnId === columnId && validation.rowIndex === rowIndex
-    );
-  }
-
-  function hasCellErrors(columnId: string, rowIndex: number) {
-    return cellErrors(columnId, rowIndex).length > 0;
   }
 
   const hasData = filterEmptyRows(data).length > 0;
   const hasErrors = sheetValidationErrors.length > 0;
 
-  const theme = useTheme();
-
   const displayOnlyShowErrorsCheckbox = !hasData || hasErrors;
 
   return (
     <div>
-      <div className="my-5">
+      <div className="my-5 flex items-center">
         {displayOnlyShowErrorsCheckbox && (
           <div>
-            <input
+            <Checkbox
+              id={`Only show errors checkbox for ${sheetDefinition.id}`}
               checked={onlyShowErrors}
-              onChange={(e) => {
-                setOnlyShowErrors((e.target as HTMLInputElement).checked);
+              setChecked={(checked) => {
+                setSelectedRows([]);
+                setOnlyShowErrors(checked);
               }}
-              type="checkbox"
-              name="row-errors"
-              id="row-errors"
+              label="Only show rows with errors"
             />
-            <label style={{ marginLeft: '10px' }} htmlFor="row-errors">
-              Only show rows with errors
-            </label>
           </div>
         )}
         {!displayOnlyShowErrorsCheckbox && (
-          <div
-            style={{
-              color: theme.colors.success,
-            }}
-            className="font-bold flex items-center"
-          >
+          <div className="text-success flex items-center font-bold">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -133,69 +127,34 @@ export default function SheetDataEditor({
             All rows pass validation!
           </div>
         )}
+
+        {selectedRows.length > 0 && (
+          <TrashIcon
+            className="ml-16 h-6 w-6 cursor-pointer"
+            onClick={() => setRemoveConfirmationModalOpen(true)}
+          />
+        )}
       </div>
 
-      <div className="overflow-x-auto max-h-[80vh]">
-        <table className="min-w-full divide-y divide-gray-300">
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    className="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sticky top-0 bg-white"
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
+      <SheetDataEditorTable
+        table={table}
+        sheetDefinition={sheetDefinition}
+        data={data}
+        allData={allData}
+        sheetValidationErrors={sheetValidationErrors}
+        onCellValueChanged={onCellValueChanged}
+        selectedRows={selectedRows}
+        setSelectedRows={setSelectedRows}
+      />
 
-          <tbody className="divide-y divide-gray-200">
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
-                {row.getVisibleCells().map((cell, cellIndex) => {
-                  const columnId = sheetDefinition.columns[cellIndex].id;
-                  // TODO: Check if it works correctly for 2 idneitcal rows
-                  const rowIndex = data.rows.indexOf(row.original);
-
-                  return (
-                    <td
-                      key={cell.id}
-                      // TODO: Perhaps we might need some more fency tooltip?
-                      title={cellErrors(columnId, rowIndex)
-                        .map((e) => e.message)
-                        .join(', ')}
-                      className={`py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 
-                      ${hasCellErrors(columnId, rowIndex) ? 'bg-red-100' : ''}
-                    `}
-                    >
-                      <SheetDataEditorCell
-                        columnDefinition={
-                          sheetDefinition.columns.find(
-                            (c) => c.id === columnId
-                          )!
-                        }
-                        allData={allData}
-                        value={cell.getValue() as ImporterOutputFieldType}
-                        onUpdated={(value) =>
-                          onCellValueChanged(rowIndex, columnId, value)
-                        }
-                      />
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <ConfirmationModal
+        open={removeConfirmationModalOpen}
+        setOpen={setRemoveConfirmationModalOpen}
+        onConfirm={onRemoveRows}
+        title="Remove rows"
+        confirmationText="Remove"
+        subTitle={`Are you sure you want to remove ${selectedRows.length} rows?`}
+      />
     </div>
   );
 }
