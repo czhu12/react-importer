@@ -1,3 +1,6 @@
+import 'tippy.js/dist/tippy.css'; // optional for styling
+import tippy from 'tippy.js';
+
 import { TableCellsIcon } from './Icons';
 export default function Header() {
   return (
@@ -17,7 +20,7 @@ export default function Header() {
           <iframe src="https://ghbtns.com/github-btn.html?user=czhu12&repo=react-importer&type=star&count=true" width="150" height="20" title="GitHub"></iframe>
         </div>
       </div>
-      <div className="px-4 mx-auto pt-32 pb-48 flex flex-col lg:flex-row max-w-6xl">
+      <div className="px-4 mx-auto pt-32 pb-32 flex flex-col lg:flex-row max-w-6xl">
         <div>
           <div className="text-5xl sm:text-7xl mb-6 tracking-tighter rubik font-bold">
             A Sleek CSV Importer
@@ -35,7 +38,22 @@ export default function Header() {
           </div>
 
           <div className="cursor-pointer flex">
-            <span className="bg-slate-800 text-white px-4 py-4 rounded-md"><pre><code>$ npm install react-importer</code></pre></span>
+            <button
+              className="bg-slate-800 text-white px-4 py-4 rounded-md cursor-pointer"
+              onClick={(e) => {
+                navigator.clipboard.writeText('npm install react-importer');
+                tippy(e.currentTarget as HTMLElement, {
+                  showOnCreate: true,
+                  onHidden: (instance) => {
+                    instance.destroy()
+                  },
+                  content: 'Copied!',
+                  placement: 'top',
+                });
+              }}
+            >
+              <pre><code>$ npm install react-importer</code></pre>
+            </button>
           </div>
           <div className="flex mt-4">
             <a className="text-sm" href="https://github.com/czhu12/react-importer">Documentation ❯</a>

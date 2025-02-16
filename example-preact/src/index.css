@@ -3,8 +3,9 @@
 .rubik {
   font-family: 'Rubik', sans-serif;
 }
+
 .content {
-	@apply py-12 max-w-6xl mx-auto px-4;
+	@apply py-8 max-w-6xl mx-auto px-4 text-lg space-y-2;
 }
 
 footer {
@@ -12,7 +13,7 @@ footer {
 }
 
 .theme-card {
-	@apply w-96 h-96 bg-[#f4f4f4] rounded-lg shadow-lg;
+	@apply w-40 h-40 bg-[#f4f4f4] rounded-lg shadow-lg;
 }
 
 .theme-card {
@@ -20,5 +21,5 @@ footer {
 }
 
 .theme-card .theme-color {
-	@apply flex-grow m-2 rounded-lg h-40;
+	@apply flex-grow m-2 rounded-lg h-12;
 }

@@ -64,18 +64,16 @@ const App = () => {
         <Header />
 
         <div className="content">
-          <h1>Building a CSV uploader is hard.</h1>
+          <h3 className="text-4xl rubik font-bold">Building a CSV uploader is hard.</h3>
           <p>
-            Tired of people uploading invalid data into your application? Or
-            writing custom import scripts that keep breaking?
-          </p>
-          <p>
-            <b>React Importer</b> solves that for you.
+            OneImport is a javascript library that makes it easy to drop in a powerful,
+            intuitive, and elegant CSV uploader. It's just 35kb gzipped, and works with any
+            javascript application.
           </p>
         </div>
 
         <div className="content">
-          <h1>Drop in an uploader into your app in seconds.</h1>
+          <h3 className="text-4xl rubik font-bold">Drop in an uploader into your app in seconds.</h3>
           <div>
             <pre className="bg-slate-800 text-white rounded-lg p-4">
               <code className="language-javascript" dangerouslySetInnerHTML={{ __html: hljs.highlight(CONTENT, { language: 'jsx' }).value }} />
@@ -85,7 +83,7 @@ const App = () => {
 
         <div className="content">
           <h1>
-            Want to see a demo? Try uploading <a href="data.csv">this file</a>.
+            Want to see a demo? Try uploading <a className="text-blue-500 hover:text-blue-600" href="/data.csv">this file</a>.
           </h1>
           <Importer
             theme={{ ...ALL_THEMES[currentTheme] }}
