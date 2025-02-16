@@ -2,6 +2,7 @@ import {
   ImporterOutputFieldType,
   ImporterTransformerDefinition,
   ImporterValidatorDefinition,
+  SelectOption,
 } from '../types';
 
 // --------- Sheet Definition Types ---------
@@ -13,11 +14,13 @@ export interface SheetDefinition {
 
 export type SheetColumnDefinition =
   | SheetColumnStringDefinition
-  | SheetColumnReferenceDefinition;
+  | SheetColumnReferenceDefinition
+  | SheetColumnEnumDefinition;
 
 interface SheetColumnBaseDefinition {
   id: string;
   label: string;
+  isReadOnly?: boolean;
   validators?: ImporterValidatorDefinition[];
   transformers?: ImporterTransformerDefinition[];
 }
@@ -31,6 +34,13 @@ interface SheetColumnReferenceDefinition extends SheetColumnBaseDefinition {
   typeArguments: {
     sheetId: string;
     sheetColumnId: string;
+  };
+}
+
+interface SheetColumnEnumDefinition extends SheetColumnBaseDefinition {
+  type: 'enum';
+  typeArguments: {
+    values: SelectOption<string>[];
   };
 }
 

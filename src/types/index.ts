@@ -6,3 +6,4 @@ export * from '../importer/types';
 export * from '../mapper/types';
 export * from '../parser/types';
 export type { FileWithPath } from 'react-dropzone';
+export type { SelectOption } from '../components/Select';

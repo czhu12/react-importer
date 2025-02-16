@@ -1,3 +1,4 @@
+import { SelectOption } from '../components/Select';
 import { SheetState } from '../types';
 
 export type MappedSheetData = SheetState;
@@ -22,7 +23,4 @@ export interface MapperOptionValue {
   sheetColumnId: string;
 }
 
-export interface MapperOption {
-  label: string;
-  value: MapperOptionValue;
-}
+export type MapperOption = SelectOption<MapperOptionValue>;
