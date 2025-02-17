@@ -29,7 +29,8 @@ interface SheetColumnStringDefinition extends SheetColumnBaseDefinition {
   type: 'string';
 }
 
-interface SheetColumnReferenceDefinition extends SheetColumnBaseDefinition {
+export interface SheetColumnReferenceDefinition
+  extends SheetColumnBaseDefinition {
   type: 'reference';
   typeArguments: {
     sheetId: string;

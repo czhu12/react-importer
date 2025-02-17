@@ -5,7 +5,7 @@ import {
   SheetState,
 } from '../../types';
 import { Select } from '../../components';
-import { isEmptyCell } from '../../utils';
+import { extractReferenceColumnPossibleValues } from '../utils';
 
 interface Props {
   columnDefinition: SheetColumnDefinition;
@@ -57,16 +57,10 @@ export default function SheetDataEditorCell({
   }
 
   if (columnDefinition.type === 'reference') {
-    const referenceArguments = columnDefinition.typeArguments;
-    const referenceSheetData = allData.find(
-      (data) => data.sheetId === referenceArguments.sheetId
+    const referenceData = extractReferenceColumnPossibleValues(
+      columnDefinition,
+      allData
     );
-
-    const referenceData =
-      referenceSheetData?.rows
-        ?.map((row) => row[referenceArguments.sheetColumnId])
-        ?.filter((c) => !isEmptyCell(c))
-        ?.filter((c, index, allData) => allData.indexOf(c) === index) ?? []; // Remove duplicates
 
     const selectOptions = referenceData.map((value) => ({
       label: value,
