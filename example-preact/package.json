@@ -9,11 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.0.6",
+    "highlight.js": "^11.11.1",
     "preact": "^10.25.4",
-    "react-importer": "file:.."
+    "react-importer": "file:..",
+    "tippy.js": "^6.3.7"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.10.1",
+    "tailwindcss": "^3.4.17",
     "typescript": "~5.7.2",
     "vite": "^6.1.0"
   }

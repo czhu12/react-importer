@@ -1,6 +1,11 @@
 import { useState } from 'preact/hooks';
 import Importer, { SheetState, ThemeVariant } from 'react-importer';
 import 'react-importer/dist/react-importer.css';
+import ThemeCard from './components/ThemeCard';
+import Header from './components/Header';
+import hljs from 'highlight.js/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
+
 import { ImporterTheme } from './types';
 
 const THEME_DEFAULT: ImporterTheme = {
@@ -65,49 +70,8 @@ const CONTENT = `import Importer from 'react-importer'
   }}
 />`;
 
-const ThemeCard = ({
-  theme,
-  onClick,
-}: {
-  theme: ImporterTheme;
-  onClick: () => void;
-}) => {
-  return (
-    <div className="theme-card" onClick={onClick}>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <div
-          className="theme-color"
-          style={{ backgroundColor: theme.colors.primary }}
-        ></div>
-        <div
-          className="theme-color"
-          style={{ backgroundColor: theme.colors.secondary }}
-        ></div>
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <div
-          className="theme-color"
-          style={{ backgroundColor: theme.colors.tertiary }}
-        ></div>
-        <div
-          className="theme-color"
-          style={{ backgroundColor: theme.colors.success }}
-        ></div>
-        <div
-          className="theme-color"
-          style={{ backgroundColor: theme.colors.warning }}
-        ></div>
-        <div
-          className="theme-color"
-          style={{ backgroundColor: theme.colors.danger }}
-        ></div>
-      </div>
-    </div>
-  );
-};
-
 const App = () => {
+  hljs.registerLanguage('javascript', javascript);
   const [ready, setReady] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<ThemeVariant>('default');
 
@@ -126,49 +90,31 @@ const App = () => {
   };
 
   return (
-    <div>
-      <div className="container">
-        <div className="header">
-          <div className="main">
-            <svg
-              style={{ marginRight: '20px' }}
-              xmlns="http://www.w3.org/2000/svg"
-              width="58"
-              height="58"
-              fill="#3498db"
-              className="bi bi-file-spreadsheet"
-              viewBox="0 0 16 16"
-            >
-              <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM6.354 9.854a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 8.707V12.5a.5.5 0 0 1-1 0V8.707L6.354 9.854z" />
-            </svg>
-            React Importer - PREACT
-          </div>
-          <div className="subtext">A modern CSV importer in React.</div>
-        </div>
+    <div className="min-h-screen w-full">
+      <div>
+        <Header />
 
         <div className="content">
-          <h1>Building a CSV uploader is hard.</h1>
+          <h3 className="text-4xl rubik font-bold">Building a CSV uploader is hard.</h3>
           <p>
-            Tired of people uploading invalid data into your application? Or
-            writing custom import scripts that keep breaking?
-          </p>
-          <p>
-            <b>React Importer</b> solves that for you.
+            OneImport is a javascript library that makes it easy to drop in a powerful,
+            intuitive, and elegant CSV uploader. It's just 35kb gzipped, and works with any
+            javascript application.
           </p>
         </div>
 
         <div className="content">
-          <h1>Drop in an uploader into your app in seconds.</h1>
+          <h3 className="text-4xl rubik font-bold">Drop in an uploader into your app in seconds.</h3>
           <div>
-            <pre>
-              <code className="language-jsx">{CONTENT}</code>
+            <pre className="bg-slate-800 text-white rounded-lg p-4">
+              <code className="language-javascript" dangerouslySetInnerHTML={{ __html: hljs.highlight(CONTENT, { language: 'jsx' }).value }} />
             </pre>
           </div>
         </div>
 
         <div className="content">
           <h1>
-            Want to see a demo? Try uploading <a href="data.csv">this file</a>.
+            Want to see a demo? Try uploading <a className="text-blue-500 hover:text-blue-600" href="/data.csv">this file</a>.
           </h1>
           <Importer
             theme={currentTheme}
@@ -256,6 +202,7 @@ const App = () => {
               <h4>Check the console for the output!</h4>
             </div>
           )}
+
         </div>
         <div className="content">
           <h1>Feel free to customize the theme</h1>
@@ -274,15 +221,12 @@ const App = () => {
             />
           </div>
         </div>
+        <footer>
+          <div className="container">
+            TODO
+          </div>
+        </footer>
       </div>
-      <footer>
-        <div className="container">
-          <p>
-            <i>{"I'm so sick of building CSV importers"}</i>
-          </p>
-          <p>- Me</p>
-        </div>
-      </footer>
     </div>
   );
 };
