@@ -35,6 +35,26 @@ Visit [here](https://czhu12.github.io/react-importer/) to see what React Importe
 npm install --save react-importer
 ```
 
+#### React and [Vite](https://vite.dev/)
+
+- Since this project uses [Preact](https://preactjs.com/), it is necesary to add the following code to your `vite.config.ts` to ensure compatibility if your project relies on React
+
+```
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      react: 'preact/compat',
+      'react-dom': 'preact/compat',
+    },
+  },
+});
+```
+
 ### Usage
 
 ```jsx
