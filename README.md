@@ -148,10 +148,6 @@ import Importer from 'react-importer';
 
 (TODO)
 
-### Documentation
-
-(TODO)
-
 #### Custom Themes
 
 We currently support three themes: `default`, `theme-1`, and `theme-2`. You can apply a theme by passing the theme prop to the Importer component:
