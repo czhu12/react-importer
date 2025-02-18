@@ -25,15 +25,9 @@ describe('IncludesValidator', () => {
       values: ['a', 'b', 'c'],
     });
     expect(validator.isValid('a')).toEqual(undefined);
-    expect(validator.isValid('a, b, c')).toEqual(
-      'Value is not in the list of allowed values'
-    );
-    expect(validator.isValid('a,b,c')).toEqual(
-      'Value is not in the list of allowed values'
-    );
-    expect(validator.isValid('d')).toEqual(
-      'Value is not in the list of allowed values'
-    );
+    expect(validator.isValid('a, b, c')).toEqual('validators.includes');
+    expect(validator.isValid('a,b,c')).toEqual('validators.includes');
+    expect(validator.isValid('d')).toEqual('validators.includes');
   });
 });
 
@@ -46,7 +40,7 @@ describe('MultiIncludesValidator', () => {
     expect(validator.isValid('a')).toEqual(undefined);
     expect(validator.isValid('a, b, c')).toEqual(undefined);
     expect(validator.isValid('a,b,c')).toEqual(undefined);
-    expect(validator.isValid('d')).toEqual('This value is not valid');
+    expect(validator.isValid('d')).toEqual('validators.multiIncludes');
   });
 });
 
@@ -72,7 +66,7 @@ describe('UniqueValidator', () => {
     const validator = buildValidatorFromDefinition({ validate: 'unique' });
     expect(validator.isValid(1)).toEqual(undefined);
     expect(validator.isValid(2)).toEqual(undefined);
-    expect(validator.isValid(1)).toEqual('This value is not unique');
+    expect(validator.isValid(1)).toEqual('validators.unique');
   });
 });
 
@@ -81,8 +75,8 @@ describe('RequiredValidator', () => {
     const validator = buildValidatorFromDefinition({ validate: 'required' });
     expect(validator.isValid(1)).toEqual(undefined);
     expect(validator.isValid('2')).toEqual(undefined);
-    expect(validator.isValid('')).toEqual('This value is required');
-    expect(validator.isValid(null)).toEqual('This value is required');
+    expect(validator.isValid('')).toEqual('validators.required');
+    expect(validator.isValid(null)).toEqual('validators.required');
   });
 });
 
@@ -92,8 +86,8 @@ describe('IntegerValidator', () => {
     expect(validator.isValid(0)).toEqual(undefined);
     expect(validator.isValid(1)).toEqual(undefined);
     expect(validator.isValid('2')).toEqual(undefined);
-    expect(validator.isValid(null)).toEqual('This is not a valid number');
-    expect(validator.isValid('hello')).toEqual('This is not a valid number');
+    expect(validator.isValid(null)).toEqual('validators.integer');
+    expect(validator.isValid('hello')).toEqual('validators.integer');
   });
 });
 
