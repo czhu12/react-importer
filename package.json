@@ -17,7 +17,9 @@
     "test": "vitest",
     "preview": "vite preview",
     "prepare": "tsc --emitDeclarationOnly",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "predeploy": "cd example && npm install && npm run build",
+    "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
     "preact": "^10.25.4"
