@@ -22,6 +22,7 @@ export interface ImporterDefinition {
     data: SheetState[],
     onProgress: (progress: number) => void
   ) => Promise<void>;
+  locale?: string;
 }
 
 /**

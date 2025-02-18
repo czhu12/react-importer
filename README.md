@@ -179,6 +179,13 @@ You can further customize theme styles by overriding the following CSS variables
 
 These variables allow you to adjust the color scheme for primary, secondary, and tertiary elements, as well as status indicators such as success, danger, warning, and info.
 
+#### Locales
+
+In order to change locale simply pass it to the Importer. Currently supported locales are
+
+- en - English (the default one)
+- fr - French
+
 ### Roadmap
 
 - Make readme and documentation better

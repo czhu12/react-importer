@@ -8,6 +8,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import Button from './Button';
 import { ReactNode } from 'preact/compat';
 import { ButtonVariant } from './Button';
+import { useTranslations } from '../i18';
 
 type VariantType = 'default' | 'danger';
 
@@ -26,10 +27,12 @@ export default function ConfirmationModal({
   setOpen,
   title,
   subTitle,
-  confirmationText = 'Confirm',
+  confirmationText,
   onConfirm,
   variant = 'default',
 }: Props) {
+  const { t } = useTranslations();
+
   const baseClasses: Record<
     VariantType,
     { icon?: ReactNode; btnVariant: ButtonVariant; bgColor?: string }
@@ -95,7 +98,8 @@ export default function ConfirmationModal({
                 }}
                 className="sm:ml-3 sm:w-auto"
               >
-                {confirmationText}
+                {confirmationText ??
+                  t('components.confirmationModal.defaultConfirm')}
               </Button>
               <Button
                 variant="tertiary"
@@ -103,7 +107,7 @@ export default function ConfirmationModal({
                 onClick={() => setOpen(false)}
                 className="mt-3 sm:mt-0 sm:w-auto"
               >
-                Cancel
+                {t('components.confirmationModal.cancel')}
               </Button>
             </div>
           </DialogPanel>

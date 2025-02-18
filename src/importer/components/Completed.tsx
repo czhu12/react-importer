@@ -1,4 +1,6 @@
-const CircularProgress = ({ progress }: { progress: number }) => {
+import { useTranslations } from '../../i18';
+
+function CircularProgress({ progress }: { progress: number }) {
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (progress / 100) * circumference;
@@ -26,9 +28,11 @@ const CircularProgress = ({ progress }: { progress: number }) => {
       />
     </svg>
   );
-};
+}
 
-const Failed = () => {
+function Failed() {
+  const { t } = useTranslations();
+
   return (
     <div className="my-16 text-center">
       <div className="relative mx-auto h-24 w-24">
@@ -42,12 +46,12 @@ const Failed = () => {
           <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
         </svg>
       </div>
-      <h2 className="text-2xl">Something went wrong</h2>
+      <h2 className="text-2xl">{t('importer.loader.failed')}</h2>
     </div>
   );
-};
+}
 
-const SuccessIcon = () => {
+function SuccessIcon() {
   return (
     <svg
       className="fill-success absolute inset-0 m-auto"
@@ -59,15 +63,17 @@ const SuccessIcon = () => {
       <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
     </svg>
   );
-};
+}
 
-const Uploading = ({
+function Uploading({
   progress,
   pending,
 }: {
   progress: number;
   pending?: boolean;
-}) => {
+}) {
+  const { t } = useTranslations();
+
   return (
     <div className="my-16 text-center">
       <div className="relative mx-auto h-24 w-24">
@@ -79,11 +85,13 @@ const Uploading = ({
           </div>
         )}
       </div>
-      {pending && <h2 className="text-2xl">Uploading</h2>}
-      {!pending && <h2 className="text-2xl">Success</h2>}
+      {pending && (
+        <h2 className="text-2xl">{t('importer.loader.uploading')}</h2>
+      )}
+      {!pending && <h2 className="text-2xl">{t('importer.loader.success')}</h2>}
     </div>
   );
-};
+}
 
 interface Props {
   progress: number;

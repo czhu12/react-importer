@@ -1,4 +1,4 @@
-import { useReducer } from 'preact/compat';
+import { useEffect, useReducer } from 'preact/compat';
 
 import FileUploader from './components/FileUploader';
 import HeaderMapper from '../mapper/components/HeaderMapper';
@@ -21,12 +21,17 @@ import { buildSuggestedHeaderMappings } from '../mapper/utils';
 import { NUMBER_OF_EMPTY_ROWS_FOR_MANUAL_DATA_INPUT } from '../constants';
 import SheetsSwitcher from '../sheet/components/SheetsSwitcher';
 import { Button, Root } from '../components';
+import { changeLocale, useTranslations } from '../i18';
+
 export default function Importer({
   theme,
   onComplete,
   sheets,
   onDataColumnsMapped,
+  locale,
 }: ImporterDefinition) {
+  const { t } = useTranslations();
+
   const [
     {
       mode,
@@ -39,6 +44,10 @@ export default function Importer({
     },
     dispatch,
   ] = useReducer(reducer, buildInitialState(sheets));
+
+  useEffect(() => {
+    changeLocale(locale);
+  }, [locale]);
 
   const currentSheetData = sheetData.find(
     (sheet) => sheet.sheetId === currentSheetId
@@ -132,7 +141,7 @@ export default function Importer({
             <FileUploader setFile={onFileUploaded} />
             <div className="mt-10 mb-2.5">
               <h6 onClick={onEnterDataManually}>
-                Or just manually enter your data
+                {t('importer.uploader.enterManually')}
               </h6>
             </div>
           </div>
@@ -167,7 +176,7 @@ export default function Importer({
               removeRows={onRemoveRows}
             />
             <div className="my-5 text-right">
-              <Button onClick={onSubmit}>Upload</Button>
+              <Button onClick={onSubmit}>{t('importer.upload')}</Button>
             </div>
           </>
         )}

@@ -9,7 +9,7 @@ export class IntegerValidator extends Validator {
       fieldValue !== undefined;
 
     if (!valid) {
-      return this.definition.error || 'This is not a valid number';
+      return this.definition.error || 'validators.integer';
     }
   }
 }

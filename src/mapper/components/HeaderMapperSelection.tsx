@@ -1,4 +1,5 @@
 import { Select } from '../../components';
+import { useTranslations } from '../../i18';
 import {
   ColumnMapping,
   ImporterOutputFieldType,
@@ -21,6 +22,8 @@ export default function HeaderMapperSelection({
   currentMappings,
   mappingSelectionOptions,
 }: Props) {
+  const { t } = useTranslations();
+
   return (
     <div>
       <div className="my-5 flex items-center">
@@ -72,7 +75,9 @@ export default function HeaderMapperSelection({
                 >
                   {idx}
                 </td>
-                <td style={{ padding: '10px 20px' }}>{e || <i>No Data</i>}</td>
+                <td style={{ padding: '10px 20px' }}>
+                  {e || <i>{t('mapper.noData')}</i>}
+                </td>
               </tr>
             );
           })}

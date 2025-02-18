@@ -22,7 +22,7 @@ export class MultiIncludesValidator extends Validator {
     const values = fieldValue.split(this.delimiter);
     // If any of the values are not in the list of valid values, then the field is invalid
     if (values.some((value) => !this.values.includes(value.trim()))) {
-      return this.definition.error || 'This value is not valid';
+      return this.definition.error || 'validators.multiIncludes';
     }
   }
 }

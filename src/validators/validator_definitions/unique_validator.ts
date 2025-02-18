@@ -14,7 +14,7 @@ export class UniqueValidator extends Validator {
 
   isValid(fieldValue: ImporterOutputFieldType) {
     if (fieldValue in this.seen) {
-      return this.definition.error || 'This value is not unique';
+      return this.definition.error || 'validators.unique';
     }
     this.seen[fieldValue] = true;
   }

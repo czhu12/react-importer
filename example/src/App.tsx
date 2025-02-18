@@ -46,6 +46,7 @@ import { EXAMPLE_CODE } from './constants';
 const App = () => {
   const [ready, setReady] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<ThemeVariant>('default');
+  const [currentLocale, setCurrentLocale] = useState('en');
 
   const onComplete = async (
     data: SheetState[],
@@ -94,6 +95,7 @@ const App = () => {
           </h1>
           <Importer
             theme={currentTheme}
+            locale={currentLocale}
             sheets={[
               {
                 id: 'employees',
@@ -194,6 +196,25 @@ const App = () => {
               theme={THEME_TWO}
               onClick={() => setCurrentTheme('theme-2')}
             />
+          </div>
+        </div>
+
+        <div className="content">
+          <h1>Feel free to customize the language</h1>
+          <div className="flex">
+            <div
+              className="grow rounded-lg bg-[#f4f4f4] p-8 text-center shadow-lg"
+              onClick={() => setCurrentLocale('en')}
+            >
+              English
+            </div>
+            <div className="w-24" />
+            <div
+              className="grow rounded-lg bg-[#f4f4f4] p-8 text-center shadow-lg"
+              onClick={() => setCurrentLocale('fr')}
+            >
+              French
+            </div>
           </div>
         </div>
         <footer>
