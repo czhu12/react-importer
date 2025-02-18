@@ -4,7 +4,6 @@ import 'react-importer/dist/react-importer.css';
 import ThemeCard from './components/ThemeCard';
 import Header from './components/Header';
 import CodeBlock from './components/CodeBlock';
-import { EXAMPLE_CODE } from './constants/exampleCode';
 import { ImporterTheme } from './types';
 
 const THEME_DEFAULT: ImporterTheme = {
@@ -42,6 +41,7 @@ const THEME_TWO: ImporterTheme = {
     info: '#0369a1',
   },
 };
+import { EXAMPLE_CODE } from './constants';
 
 const App = () => {
   const [ready, setReady] = useState(false);
