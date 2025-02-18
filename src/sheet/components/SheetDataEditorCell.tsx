@@ -6,6 +6,7 @@ import {
 } from '../../types';
 import { Select } from '../../components';
 import { extractReferenceColumnPossibleValues } from '../utils';
+import { useTranslations } from '../../i18';
 
 interface Props {
   columnDefinition: SheetColumnDefinition;
@@ -22,6 +23,8 @@ export default function SheetDataEditorCell({
   allData,
   clearRowsSelection,
 }: Props) {
+  const { t } = useTranslations();
+
   const [editMode, setEditMode] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -43,7 +46,7 @@ export default function SheetDataEditorCell({
     return (
       <div
         onClick={(e) => !readOnly && e.detail > 1 && setEditMode(true)}
-        title={readOnly ? 'Read only' : 'Double click to edit'}
+        title={readOnly ? t('sheet.readOnly') : t('sheet.editTooltip')}
         className="h-full w-full"
       >
         {nonEmptyValue}

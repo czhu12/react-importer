@@ -1,4 +1,5 @@
 import { Button } from '../../components';
+import { useTranslations } from '../../i18';
 import { ColumnMapping, ParsedFile, SheetDefinition } from '../../types';
 import {
   calculateMappingExamples,
@@ -21,6 +22,8 @@ export default function HeaderMapper({
   onMappingsChanged,
   onMappingsSet,
 }: Props) {
+  const { t } = useTranslations();
+
   const data = parsed.data;
   const csvHeaders = parsed.meta.fields!; // TODO THIS BRANCH: Check why it can be undefined
 
@@ -41,7 +44,9 @@ export default function HeaderMapper({
   return (
     <div>
       <div>
-        <h5>{parsed.data.length - 1} Rows Imported</h5>
+        <h5>
+          {t('mapper.numberRowsImported', { count: parsed.data.length - 1 })}
+        </h5>
       </div>
       {csvHeaders.map((header, columnIndex) => {
         const examples = calculateMappingExamples(data, header);
@@ -71,9 +76,9 @@ export default function HeaderMapper({
       })}
       <div className="my-5 flex justify-between">
         <Button variant="secondary" outline>
-          Back
+          {t('mapper.back')}
         </Button>
-        <Button onClick={onMappingsSet}>Confirm</Button>
+        <Button onClick={onMappingsSet}> {t('mapper.confirm')}</Button>
       </div>
     </div>
   );

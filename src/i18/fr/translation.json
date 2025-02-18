@@ -1,0 +1,46 @@
+{
+  "components": {
+    "confirmationModal": {
+      "defaultConfirm": "Confirmer",
+      "cancel": "Annuler"
+    }
+  },
+  "importer": {
+    "upload": "Télécharger",
+    "loader": {
+      "failed": "Quelque chose a mal tourné",
+      "uploading": "Téléchargement en cours",
+      "success": "Succès"
+    },
+    "uploader": {
+      "pickFile": "Choisir un fichier",
+      "dragAndDrop": "Glissez et déposez votre fichier ici",
+      "fileSizeLimit": "Limite {{limit}}",
+      "browseFiles": "Parcourir les fichiers",
+      "enterManually": "Ou saisissez vos données manuellement"
+    }
+  },
+  "mapper": {
+    "numberRowsImported": "{{count}} lignes importées",
+    "back": "Retour",
+    "confirm": "Confirmer",
+    "noData": "Aucune donnée"
+  },
+  "sheet": {
+    "onlyShowErrorsCheckboxLabel": "Afficher uniquement les lignes avec des erreurs",
+    "validationPassed": "Toutes les lignes passent la validation !",
+    "removeConfirmationModalTitle": "Supprimer les lignes",
+    "removeConfirmationModalConfirmationText": "Supprimer",
+    "removeConfirmationModalSubTitle": "Êtes-vous sûr de vouloir supprimer {{rowsCount}} lignes ?",
+    "readOnly": "Lecture seule",
+    "editTooltip": "Double-cliquez pour modifier"
+  },
+  "validators": {
+    "includes": "La valeur n'est pas dans la liste des valeurs autorisées",
+    "integer": "Ce n'est pas un nombre valide",
+    "multiIncludes": "Cette valeur n'est pas valide",
+    "regex": "Cette valeur est invalide",
+    "required": "Cette valeur est obligatoire",
+    "unique": "Cette valeur n'est pas unique"
+  }
+}

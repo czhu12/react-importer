@@ -16,6 +16,7 @@ import {
 import { Checkbox, ConfirmationModal } from '../../components';
 import SheetDataEditorTable from './SheetDataEditorTable';
 import { TrashIcon } from '@heroicons/react/24/outline';
+import { useTranslations } from '../../i18';
 
 const columnHelper = createColumnHelper<SheetRow>();
 
@@ -36,6 +37,8 @@ export default function SheetDataEditor({
   setRowData,
   removeRows,
 }: Props) {
+  const { t } = useTranslations();
+
   const [selectedRows, setSelectedRows] = useState<SheetRow[]>([]);
   const [onlyShowErrors, setOnlyShowErrors] = useState(false);
   const [removeConfirmationModalOpen, setRemoveConfirmationModalOpen] =
@@ -108,7 +111,7 @@ export default function SheetDataEditor({
                 setSelectedRows([]);
                 setOnlyShowErrors(checked);
               }}
-              label="Only show rows with errors"
+              label={t('sheet.onlyShowErrorsCheckboxLabel')}
             />
           </div>
         )}
@@ -124,7 +127,7 @@ export default function SheetDataEditor({
             >
               <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
             </svg>
-            All rows pass validation!
+            {t('sheet.validationPassed')}
           </div>
         )}
 
@@ -151,9 +154,11 @@ export default function SheetDataEditor({
         open={removeConfirmationModalOpen}
         setOpen={setRemoveConfirmationModalOpen}
         onConfirm={onRemoveRows}
-        title="Remove rows"
-        confirmationText="Remove"
-        subTitle={`Are you sure you want to remove ${selectedRows.length} rows?`}
+        title={t('sheet.removeConfirmationModalTitle')}
+        confirmationText={t('sheet.removeConfirmationModalConfirmationText')}
+        subTitle={t('sheet.removeConfirmationModalSubTitle', {
+          rowsCount: selectedRows.length,
+        })}
         variant="danger"
       />
     </div>

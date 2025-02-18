@@ -21,7 +21,7 @@ export class RegexValidator extends Validator {
   isValid(fieldValue: ImporterOutputFieldType) {
     const matches = this.regexp.test(fieldValue);
     if (!matches) {
-      return this.definition.error || 'This value is invalid';
+      return this.definition.error || 'validators.regex';
     }
   }
 }

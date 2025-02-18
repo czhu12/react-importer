@@ -22,7 +22,7 @@ export default function SheetsSwitcher({
         label: sheet.label,
         value: sheet.id,
         icon: validationErrors.some((error) => error.sheetId === sheet.id) ? (
-          <ExclamationCircleIcon className="w-4 h-4 mr-3" />
+          <ExclamationCircleIcon className="mr-3 h-4 w-4" />
         ) : undefined,
       }))}
       activeTab={activeSheetId}

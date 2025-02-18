@@ -1,0 +1,46 @@
+{
+  "components": {
+    "confirmationModal": {
+      "defaultConfirm": "Confirm",
+      "cancel": "Cancel"
+    }
+  },
+  "importer": {
+    "upload": "Upload",
+    "loader": {
+      "failed": "Something went wrong",
+      "uploading": "Uploading",
+      "success": "Success"
+    },
+    "uploader": {
+      "pickFile": "Pick a file",
+      "dragAndDrop": "Drag and drop your file here",
+      "fileSizeLimit": "Limit {{limit}}",
+      "browseFiles": "Browse Files",
+      "enterManually": "Or just manually enter your data"
+    }
+  },
+  "mapper": {
+    "numberRowsImported": "{{count}} Rows Imported",
+    "back": "Back",
+    "confirm": "Confirm",
+    "noData": "No Data"
+  },
+  "sheet": {
+    "onlyShowErrorsCheckboxLabel": "Only show rows with errors",
+    "validationPassed": "All rows pass validation!",
+    "removeConfirmationModalTitle": "Remove rows",
+    "removeConfirmationModalConfirmationText": "Remove",
+    "removeConfirmationModalSubTitle": "Are you sure you want to remove {{rowsCount}} rows?",
+    "readOnly": "Read Only",
+    "editTooltip": "Double click to edit"
+  },
+  "validators": {
+    "includes": "Value is not in the list of allowed values",
+    "integer": "This is not a valid number",
+    "multiIncludes": "This value is not valid",
+    "regex": "This value is invalid",
+    "required": "This value is required",
+    "unique": "This value is not unique"
+  }
+}

@@ -3,6 +3,7 @@ import SheetDataEditorCell from './SheetDataEditorCell';
 import { SheetDefinition, SheetRow, SheetState } from '../types';
 import { ImporterOutputFieldType, ImporterValidationError } from '../../types';
 import { Checkbox } from '../../components';
+import { useTranslations } from '../../i18';
 
 interface Props {
   table: Table<SheetRow>;
@@ -29,6 +30,8 @@ export default function SheetDataEditorTable({
   selectedRows,
   setSelectedRows,
 }: Props) {
+  const { t } = useTranslations();
+
   function cellErrors(columnId: string, rowIndex: number) {
     return sheetValidationErrors.filter(
       (validation) =>
@@ -113,7 +116,7 @@ export default function SheetDataEditorTable({
                     key={cell.id}
                     // TODO: Perhaps we might need some more fency tooltip?
                     title={cellErrors(columnId, rowIndex)
-                      .map((e) => e.message)
+                      .map((e) => t(e.message))
                       .join(', ')}
                     className={`${cellClass} ${hasCellErrors(columnId, rowIndex) ? 'bg-red-100' : ''} `}
                   >

@@ -26,14 +26,11 @@ export default function Tabs({ tabs, activeTab, onTabChange }: Props) {
                 key={tab.label}
                 aria-current={tab.value === activeTab ? 'page' : undefined}
                 onClick={() => onTabChange(tab.value)}
-                className={`
-                  ${
-                    tab.value === activeTab
-                      ? 'border-primary text-primary'
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                  }
-                  border-b-2 px-1 py-4 text-sm font-medium whitespace-nowrap cursor-pointer flex items-center
-               `}
+                className={` ${
+                  tab.value === activeTab
+                    ? 'border-primary text-primary'
+                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                } flex cursor-pointer items-center border-b-2 px-1 py-4 text-sm font-medium whitespace-nowrap`}
               >
                 {tab.icon}
                 {tab.label}
