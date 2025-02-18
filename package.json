@@ -19,7 +19,7 @@
     "prepare": "tsc --emitDeclarationOnly",
     "prepublishOnly": "npm run build",
     "predeploy": "cd example && npm install && npm run build",
-    "deploy": "gh-pages -d example/build"
+    "deploy": "gh-pages -d example/dist"
   },
   "peerDependencies": {
     "preact": "^10.25.4"
