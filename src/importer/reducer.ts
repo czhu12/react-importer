@@ -1,3 +1,4 @@
+import { applyTransformations } from '../transformers';
 import { ImporterAction, ImporterState, SheetDefinition } from '../types';
 import { applyValidations } from '../validators';
 
@@ -39,7 +40,10 @@ const reducer = (
     case 'DATA_MAPPED': {
       return {
         ...state,
-        sheetData: action.payload.mappedData,
+        sheetData: applyTransformations(
+          state.sheetDefinitions,
+          action.payload.mappedData
+        ),
         mode: 'preview',
         validationErrors: applyValidations(
           state.sheetDefinitions,
@@ -64,7 +68,7 @@ const reducer = (
 
       return {
         ...state,
-        sheetData: newData,
+        sheetData: applyTransformations(state.sheetDefinitions, newData),
         validationErrors: applyValidations(state.sheetDefinitions, newData),
       };
     }
