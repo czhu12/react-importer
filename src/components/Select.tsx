@@ -51,7 +51,7 @@ export default function Select<T>({
   return (
     <Listbox value={value} onChange={handleChange} multiple={multiple}>
       <div className="relative">
-        <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+        <ListboxButton className="focus:outline-primary grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6">
           <span className="col-start-1 row-start-1 truncate pr-6">
             {selectedOptions.length > 0
               ? selectedOptions.map((o) => o.label).join(', ')
@@ -71,7 +71,7 @@ export default function Select<T>({
             <ListboxOption
               key={option.value as string}
               value={option.value}
-              className="flex items-center group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
+              className="group data-focus:bg-primary relative flex cursor-default items-center py-2 pr-9 pl-3 text-gray-900 select-none data-focus:text-white data-focus:outline-hidden"
             >
               {option.icon}
 
@@ -80,7 +80,7 @@ export default function Select<T>({
               </span>
 
               {isSelected(option.value) && (
-                <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-data-focus:text-white">
+                <span className="text-primary absolute inset-y-0 right-0 flex items-center pr-4 group-data-focus:text-white">
                   <CheckIcon aria-hidden="true" className="size-5" />
                 </span>
               )}

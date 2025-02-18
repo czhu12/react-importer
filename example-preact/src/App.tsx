@@ -10,11 +10,11 @@ import { ImporterTheme } from './types';
 
 const THEME_DEFAULT: ImporterTheme = {
   colors: {
-    primary: '#0369a1',
+    primary: '#4f39f6',
     secondary: '#0284c7',
-    tertiary: '#f59e0b',
+    tertiary: '#d1d5dc',
     success: '#10b981',
-    danger: '#dc2626',
+    danger: '#f44336',
     warning: '#facc15',
     info: '#0ea5e9',
   },
@@ -24,7 +24,7 @@ const THEME_ONE: ImporterTheme = {
   colors: {
     primary: '#42a5f5',
     secondary: '#ce93d8',
-    tertiary: '#93c5fd',
+    tertiary: '#d1d5dc',
     success: '#66bb6a',
     danger: '#f44336',
     warning: '#ffa726',

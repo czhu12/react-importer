@@ -5,6 +5,11 @@ import {
   DialogTitle,
 } from '@headlessui/react';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import Button from './Button';
+import { ReactNode } from 'preact/compat';
+import { ButtonVariant } from './Button';
+
+type VariantType = 'default' | 'danger';
 
 interface Props {
   open: boolean;
@@ -13,6 +18,7 @@ interface Props {
   subTitle?: string;
   confirmationText?: string;
   onConfirm: () => void;
+  variant: VariantType;
 }
 
 export default function ConfirmationModal({
@@ -22,7 +28,29 @@ export default function ConfirmationModal({
   subTitle,
   confirmationText = 'Confirm',
   onConfirm,
+  variant = 'default',
 }: Props) {
+  const baseClasses: Record<
+    VariantType,
+    { icon?: ReactNode; btnVariant: ButtonVariant; bgColor?: string }
+  > = {
+    danger: {
+      icon: (
+        <ExclamationTriangleIcon
+          className="text-danger size-6"
+          aria-hidden="true"
+        />
+      ),
+      btnVariant: 'danger',
+      bgColor: 'bg-danger-extra-light',
+    },
+    default: {
+      btnVariant: 'primary',
+    },
+  };
+
+  const { icon, btnVariant, bgColor } = baseClasses[variant];
+
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10">
       <DialogBackdrop
@@ -37,12 +65,13 @@ export default function ConfirmationModal({
             className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-closed:sm:translate-y-0 data-closed:sm:scale-95"
           >
             <div className="sm:flex sm:items-start">
-              <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
-                <ExclamationTriangleIcon
-                  aria-hidden="true"
-                  className="size-6 text-red-600"
-                />
-              </div>
+              {icon && (
+                <div
+                  className={`mx-auto flex size-12 shrink-0 items-center justify-center rounded-full ${bgColor} sm:mx-0 sm:size-10`}
+                >
+                  {icon}
+                </div>
+              )}
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <DialogTitle
                   as="h3"
@@ -58,24 +87,24 @@ export default function ConfirmationModal({
               </div>
             </div>
             <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-              <button
-                type="button"
+              <Button
+                variant={btnVariant}
                 onClick={() => {
                   onConfirm();
                   setOpen(false);
                 }}
-                className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:ml-3 sm:w-auto"
+                className="sm:ml-3 sm:w-auto"
               >
                 {confirmationText}
-              </button>
-              <button
-                type="button"
+              </Button>
+              <Button
+                variant="tertiary"
                 data-autofocus
                 onClick={() => setOpen(false)}
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                className="mt-3 sm:mt-0 sm:w-auto"
               >
                 Cancel
-              </button>
+              </Button>
             </div>
           </DialogPanel>
         </div>

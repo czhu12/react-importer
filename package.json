@@ -58,6 +58,7 @@
     "@tanstack/react-table": "^8.21.2",
     "cva": "npm:class-variance-authority@^0.7.1",
     "dropzone": "^5.9.3",
-    "papaparse": "^5.4.1"
+    "papaparse": "^5.4.1",
+    "tailwind-merge": "^3.0.1"
   }
 }
