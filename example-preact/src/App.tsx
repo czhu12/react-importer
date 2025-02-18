@@ -3,9 +3,8 @@ import Importer, { SheetState, ThemeVariant } from 'react-importer';
 import 'react-importer/dist/react-importer.css';
 import ThemeCard from './components/ThemeCard';
 import Header from './components/Header';
-import hljs from 'highlight.js/lib/core';
-import javascript from 'highlight.js/lib/languages/javascript';
-
+import CodeBlock from './components/CodeBlock';
+import { EXAMPLE_CODE } from './constants/exampleCode';
 import { ImporterTheme } from './types';
 
 const THEME_DEFAULT: ImporterTheme = {
@@ -44,34 +43,7 @@ const THEME_TWO: ImporterTheme = {
   },
 };
 
-const CONTENT = `import Importer from 'react-importer'
-
-<Importer
-  fields={[
-    {
-      label: "Name", key: "name", validators: [
-        { validate: "required" },
-      ]
-    },
-    {
-      label: "Email", key: "email", validators: [
-        { validate: "required" },
-        { validate: "unique", error: "This email is not unique" },
-      ]
-    },
-    {
-      label: "State", key: "state", transformers: [
-        { transformer: "state_code" }
-      ]
-    },
-  ]}
-  onComplete={(data) => {
-    console.log(data)
-  }}
-/>`;
-
 const App = () => {
-  hljs.registerLanguage('javascript', javascript);
   const [ready, setReady] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<ThemeVariant>('default');
 
@@ -95,33 +67,37 @@ const App = () => {
         <Header />
 
         <div className="content">
-          <h3 className="text-4xl rubik font-bold">Building a CSV uploader is hard.</h3>
+          <h3 className="rubik text-4xl font-bold">
+            Building a CSV uploader is hard.
+          </h3>
           <p>
-            OneImport is a javascript library that makes it easy to drop in a powerful,
-            intuitive, and elegant CSV uploader. It's just 35kb gzipped, and works with any
-            javascript application.
+            OneImport is a javascript library that makes it easy to drop in a
+            powerful, intuitive, and elegant CSV uploader. It's just 35kb
+            gzipped, and works with any javascript application.
           </p>
         </div>
 
         <div className="content">
-          <h3 className="text-4xl rubik font-bold">Drop in an uploader into your app in seconds.</h3>
-          <div>
-            <pre className="bg-slate-800 text-white rounded-lg p-4">
-              <code className="language-javascript" dangerouslySetInnerHTML={{ __html: hljs.highlight(CONTENT, { language: 'jsx' }).value }} />
-            </pre>
-          </div>
+          <CodeBlock
+            title="Drop in an uploader into your app in seconds."
+            code={EXAMPLE_CODE}
+          />
         </div>
 
         <div className="content">
           <h1>
-            Want to see a demo? Try uploading <a className="text-blue-500 hover:text-blue-600" href="/data.csv">this file</a>.
+            Want to see a demo? Try uploading{' '}
+            <a className="text-blue-500 hover:text-blue-600" href="/data.csv">
+              this file
+            </a>
+            .
           </h1>
           <Importer
             theme={currentTheme}
             sheets={[
               {
-                id: 'sheet_1',
-                label: 'Sheet 1',
+                id: 'employees',
+                label: 'Employees',
                 columns: [
                   {
                     label: 'Name',
@@ -187,7 +163,7 @@ const App = () => {
                     id: 'name',
                     type: 'reference',
                     typeArguments: {
-                      sheetId: 'sheet_1',
+                      sheetId: 'employees',
                       sheetColumnId: 'name',
                     },
                     validators: [{ validate: 'required' }],
@@ -202,7 +178,6 @@ const App = () => {
               <h4>Check the console for the output!</h4>
             </div>
           )}
-
         </div>
         <div className="content">
           <h1>Feel free to customize the theme</h1>
@@ -222,9 +197,7 @@ const App = () => {
           </div>
         </div>
         <footer>
-          <div className="container">
-            TODO
-          </div>
+          <div className="container">TODO</div>
         </footer>
       </div>
     </div>
