@@ -35,28 +35,109 @@ Visit [here](https://czhu12.github.io/react-importer/) to see what React Importe
 npm install --save react-importer
 ```
 
+#### React and [Vite](https://vite.dev/)
+
+- Since this project uses [Preact](https://preactjs.com/), it is necesary to add the following code to your `vite.config.ts` to ensure compatibility if your project relies on React
+- Detailed documenation on aliasing React to Preact can be found [here](https://preactjs.com/guide/v10/getting-started/#aliasing-react-to-preact)
+
+```
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      react: 'preact/compat',
+      'react-dom': 'preact/compat',
+    },
+  },
+});
+```
+
 ### Usage
 
 ```jsx
 import Importer from 'react-importer';
 
 <Importer
-  fields={[
+  sheets={[
     {
-      label: 'Name',
-      key: 'name',
-      validators: [{ validate: 'required' }],
-      transformers: [{ transform: 'lower_case' }],
-    },
-    {
-      label: 'Email',
-      key: 'email',
-      validators: [
-        { validate: 'required' },
-        { validate: 'unique', error: 'This email is not unique' },
+      id: 'employees',
+      label: 'Employees',
+      columns: [
+        {
+          label: 'Name',
+          id: 'name',
+          type: 'string',
+          validators: [{ validate: 'required' }],
+        },
+        {
+          label: 'Email',
+          id: 'email',
+          type: 'string',
+          validators: [
+            { validate: 'required' },
+            { validate: 'unique', error: 'This email is not unique' },
+            {
+              validate: 'regex_matches',
+              regex:
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              error: 'This email is not valid',
+            },
+          ],
+        },
+        {
+          label: 'Phone Number',
+          id: 'phone_number',
+          type: 'string',
+          validators: [{ validate: 'required' }],
+        },
+        { label: 'City', id: 'city', type: 'string' },
+        {
+          label: 'State',
+          id: 'state',
+          type: 'string',
+          isReadOnly: true,
+          transformers: [{ transformer: 'state_code' }],
+        },
       ],
     },
-    { label: 'State', key: 'state' },
+    {
+      id: 'companies',
+      label: 'Companies',
+      columns: [
+        {
+          label: 'Company',
+          id: 'company',
+          type: 'string',
+          validators: [{ validate: 'required' }],
+        },
+        {
+          label: 'Industry',
+          id: 'industry',
+          type: 'enum',
+          typeArguments: {
+            values: [
+              { label: 'Tech', value: 'tech' },
+              { label: 'Finance', value: 'finance' },
+            ],
+          },
+          validators: [{ validate: 'required' }],
+        },
+        {
+          label: 'Name',
+          id: 'name',
+          type: 'reference',
+          typeArguments: {
+            sheetId: 'employees',
+            sheetColumnId: 'name',
+          },
+          validators: [{ validate: 'required' }],
+        },
+      ],
+    },
   ]}
   onComplete={(data) => {
     console.log(data);
