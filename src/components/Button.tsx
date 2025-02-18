@@ -21,7 +21,7 @@ interface Props {
   className?: string;
 }
 
-const buttonStyles = cva('text-center inline-block font-semibold', {
+const baseClasses = cva('text-center inline-block font-semibold', {
   variants: {
     variant: {
       primary: 'shadow-xs bg-primary text-white',
@@ -98,7 +98,7 @@ export default function Button({
   className,
 }: Props) {
   const componentClassName = twMerge(
-    buttonStyles({ variant, disabled, size }),
+    baseClasses({ variant, disabled, size }),
     className
   );
 
