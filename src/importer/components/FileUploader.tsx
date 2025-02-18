@@ -1,31 +1,36 @@
-import { useEffect } from 'preact/compat';
-import { FileWithPath, useDropzone } from 'react-dropzone';
+import { useEffect, useRef } from 'preact/compat';
+import Dropzone from 'dropzone';
 import { Card, Button } from '../../components';
 
 interface Props {
-  setFile: (file: FileWithPath) => void;
+  setFile: (file: File) => void;
 }
 
 export default function FileUploader({ setFile }: Props) {
-  const { acceptedFiles, getRootProps, getInputProps, isDragAccept } =
-    useDropzone();
+  const dropzoneRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (acceptedFiles.length > 0) {
-      setFile(acceptedFiles[0]);
-    }
-  }, [acceptedFiles]);
+    if (!dropzoneRef.current) return;
 
-  const backgroundColor = isDragAccept
-    ? 'rgb(236, 240, 241)'
-    : 'rgb(250, 250, 250)';
+    const dz = new Dropzone(dropzoneRef.current, {
+      url: '/', // Required to pass, but we don't use it
+      autoProcessQueue: false,
+      maxFiles: 1,
+      acceptedFiles: 'text/csv',
+      clickable: true,
+      previewsContainer: false,
+    });
+
+    dz.on('addedfile', (file) => {
+      setFile(file);
+    });
+
+    return () => dz.destroy();
+  }, [setFile]);
+
   return (
-    <Card
-      {...getRootProps()}
-      style={{ cursor: 'pointer', backgroundColor: backgroundColor }}
-    >
-      <div className="p-7.5">
-        <input {...getInputProps()} />
+    <Card ref={dropzoneRef} style={{ cursor: 'pointer' }}>
+      <div className="p-7.5" onClick={() => dropzoneRef.current?.click()}>
         <div className="mb-7.5">Pick a file</div>
         <div className="flex">
           <div className="flex-none">
