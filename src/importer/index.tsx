@@ -4,13 +4,11 @@ import FileUploader from './components/FileUploader';
 import HeaderMapper from '../mapper/components/HeaderMapper';
 import SheetDataEditor from '../sheet/components/SheetDataEditor';
 import Completed from './components/Completed';
-import { Root } from '../components';
 import { delay } from '../utils/timing';
 import { buildInitialState, reducer } from './reducer';
 import {
   CellChangedPayload,
   ColumnMapping,
-  FileWithPath,
   ImporterDefinition,
   RemoveRowsPayload,
 } from '../types';
@@ -22,7 +20,7 @@ import { applyTransformations } from '../transformers';
 import { buildSuggestedHeaderMappings } from '../mapper/utils';
 import { NUMBER_OF_EMPTY_ROWS_FOR_MANUAL_DATA_INPUT } from '../constants';
 import SheetsSwitcher from '../sheet/components/SheetsSwitcher';
-import { Button } from '../components';
+import { Button, Root } from '../components';
 export default function Importer({
   theme,
   onComplete,
@@ -50,7 +48,7 @@ export default function Importer({
     (sheet) => sheet.id === currentSheetId
   );
 
-  function onFileUploaded(file: FileWithPath) {
+  function onFileUploaded(file: File) {
     parseCsv({
       file,
       onCompleted: (newParsed) => {
@@ -73,7 +71,6 @@ export default function Importer({
     dispatch({
       type: 'ENTER_DATA_MANUALLY',
       payload: {
-        sheetDefinitions: sheets,
         amountOfEmptyRowsToAdd: NUMBER_OF_EMPTY_ROWS_FOR_MANUAL_DATA_INPUT,
       },
     });
