@@ -18,7 +18,7 @@ const reducer = (
 ): ImporterState => {
   switch (action.type) {
     case 'ENTER_DATA_MANUALLY': {
-      const emptyData = action.payload.sheetDefinitions.map((sheet) => ({
+      const emptyData = state.sheetDefinitions.map((sheet) => ({
         sheetId: sheet.id,
         rows: Array.from(
           { length: action.payload.amountOfEmptyRowsToAdd },

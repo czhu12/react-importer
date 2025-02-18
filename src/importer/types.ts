@@ -68,7 +68,6 @@ export type ImporterAction =
   | {
       type: 'ENTER_DATA_MANUALLY';
       payload: {
-        sheetDefinitions: SheetDefinition[];
         amountOfEmptyRowsToAdd: number;
       };
     } // Changes the mode to 'preview'

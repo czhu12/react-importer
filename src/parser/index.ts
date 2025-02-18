@@ -1,4 +1,3 @@
-import { FileWithPath } from 'react-dropzone';
 import { CSVParsedData, ParsedFile } from './types';
 // This is how package documentation imports the package
 // eslint-disable-next-line import/default
@@ -8,7 +7,7 @@ export function parseCsv({
   file,
   onCompleted,
 }: {
-  file: FileWithPath;
+  file: File;
   onCompleted: (data: ParsedFile) => void;
 }) {
   Papa.parse<CSVParsedData>(file, {
