@@ -38,6 +38,7 @@ npm install --save react-importer
 #### React and [Vite](https://vite.dev/)
 
 - Since this project uses [Preact](https://preactjs.com/), it is necesary to add the following code to your `vite.config.ts` to ensure compatibility if your project relies on React
+- Detailed documenation on aliasing React to Preact can be found [here](https://preactjs.com/guide/v10/getting-started/#aliasing-react-to-preact)
 
 ```
 import { defineConfig } from 'vite';
