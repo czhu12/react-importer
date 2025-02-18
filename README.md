@@ -6,7 +6,6 @@
 
 - Notify progress & notify errors on import
 - React - we can use this in connect
--
 
 [![NPM](https://img.shields.io/npm/v/react-importer.svg)](https://www.npmjs.com/package/react-importer) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Build Status](https://github.com/czhu12/react-importer/actions/workflows/ci.yml/badge.svg)](https://github.com/czhu12/react-importer/actions/workflows/ci.yml) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -148,6 +147,41 @@ import Importer from 'react-importer';
 ### Documentation
 
 (TODO)
+
+### Documentation
+
+(TODO)
+
+#### Custom Themes
+
+We currently support three themes: `default`, `theme-1`, and `theme-2`. You can apply a theme by passing the theme prop to the Importer component:
+
+```jsx
+<Importer theme="theme-1" />
+```
+
+##### Customization
+
+You can further customize theme styles by overriding the following CSS variables in your `index.css` file:
+
+```css
+:root {
+  --csv-importer-color-primary: #007bff;
+  --csv-importer-color-primary-light: #66b3ff;
+  --csv-importer-color-primary-extra-light: #cce7ff;
+  --csv-importer-color-secondary: #6c757d;
+  --csv-importer-color-tertiary: #17a2b8;
+  --csv-importer-color-tertiary-light: #5bc0de;
+  --csv-importer-color-success: #28a745;
+  --csv-importer-color-danger: #dc3545;
+  --csv-importer-color-danger-light: #f5c6cb;
+  --csv-importer-color-danger-extra-light: #f8d7da;
+  --csv-importer-color-warning: #ffc107;
+  --csv-importer-color-info: #17a2b8;
+}
+```
+
+These variables allow you to adjust the color scheme for primary, secondary, and tertiary elements, as well as status indicators such as success, danger, warning, and info.
 
 ### Roadmap
 
