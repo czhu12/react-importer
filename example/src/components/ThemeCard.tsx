@@ -1,4 +1,4 @@
-import { ImporterTheme } from 'react-importer';
+import { ImporterTheme } from '../types';
 
 export default function ThemeCard({
   theme,
@@ -35,9 +35,9 @@ export default function ThemeCard({
         ></div>
         <div
           className="theme-color"
-          style={{ backgroundColor: theme.colors.light }}
+          style={{ backgroundColor: theme.colors.secondary }}
         ></div>
       </div>
     </div>
   );
-};
+}
