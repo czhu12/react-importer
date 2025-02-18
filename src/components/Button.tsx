@@ -1,20 +1,17 @@
 import { cva } from 'cva';
 import { CSSProperties, ReactNode } from 'preact/compat';
+import { twMerge } from 'tailwind-merge';
+import { ButtonVariant } from './types';
 
 interface Props {
   children?: ReactNode;
-  variant?:
-    | 'primary'
-    | 'success'
-    | 'danger'
-    | 'secondary'
-    | 'warning'
-    | 'tertiary';
+  variant?: ButtonVariant;
   outline?: boolean;
   disabled?: boolean;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   onClick?: () => void;
   style?: CSSProperties;
+  className?: string;
 }
 
 const buttonStyles = cva('text-center inline-block font-semibold', {
@@ -24,7 +21,7 @@ const buttonStyles = cva('text-center inline-block font-semibold', {
       secondary:
         'bg-white text-primary ring-1 shadow-xs ring-bg-primary ring-inset',
       tertiary:
-        'bg-white text-tertiary ring-1 shadow-xs ring-tertiary ring-inset',
+        'bg-white text-gray-900 ring-1 shadow-xs ring-tertiary ring-inset',
       success: 'shadow-xs bg-success text-white',
       danger: 'shadow-xs bg-danger text-white',
       warning: 'shadow-xs bg-warning text-white',
@@ -46,7 +43,7 @@ const buttonStyles = cva('text-center inline-block font-semibold', {
       variant: 'primary',
       disabled: false,
       className:
-        'hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
+        'hover:bg-primary-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
     },
     {
       variant: 'secondary',
@@ -57,7 +54,7 @@ const buttonStyles = cva('text-center inline-block font-semibold', {
     {
       variant: 'tertiary',
       disabled: false,
-      className: 'hover:bg-gray-50',
+      className: 'hover:bg-tertiary-light',
     },
     {
       variant: 'success',
@@ -69,7 +66,7 @@ const buttonStyles = cva('text-center inline-block font-semibold', {
       variant: 'danger',
       disabled: false,
       className:
-        'hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-danger',
+        'hover:bg-danger-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-danger',
     },
     {
       variant: 'warning',
@@ -91,8 +88,12 @@ export default function Button({
   disabled,
   onClick,
   size,
+  className,
 }: Props) {
-  const componentClassName = buttonStyles({ variant, disabled, size });
+  const componentClassName = twMerge(
+    buttonStyles({ variant, disabled, size }),
+    className
+  );
 
   return (
     <div className={componentClassName} onClick={onClick}>

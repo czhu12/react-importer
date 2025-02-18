@@ -154,6 +154,7 @@ export default function SheetDataEditor({
         title="Remove rows"
         confirmationText="Remove"
         subTitle={`Are you sure you want to remove ${selectedRows.length} rows?`}
+        variant="danger"
       />
     </div>
   );
