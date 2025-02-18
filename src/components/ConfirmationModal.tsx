@@ -7,7 +7,9 @@ import {
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import Button from './Button';
 import { ReactNode } from 'preact/compat';
-import { ButtonVariant } from './types';
+import { ButtonVariant } from './Button';
+
+type VariantType = 'default' | 'danger';
 
 interface Props {
   open: boolean;
@@ -16,10 +18,8 @@ interface Props {
   subTitle?: string;
   confirmationText?: string;
   onConfirm: () => void;
-  variant: 'default' | 'danger';
+  variant: VariantType;
 }
-
-type VariantType = 'default' | 'danger';
 
 export default function ConfirmationModal({
   open,
@@ -30,7 +30,7 @@ export default function ConfirmationModal({
   onConfirm,
   variant = 'default',
 }: Props) {
-  const styles: Record<
+  const baseClasses: Record<
     VariantType,
     { icon?: ReactNode; btnVariant: ButtonVariant; bgColor?: string }
   > = {
@@ -49,7 +49,7 @@ export default function ConfirmationModal({
     },
   };
 
-  const { icon, btnVariant, bgColor } = styles[variant];
+  const { icon, btnVariant, bgColor } = baseClasses[variant];
 
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10">

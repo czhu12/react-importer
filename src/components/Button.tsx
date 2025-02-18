@@ -1,7 +1,14 @@
 import { cva } from 'cva';
 import { CSSProperties, ReactNode } from 'preact/compat';
 import { twMerge } from 'tailwind-merge';
-import { ButtonVariant } from './types';
+
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'success'
+  | 'danger'
+  | 'warning';
 
 interface Props {
   children?: ReactNode;
