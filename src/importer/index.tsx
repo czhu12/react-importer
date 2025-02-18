@@ -71,7 +71,6 @@ export default function Importer({
     dispatch({
       type: 'ENTER_DATA_MANUALLY',
       payload: {
-        sheetDefinitions: sheets,
         amountOfEmptyRowsToAdd: NUMBER_OF_EMPTY_ROWS_FOR_MANUAL_DATA_INPUT,
       },
     });
