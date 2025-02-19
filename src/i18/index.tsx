@@ -5,6 +5,8 @@ import { useContext } from 'preact/hooks';
 import { ReactNode } from 'preact/compat';
 import { ArgumentsType, Resources, TranslationContextType } from './types';
 
+/// Writing a custom translations module to reduce the size of the package
+
 const resources: Resources = {
   en: enTranslation,
   fr: frTranslation,
