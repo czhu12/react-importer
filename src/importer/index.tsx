@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'preact/compat';
+import { useReducer } from 'preact/compat';
 
 import FileUploader from './components/FileUploader';
 import HeaderMapper from '../mapper/components/HeaderMapper';
@@ -21,14 +21,13 @@ import { buildSuggestedHeaderMappings } from '../mapper/utils';
 import { NUMBER_OF_EMPTY_ROWS_FOR_MANUAL_DATA_INPUT } from '../constants';
 import SheetsSwitcher from '../sheet/components/SheetsSwitcher';
 import { Button, Root } from '../components';
-import { changeLocale, useTranslations } from '../i18';
+import { TranslationProvider, useTranslations } from '../i18';
 
-export default function Importer({
+function ImporterBody({
   theme,
   onComplete,
   sheets,
   onDataColumnsMapped,
-  locale,
 }: ImporterDefinition) {
   const { t } = useTranslations();
 
@@ -44,10 +43,6 @@ export default function Importer({
     },
     dispatch,
   ] = useReducer(reducer, buildInitialState(sheets));
-
-  useEffect(() => {
-    changeLocale(locale);
-  }, [locale]);
 
   const currentSheetData = sheetData.find(
     (sheet) => sheet.sheetId === currentSheetId
@@ -189,5 +184,13 @@ export default function Importer({
         )}
       </Root>
     </ThemeSetter>
+  );
+}
+
+export default function Importer(props: ImporterDefinition) {
+  return (
+    <TranslationProvider selectedLocale={props.locale}>
+      <ImporterBody {...props} />
+    </TranslationProvider>
   );
 }
