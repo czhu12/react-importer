@@ -42,41 +42,7 @@ export const EXAMPLE_CODE = `import Importer from 'react-importer'
           transformers: [{ transformer: 'state_code' }],
         },
       ],
-    },
-    {
-      id: 'companies',
-      label: 'Companies',
-      columns: [
-        {
-          label: 'Company',
-          id: 'company',
-          type: 'string',
-          validators: [{ validate: 'required' }],
-        },
-        {
-          label: 'Industry',
-          id: 'industry',
-          type: 'enum',
-          typeArguments: {
-            values: [
-              { label: 'Tech', value: 'tech' },
-              { label: 'Finance', value: 'finance' },
-            ],
-          },
-          validators: [{ validate: 'required' }],
-        },
-        {
-          label: 'Name',
-          id: 'name',
-          type: 'reference',
-          typeArguments: {
-            sheetId: 'employees',
-            sheetColumnId: 'name',
-          },
-          validators: [{ validate: 'required' }],
-        },
-      ],
-    },
+    }
   ]}
   onComplete={(data) => {
     console.log(data)
