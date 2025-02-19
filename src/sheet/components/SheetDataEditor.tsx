@@ -17,6 +17,7 @@ import { Checkbox, ConfirmationModal } from '../../components';
 import SheetDataEditorTable from './SheetDataEditorTable';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from '../../i18';
+import SheetDataEditorHeader from './SheetDataEditorHeader';
 
 const columnHelper = createColumnHelper<SheetRow>();
 
@@ -62,7 +63,7 @@ export default function SheetDataEditor({
     () =>
       sheetDefinition.columns.map((column) =>
         columnHelper.accessor(column.id, {
-          header: column.label,
+          header: () => <SheetDataEditorHeader column={column} />,
         })
       ),
     [sheetDefinition]

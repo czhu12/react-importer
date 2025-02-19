@@ -61,6 +61,17 @@ export default function SheetDataEditorTable({
     }
   }
 
+  function cellBackgroundColor(columnId: string, rowIndex: number) {
+    if (hasCellErrors(columnId, rowIndex)) {
+      return 'bg-red-100';
+    } else if (
+      sheetDefinition.columns.find((c) => c.id === columnId)?.isReadOnly
+    ) {
+      return 'bg-gray-100';
+    }
+    return '';
+  }
+
   const headerClass =
     'sticky top-0 bg-white py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900';
   const cellClass =
@@ -118,7 +129,7 @@ export default function SheetDataEditorTable({
                     title={cellErrors(columnId, rowIndex)
                       .map((e) => t(e.message))
                       .join(', ')}
-                    className={`${cellClass} ${hasCellErrors(columnId, rowIndex) ? 'bg-red-100' : ''} `}
+                    className={`${cellClass} ${cellBackgroundColor(columnId, rowIndex)} `}
                   >
                     <SheetDataEditorCell
                       columnDefinition={
