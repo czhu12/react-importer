@@ -1,6 +1,5 @@
 import { cva } from 'cva';
 import { CSSProperties, ReactNode } from 'preact/compat';
-import { twMerge } from 'tailwind-merge';
 
 export type ButtonVariant =
   | 'primary'
@@ -18,7 +17,6 @@ interface Props {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   onClick?: () => void;
   style?: CSSProperties;
-  className?: string;
 }
 
 const baseClasses = cva('text-center inline-block font-semibold', {
@@ -95,12 +93,8 @@ export default function Button({
   disabled,
   onClick,
   size,
-  className,
 }: Props) {
-  const componentClassName = twMerge(
-    baseClasses({ variant, disabled, size }),
-    className
-  );
+  const componentClassName = baseClasses({ variant, disabled, size });
 
   return (
     <div className={componentClassName} onClick={onClick}>
