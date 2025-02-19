@@ -6,6 +6,7 @@ import {
 } from '../../types';
 import { Select } from '../../components';
 import { extractReferenceColumnPossibleValues } from '../utils';
+import Tooltip from '../../components/Tooltip';
 import { useTranslations } from '../../i18';
 
 interface Props {
@@ -14,14 +15,16 @@ interface Props {
   onUpdated: (value: ImporterOutputFieldType) => void;
   allData: SheetState[];
   clearRowsSelection: () => void;
+  errorsText: string;
 }
 
-export default function SheetDataEditorCell({
+export default function SheetDataEditorCellBody({
   columnDefinition,
   value,
   onUpdated,
   allData,
   clearRowsSelection,
+  errorsText,
 }: Props) {
   const { t } = useTranslations();
 
@@ -42,15 +45,27 @@ export default function SheetDataEditorCell({
   const nonEmptyValue = valueEmpty ? '\u00A0' : value;
   const readOnly = columnDefinition.isReadOnly;
 
+  const cellBackgroundColor = errorsText
+    ? 'bg-danger-extra-light'
+    : readOnly
+      ? 'bg-gray-100'
+      : '';
+
   if (!editMode) {
     return (
-      <div
-        onClick={(e) => !readOnly && e.detail > 1 && setEditMode(true)}
-        title={readOnly ? t('sheet.readOnly') : t('sheet.editTooltip')}
-        className="h-full w-full"
+      <Tooltip
+        variant={errorsText ? 'error' : 'info'}
+        tooltipText={
+          errorsText ? errorsText : readOnly ? t('sheet.readOnly') : ''
+        }
       >
-        {nonEmptyValue}
-      </div>
+        <div
+          onClick={(e) => !readOnly && e.detail > 1 && setEditMode(true)}
+          className={`h-full w-full py-4 pr-3 pl-4 ${cellBackgroundColor}`}
+        >
+          {nonEmptyValue}
+        </div>
+      </Tooltip>
     );
   }
 
