@@ -1,17 +1,13 @@
-import { CSSProperties, ReactNode, forwardRef } from 'preact/compat';
+import { forwardRef } from 'preact/compat';
+import { JSX } from 'preact';
 
-interface Props {
-  children?: ReactNode;
-  style?: CSSProperties;
-}
-
-const Card = forwardRef<HTMLDivElement, Props>(
-  ({ children, style, ...props }, ref) => {
+const Card = forwardRef<HTMLDivElement, JSX.HTMLAttributes<HTMLDivElement>>(
+  ({ children, ...props }, ref) => {
     const componentStyle: React.CSSProperties = {
       boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
       padding: '10px',
       borderRadius: '5px',
-      ...style,
+      cursor: props.onClick ? 'pointer' : 'default',
     };
 
     return (

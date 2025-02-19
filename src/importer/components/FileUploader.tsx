@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'preact/compat';
-import Dropzone from 'dropzone';
+import { useRef } from 'preact/compat';
 import { Card, Button } from '../../components';
 import { CloudArrowUpIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from '../../i18';
+import { SUPPORTED_FILE_MIME_TYPES } from '../../constants';
 
 interface Props {
   setFile: (file: File) => void;
@@ -11,30 +11,35 @@ interface Props {
 export default function FileUploader({ setFile }: Props) {
   const { t } = useTranslations();
 
-  const dropzoneRef = useRef<HTMLDivElement | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
-    if (!dropzoneRef.current) return;
+  const handleFileSelect = (event: Event) => {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      const file = input.files[0];
+      if (SUPPORTED_FILE_MIME_TYPES.includes(file.type)) {
+        setFile(file);
+      }
+    }
+  };
 
-    const dz = new Dropzone(dropzoneRef.current, {
-      url: '/', // Required to pass, but we don't use it
-      autoProcessQueue: false,
-      maxFiles: 1,
-      acceptedFiles: 'text/csv',
-      clickable: true,
-      previewsContainer: false,
-    });
-
-    dz.on('addedfile', (file) => {
-      setFile(file);
-    });
-
-    return () => dz.destroy();
-  }, [setFile]);
+  const handleDrop = (event: DragEvent) => {
+    event.preventDefault();
+    if (event.dataTransfer?.files.length) {
+      const file = event.dataTransfer.files[0];
+      if (SUPPORTED_FILE_MIME_TYPES.includes(file.type)) {
+        setFile(file);
+      }
+    }
+  };
 
   return (
-    <Card ref={dropzoneRef} style={{ cursor: 'pointer' }}>
-      <div className="p-7.5" onClick={() => dropzoneRef.current?.click()}>
+    <Card
+      onClick={() => fileInputRef.current?.click()}
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={handleDrop}
+    >
+      <div className="p-7.5">
         <div className="mb-7.5">{t('importer.uploader.pickFile')}</div>
         <div className="flex items-center">
           <CloudArrowUpIcon className="text-primary mr-3 h-12 w-12" />
@@ -52,6 +57,13 @@ export default function FileUploader({ setFile }: Props) {
           </div>
         </div>
       </div>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept={SUPPORTED_FILE_MIME_TYPES.join(',')}
+        style={{ display: 'none' }}
+        onChange={handleFileSelect}
+      />
     </Card>
   );
 }
