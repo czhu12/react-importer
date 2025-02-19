@@ -63,7 +63,6 @@
     "dropzone": "^5.9.3",
     "i18next": "^24.2.2",
     "papaparse": "^5.4.1",
-    "react-i18next": "^15.4.1",
-    "tailwind-merge": "^3.0.1"
+    "react-i18next": "^15.4.1"
   }
 }

@@ -90,25 +90,27 @@ export default function ConfirmationModal({
               </div>
             </div>
             <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-              <Button
-                variant={btnVariant}
-                onClick={() => {
-                  onConfirm();
-                  setOpen(false);
-                }}
-                className="sm:ml-3 sm:w-auto"
-              >
-                {confirmationText ??
-                  t('components.confirmationModal.defaultConfirm')}
-              </Button>
-              <Button
-                variant="tertiary"
-                data-autofocus
-                onClick={() => setOpen(false)}
-                className="mt-3 sm:mt-0 sm:w-auto"
-              >
-                {t('components.confirmationModal.cancel')}
-              </Button>
+              <div className="sm:ml-3 sm:w-auto">
+                <Button
+                  variant={btnVariant}
+                  onClick={() => {
+                    onConfirm();
+                    setOpen(false);
+                  }}
+                >
+                  {confirmationText ??
+                    t('components.confirmationModal.defaultConfirm')}
+                </Button>
+              </div>
+              <div className="mt-3 sm:mt-0 sm:w-auto">
+                <Button
+                  variant="tertiary"
+                  data-autofocus
+                  onClick={() => setOpen(false)}
+                >
+                  {t('components.confirmationModal.cancel')}
+                </Button>
+              </div>
             </div>
           </DialogPanel>
         </div>
