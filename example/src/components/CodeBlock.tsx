@@ -15,7 +15,7 @@ export default function CodeBlock({
       <h3 className="rubik text-4xl font-bold">{title}</h3>
       <pre className="max-h-120 overflow-auto rounded-lg bg-slate-800 p-4 text-white">
         <code
-          className="language-javascript text-sm"
+          className="language-javascript"
           dangerouslySetInnerHTML={{
             __html: hljs.highlight(code, { language: 'jsx' }).value,
           }}
