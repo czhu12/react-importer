@@ -221,6 +221,8 @@ const App = () => {
           <div className="container">TODO</div>
         </footer>
       </div>
+
+      <Footer />
     </div>
   );
 };
