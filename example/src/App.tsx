@@ -203,14 +203,14 @@ const App = () => {
           <h1>Feel free to customize the language</h1>
           <div className="flex">
             <div
-              className="grow rounded-lg bg-[#f4f4f4] p-8 text-center shadow-lg"
+              className="grow cursor-pointer rounded-lg bg-[#f4f4f4] p-8 text-center shadow-lg"
               onClick={() => setCurrentLocale('en')}
             >
               English
             </div>
             <div className="w-24" />
             <div
-              className="grow rounded-lg bg-[#f4f4f4] p-8 text-center shadow-lg"
+              className="grow cursor-pointer rounded-lg bg-[#f4f4f4] p-8 text-center shadow-lg"
               onClick={() => setCurrentLocale('fr')}
             >
               French
