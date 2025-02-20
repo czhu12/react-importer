@@ -48,6 +48,8 @@ export default function Header() {
             ✓ Drop it into any app, even if you don't use React.
             <br />
             ✓ Beautiful, customizable UI, with sensible defaults.
+            <br />
+            ✓ Fully supports multiple languages for a seamless experience.
             <br />✓ Only ~130KB gzipped.
           </div>
 
