@@ -38,7 +38,7 @@ export default function Header() {
             <br />
             ✓ No more custom scripts to handle complex CSV files.
             <br />
-            ✓ Drop it into any app, even if you don't use React.
+            {`✓ Drop it into any app, even if you don't use React.`}
             <br />
             ✓ Beautiful, customizable UI, with sensible defaults.
             <br />
@@ -78,6 +78,7 @@ export default function Header() {
               className="text-md px-4 py-2.5"
               href="https://github.com/czhu12/react-importer"
               target="_blank"
+              rel="noreferrer"
             >
               Documentation ❯
             </a>
