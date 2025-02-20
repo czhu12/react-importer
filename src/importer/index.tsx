@@ -175,9 +175,12 @@ function ImporterBody({
               <div className="mt-5">
                 <FileUploader setFile={onFileUploaded} />
                 <div className="mt-10 mb-2.5">
-                  <h6 onClick={onEnterDataManually}>
+                  <p
+                    onClick={onEnterDataManually}
+                    className="text-primary hover:text-primary cursor-pointer decoration-2 opacity-90 hover:underline focus:underline focus:outline-none"
+                  >
                     {t('importer.uploader.enterManually')}
-                  </h6>
+                  </p>
                 </div>
               </div>
             )}

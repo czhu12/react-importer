@@ -40,19 +40,15 @@ export default function FileUploader({ setFile }: Props) {
       onDrop={handleDrop}
     >
       <div className="p-7.5">
-        <div className="mb-7.5">{t('importer.uploader.pickFile')}</div>
-        <div className="flex items-center">
-          <CloudArrowUpIcon className="text-primary mr-3 h-12 w-12" />
+        <div className="flex flex-col items-center justify-center">
+          <CloudArrowUpIcon className="text-primary mb-3 h-12 w-12" />
 
-          <div className="flex-grow">
-            <h5 style={{ marginBottom: '10px' }}>
-              {t('importer.uploader.dragAndDrop')}
-            </h5>
-            <div>
-              {t('importer.uploader.fileSizeLimit', { limit: '20MB' })} • CSV
-            </div>
+          <p className="mb-3">{t('importer.uploader.dragAndDrop')}</p>
+          <div className="text-sm text-gray-500">
+            {t('importer.uploader.fileSizeLimit', { limit: '20MB' })} • CSV
           </div>
-          <div className="flex-none">
+
+          <div className="mt-3">
             <Button>{t('importer.uploader.browseFiles')}</Button>
           </div>
         </div>

@@ -13,7 +13,6 @@
       "success": "Succès"
     },
     "uploader": {
-      "pickFile": "Choisir un fichier",
       "dragAndDrop": "Glissez et déposez votre fichier ici",
       "fileSizeLimit": "Limite {{limit}}",
       "browseFiles": "Parcourir les fichiers",
