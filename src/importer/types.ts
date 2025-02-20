@@ -26,7 +26,6 @@ export interface ImporterDefinition {
 }
 
 /**
- * initial - user can select to either upload a file or input data manually
  * mapping - user is mapping the columns from the file to the sheet columns
  * preview - user is reviewing the data to be imported or is imputing data manually
  * submit  - user is submitting the data - during/after the onComplete callback
@@ -34,7 +33,6 @@ export interface ImporterDefinition {
  * failed - the import process failed
  */
 export type ImporterMode =
-  | 'initial'
   | 'mapping'
   | 'preview'
   | 'submit'
