@@ -1,5 +1,5 @@
 import { useTranslations } from '../../i18';
-
+import { XMarkIcon, CheckIcon } from '@heroicons/react/24/outline';
 function CircularProgress({ progress }: { progress: number }) {
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
@@ -35,16 +35,8 @@ function Failed() {
 
   return (
     <div className="my-16 text-center">
-      <div className="relative mx-auto h-24 w-24">
-        <svg
-          className="fill-danger absolute inset-0 m-auto"
-          xmlns="http://www.w3.org/2000/svg"
-          width="64"
-          height="64"
-          viewBox="0 0 16 16"
-        >
-          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-        </svg>
+      <div className="relative mx-auto h-12 w-12">
+        <XMarkIcon className="text-danger" />
       </div>
       <h2 className="text-2xl">{t('importer.loader.failed')}</h2>
     </div>
@@ -53,15 +45,7 @@ function Failed() {
 
 function SuccessIcon() {
   return (
-    <svg
-      className="fill-success absolute inset-0 m-auto"
-      xmlns="http://www.w3.org/2000/svg"
-      width="64"
-      height="64"
-      viewBox="0 0 16 16"
-    >
-      <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
-    </svg>
+    <CheckIcon className="text-success absolute inset-0 m-auto h-12 w-12 stroke-4" />
   );
 }
 
