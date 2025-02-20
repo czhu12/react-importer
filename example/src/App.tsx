@@ -5,13 +5,11 @@ import 'react-importer/dist/react-importer.css';
 import Header from './components/Header';
 import CodeBlock from './components/CodeBlock';
 import Footer from './components/Footer';
-import Modal from './components/Modal';
 
 import { EXAMPLE_CODE } from './constants';
 
 const App = () => {
   const [ready, setReady] = useState(false);
-  const [open, setOpen] = useState(false);
 
   const onComplete = async (
     data: SheetState[],
@@ -29,28 +27,35 @@ const App = () => {
 
   return (
     <div className="min-h-screen w-full">
-      <Header setOpen={setOpen} />
+      <Header />
 
-      <div className="content">
-        <h3 className="rubik text-4xl font-bold">
-          Building a CSV uploader is hard.
-        </h3>
-        <p>
-          OneImport is a javascript library that makes it easy to drop in a
-          powerful, intuitive, and elegant CSV uploader. It's just ~130KB
-          gzipped, and works with any javascript application.
-        </p>
-      </div>
+      <div className="mb-16">
+        <div className="content">
+          <h3 className="rubik text-4xl font-bold">
+            Building a CSV uploader is hard
+          </h3>
+          <p>
+            OneImport is a javascript library that makes it easy to drop in a
+            powerful, intuitive, and elegant CSV uploader. It's just ~130KB
+            gzipped, and works with any javascript application.
+          </p>
+        </div>
 
-      <div className="content">
-        <CodeBlock
-          title="Drop in an uploader into your app in seconds."
-          code={EXAMPLE_CODE}
-        />
-      </div>
+        <div className="content">
+          <CodeBlock
+            title="Drop in an uploader into your app in seconds"
+            code={EXAMPLE_CODE}
+          />
+        </div>
 
-      <Modal open={open} setOpen={() => {}} title="OneImport">
-        <div>
+        <div className="content">
+          <h1>
+            Want to see a demo? Try uploading{' '}
+            <a className="text-blue-500 hover:text-blue-600" href="/data.csv">
+              this file
+            </a>
+            .
+          </h1>
           <Importer
             theme="default"
             locale="en"
@@ -133,11 +138,13 @@ const App = () => {
             ]}
             onComplete={onComplete}
           />
-          <div className="content text-center">
-            {ready && <h4>Check the console for the output!</h4>}
-          </div>
+          {ready && (
+            <div style={{ margin: '0 auto', maxWidth: '1200px' }}>
+              <h4>Check the console for the output!</h4>
+            </div>
+          )}
         </div>
-      </Modal>
+      </div>
 
       <Footer />
     </div>
