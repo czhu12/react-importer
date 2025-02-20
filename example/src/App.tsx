@@ -33,9 +33,9 @@ const App = () => {
             Building a CSV uploader is hard
           </h3>
           <p>
-            OneImport is a javascript library that makes it easy to drop in a
+            {`OneImport is a javascript library that makes it easy to drop in a
             powerful, intuitive, and elegant CSV uploader. It's just ~130KB
-            gzipped, and works with any javascript application.
+            gzipped, and works with any javascript application.`}
           </p>
         </div>
 
