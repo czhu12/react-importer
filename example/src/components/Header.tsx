@@ -1,8 +1,6 @@
 import 'tippy.js/dist/tippy.css'; // optional for styling
 import tippy from 'tippy.js';
-import { CloudArrowUpIcon } from '@heroicons/react/24/outline';
-
-import { TableCellsIcon } from './Icons';
+import { CloudArrowUpIcon, TableCellsIcon } from '@heroicons/react/24/outline';
 
 export default function Header() {
   return (
@@ -17,7 +15,7 @@ export default function Header() {
       <div className="relative bg-gradient-to-b from-[rgba(0,0,0,0.25)] to-[rgba(0,0,0,0)] py-4 font-semibold text-white">
         <div className="mx-auto mt-4 flex max-w-6xl flex-row justify-between px-4">
           <div className="rubik flex flex-row items-center gap-2">
-            <TableCellsIcon />
+            <TableCellsIcon className="size-6" />
             OneImport
           </div>
           <a href="https://github.com/czhu12/react-importer" target="_blank">
