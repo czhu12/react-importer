@@ -1,11 +1,9 @@
 import { useState } from 'preact/hooks';
 import Importer, { SheetState } from 'react-importer';
 import 'react-importer/dist/react-importer.css';
-
 import Header from './components/Header';
 import CodeBlock from './components/CodeBlock';
 import Footer from './components/Footer';
-
 import { EXAMPLE_CODE } from './constants';
 
 const App = () => {
