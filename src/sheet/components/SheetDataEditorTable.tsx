@@ -39,10 +39,6 @@ export default function SheetDataEditorTable({
     );
   }
 
-  function hasCellErrors(columnId: string, rowIndex: number) {
-    return cellErrors(columnId, rowIndex).length > 0;
-  }
-
   const selectAllChecked = selectedRows.length === data.rows.length;
 
   function toggleSelectAll() {
@@ -62,9 +58,8 @@ export default function SheetDataEditorTable({
   }
 
   const headerClass =
-    'sticky top-0 bg-white py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900';
-  const cellClass =
-    'py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900';
+    'sticky top-0 bg-white py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 z-10';
+  const cellClass = 'text-sm font-medium whitespace-nowrap text-gray-900';
 
   return (
     <div className="max-h-[80vh] overflow-x-auto">
@@ -110,16 +105,12 @@ export default function SheetDataEditorTable({
                 const columnId = sheetDefinition.columns[cellIndex].id;
                 // TODO: Check if it works correctly for 2 idneitcal rows
                 const rowIndex = data.rows.indexOf(row.original);
+                const cellErrorsText = cellErrors(columnId, rowIndex)
+                  .map((e) => t(e.message))
+                  .join(', ');
 
                 return (
-                  <td
-                    key={cell.id}
-                    // TODO: Perhaps we might need some more fency tooltip?
-                    title={cellErrors(columnId, rowIndex)
-                      .map((e) => t(e.message))
-                      .join(', ')}
-                    className={`${cellClass} ${hasCellErrors(columnId, rowIndex) ? 'bg-red-100' : ''} `}
-                  >
+                  <td key={cell.id} className={cellClass}>
                     <SheetDataEditorCell
                       columnDefinition={
                         sheetDefinition.columns.find((c) => c.id === columnId)!
@@ -130,6 +121,7 @@ export default function SheetDataEditorTable({
                         onCellValueChanged(rowIndex, columnId, value)
                       }
                       clearRowsSelection={() => setSelectedRows([])}
+                      errorsText={cellErrorsText}
                     />
                   </td>
                 );
