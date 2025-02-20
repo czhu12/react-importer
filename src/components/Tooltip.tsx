@@ -24,37 +24,33 @@ const tooltipBaseClasses = cva(
   }
 );
 
-const tooltipWrapperBaseClassesWithoutOutline = 'group relative h-full w-full';
-
-const tooltipWrapperBaseClasses = cva(
-  `${tooltipWrapperBaseClassesWithoutOutline} focus-within:outline focus-within:outline-b-0  hover:outline hover:outline-b-0`,
-  {
-    variants: {
-      variant: {
-        error: 'focus-within:outline-danger hover:outline-danger',
-        info: 'focus-within:outline-gray-500 hover:outline-gray-500',
-      },
+const tooltipWrapperBaseClasses = cva('group relative h-full w-full', {
+  variants: {
+    variant: {
+      error: 'focus-within:outline-danger hover:outline-danger',
+      info: 'focus-within:outline-gray-500 hover:outline-gray-500',
     },
-    defaultVariants: {
-      variant: 'info',
+    withOutline: {
+      true: 'focus-within:outline focus-within:outline-b-0  hover:outline hover:outline-b-0',
+      false: '',
     },
-  }
-);
+  },
+  defaultVariants: {
+    variant: 'info',
+    withOutline: false,
+  },
+});
 
 export default function Tooltip({ variant, children, tooltipText }: Props) {
   const tooltipClassName = tooltipBaseClasses({ variant });
-  const tooltipWrapperClassName = tooltipWrapperBaseClasses({ variant });
+  const tooltipWrapperClassName = tooltipWrapperBaseClasses({
+    variant,
+    withOutline: !!tooltipText,
+  });
 
   // Add tabIndex to make the tooltip focusable
   return (
-    <div
-      className={
-        tooltipText
-          ? tooltipWrapperClassName
-          : tooltipWrapperBaseClassesWithoutOutline
-      }
-      tabIndex={0}
-    >
+    <div className={tooltipWrapperClassName} tabIndex={0}>
       {children}
       {tooltipText && <span className={tooltipClassName}>{tooltipText}</span>}
     </div>
