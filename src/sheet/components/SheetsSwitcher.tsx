@@ -1,5 +1,5 @@
 import { SheetDefinition } from '../types';
-import Tabs from '../../components/Tabs';
+import { Tabs } from '../../components';
 import { ImporterValidationError } from '../../types';
 import { ExclamationCircleIcon } from '@heroicons/react/16/solid';
 

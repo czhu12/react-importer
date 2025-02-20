@@ -4,9 +4,8 @@ import {
   SheetColumnDefinition,
   SheetState,
 } from '../../types';
-import { Select } from '../../components';
+import { Select, Tooltip } from '../../components';
 import { extractReferenceColumnPossibleValues } from '../utils';
-import Tooltip from '../../components/Tooltip';
 import { useTranslations } from '../../i18';
 
 interface Props {
