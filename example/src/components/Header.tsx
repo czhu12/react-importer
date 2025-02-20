@@ -28,7 +28,7 @@ export default function Header() {
           </a>
         </div>
       </div>
-      <div className="mx-auto flex max-w-6xl flex-col px-4 pt-24 pb-32 lg:flex-row">
+      <div className="mx-auto flex max-w-6xl flex-col px-4 pt-24 pb-32 lg:!flex-row">
         <div>
           <div className="rubik mb-6 text-5xl font-bold tracking-tighter sm:text-7xl">
             A Sleek CSV Importer
