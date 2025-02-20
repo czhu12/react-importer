@@ -19,7 +19,11 @@ export default function Header() {
             <TableCellsIcon className="size-6" />
             OneImport
           </div>
-          <a href="https://github.com/czhu12/react-importer" target="_blank">
+          <a
+            href="https://github.com/czhu12/react-importer"
+            target="_blank"
+            rel="noreferrer"
+          >
             <GitHubIcon className="size-8 hover:text-gray-300" />
           </a>
         </div>
