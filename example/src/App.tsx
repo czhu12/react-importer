@@ -55,8 +55,6 @@ const App = () => {
             .
           </h1>
           <Importer
-            theme="default"
-            locale="en"
             sheets={[
               {
                 id: 'employees',
