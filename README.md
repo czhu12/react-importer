@@ -201,4 +201,4 @@ MIT © [czhu12](https://github.com/czhu12)
 ## Development setup
 
 - Run `npm i && npm run watch` - this watches for changes in main plugin and rebuilds if needed
-- Run `cd example-preact && npm i && npm run dev` - this runs example application
+- Run `cd example && npm i && npm run dev` - this runs example application
