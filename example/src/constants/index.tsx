@@ -1,6 +1,8 @@
 export const EXAMPLE_CODE = `import Importer from 'react-importer'
 
 <Importer
+  theme="default"
+  language="en"
   sheets={[
       {
       id: 'employees',
@@ -9,27 +11,6 @@ export const EXAMPLE_CODE = `import Importer from 'react-importer'
         {
           label: 'Name',
           id: 'name',
-          type: 'string',
-          validators: [{ validate: 'required' }],
-        },
-        {
-          label: 'Email',
-          id: 'email',
-          type: 'string',
-          validators: [
-            { validate: 'required' },
-            { validate: 'unique', error: 'This email is not unique' },
-            {
-              validate: 'regex_matches',
-              regex:
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-              error: 'This email is not valid',
-            },
-          ],
-        },
-        {
-          label: 'Phone Number',
-          id: 'phone_number',
           type: 'string',
           validators: [{ validate: 'required' }],
         },
@@ -42,44 +23,8 @@ export const EXAMPLE_CODE = `import Importer from 'react-importer'
           transformers: [{ transformer: 'state_code' }],
         },
       ],
-    },
-    {
-      id: 'companies',
-      label: 'Companies',
-      columns: [
-        {
-          label: 'Company',
-          id: 'company',
-          type: 'string',
-          validators: [{ validate: 'required' }],
-        },
-        {
-          label: 'Industry',
-          id: 'industry',
-          type: 'enum',
-          typeArguments: {
-            values: [
-              { label: 'Tech', value: 'tech' },
-              { label: 'Finance', value: 'finance' },
-            ],
-          },
-          validators: [{ validate: 'required' }],
-        },
-        {
-          label: 'Name',
-          id: 'name',
-          type: 'reference',
-          typeArguments: {
-            sheetId: 'employees',
-            sheetColumnId: 'name',
-          },
-          validators: [{ validate: 'required' }],
-        },
-      ],
-    },
+    }
   ]}
-  onComplete={(data) => {
-    console.log(data)
-  }}
+  onComplete={onComplete}
 />
 `;
