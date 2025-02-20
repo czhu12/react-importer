@@ -18,7 +18,7 @@ interface Props {
   errorsText: string;
 }
 
-export default function SheetDataEditorCellBody({
+export default function SheetDataEditorCell({
   columnDefinition,
   value,
   onUpdated,
