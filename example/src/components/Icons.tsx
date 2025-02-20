@@ -1,4 +1,4 @@
-export function YouTubeIcon(props: any) {
+export function GitHubIcon(props: any) {
   return (
     <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
       <path
@@ -10,7 +10,7 @@ export function YouTubeIcon(props: any) {
   );
 }
 
-export function GitHubIcon(props: any) {
+export function YouTubeIcon(props: any) {
   return (
     <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
       <path
