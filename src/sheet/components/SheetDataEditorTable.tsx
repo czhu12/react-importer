@@ -39,7 +39,8 @@ export default function SheetDataEditorTable({
     );
   }
 
-  const selectAllChecked = selectedRows.length === data.rows.length;
+  const selectAllChecked =
+    selectedRows.length === data.rows.length && data.rows.length > 0;
 
   function toggleSelectAll() {
     if (selectAllChecked) {
@@ -92,7 +93,7 @@ export default function SheetDataEditorTable({
         <tbody className="divide-y divide-gray-200">
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
-              <td className={cellClass}>
+              <td className={`${cellClass} py-3.5 pr-3 pl-4`}>
                 <Checkbox
                   // TODO: Check if it works correctly for 2 idnetical rows
                   id={`Selection checkbox for ${sheetDefinition.id} ${row}`}

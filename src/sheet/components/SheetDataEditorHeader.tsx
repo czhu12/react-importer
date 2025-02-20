@@ -11,7 +11,10 @@ export default function SheetDataEditorHeader({ column }: Props) {
   const { t } = useTranslations();
 
   return (
-    <div className="flex items-center" title={t('sheet.readOnly')}>
+    <div
+      className="flex items-center"
+      title={column.isReadOnly ? t('sheet.readOnly') : undefined}
+    >
       {column.isReadOnly && (
         <div className="relative h-5 w-5">
           <XMarkIcon className="absolute top-0 left-0 h-5 w-5 text-gray-400" />

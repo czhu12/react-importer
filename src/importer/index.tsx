@@ -46,11 +46,11 @@ function ImporterBody({
 
   const currentSheetData = sheetData.find(
     (sheet) => sheet.sheetId === currentSheetId
-  );
+  )!;
 
   const currentSheetDefinition = sheets.find(
     (sheet) => sheet.id === currentSheetId
-  );
+  )!;
 
   function onFileUploaded(file: File) {
     parseCsv({
@@ -88,7 +88,12 @@ function ImporterBody({
   }
 
   async function onMappingsSet() {
-    const mappedData = getMappedData(sheets, columnMappings ?? [], parsedFile!);
+    const mappedData = getMappedData(
+      sheets,
+      columnMappings ?? [],
+      parsedFile!,
+      sheetData
+    );
 
     const newMappedData =
       onDataColumnsMapped != null
@@ -131,16 +136,6 @@ function ImporterBody({
   return (
     <ThemeSetter theme={theme}>
       <Root>
-        {mode === 'initial' && (
-          <div>
-            <FileUploader setFile={onFileUploaded} />
-            <div className="mt-10 mb-2.5">
-              <h6 onClick={onEnterDataManually}>
-                {t('importer.uploader.enterManually')}
-              </h6>
-            </div>
-          </div>
-        )}
         {mode === 'mapping' && (
           <HeaderMapper
             parsed={parsedFile!}
@@ -161,18 +156,31 @@ function ImporterBody({
               validationErrors={validationErrors}
             />
             <SheetDataEditor
-              data={currentSheetData!}
+              data={currentSheetData}
               allData={sheetData}
-              sheetDefinition={currentSheetDefinition!}
+              sheetDefinition={currentSheetDefinition}
               sheetValidationErrors={validationErrors.filter(
                 (error) => error.sheetId === currentSheetDefinition?.id
               )}
               setRowData={onCellChanged}
               removeRows={onRemoveRows}
             />
-            <div className="my-5 text-right">
-              <Button onClick={onSubmit}>{t('importer.upload')}</Button>
-            </div>
+            {currentSheetData.rows.length > 0 && (
+              <div className="my-5 text-right">
+                <Button onClick={onSubmit}>{t('importer.upload')}</Button>
+              </div>
+            )}
+
+            {currentSheetData.rows.length <= 0 && (
+              <div className="mt-5">
+                <FileUploader setFile={onFileUploaded} />
+                <div className="mt-10 mb-2.5">
+                  <h6 onClick={onEnterDataManually}>
+                    {t('importer.uploader.enterManually')}
+                  </h6>
+                </div>
+              </div>
+            )}
           </>
         )}
         {['submit', 'failed', 'completed'].includes(mode) && (

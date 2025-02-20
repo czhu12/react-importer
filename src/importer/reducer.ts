@@ -6,9 +6,12 @@ function buildInitialState(sheetDefinitions: SheetDefinition[]): ImporterState {
   return {
     sheetDefinitions,
     currentSheetId: sheetDefinitions[0].id,
-    mode: 'initial',
+    mode: 'preview',
     validationErrors: [],
-    sheetData: [],
+    sheetData: sheetDefinitions.map((sheet) => ({
+      sheetId: sheet.id,
+      rows: [],
+    })),
     importProgress: 0,
   };
 }
@@ -21,10 +24,15 @@ const reducer = (
     case 'ENTER_DATA_MANUALLY': {
       const emptyData = state.sheetDefinitions.map((sheet) => ({
         sheetId: sheet.id,
-        rows: Array.from(
-          { length: action.payload.amountOfEmptyRowsToAdd },
-          () => ({})
-        ),
+        rows:
+          state.currentSheetId === sheet.id
+            ? Array.from(
+                { length: action.payload.amountOfEmptyRowsToAdd },
+                () => ({})
+              )
+            : state.sheetData.find(
+                (sheetData) => sheetData.sheetId === sheet.id
+              )?.rows || [],
       }));
 
       return { ...state, mode: 'preview', sheetData: emptyData };
