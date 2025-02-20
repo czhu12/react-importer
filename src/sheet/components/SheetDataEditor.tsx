@@ -5,7 +5,6 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import { filterEmptyRows } from '../../utils';
 import { SheetDefinition, SheetState, SheetRow } from '../types';
 import {
   CellChangedPayload,

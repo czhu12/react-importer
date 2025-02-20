@@ -18,7 +18,6 @@ export function getMappedData(
       (mapping) => mapping.sheetId === sheetDefinition.id
     );
 
-    // Leave sheet data empty if there are no mappings
     if (sheetMappings.length === 0) {
       rows =
         currentData.find((d) => d.sheetId === sheetDefinition.id)?.rows || [];
