@@ -10,7 +10,9 @@
     "loader": {
       "failed": "Something went wrong",
       "uploading": "Uploading",
-      "success": "Success"
+      "success": "Success",
+      "retry": "Try again",
+      "backToPreview": "Back to edit"
     },
     "uploader": {
       "dragAndDrop": "Drag and drop your file here",
