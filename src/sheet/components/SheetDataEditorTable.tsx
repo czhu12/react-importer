@@ -8,7 +8,7 @@ import { useTranslations } from '../../i18';
 interface Props {
   table: Table<SheetRow>;
   sheetDefinition: SheetDefinition;
-  data: SheetState;
+  visibleData: SheetRow[];
   allData: SheetState[];
   sheetValidationErrors: ImporterValidationError[];
   onCellValueChanged: (
@@ -23,7 +23,7 @@ interface Props {
 export default function SheetDataEditorTable({
   table,
   sheetDefinition,
-  data,
+  visibleData,
   allData,
   sheetValidationErrors,
   onCellValueChanged,
@@ -40,13 +40,13 @@ export default function SheetDataEditorTable({
   }
 
   const selectAllChecked =
-    selectedRows.length === data.rows.length && data.rows.length > 0;
+    selectedRows.length === visibleData.length && visibleData.length > 0;
 
   function toggleSelectAll() {
     if (selectAllChecked) {
       setSelectedRows([]);
     } else {
-      setSelectedRows(data.rows);
+      setSelectedRows(visibleData);
     }
   }
 
@@ -104,8 +104,11 @@ export default function SheetDataEditorTable({
 
               {row.getVisibleCells().map((cell, cellIndex) => {
                 const columnId = sheetDefinition.columns[cellIndex].id;
-                // TODO: Check if it works correctly for 2 idneitcal rows
-                const rowIndex = data.rows.indexOf(row.original);
+                // TODO: Check if it works correctly for 2 identical rows
+                const rowIndex = allData
+                  .find((d) => d.sheetId === sheetDefinition.id)!
+                  .rows.indexOf(row.original);
+
                 const cellErrorsText = cellErrors(columnId, rowIndex)
                   .map((e) => t(e.message))
                   .join(', ');

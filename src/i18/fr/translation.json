@@ -10,7 +10,9 @@
     "loader": {
       "failed": "Quelque chose a mal tourné",
       "uploading": "Téléchargement en cours",
-      "success": "Succès"
+      "success": "Succès",
+      "retry": "Réessayer",
+      "backToPreview": "Retour à modifier"
     },
     "uploader": {
       "dragAndDrop": "Glissez et déposez votre fichier ici",

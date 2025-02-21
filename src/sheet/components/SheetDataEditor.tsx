@@ -120,7 +120,7 @@ export default function SheetDataEditor({
       <SheetDataEditorTable
         table={table}
         sheetDefinition={sheetDefinition}
-        data={data}
+        visibleData={rowData}
         allData={allData}
         sheetValidationErrors={sheetValidationErrors}
         onCellValueChanged={onCellValueChanged}

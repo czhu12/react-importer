@@ -1,29 +1,27 @@
-import { useTranslations } from '../../i18';
-import { XMarkIcon } from '@heroicons/react/24/outline';
 import Uploading from './Uploading';
-
-function Failed() {
-  const { t } = useTranslations();
-
-  return (
-    <div className="my-16 text-center">
-      <div className="relative mx-auto h-12 w-12">
-        <XMarkIcon className="text-danger" />
-      </div>
-      <h2 className="text-2xl">{t('importer.loader.failed')}</h2>
-    </div>
-  );
-}
+import Failed from './Failed';
+import { ImporterMode } from '../types';
 
 interface Props {
   progress: number;
-  pending?: boolean;
-  failed?: boolean;
+  mode: Mode;
+  onRetry: () => void;
+  onBackToPreview: () => void;
 }
 
-export default function Completed({ progress, pending, failed }: Props) {
+type Mode = Extract<ImporterMode, 'submit' | 'failed' | 'completed'>;
+
+export default function Completed({
+  progress,
+  mode,
+  onRetry,
+  onBackToPreview,
+}: Props) {
+  const failed = mode === 'failed';
+  const pending = mode === 'submit';
+
   if (failed) {
-    return <Failed />;
+    return <Failed onRetry={onRetry} onBackToPreview={onBackToPreview} />;
   }
   return <Uploading progress={progress} pending={pending} />;
 }

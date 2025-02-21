@@ -112,6 +112,7 @@ function ImporterBody({
   }
 
   async function onSubmit() {
+    dispatch({ type: 'PROGRESS', payload: { progress: 0 } });
     dispatch({ type: 'SUBMIT' });
     try {
       // TODO THIS BRANCH: Should we filter invalid data?
@@ -131,6 +132,10 @@ function ImporterBody({
     dispatch({ type: 'PROGRESS', payload: { progress: 100 } });
     await delay(200);
     dispatch({ type: 'COMPLETED' });
+  }
+
+  function onBackToPreview() {
+    dispatch({ type: 'PREVIEW' });
   }
 
   return (
@@ -186,11 +191,12 @@ function ImporterBody({
             )}
           </>
         )}
-        {['submit', 'failed', 'completed'].includes(mode) && (
+        {(mode === 'submit' || mode === 'failed' || mode === 'completed') && (
           <Completed
-            pending={mode === 'submit'}
+            mode={mode}
             progress={importProgress}
-            failed={mode === 'failed'}
+            onRetry={onSubmit}
+            onBackToPreview={onBackToPreview}
           />
         )}
       </Root>
