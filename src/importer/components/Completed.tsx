@@ -2,14 +2,14 @@ import Uploading from './Uploading';
 import Failed from './Failed';
 import { ImporterMode } from '../types';
 
+type Mode = Extract<ImporterMode, 'submit' | 'failed' | 'completed'>;
+
 interface Props {
   progress: number;
   mode: Mode;
   onRetry: () => void;
   onBackToPreview: () => void;
 }
-
-type Mode = Extract<ImporterMode, 'submit' | 'failed' | 'completed'>;
 
 export default function Completed({
   progress,
