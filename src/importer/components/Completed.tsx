@@ -1,9 +1,42 @@
 import { useTranslations } from '../../i18';
 import { XMarkIcon, CheckIcon } from '@heroicons/react/24/outline';
-function CircularProgress({ progress }: { progress: number }) {
+import { useState, useEffect } from 'preact/hooks';
+
+function CircularProgress({
+  progress,
+  pending,
+}: {
+  progress: number;
+  pending?: boolean;
+}) {
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (progress / 100) * circumference;
+  const [progressUnavailable, setProgressUnavailable] = useState(false);
+
+  useEffect(() => {
+    if (progress === 0) {
+      const timeout = setTimeout(() => {
+        setProgressUnavailable(true);
+      }, 3000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [progress]);
+
+  if (progressUnavailable) {
+    return (
+      <div className="flex justify-center">
+        <div
+          className={
+            pending
+              ? `border-success h-22 w-22 animate-spin rounded-full border-10 border-t-transparent`
+              : `border-success h-22 w-22 rounded-full border-10`
+          }
+        ></div>
+      </div>
+    );
+  }
 
   return (
     <svg className="mx-auto h-24 w-24 rotate-[-90deg]" width="100" height="100">
@@ -61,7 +94,7 @@ function Uploading({
   return (
     <div className="my-16 text-center">
       <div className="relative mx-auto h-24 w-24">
-        <CircularProgress progress={progress} />
+        <CircularProgress progress={progress} pending={pending} />
         {!pending && <SuccessIcon />}
         {pending && (
           <div className="absolute inset-0 flex items-center justify-center">
