@@ -19,7 +19,7 @@ interface Props {
   subTitle?: string;
   confirmationText?: string;
   onConfirm: () => void;
-  variant: VariantType;
+  variant?: VariantType;
 }
 
 export default function ConfirmationModal({

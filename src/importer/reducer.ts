@@ -112,6 +112,8 @@ const reducer = (
       return { ...state, mode: 'completed' };
     case 'FAILED':
       return { ...state, mode: 'failed' };
+    case 'PREVIEW':
+      return { ...state, mode: 'preview' };
     default:
       return state;
   }

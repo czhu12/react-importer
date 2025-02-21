@@ -18,6 +18,9 @@ const App = () => {
     await new Promise((resolve) => setTimeout(resolve, 200));
     onProgress(50);
     await new Promise((resolve) => setTimeout(resolve, 200));
+
+    throw new Error('Something went wrong');
+
     onProgress(100);
     console.log(data);
     setReady(true);

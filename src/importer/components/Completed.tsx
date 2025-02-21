@@ -1,5 +1,8 @@
 import { useTranslations } from '../../i18';
-import { XMarkIcon, CheckIcon } from '@heroicons/react/24/outline';
+import { CheckIcon } from '@heroicons/react/24/outline';
+import Failed from './Failed';
+import { ImporterMode } from '../types';
+
 function CircularProgress({ progress }: { progress: number }) {
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
@@ -27,19 +30,6 @@ function CircularProgress({ progress }: { progress: number }) {
         className="stroke-success transition-[stroke-dashoffset] duration-500"
       />
     </svg>
-  );
-}
-
-function Failed() {
-  const { t } = useTranslations();
-
-  return (
-    <div className="my-16 text-center">
-      <div className="relative mx-auto h-12 w-12">
-        <XMarkIcon className="text-danger" />
-      </div>
-      <h2 className="text-2xl">{t('importer.loader.failed')}</h2>
-    </div>
   );
 }
 
@@ -77,15 +67,26 @@ function Uploading({
   );
 }
 
+type Mode = Extract<ImporterMode, 'submit' | 'failed' | 'completed'>;
+
 interface Props {
   progress: number;
-  pending?: boolean;
-  failed?: boolean;
+  mode: Mode;
+  onRetry: () => void;
+  onBackToPreview: () => void;
 }
 
-export default function Completed({ progress, pending, failed }: Props) {
+export default function Completed({
+  progress,
+  mode,
+  onRetry,
+  onBackToPreview,
+}: Props) {
+  const failed = mode === 'failed';
+  const pending = mode === 'submit';
+
   if (failed) {
-    return <Failed />;
+    return <Failed onRetry={onRetry} onBackToPreview={onBackToPreview} />;
   }
   return <Uploading progress={progress} pending={pending} />;
 }
