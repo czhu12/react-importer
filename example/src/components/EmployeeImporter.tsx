@@ -18,7 +18,7 @@ export default function EmployeeImporter() {
     console.log(data);
     setReady(true);
   };
-  return <div>
+  return <div className="content">
     <h1>
       Want to see a demo? Try uploading{' '}
       <a className="text-blue-500 hover:text-blue-600" href="/datasets/example-1.csv">

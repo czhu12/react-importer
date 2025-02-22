@@ -1,12 +1,12 @@
 import { useState } from 'preact/hooks';
-import Importer, { SheetState, SheetDefinition } from 'react-importer';
+import Importer, { SheetState, SheetDefinition, SheetRow } from 'react-importer';
 const COMPANY_SHEET: SheetDefinition = {
   id: 'companies',
   label: 'Companies',
   columns: [
     {
       label: 'Name',
-      id: 'name',
+      id: 'company_name',
       type: 'string',
       validators: [{ validate: 'required' }],
     },
@@ -95,7 +95,7 @@ export default function StudentsImporter() {
     setReady(true);
   };
 
-  return <div>
+  return <div className="content">
     <h1>
       Want to see a demo? Try uploading{' '}
       <a className="text-blue-500 hover:text-blue-600" href="/datasets/example-2.csv">
@@ -108,9 +108,16 @@ export default function StudentsImporter() {
         EMPLOYEE_SHEET,
         COMPANY_SHEET,
       ]}
-      onDataColumnsMapped={(dataColumns) => {
-        console.log(dataColumns);
-        return dataColumns;
+      onDataColumnsMapped={(sheets) => {
+        const sheet = sheets.find((sheet) => sheet.sheetId === 'companies')!;
+        const seen = new Set();
+        sheet.rows = [...sheet.rows].filter((row: SheetRow) => {
+          // Remove duplicate names, don't validate yet...
+          const hasSeen = !seen.has(row['company_name'])
+          seen.add(row['company_name']);
+          return hasSeen;
+        });
+        return sheets;
       }}
       onComplete={onComplete}
     />
