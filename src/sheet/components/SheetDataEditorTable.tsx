@@ -98,7 +98,7 @@ export default function SheetDataEditorTable({
               >
                 <Checkbox
                   // TODO: Check if it works correctly for 2 idnetical rows
-                  id={`Selection checkbox for ${sheetDefinition.id} ${row}`}
+                  id={`Selection checkbox for ${sheetDefinition.id} ${row.id}`}
                   checked={selectedRows.includes(row.original)}
                   setChecked={() => toggleRowSelection(row.original)}
                   label={`${Number(row.id) + 1}`}
