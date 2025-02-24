@@ -5,7 +5,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import { SheetDefinition, SheetState, SheetRow } from '../types';
+import { SheetDefinition, SheetState, SheetRow, SheetViewMode } from '../types';
 import {
   CellChangedPayload,
   ImporterOutputFieldType,
@@ -19,12 +19,6 @@ import { useTranslations } from '../../i18';
 import SheetDataEditorHeader from './SheetDataEditorHeader';
 
 const columnHelper = createColumnHelper<SheetRow>();
-
-const VIEW_MODES = {
-  ALL: 'all',
-  ERRORS: 'errors',
-  VALID: 'valid',
-};
 
 interface Props {
   sheetDefinition: SheetDefinition;
@@ -46,27 +40,27 @@ export default function SheetDataEditor({
   const { t } = useTranslations();
 
   const [selectedRows, setSelectedRows] = useState<SheetRow[]>([]);
-  const [viewMode, setViewMode] = useState(VIEW_MODES.ALL);
+  const [viewMode, setViewMode] = useState<SheetViewMode>(SheetViewMode.ALL);
   const [removeConfirmationModalOpen, setRemoveConfirmationModalOpen] =
     useState(false);
 
   useEffect(() => {
     setSelectedRows([]); // On changing sheets
-    setViewMode(VIEW_MODES.ALL);
+    setViewMode(SheetViewMode.ALL);
   }, [sheetDefinition]);
 
   const rowData = useMemo(() => {
     switch (viewMode) {
-      case VIEW_MODES.ERRORS:
+      case SheetViewMode.ERRORS:
         return data.rows.filter((_, index) =>
           sheetValidationErrors.some((error) => error.rowIndex === index)
         );
-      case VIEW_MODES.VALID:
+      case SheetViewMode.VALID:
         return data.rows.filter(
           (_, index) =>
             !sheetValidationErrors.some((error) => error.rowIndex === index)
         );
-      case VIEW_MODES.ALL:
+      case SheetViewMode.ALL:
       default:
         return data.rows;
     }
@@ -116,11 +110,11 @@ export default function SheetDataEditor({
             <button
               type="button"
               className={`relative inline-flex cursor-pointer items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-10 ${
-                viewMode === VIEW_MODES.ALL ? '!bg-gray-900 text-white' : ''
+                viewMode === SheetViewMode.ALL ? '!bg-gray-900 text-white' : ''
               }`}
               onClick={() => {
                 setSelectedRows([]);
-                setViewMode(VIEW_MODES.ALL);
+                setViewMode(SheetViewMode.ALL);
               }}
             >
               All
@@ -128,11 +122,13 @@ export default function SheetDataEditor({
             <button
               type="button"
               className={`relative -ml-px inline-flex cursor-pointer items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-10 ${
-                viewMode === VIEW_MODES.VALID ? '!bg-gray-900 text-white' : ''
+                viewMode === SheetViewMode.VALID
+                  ? '!bg-gray-900 text-white'
+                  : ''
               }`}
               onClick={() => {
                 setSelectedRows([]);
-                setViewMode(VIEW_MODES.VALID);
+                setViewMode(SheetViewMode.VALID);
               }}
             >
               Valid
@@ -140,11 +136,11 @@ export default function SheetDataEditor({
             <button
               type="button"
               className={`text-danger relative -ml-px inline-flex cursor-pointer items-center rounded-r-md bg-white px-3 py-2 text-sm font-semibold ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-10 ${
-                viewMode === VIEW_MODES.ERRORS ? '!bg-danger text-white' : ''
+                viewMode === SheetViewMode.ERRORS ? '!bg-danger text-white' : ''
               }`}
               onClick={() => {
                 setSelectedRows([]);
-                setViewMode(VIEW_MODES.ERRORS);
+                setViewMode(SheetViewMode.ERRORS);
               }}
             >
               Invalid
