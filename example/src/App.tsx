@@ -8,7 +8,6 @@ import EmployeeImporter from './components/EmployeeImporter';
 import WideImporter from './components/WideImporter';
 
 const App = () => {
-
   return (
     <div className="min-h-screen w-full">
       <Header />

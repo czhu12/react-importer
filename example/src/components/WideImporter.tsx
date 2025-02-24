@@ -1,5 +1,9 @@
 import { useState } from 'preact/hooks';
-import Importer, { SheetState, SheetDefinition, SheetRow } from 'react-importer';
+import Importer, {
+  SheetState,
+  SheetDefinition,
+  SheetRow,
+} from 'react-importer';
 const SCHOOLS_SHEET: SheetDefinition = {
   id: 'schools',
   label: 'Schools',
@@ -12,7 +16,7 @@ const SCHOOLS_SHEET: SheetDefinition = {
     { label: 'School State', id: 'school_state', type: 'string' },
     { label: 'School Zip Code', id: 'school_zip_code', type: 'string' },
   ],
-}
+};
 
 const STUDENTS_SHEET: SheetDefinition = {
   id: 'students',
@@ -23,17 +27,48 @@ const STUDENTS_SHEET: SheetDefinition = {
       label: 'Student ID',
       id: 'id',
       type: 'string',
-      validators: [{ validate: 'required' }, { validate: 'unique', error: 'This student ID is not unique' }],
+      validators: [
+        { validate: 'required' },
+        { validate: 'unique', error: 'This student ID is not unique' },
+      ],
     },
     {
       label: 'Grade',
       id: 'grade',
       type: 'string',
-      validators: [{ validate: 'required' }, { validate: 'includes', values: ['k', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'] }],
+      validators: [
+        { validate: 'required' },
+        {
+          validate: 'includes',
+          values: [
+            'k',
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '10',
+            '11',
+            '12',
+          ],
+        },
+      ],
     },
     // Guardian
-    { label: 'Parent/Guardian First Name', id: 'parent_guardian_first_name', type: 'string' },
-    { label: 'Parent/Guardian Last Name', id: 'parent_guardian_last_name', type: 'string' },
+    {
+      label: 'Parent/Guardian First Name',
+      id: 'parent_guardian_first_name',
+      type: 'string',
+    },
+    {
+      label: 'Parent/Guardian Last Name',
+      id: 'parent_guardian_last_name',
+      type: 'string',
+    },
     // Address
     { label: 'Address 1', id: 'address_1', type: 'string' },
     { label: 'Address 2', id: 'address_2', type: 'string' },
@@ -78,14 +113,38 @@ const STUDENTS_SHEET: SheetDefinition = {
     { label: 'Gender', id: 'gender', type: 'string' },
 
     // Insurance information
-    { label: 'Insurance Group Number', id: 'insurance_group_number', type: 'string' },
-    { label: 'Insurance Policy Holder', id: 'insurance_policy_holder', type: 'string' },
-    { label: 'Insurance Primary Member Date of Birth', id: 'insurance_primary_member_date_of_birth', type: 'string' },
-    { label: 'Insurance Primary Member First Name', id: 'insurance_primary_member_first_name', type: 'string' },
-    { label: 'Insurance Primary Member Last Name', id: 'insurance_primary_member_last_name', type: 'string' },
-    { label: 'Insurance Secondary Company', id: 'insurance_secondary_company', type: 'string' },
+    {
+      label: 'Insurance Group Number',
+      id: 'insurance_group_number',
+      type: 'string',
+    },
+    {
+      label: 'Insurance Policy Holder',
+      id: 'insurance_policy_holder',
+      type: 'string',
+    },
+    {
+      label: 'Insurance Primary Member Date of Birth',
+      id: 'insurance_primary_member_date_of_birth',
+      type: 'string',
+    },
+    {
+      label: 'Insurance Primary Member First Name',
+      id: 'insurance_primary_member_first_name',
+      type: 'string',
+    },
+    {
+      label: 'Insurance Primary Member Last Name',
+      id: 'insurance_primary_member_last_name',
+      type: 'string',
+    },
+    {
+      label: 'Insurance Secondary Company',
+      id: 'insurance_secondary_company',
+      type: 'string',
+    },
   ],
-}
+};
 
 export default function ComplexImporter() {
   const [ready, setReady] = useState(false);
@@ -94,7 +153,6 @@ export default function ComplexImporter() {
     data: SheetState[],
     onProgress: (progress: number) => void
   ) => {
-
     await new Promise((resolve) => setTimeout(resolve, 200));
     onProgress(20);
     await new Promise((resolve) => setTimeout(resolve, 200));
@@ -105,37 +163,39 @@ export default function ComplexImporter() {
     setReady(true);
   };
 
-  return <div className="content">
-    <h1>
-      Want to see a demo? Try uploading{' '}
-      <a className="text-blue-500 hover:text-blue-600" href="/datasets/students_and_schools.csv">
-        this file
-      </a>
-      .
-    </h1>
+  return (
+    <div className="content">
+      <h1>
+        Want to see a demo? Try uploading{' '}
+        <a
+          className="text-blue-500 hover:text-blue-600"
+          href="/datasets/students_and_schools.csv"
+        >
+          this file
+        </a>
+        .
+      </h1>
 
-    <Importer
-      sheets={[
-        STUDENTS_SHEET,
-        SCHOOLS_SHEET,
-      ]}
-      onDataColumnsMapped={(sheets) => {
-        const sheet = sheets.find((sheet) => sheet.sheetId === 'schools')!;
-        const seen = new Set();
-        sheet.rows = [...sheet.rows].filter((row: SheetRow) => {
-          // Remove duplicate names, don't validate yet...
-          const hasSeen = !seen.has(row['school_name'])
-          seen.add(row['school_name']);
-          return hasSeen;
-        });
-        return sheets;
-      }}
-      onComplete={onComplete}
-    />
-    {ready && (
-      <div style={{ margin: '0 auto', maxWidth: '1200px' }}>
-        <h4>Check the console for the output!</h4>
-      </div>
-    )}
-  </div>;
+      <Importer
+        sheets={[STUDENTS_SHEET, SCHOOLS_SHEET]}
+        onDataColumnsMapped={(sheets) => {
+          const sheet = sheets.find((sheet) => sheet.sheetId === 'schools')!;
+          const seen = new Set();
+          sheet.rows = [...sheet.rows].filter((row: SheetRow) => {
+            // Remove duplicate names, don't validate yet...
+            const hasSeen = !seen.has(row.school_name);
+            seen.add(row.school_name);
+            return hasSeen;
+          });
+          return sheets;
+        }}
+        onComplete={onComplete}
+      />
+      {ready && (
+        <div style={{ margin: '0 auto', maxWidth: '1200px' }}>
+          <h4>Check the console for the output!</h4>
+        </div>
+      )}
+    </div>
+  );
 }
