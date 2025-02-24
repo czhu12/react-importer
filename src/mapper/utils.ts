@@ -2,9 +2,27 @@ import { NUMBER_OF_EXAMPLES_IN_MAPPING } from '../constants';
 import {
   ColumnMapping,
   CSVParsedData,
+  MapperOption,
   MapperOptionValue,
   SheetDefinition,
 } from '../types';
+import { fieldIsRequired } from '../validators';
+
+function removeMappingDuplicates(mappings: ColumnMapping[]): ColumnMapping[] {
+  const uniqueMap = new Map<string, ColumnMapping>();
+
+  mappings.forEach((entry) => {
+    if (!uniqueMap.has(entry.csvColumnName)) {
+      uniqueMap.set(entry.csvColumnName, entry);
+    }
+  });
+
+  return Array.from(uniqueMap.values());
+}
+
+function normalizeString(str: string) {
+  return str.toLowerCase().replace('_', '').replace(' ', '');
+}
 
 function buildSheetSuggestedHeaderMappings(
   sheet: SheetDefinition,
@@ -14,15 +32,19 @@ function buildSheetSuggestedHeaderMappings(
 
   csvHeaders.forEach((header) => {
     const foundField = sheet.columns.find((column) => {
-      const normalizedColumnId = column.id
-        .toLowerCase()
-        .replace('_', '')
-        .replace(' ', '');
-      const normalizedHeader = header
-        .toLowerCase()
-        .replace('_', '')
-        .replace(' ', '');
-      return normalizedColumnId === normalizedHeader;
+      if (column.type === 'reference') {
+        // Reference columns are filled automatically so they shouldn't be mapped by hand
+        return false;
+      }
+
+      const keywords = [
+        column.id,
+        ...(column.suggestedMappingKeywords || []),
+      ].map((k) => normalizeString(k));
+
+      const normalizedHeader = normalizeString(header);
+
+      return keywords.includes(normalizedHeader);
     });
 
     if (!foundField) {
@@ -46,41 +68,31 @@ export const buildSuggestedHeaderMappings = (
   const headerMappings: ColumnMapping[] = [];
 
   sheetDefinitions.forEach((sheet) => {
-    const headers = csvHeaders;
-    const mappings = buildSheetSuggestedHeaderMappings(sheet, headers);
+    const mappings = buildSheetSuggestedHeaderMappings(sheet, csvHeaders);
     headerMappings.push(...mappings);
   });
 
-  return headerMappings;
+  return removeMappingDuplicates(headerMappings);
 };
 
 export function calculateNewMappingsForCsvColumnMapingChanged(
   currentMapping: ColumnMapping[],
   csvColumnName: string,
-  newCsvColumnMaping: MapperOptionValue[] | null
+  newCsvColumnMaping: MapperOptionValue | null
 ): ColumnMapping[] {
   if (newCsvColumnMaping == null) {
     return currentMapping;
   }
 
   // Make sure we don't allow dupplicate mappings for the same sheet column
-  const currentFilteredMapping = currentMapping.filter(
-    (currentM) =>
-      newCsvColumnMaping.find(
-        (newM) =>
-          currentM.sheetId === newM.sheetId &&
-          currentM.sheetColumnId === newM.sheetColumnId
-      ) == null
+  const mappingsForOtherSheets = currentMapping.filter(
+    (m) =>
+      (m.sheetId !== newCsvColumnMaping.sheetId ||
+        m.sheetColumnId !== newCsvColumnMaping.sheetColumnId) &&
+      m.csvColumnName !== csvColumnName
   );
 
-  const mappingsForOtherColumns = currentFilteredMapping.filter(
-    (m) => m.csvColumnName !== csvColumnName
-  );
-
-  return [
-    ...mappingsForOtherColumns,
-    ...newCsvColumnMaping.map((m) => ({ ...m, csvColumnName })),
-  ];
+  return [...mappingsForOtherSheets, { ...newCsvColumnMaping, csvColumnName }];
 }
 
 export function calculateMappingExamples(
@@ -91,4 +103,56 @@ export function calculateMappingExamples(
     .map((d) => d[csvColumnName])
     .filter((v) => v != null && v.trim() !== '')
     .slice(0, NUMBER_OF_EXAMPLES_IN_MAPPING);
+}
+
+export function getMappingAvailableSelectOptions(
+  sheetDefinitions: SheetDefinition[]
+) {
+  return sheetDefinitions.flatMap((sheetDefinition) =>
+    sheetDefinition.columns
+      .filter((column) => column.type !== 'reference') // Reference columns would be mapped automatically
+      .map((column) => ({
+        label: `${column.label}${fieldIsRequired(column) ? ' *' : ''}`,
+        value: {
+          sheetId: sheetDefinition.id,
+          sheetColumnId: column.id,
+        },
+      }))
+  );
+}
+
+export function filterAlreadyUsedMappingOptions(
+  mappingOptions: MapperOption[],
+  currentMapping: ColumnMapping[]
+) {
+  return mappingOptions.filter(
+    (option) =>
+      !currentMapping.some(
+        (mapping) =>
+          mapping.sheetId === option.value.sheetId &&
+          mapping.sheetColumnId === option.value.sheetColumnId
+      )
+  );
+}
+
+export function areAllRequiredMappingsSet(
+  sheetDefinitions: SheetDefinition[],
+  mappings: ColumnMapping[]
+) {
+  for (const sheet of sheetDefinitions) {
+    for (const column of sheet.columns) {
+      // Reference columns are filled automatically so they shouldn't be required to map by hand
+      if (fieldIsRequired(column) && column.type !== 'reference') {
+        const mapping = mappings.find(
+          (m) => m.sheetId === sheet.id && m.sheetColumnId === column.id
+        );
+
+        if (mapping == null) {
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
 }

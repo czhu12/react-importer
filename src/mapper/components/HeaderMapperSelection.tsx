@@ -11,16 +11,16 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 interface Props {
   csvHeader: string;
   examples: ImporterOutputFieldType[];
-  currentMappings: MapperOptionValue[] | null;
-  setMappings: (header: MapperOptionValue[] | null) => void;
+  currentMapping: MapperOptionValue | null;
+  setMapping: (header: MapperOptionValue | null) => void;
   mappingSelectionOptions: MapperOption[];
 }
 
 export default function HeaderMapperSelection({
   csvHeader,
   examples,
-  setMappings,
-  currentMappings,
+  setMapping,
+  currentMapping,
   mappingSelectionOptions,
 }: Props) {
   const { t } = useTranslations();
@@ -38,15 +38,18 @@ export default function HeaderMapperSelection({
             // TODO THIS BRANCH: Add back the following props
             // isClearable
             // isSearchable
-            compareFunction={(a, b) =>
-              a.sheetColumnId === b.sheetColumnId && a.sheetId === b.sheetId
-            }
-            multiple
-            value={currentMappings}
+            compareFunction={(a, b) => {
+              if (a == null || b == null) {
+                return false;
+              }
+
+              return (
+                a.sheetColumnId === b.sheetColumnId && a.sheetId === b.sheetId
+              );
+            }}
+            value={currentMapping}
             options={mappingSelectionOptions}
-            onChange={(mappings) =>
-              setMappings(mappings as ColumnMapping[] | null)
-            }
+            onChange={(mapping) => setMapping(mapping as ColumnMapping | null)}
           />
         </div>
       </div>

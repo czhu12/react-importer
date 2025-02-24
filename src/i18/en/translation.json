@@ -7,6 +7,7 @@
   },
   "importer": {
     "upload": "Upload",
+    "back": "Back",
     "loader": {
       "failed": "Something went wrong",
       "uploading": "Uploading",
@@ -19,6 +20,12 @@
       "fileSizeLimit": "Limit {{limit}}",
       "browseFiles": "Browse Files",
       "enterManually": "Or just manually enter your data"
+    },
+    "backToMappingConfirmation": {
+      "title": "Are you sure?",
+      "subTitle": "This will discard all changes made after the data was mapped",
+      "confirmationText": "Yes, go back",
+      "cancelText": "No, stay here"
     }
   },
   "mapper": {

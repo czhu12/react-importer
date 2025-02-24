@@ -24,15 +24,10 @@ const reducer = (
     case 'ENTER_DATA_MANUALLY': {
       const emptyData = state.sheetDefinitions.map((sheet) => ({
         sheetId: sheet.id,
-        rows:
-          state.currentSheetId === sheet.id
-            ? Array.from(
-                { length: action.payload.amountOfEmptyRowsToAdd },
-                () => ({})
-              )
-            : state.sheetData.find(
-                (sheetData) => sheetData.sheetId === sheet.id
-              )?.rows || [],
+        rows: Array.from(
+          { length: action.payload.amountOfEmptyRowsToAdd },
+          () => ({})
+        ),
       }));
 
       return { ...state, mode: 'preview', sheetData: emptyData };
@@ -114,6 +109,8 @@ const reducer = (
       return { ...state, mode: 'failed' };
     case 'PREVIEW':
       return { ...state, mode: 'preview' };
+    case 'MAPPING':
+      return { ...state, mode: 'mapping' };
     default:
       return state;
   }

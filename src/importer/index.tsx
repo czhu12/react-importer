@@ -22,6 +22,7 @@ import { NUMBER_OF_EMPTY_ROWS_FOR_MANUAL_DATA_INPUT } from '../constants';
 import SheetsSwitcher from '../sheet/components/SheetsSwitcher';
 import { Button, Root } from '../components';
 import { TranslationProvider, useTranslations } from '../i18';
+import BackToMappingButton from './components/BackToMappingButton';
 
 function ImporterBody({
   theme,
@@ -88,12 +89,7 @@ function ImporterBody({
   }
 
   async function onMappingsSet() {
-    const mappedData = getMappedData(
-      sheets,
-      columnMappings ?? [],
-      parsedFile!,
-      sheetData
-    );
+    const mappedData = getMappedData(sheets, columnMappings ?? [], parsedFile!);
 
     const newMappedData =
       onDataColumnsMapped != null
@@ -138,6 +134,10 @@ function ImporterBody({
     dispatch({ type: 'PREVIEW' });
   }
 
+  function onBackToMapping() {
+    dispatch({ type: 'MAPPING' });
+  }
+
   return (
     <ThemeSetter theme={theme}>
       <Root>
@@ -148,6 +148,7 @@ function ImporterBody({
             currentMapping={columnMappings ?? []}
             onMappingsChanged={onMappingsChanged}
             onMappingsSet={onMappingsSet}
+            onBack={onBackToPreview}
           />
         )}
         {mode === 'preview' && (
@@ -171,8 +172,15 @@ function ImporterBody({
               removeRows={onRemoveRows}
             />
             {currentSheetData.rows.length > 0 && (
-              <div className="my-5 text-right">
-                <Button onClick={onSubmit}>{t('importer.upload')}</Button>
+              <div className="my-5 flex justify-between">
+                <div>
+                  {columnMappings != null && (
+                    <BackToMappingButton onBackToMapping={onBackToMapping} />
+                  )}
+                </div>
+                <div>
+                  <Button onClick={onSubmit}>{t('importer.upload')}</Button>
+                </div>
               </div>
             )}
 

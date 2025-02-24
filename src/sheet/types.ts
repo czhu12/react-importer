@@ -20,6 +20,7 @@ export type SheetColumnDefinition =
 interface SheetColumnBaseDefinition {
   id: string;
   label: string;
+  suggestedMappingKeywords?: string[];
   isReadOnly?: boolean;
   validators?: ImporterValidatorDefinition[];
   transformers?: ImporterTransformerDefinition[];

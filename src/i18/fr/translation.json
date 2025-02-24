@@ -7,6 +7,7 @@
   },
   "importer": {
     "upload": "Télécharger",
+    "back": "Retour",
     "loader": {
       "failed": "Quelque chose a mal tourné",
       "uploading": "Téléchargement en cours",
@@ -19,6 +20,12 @@
       "fileSizeLimit": "Limite {{limit}}",
       "browseFiles": "Parcourir les fichiers",
       "enterManually": "Ou saisissez vos données manuellement"
+    },
+    "backToMappingConfirmation": {
+      "title": "Êtes-vous sûr ?",
+      "subTitle": "Cela annulera toutes les modifications effectuées après le mappage des données",
+      "confirmationText": "Oui, revenir en arrière",
+      "cancelText": "Non, rester ici"
     }
   },
   "mapper": {
