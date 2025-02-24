@@ -12,12 +12,15 @@ import {
   ImporterValidationError,
   RemoveRowsPayload,
 } from '../../types';
-import { ConfirmationModal, ButtonGroup } from '../../components';
+import {
+  ConfirmationModal,
+  ButtonGroup,
+  ButtonGroupType,
+} from '../../components';
 import SheetDataEditorTable from './SheetDataEditorTable';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from '../../i18';
 import SheetDataEditorHeader from './SheetDataEditorHeader';
-import { Button } from '../../components/ButtonGroup';
 
 const columnHelper = createColumnHelper<SheetRow>();
 
@@ -45,7 +48,7 @@ export default function SheetDataEditor({
   const [removeConfirmationModalOpen, setRemoveConfirmationModalOpen] =
     useState(false);
 
-  const viewModeButtons: Button[] = [
+  const viewModeButtons: ButtonGroupType[] = [
     {
       value: 'all',
       label: 'sheet.all',

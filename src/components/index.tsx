@@ -7,3 +7,4 @@ export { default as Select } from './Select';
 export { default as Tabs } from './Tabs';
 export { default as Tooltip } from './Tooltip';
 export { default as ButtonGroup } from './ButtonGroup';
+export type { ButtonGroupType } from './ButtonGroup';

@@ -3,10 +3,10 @@ import { useTranslations } from '../i18';
 
 interface Props {
   activeButton: string;
-  buttons: Button[];
+  buttons: ButtonGroupType[];
 }
 
-export type Button = {
+export type ButtonGroupType = {
   value: string;
   label: string;
   onClick: () => void;
