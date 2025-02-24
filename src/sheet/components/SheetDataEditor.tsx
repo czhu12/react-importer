@@ -152,6 +152,7 @@ export default function SheetDataEditor({
           </span>
         </div>
 
+        {/* TODO: Add tooltip when disabled */}
         <TrashIcon
           className={`ml-8 h-6 w-6 cursor-pointer ${
             selectedRows.length > 0
