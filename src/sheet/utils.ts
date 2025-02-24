@@ -1,5 +1,10 @@
 import { isEmptyCell } from '../utils';
-import { SheetColumnReferenceDefinition, SheetState } from '../types';
+import {
+  SheetColumnReferenceDefinition,
+  SheetDefinition,
+  SheetState,
+} from '../types';
+import { DOWNLOADED_CSV_SEPARATOR } from '../constants';
 
 export function extractReferenceColumnPossibleValues(
   columnDefinition: SheetColumnReferenceDefinition,
@@ -16,4 +21,29 @@ export function extractReferenceColumnPossibleValues(
       ?.filter((c) => !isEmptyCell(c))
       ?.filter((c, index, allData) => allData.indexOf(c) === index) ?? [] // Remove dupplicates
   );
+}
+
+export function downloadSheetAsCsv(
+  sheetDefinition: SheetDefinition,
+  data: SheetState
+) {
+  const headers = sheetDefinition.columns
+    .map((column) => column.id)
+    .join(DOWNLOADED_CSV_SEPARATOR);
+
+  const rows = data.rows.map((row) =>
+    sheetDefinition.columns
+      .map((column) => row[column.id])
+      .join(DOWNLOADED_CSV_SEPARATOR)
+  );
+
+  const csv = [headers, ...rows].join('\n');
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${sheetDefinition.label}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
 }

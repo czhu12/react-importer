@@ -97,6 +97,21 @@ const reducer = (
       };
     }
 
+    case 'ADD_EMPTY_ROW': {
+      const newData = state.sheetData.map((data) => {
+        if (data.sheetId !== state.currentSheetId) {
+          return data;
+        }
+
+        return {
+          ...data,
+          rows: [...data.rows, {}],
+        };
+      });
+
+      return { ...state, sheetData: newData };
+    }
+
     case 'SHEET_CHANGED':
       return { ...state, currentSheetId: action.payload.sheetId };
     case 'SUBMIT':

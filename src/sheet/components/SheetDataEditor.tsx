@@ -18,9 +18,14 @@ import {
   ButtonGroupType,
 } from '../../components';
 import SheetDataEditorTable from './SheetDataEditorTable';
-import { TrashIcon } from '@heroicons/react/24/outline';
+import {
+  TrashIcon,
+  PlusIcon,
+  ArrowDownTrayIcon,
+} from '@heroicons/react/24/outline';
 import { useTranslations } from '../../i18';
 import SheetDataEditorHeader from './SheetDataEditorHeader';
+import { downloadSheetAsCsv } from '../utils';
 
 const columnHelper = createColumnHelper<SheetRow>();
 
@@ -31,6 +36,7 @@ interface Props {
   sheetValidationErrors: ImporterValidationError[];
   setRowData: (payload: CellChangedPayload) => void;
   removeRows: (payload: RemoveRowsPayload) => void;
+  addEmptyRow: () => void;
 }
 
 export default function SheetDataEditor({
@@ -40,6 +46,7 @@ export default function SheetDataEditor({
   sheetValidationErrors,
   setRowData,
   removeRows,
+  addEmptyRow,
 }: Props) {
   const { t } = useTranslations();
 
@@ -47,6 +54,9 @@ export default function SheetDataEditor({
   const [viewMode, setViewMode] = useState<SheetViewMode>('all');
   const [removeConfirmationModalOpen, setRemoveConfirmationModalOpen] =
     useState(false);
+
+  const disabledButtonClasses =
+    'pointer-events-none cursor-not-allowed opacity-50';
 
   const viewModeButtons: ButtonGroupType[] = [
     {
@@ -145,12 +155,22 @@ export default function SheetDataEditor({
 
         {/* TODO: Add tooltip when disabled */}
         <TrashIcon
-          className={`ml-8 h-6 w-6 cursor-pointer ${
-            selectedRows.length > 0
-              ? ''
-              : 'pointer-events-none cursor-not-allowed opacity-50'
+          className={`ml-8 h-6 w-6 ${
+            selectedRows.length > 0 ? 'cursor-pointer' : disabledButtonClasses
           }`}
           onClick={() => setRemoveConfirmationModalOpen(true)}
+        />
+
+        <PlusIcon
+          className="ml-5 h-6 w-6 cursor-pointer"
+          onClick={addEmptyRow}
+        />
+
+        <ArrowDownTrayIcon
+          className={`ml-5 h-6 w-6 ${
+            data.rows.length > 0 ? 'cursor-pointer' : disabledButtonClasses
+          }`}
+          onClick={() => downloadSheetAsCsv(sheetDefinition, data)}
         />
       </div>
 

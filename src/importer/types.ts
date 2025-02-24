@@ -81,6 +81,9 @@ export type ImporterAction =
       type: 'REMOVE_ROWS';
       payload: RemoveRowsPayload;
     } // Removes rows from the sheetData
+  | {
+      type: 'ADD_EMPTY_ROW';
+    } // Removes rows from the sheetData
   | { type: 'SHEET_CHANGED'; payload: { sheetId: string } } // Calls onComplete callback with state.sheetData, changes mode to 'submit'
   | { type: 'SUBMIT' } // Calls onComplete callback with state.sheetData, changes mode to 'submit'
   | { type: 'PROGRESS'; payload: { progress: number } } // Updates importProgress
