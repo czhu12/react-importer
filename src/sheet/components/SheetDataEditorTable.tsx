@@ -63,7 +63,7 @@ export default function SheetDataEditorTable({
   const cellClass = 'text-sm font-medium whitespace-nowrap text-gray-900';
 
   return (
-    <div className="max-h-[80vh] overflow-x-auto overflow-y-auto">
+    <div className="max-h-[80vh] overflow-auto">
       <table className="min-w-full divide-y divide-gray-300 border-y border-gray-300">
         <thead className="sticky top-0 z-10 bg-gray-100">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -94,7 +94,7 @@ export default function SheetDataEditorTable({
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               <td
-                className={`bg-gray-100 ${cellClass} sticky left-0 z-10 py-3.5 pr-3 pl-4`}
+                className={`bg-gray-100 ${cellClass} sticky left-0 z-5 py-3.5 pr-3 pl-4`}
               >
                 <Checkbox
                   // TODO: Check if it works correctly for 2 idnetical rows
