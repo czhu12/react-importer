@@ -59,7 +59,7 @@ export default function SheetDataEditorTable({
   }
 
   const headerClass =
-    'sticky top-0 bg-gray-100 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 z-10 whitespace-nowrap ';
+    'sticky top-0 bg-gray-100 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 whitespace-nowrap ';
   const cellClass = 'text-sm font-medium whitespace-nowrap text-gray-900';
 
   return (
@@ -77,7 +77,7 @@ export default function SheetDataEditorTable({
               </th>
 
               {headerGroup.headers.map((header) => (
-                <th key={header.id} className={`min-w-48 ${headerClass}`}>
+                <th key={header.id} className={`z-10 min-w-48 ${headerClass}`}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(
