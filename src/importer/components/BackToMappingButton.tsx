@@ -20,6 +20,7 @@ export default function BackToMappingButton({ onBackToMapping }: Props) {
         {t('importer.back')}
       </Button>
       <ConfirmationModal
+        variant="danger"
         onConfirm={onBackToMapping}
         open={confirmationModalOpen}
         setOpen={setConfirmationModalOpen}
