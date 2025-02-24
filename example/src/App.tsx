@@ -5,9 +5,9 @@ import Footer from './components/Footer';
 import { EXAMPLE_CODE } from './constants';
 import EmployeeSheetImporter from './components/EmployeeSheetImporter';
 import EmployeeImporter from './components/EmployeeImporter';
+import WideImporter from './components/WideImporter';
 
 const App = () => {
-
   return (
     <div className="min-h-screen w-full">
       <Header />
@@ -31,10 +31,9 @@ const App = () => {
           />
         </div>
 
-        <div className="content">
-          <EmployeeImporter />
-          <EmployeeSheetImporter />
-        </div>
+        <EmployeeImporter />
+        <EmployeeSheetImporter />
+        <WideImporter />
       </div>
 
       <Footer />
