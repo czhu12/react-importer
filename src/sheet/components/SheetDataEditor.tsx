@@ -168,9 +168,9 @@ export default function SheetDataEditor({
 
         <ArrowDownTrayIcon
           className={`ml-5 h-6 w-6 ${
-            data.rows.length > 0 ? 'cursor-pointer' : disabledButtonClasses
+            rowData.length > 0 ? 'cursor-pointer' : disabledButtonClasses
           }`}
-          onClick={() => downloadSheetAsCsv(sheetDefinition, data)}
+          onClick={() => downloadSheetAsCsv(sheetDefinition, rowData)}
         />
       </div>
 
