@@ -31,6 +31,7 @@ export default function SheetDataEditorTable({
   setSelectedRows,
 }: Props) {
   const { t } = useTranslations();
+  console.log(table.getHeaderGroups());
 
   function cellErrors(columnId: string, rowIndex: number) {
     return sheetValidationErrors.filter(
@@ -59,16 +60,16 @@ export default function SheetDataEditorTable({
   }
 
   const headerClass =
-    'sticky top-0 bg-white py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 z-10';
+    'sticky top-0 bg-gray-100 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 z-10 whitespace-nowrap ';
   const cellClass = 'text-sm font-medium whitespace-nowrap text-gray-900';
 
   return (
-    <div className="max-h-[80vh] overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-300">
-        <thead>
+    <div className="max-h-[80vh] overflow-x-auto overflow-y-auto">
+      <table className="min-w-full divide-y divide-gray-300 border-y border-gray-300">
+        <thead className="sticky top-0 z-10 bg-gray-100">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
-              <th className={headerClass}>
+              <th className={`${headerClass} sticky left-0 z-20`}>
                 <Checkbox
                   id={`Select all checkbox for ${sheetDefinition.id}`}
                   checked={selectAllChecked}
@@ -77,7 +78,7 @@ export default function SheetDataEditorTable({
               </th>
 
               {headerGroup.headers.map((header) => (
-                <th key={header.id} className={headerClass}>
+                <th key={header.id} className={`min-w-48 ${headerClass}`}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -93,12 +94,15 @@ export default function SheetDataEditorTable({
         <tbody className="divide-y divide-gray-200">
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
-              <td className={`${cellClass} py-3.5 pr-3 pl-4`}>
+              <td
+                className={`bg-gray-100 ${cellClass} sticky left-0 z-10 py-3.5 pr-3 pl-4`}
+              >
                 <Checkbox
                   // TODO: Check if it works correctly for 2 idnetical rows
                   id={`Selection checkbox for ${sheetDefinition.id} ${row}`}
                   checked={selectedRows.includes(row.original)}
                   setChecked={() => toggleRowSelection(row.original)}
+                  label={`${Number(row.id) + 1}`}
                 />
               </td>
 

@@ -12,13 +12,19 @@ import {
   ImporterValidationError,
   RemoveRowsPayload,
 } from '../../types';
-import { Checkbox, ConfirmationModal } from '../../components';
+import { ConfirmationModal } from '../../components';
 import SheetDataEditorTable from './SheetDataEditorTable';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from '../../i18';
 import SheetDataEditorHeader from './SheetDataEditorHeader';
 
 const columnHelper = createColumnHelper<SheetRow>();
+
+const VIEW_MODES = {
+  ALL: 'all',
+  ERRORS: 'errors',
+  VALID: 'valid',
+};
 
 interface Props {
   sheetDefinition: SheetDefinition;
@@ -40,23 +46,31 @@ export default function SheetDataEditor({
   const { t } = useTranslations();
 
   const [selectedRows, setSelectedRows] = useState<SheetRow[]>([]);
-  const [onlyShowErrors, setOnlyShowErrors] = useState(false);
+  const [viewMode, setViewMode] = useState(VIEW_MODES.ALL);
   const [removeConfirmationModalOpen, setRemoveConfirmationModalOpen] =
     useState(false);
 
   useEffect(() => {
     setSelectedRows([]); // On changing sheets
+    setViewMode(VIEW_MODES.ALL);
   }, [sheetDefinition]);
 
-  const rowData = useMemo(
-    () =>
-      data.rows.filter(
-        (_, index) =>
-          !onlyShowErrors ||
+  const rowData = useMemo(() => {
+    switch (viewMode) {
+      case VIEW_MODES.ERRORS:
+        return data.rows.filter((_, index) =>
           sheetValidationErrors.some((error) => error.rowIndex === index)
-      ),
-    [data, onlyShowErrors, sheetValidationErrors]
-  );
+        );
+      case VIEW_MODES.VALID:
+        return data.rows.filter(
+          (_, index) =>
+            !sheetValidationErrors.some((error) => error.rowIndex === index)
+        );
+      case VIEW_MODES.ALL:
+      default:
+        return data.rows;
+    }
+  }, [data, viewMode, sheetValidationErrors]);
 
   const columns = useMemo(
     () =>
@@ -98,23 +112,54 @@ export default function SheetDataEditor({
     <div>
       <div className="my-5 flex items-center">
         <div>
-          <Checkbox
-            id={`Only show errors checkbox for ${sheetDefinition.id}`}
-            checked={onlyShowErrors}
-            setChecked={(checked) => {
-              setSelectedRows([]);
-              setOnlyShowErrors(checked);
-            }}
-            label={t('sheet.onlyShowErrorsCheckboxLabel')}
-          />
+          <span className="isolate inline-flex rounded-md shadow-xs">
+            <button
+              type="button"
+              className={`relative inline-flex cursor-pointer items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-10 ${
+                viewMode === VIEW_MODES.ALL ? '!bg-gray-900 text-white' : ''
+              }`}
+              onClick={() => {
+                setSelectedRows([]);
+                setViewMode(VIEW_MODES.ALL);
+              }}
+            >
+              All
+            </button>
+            <button
+              type="button"
+              className={`relative -ml-px inline-flex cursor-pointer items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-10 ${
+                viewMode === VIEW_MODES.VALID ? '!bg-gray-900 text-white' : ''
+              }`}
+              onClick={() => {
+                setSelectedRows([]);
+                setViewMode(VIEW_MODES.VALID);
+              }}
+            >
+              Valid
+            </button>
+            <button
+              type="button"
+              className={`text-danger relative -ml-px inline-flex cursor-pointer items-center rounded-r-md bg-white px-3 py-2 text-sm font-semibold ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-10 ${
+                viewMode === VIEW_MODES.ERRORS ? '!bg-danger text-white' : ''
+              }`}
+              onClick={() => {
+                setSelectedRows([]);
+                setViewMode(VIEW_MODES.ERRORS);
+              }}
+            >
+              Invalid
+            </button>
+          </span>
         </div>
 
-        {selectedRows.length > 0 && (
-          <TrashIcon
-            className="ml-16 h-6 w-6 cursor-pointer"
-            onClick={() => setRemoveConfirmationModalOpen(true)}
-          />
-        )}
+        <TrashIcon
+          className={`ml-8 h-6 w-6 cursor-pointer ${
+            selectedRows.length > 0
+              ? ''
+              : 'pointer-events-none cursor-not-allowed opacity-50'
+          }`}
+          onClick={() => setRemoveConfirmationModalOpen(true)}
+        />
       </div>
 
       <SheetDataEditorTable
