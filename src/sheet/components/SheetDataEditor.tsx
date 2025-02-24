@@ -40,27 +40,27 @@ export default function SheetDataEditor({
   const { t } = useTranslations();
 
   const [selectedRows, setSelectedRows] = useState<SheetRow[]>([]);
-  const [viewMode, setViewMode] = useState<SheetViewMode>(SheetViewMode.ALL);
+  const [viewMode, setViewMode] = useState<SheetViewMode>('all');
   const [removeConfirmationModalOpen, setRemoveConfirmationModalOpen] =
     useState(false);
 
   useEffect(() => {
     setSelectedRows([]); // On changing sheets
-    setViewMode(SheetViewMode.ALL);
+    setViewMode('all');
   }, [sheetDefinition]);
 
   const rowData = useMemo(() => {
     switch (viewMode) {
-      case SheetViewMode.ERRORS:
+      case 'errors':
         return data.rows.filter((_, index) =>
           sheetValidationErrors.some((error) => error.rowIndex === index)
         );
-      case SheetViewMode.VALID:
+      case 'valid':
         return data.rows.filter(
           (_, index) =>
             !sheetValidationErrors.some((error) => error.rowIndex === index)
         );
-      case SheetViewMode.ALL:
+      case 'all':
       default:
         return data.rows;
     }
@@ -110,11 +110,11 @@ export default function SheetDataEditor({
             <button
               type="button"
               className={`relative inline-flex cursor-pointer items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-10 ${
-                viewMode === SheetViewMode.ALL ? '!bg-gray-900 text-white' : ''
+                viewMode === 'all' ? '!bg-gray-900 text-white' : ''
               }`}
               onClick={() => {
                 setSelectedRows([]);
-                setViewMode(SheetViewMode.ALL);
+                setViewMode('all');
               }}
             >
               {t('sheet.all')}
@@ -122,13 +122,11 @@ export default function SheetDataEditor({
             <button
               type="button"
               className={`relative -ml-px inline-flex cursor-pointer items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-10 ${
-                viewMode === SheetViewMode.VALID
-                  ? '!bg-gray-900 text-white'
-                  : ''
+                viewMode === 'valid' ? '!bg-gray-900 text-white' : ''
               }`}
               onClick={() => {
                 setSelectedRows([]);
-                setViewMode(SheetViewMode.VALID);
+                setViewMode('valid');
               }}
             >
               {t('sheet.valid')}
@@ -136,11 +134,11 @@ export default function SheetDataEditor({
             <button
               type="button"
               className={`text-danger relative -ml-px inline-flex cursor-pointer items-center rounded-r-md bg-white px-3 py-2 text-sm font-semibold ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-10 ${
-                viewMode === SheetViewMode.ERRORS ? '!bg-danger text-white' : ''
+                viewMode === 'errors' ? '!bg-danger text-white' : ''
               }`}
               onClick={() => {
                 setSelectedRows([]);
-                setViewMode(SheetViewMode.ERRORS);
+                setViewMode('errors');
               }}
             >
               {t('sheet.invalid')}

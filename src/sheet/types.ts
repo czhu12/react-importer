@@ -53,8 +53,4 @@ export interface SheetState {
   rows: SheetRow[]; // key being column id
 }
 
-export enum SheetViewMode {
-  ALL = 'all',
-  VALID = 'valid',
-  ERRORS = 'errors',
-}
+export type SheetViewMode = 'all' | 'valid' | 'errors';
