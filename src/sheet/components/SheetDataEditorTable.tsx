@@ -31,7 +31,6 @@ export default function SheetDataEditorTable({
   setSelectedRows,
 }: Props) {
   const { t } = useTranslations();
-  console.log(table.getHeaderGroups());
 
   function cellErrors(columnId: string, rowIndex: number) {
     return sheetValidationErrors.filter(
