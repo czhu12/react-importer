@@ -28,13 +28,15 @@
     "noData": "Aucune donnée"
   },
   "sheet": {
-    "onlyShowErrorsCheckboxLabel": "Afficher uniquement les lignes avec des erreurs",
     "validationPassed": "Toutes les lignes passent la validation !",
     "removeConfirmationModalTitle": "Supprimer les lignes",
     "removeConfirmationModalConfirmationText": "Supprimer",
     "removeConfirmationModalSubTitle": "Êtes-vous sûr de vouloir supprimer {{rowsCount}} lignes ?",
     "readOnly": "Lecture seule",
-    "editTooltip": "Double-cliquez pour modifier"
+    "editTooltip": "Double-cliquez pour modifier",
+    "all": "Toutes",
+    "valid": "Valides",
+    "invalid": "Invalides"
   },
   "validators": {
     "includes": "La valeur n'est pas dans la liste des valeurs autorisées",

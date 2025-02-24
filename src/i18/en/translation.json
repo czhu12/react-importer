@@ -28,13 +28,15 @@
     "noData": "No Data"
   },
   "sheet": {
-    "onlyShowErrorsCheckboxLabel": "Only show rows with errors",
     "validationPassed": "All rows pass validation!",
     "removeConfirmationModalTitle": "Remove rows",
     "removeConfirmationModalConfirmationText": "Remove",
     "removeConfirmationModalSubTitle": "Are you sure you want to remove {{rowsCount}} rows?",
     "readOnly": "Read Only",
-    "editTooltip": "Double click to edit"
+    "editTooltip": "Double click to edit",
+    "all": "All",
+    "valid": "Valid",
+    "invalid": "Invalid"
   },
   "validators": {
     "includes": "Value is not in the list of allowed values",

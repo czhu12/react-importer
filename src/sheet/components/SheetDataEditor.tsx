@@ -117,7 +117,7 @@ export default function SheetDataEditor({
                 setViewMode(SheetViewMode.ALL);
               }}
             >
-              All
+              {t('sheet.all')}
             </button>
             <button
               type="button"
@@ -131,7 +131,7 @@ export default function SheetDataEditor({
                 setViewMode(SheetViewMode.VALID);
               }}
             >
-              Valid
+              {t('sheet.valid')}
             </button>
             <button
               type="button"
@@ -143,7 +143,7 @@ export default function SheetDataEditor({
                 setViewMode(SheetViewMode.ERRORS);
               }}
             >
-              Invalid
+              {t('sheet.invalid')}
             </button>
           </span>
         </div>
