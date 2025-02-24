@@ -1,5 +1,4 @@
 import { cva } from 'cva';
-import { useTranslations } from '../i18';
 
 interface Props {
   activeButton: string;
@@ -57,8 +56,6 @@ const buttonStyles = cva(
 );
 
 export default function ButtonGroup({ activeButton, buttons }: Props) {
-  const { t } = useTranslations();
-
   return (
     <span className="isolate inline-flex rounded-md shadow-xs">
       {buttons.map((button, index) => (
@@ -77,7 +74,7 @@ export default function ButtonGroup({ activeButton, buttons }: Props) {
                   : 'center',
           })}
         >
-          {t(button.label)}
+          {button.label}
         </button>
       ))}
     </span>

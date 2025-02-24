@@ -51,7 +51,7 @@ export default function SheetDataEditor({
   const viewModeButtons: ButtonGroupType[] = [
     {
       value: 'all',
-      label: 'sheet.all',
+      label: t('sheet.all'),
       onClick: () => {
         setSelectedRows([]);
         setViewMode('all');
@@ -60,7 +60,7 @@ export default function SheetDataEditor({
     },
     {
       value: 'valid',
-      label: 'sheet.valid',
+      label: t('sheet.valid'),
       onClick: () => {
         setSelectedRows([]);
         setViewMode('valid');
@@ -69,7 +69,7 @@ export default function SheetDataEditor({
     },
     {
       value: 'errors',
-      label: 'sheet.invalid',
+      label: t('sheet.invalid'),
       onClick: () => {
         setSelectedRows([]);
         setViewMode('errors');
