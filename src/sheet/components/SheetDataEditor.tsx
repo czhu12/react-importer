@@ -5,14 +5,18 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import { SheetDefinition, SheetState, SheetRow } from '../types';
+import { SheetDefinition, SheetState, SheetRow, SheetViewMode } from '../types';
 import {
   CellChangedPayload,
   ImporterOutputFieldType,
   ImporterValidationError,
   RemoveRowsPayload,
 } from '../../types';
-import { Checkbox, ConfirmationModal } from '../../components';
+import {
+  ConfirmationModal,
+  ButtonGroup,
+  ButtonGroupType,
+} from '../../components';
 import SheetDataEditorTable from './SheetDataEditorTable';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from '../../i18';
@@ -40,23 +44,61 @@ export default function SheetDataEditor({
   const { t } = useTranslations();
 
   const [selectedRows, setSelectedRows] = useState<SheetRow[]>([]);
-  const [onlyShowErrors, setOnlyShowErrors] = useState(false);
+  const [viewMode, setViewMode] = useState<SheetViewMode>('all');
   const [removeConfirmationModalOpen, setRemoveConfirmationModalOpen] =
     useState(false);
 
+  const viewModeButtons: ButtonGroupType[] = [
+    {
+      value: 'all',
+      label: t('sheet.all'),
+      onClick: () => {
+        setSelectedRows([]);
+        setViewMode('all');
+      },
+      variant: 'default',
+    },
+    {
+      value: 'valid',
+      label: t('sheet.valid'),
+      onClick: () => {
+        setSelectedRows([]);
+        setViewMode('valid');
+      },
+      variant: 'default',
+    },
+    {
+      value: 'errors',
+      label: t('sheet.invalid'),
+      onClick: () => {
+        setSelectedRows([]);
+        setViewMode('errors');
+      },
+      variant: 'danger',
+    },
+  ];
+
   useEffect(() => {
     setSelectedRows([]); // On changing sheets
+    setViewMode('all');
   }, [sheetDefinition]);
 
-  const rowData = useMemo(
-    () =>
-      data.rows.filter(
-        (_, index) =>
-          !onlyShowErrors ||
+  const rowData = useMemo(() => {
+    switch (viewMode) {
+      case 'errors':
+        return data.rows.filter((_, index) =>
           sheetValidationErrors.some((error) => error.rowIndex === index)
-      ),
-    [data, onlyShowErrors, sheetValidationErrors]
-  );
+        );
+      case 'valid':
+        return data.rows.filter(
+          (_, index) =>
+            !sheetValidationErrors.some((error) => error.rowIndex === index)
+        );
+      case 'all':
+      default:
+        return data.rows;
+    }
+  }, [data, viewMode, sheetValidationErrors]);
 
   const columns = useMemo(
     () =>
@@ -98,23 +140,18 @@ export default function SheetDataEditor({
     <div>
       <div className="my-5 flex items-center">
         <div>
-          <Checkbox
-            id={`Only show errors checkbox for ${sheetDefinition.id}`}
-            checked={onlyShowErrors}
-            setChecked={(checked) => {
-              setSelectedRows([]);
-              setOnlyShowErrors(checked);
-            }}
-            label={t('sheet.onlyShowErrorsCheckboxLabel')}
-          />
+          <ButtonGroup activeButton={viewMode} buttons={viewModeButtons} />
         </div>
 
-        {selectedRows.length > 0 && (
-          <TrashIcon
-            className="ml-16 h-6 w-6 cursor-pointer"
-            onClick={() => setRemoveConfirmationModalOpen(true)}
-          />
-        )}
+        {/* TODO: Add tooltip when disabled */}
+        <TrashIcon
+          className={`ml-8 h-6 w-6 cursor-pointer ${
+            selectedRows.length > 0
+              ? ''
+              : 'pointer-events-none cursor-not-allowed opacity-50'
+          }`}
+          onClick={() => setRemoveConfirmationModalOpen(true)}
+        />
       </div>
 
       <SheetDataEditorTable

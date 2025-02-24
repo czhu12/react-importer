@@ -53,3 +53,5 @@ export interface SheetState {
   sheetId: string;
   rows: SheetRow[]; // key being column id
 }
+
+export type SheetViewMode = 'all' | 'valid' | 'errors';

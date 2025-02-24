@@ -16,7 +16,7 @@ export default function SheetDataEditorHeader({ column }: Props) {
       title={column.isReadOnly ? t('sheet.readOnly') : undefined}
     >
       {column.isReadOnly && (
-        <div className="relative h-5 w-5">
+        <div className="relative mr-3 h-5 w-5">
           <XMarkIcon className="absolute top-0 left-0 h-5 w-5 text-gray-400" />
 
           <PencilIcon className="absolute top-0 left-0 h-5 w-5 text-gray-500" />
