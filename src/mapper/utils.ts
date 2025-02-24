@@ -81,7 +81,7 @@ export function calculateNewMappingsForCsvColumnMapingChanged(
   newCsvColumnMaping: MapperOptionValue | null
 ): ColumnMapping[] {
   if (newCsvColumnMaping == null) {
-    return currentMapping;
+    return currentMapping.filter((m) => m.csvColumnName !== csvColumnName);
   }
 
   // Make sure we don't allow dupplicate mappings for the same sheet column

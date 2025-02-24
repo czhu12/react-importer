@@ -4,8 +4,11 @@ import {
   ListboxOption,
   ListboxOptions,
 } from '@headlessui/react';
-import { ChevronUpDownIcon } from '@heroicons/react/16/solid';
-import { CheckIcon } from '@heroicons/react/20/solid';
+import {
+  ChevronUpDownIcon,
+  XMarkIcon,
+  CheckIcon,
+} from '@heroicons/react/20/solid';
 
 export interface SelectOption<T> {
   label: string;
@@ -19,6 +22,7 @@ interface Props<T> {
   onChange: (value: T[] | T | null) => void;
   multiple?: boolean;
   compareFunction?: (a: T, b: T) => boolean;
+  clearable?: boolean;
 }
 
 export default function Select<T>({
@@ -27,9 +31,8 @@ export default function Select<T>({
   onChange,
   multiple = false,
   compareFunction = (a, b) => a === b,
+  clearable = false,
 }: Props<T>) {
-  // TODO: Add support for clearable and searchable
-
   const isSelected = (valueToCheck: T) => {
     if (multiple && Array.isArray(value)) {
       return value.some((selected) => compareFunction(selected, valueToCheck));
@@ -46,6 +49,14 @@ export default function Select<T>({
     }
   };
 
+  const clear = () => {
+    if (multiple) {
+      onChange([]);
+    } else {
+      onChange(null);
+    }
+  };
+
   const selectedOptions = options.filter((option) => isSelected(option.value));
 
   return (
@@ -57,6 +68,22 @@ export default function Select<T>({
               ? selectedOptions.map((o) => o.label).join(', ')
               : 'Select an option'}
           </span>
+
+          {clearable && selectedOptions.length > 0 && (
+            <span
+              onClick={(e) => {
+                e.stopPropagation();
+                clear();
+              }}
+              className="absolute inset-y-0 right-8 flex cursor-pointer items-center pr-2"
+            >
+              <XMarkIcon
+                className="h-5 w-5 text-gray-500 hover:text-gray-700"
+                aria-hidden="true"
+              />
+            </span>
+          )}
+
           <ChevronUpDownIcon
             aria-hidden="true"
             className="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4"
@@ -81,7 +108,7 @@ export default function Select<T>({
 
               {isSelected(option.value) && (
                 <span className="text-primary absolute inset-y-0 right-0 flex items-center pr-4 group-data-focus:text-white">
-                  <CheckIcon aria-hidden="true" className="size-5" />
+                  <CheckIcon aria-hidden="true" className="h-5 w-5" />
                 </span>
               )}
             </ListboxOption>
