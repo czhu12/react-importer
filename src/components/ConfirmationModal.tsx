@@ -18,6 +18,7 @@ interface Props {
   title: string;
   subTitle?: string;
   confirmationText?: string;
+  cancelText?: string;
   onConfirm: () => void;
   variant?: VariantType;
 }
@@ -28,6 +29,7 @@ export default function ConfirmationModal({
   title,
   subTitle,
   confirmationText,
+  cancelText,
   onConfirm,
   variant = 'default',
 }: Props) {
@@ -108,7 +110,7 @@ export default function ConfirmationModal({
                   data-autofocus
                   onClick={() => setOpen(false)}
                 >
-                  {t('components.confirmationModal.cancel')}
+                  {cancelText ?? t('components.confirmationModal.cancel')}
                 </Button>
               </div>
             </div>

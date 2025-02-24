@@ -7,26 +7,25 @@ interface Props {
   csvHeader: string;
   mappingSelectionOptions: MapperOption[];
   examples: ImporterOutputFieldType[];
-  currentMappings: ColumnMapping[];
-  setMappings: (mappings: MapperOptionValue[] | null) => void;
+  currentMapping: ColumnMapping | null;
+  setMapping: (mappings: MapperOptionValue | null) => void;
 }
 
 export default function HeaderMapperRow({
   mappingSelectionOptions,
   csvHeader,
   examples,
-  currentMappings,
-  setMappings,
+  currentMapping,
+  setMapping,
 }: Props) {
-  const currentHeaderOptions = mappingSelectionOptions
-    .filter((option) =>
-      currentMappings.some(
-        (mapping) =>
-          mapping.sheetId === option.value.sheetId &&
-          mapping.sheetColumnId === option.value.sheetColumnId
-      )
-    )
-    .map((option) => option.value);
+  const currentHeaderOption =
+    currentMapping == null
+      ? null
+      : (mappingSelectionOptions.find(
+          (option) =>
+            option.value.sheetId === currentMapping.sheetId &&
+            option.value.sheetColumnId === currentMapping.sheetColumnId
+        )?.value ?? null);
 
   return (
     <div className="my-5">
@@ -35,8 +34,8 @@ export default function HeaderMapperRow({
           mappingSelectionOptions={mappingSelectionOptions}
           csvHeader={csvHeader}
           examples={examples}
-          currentMappings={currentHeaderOptions}
-          setMappings={setMappings}
+          currentMapping={currentHeaderOption}
+          setMapping={setMapping}
         />
       </Card>
     </div>
