@@ -12,11 +12,12 @@ import {
   ImporterValidationError,
   RemoveRowsPayload,
 } from '../../types';
-import { ConfirmationModal } from '../../components';
+import { ConfirmationModal, ButtonGroup } from '../../components';
 import SheetDataEditorTable from './SheetDataEditorTable';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from '../../i18';
 import SheetDataEditorHeader from './SheetDataEditorHeader';
+import { Button } from '../../components/ButtonGroup';
 
 const columnHelper = createColumnHelper<SheetRow>();
 
@@ -43,6 +44,36 @@ export default function SheetDataEditor({
   const [viewMode, setViewMode] = useState<SheetViewMode>('all');
   const [removeConfirmationModalOpen, setRemoveConfirmationModalOpen] =
     useState(false);
+
+  const viewModeButtons: Button[] = [
+    {
+      value: 'all',
+      label: 'sheet.all',
+      onClick: () => {
+        setSelectedRows([]);
+        setViewMode('all');
+      },
+      variant: 'default',
+    },
+    {
+      value: 'valid',
+      label: 'sheet.valid',
+      onClick: () => {
+        setSelectedRows([]);
+        setViewMode('valid');
+      },
+      variant: 'default',
+    },
+    {
+      value: 'errors',
+      label: 'sheet.invalid',
+      onClick: () => {
+        setSelectedRows([]);
+        setViewMode('errors');
+      },
+      variant: 'danger',
+    },
+  ];
 
   useEffect(() => {
     setSelectedRows([]); // On changing sheets
@@ -106,44 +137,7 @@ export default function SheetDataEditor({
     <div>
       <div className="my-5 flex items-center">
         <div>
-          <span className="isolate inline-flex rounded-md shadow-xs">
-            <button
-              type="button"
-              className={`relative inline-flex cursor-pointer items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-10 ${
-                viewMode === 'all' ? '!bg-gray-900 text-white' : ''
-              }`}
-              onClick={() => {
-                setSelectedRows([]);
-                setViewMode('all');
-              }}
-            >
-              {t('sheet.all')}
-            </button>
-            <button
-              type="button"
-              className={`relative -ml-px inline-flex cursor-pointer items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-10 ${
-                viewMode === 'valid' ? '!bg-gray-900 text-white' : ''
-              }`}
-              onClick={() => {
-                setSelectedRows([]);
-                setViewMode('valid');
-              }}
-            >
-              {t('sheet.valid')}
-            </button>
-            <button
-              type="button"
-              className={`text-danger relative -ml-px inline-flex cursor-pointer items-center rounded-r-md bg-white px-3 py-2 text-sm font-semibold ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-10 ${
-                viewMode === 'errors' ? '!bg-danger text-white' : ''
-              }`}
-              onClick={() => {
-                setSelectedRows([]);
-                setViewMode('errors');
-              }}
-            >
-              {t('sheet.invalid')}
-            </button>
-          </span>
+          <ButtonGroup activeButton={viewMode} buttons={viewModeButtons} />
         </div>
 
         {/* TODO: Add tooltip when disabled */}
