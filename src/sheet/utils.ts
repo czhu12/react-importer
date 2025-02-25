@@ -102,7 +102,7 @@ export function useFilteredRowData(
     if (searchPhrase.trim() !== '') {
       rows = rows.filter((row) =>
         Object.values(row).some((cellValue) =>
-          normalizeString(cellValue).includes(normalizeString(searchPhrase))
+          normalizeString(cellValue)?.includes(normalizeString(searchPhrase)!)
         )
       );
     }
