@@ -43,7 +43,8 @@
     "editTooltip": "Double-cliquez pour modifier",
     "all": "Toutes",
     "valid": "Valides",
-    "invalid": "Invalides"
+    "invalid": "Invalides",
+    "removeRowsTooltip": "Veuillez sélectionner au moins un enregistrement avant de le supprimer"
   },
   "validators": {
     "includes": "La valeur n'est pas dans la liste des valeurs autorisées",

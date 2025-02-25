@@ -43,7 +43,8 @@
     "editTooltip": "Double click to edit",
     "all": "All",
     "valid": "Valid",
-    "invalid": "Invalid"
+    "invalid": "Invalid",
+    "removeRowsTooltip": "Please select at least one record in order to delete it"
   },
   "validators": {
     "includes": "Value is not in the list of allowed values",

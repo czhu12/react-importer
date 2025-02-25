@@ -4,7 +4,7 @@ import {
   SheetColumnDefinition,
   SheetState,
 } from '../../types';
-import { Select, Tooltip } from '../../components';
+import { Select, TableTooltip } from '../../components';
 import { extractReferenceColumnPossibleValues } from '../utils';
 import { useTranslations } from '../../i18';
 
@@ -52,7 +52,7 @@ export default function SheetDataEditorCell({
 
   if (!editMode) {
     return (
-      <Tooltip
+      <TableTooltip
         variant={errorsText ? 'error' : 'info'}
         tooltipText={
           errorsText ? errorsText : readOnly ? t('sheet.readOnly') : ''
@@ -64,7 +64,7 @@ export default function SheetDataEditorCell({
         >
           {nonEmptyValue}
         </div>
-      </Tooltip>
+      </TableTooltip>
     );
   }
 

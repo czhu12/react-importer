@@ -16,6 +16,7 @@ import {
   ConfirmationModal,
   ButtonGroup,
   ButtonGroupType,
+  Tooltip,
 } from '../../components';
 import SheetDataEditorTable from './SheetDataEditorTable';
 import {
@@ -149,17 +150,21 @@ export default function SheetDataEditor({
   return (
     <div>
       <div className="my-5 flex items-center">
-        <div>
+        <div className="mr-8">
           <ButtonGroup activeButton={viewMode} buttons={viewModeButtons} />
         </div>
 
-        {/* TODO: Add tooltip when disabled */}
-        <TrashIcon
-          className={`ml-8 h-6 w-6 ${
-            selectedRows.length > 0 ? 'cursor-pointer' : disabledButtonClasses
-          }`}
-          onClick={() => setRemoveConfirmationModalOpen(true)}
-        />
+        <div className="group relative">
+          <TrashIcon
+            className={`m-2 h-6 w-6 ${
+              selectedRows.length > 0 ? 'cursor-pointer' : disabledButtonClasses
+            }`}
+            onClick={() => setRemoveConfirmationModalOpen(true)}
+          />
+          {selectedRows.length === 0 && (
+            <Tooltip tooltipText={t('sheet.removeRowsTooltip')} />
+          )}
+        </div>
 
         <PlusIcon
           className="ml-5 h-6 w-6 cursor-pointer"
