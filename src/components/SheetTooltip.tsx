@@ -41,7 +41,7 @@ const tooltipWrapperBaseClasses = cva('group relative h-full w-full', {
   },
 });
 
-export default function TableTooltip({
+export default function SheetTooltip({
   variant,
   children,
   tooltipText,
