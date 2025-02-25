@@ -11,6 +11,7 @@ import {
   TrashIcon,
   PlusIcon,
   ArrowDownTrayIcon,
+  MagnifyingGlassIcon,
 } from '@heroicons/react/24/outline';
 import { useTranslations } from '../../i18';
 import { SheetDefinition, SheetRow, SheetViewMode } from '../types';
@@ -40,7 +41,6 @@ export default function SheetDataEditorActions({
   selectedRows,
   setSelectedRows,
   viewMode,
-
   setViewMode,
   searchPhrase,
   setSearchPhrase,
@@ -133,6 +133,7 @@ export default function SheetDataEditorActions({
         value={searchPhrase}
         onChange={setSearchPhrase}
         placeholder={t('sheet.search')}
+        iconBuilder={(props) => <MagnifyingGlassIcon {...props} />}
       />
 
       {/* TODO: Add tooltip when disabled */}
