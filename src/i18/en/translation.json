@@ -49,9 +49,9 @@
     "all": "All",
     "valid": "Valid",
     "invalid": "Invalid",
-    "removeRowsTooltip": "Please select at least one record in order to delete it",
     "filterByError": "Filter by error",
-    "search": "Search"
+    "search": "Search",
+    "removeRowsTooltip": "Please select at least one record in order to delete it"
   },
   "validators": {
     "includes": "Value is not in the list of allowed values",

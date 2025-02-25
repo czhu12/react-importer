@@ -10,7 +10,7 @@ interface Props {
 }
 
 const tooltipBaseClasses = cva(
-  'bg-gray-50 text-gray-900 absolute outline outline-t-0 top-full w-full whitespace-normal z-20 mb-2 hidden px-2 py-4 text-xs group-focus-within:block group-hover:block',
+  'bg-gray-50 text-gray-900 absolute outline top-full w-full whitespace-normal z-20 mb-2 hidden px-2 py-4 text-xs group-focus-within:block group-hover:block',
   {
     variants: {
       variant: {
@@ -31,7 +31,7 @@ const tooltipWrapperBaseClasses = cva('group relative h-full w-full', {
       info: 'focus-within:outline-gray-500 hover:outline-gray-500',
     },
     withOutline: {
-      true: 'focus-within:outline focus-within:outline-b-0  hover:outline hover:outline-b-0',
+      true: 'focus-within:outline hover:outline hover:z-20 focus-within:z-20',
       false: '',
     },
   },
