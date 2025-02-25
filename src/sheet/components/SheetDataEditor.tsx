@@ -89,6 +89,22 @@ export default function SheetDataEditor({
     allData,
   ]);
 
+  const rowValidationSummary = useMemo(() => {
+    const allRows = data.rows;
+    const validRows = allRows.filter(
+      (_, index) =>
+        !sheetValidationErrors.some((error) => error.rowIndex === index)
+    );
+    const invalidRows = allRows.filter((_, index) =>
+      sheetValidationErrors.some((error) => error.rowIndex === index)
+    );
+    return {
+      all: allRows.length,
+      valid: validRows.length,
+      errors: invalidRows.length,
+    };
+  }, [data, sheetValidationErrors]);
+
   const columns = useMemo(
     () =>
       sheetDefinition.columns.map((column) =>
@@ -134,6 +150,7 @@ export default function SheetDataEditor({
         removeRows={removeRows}
         addEmptyRow={addEmptyRow}
         sheetValidationErrors={sheetValidationErrors}
+        rowValidationSummary={rowValidationSummary}
       />
 
       <SheetDataEditorTable

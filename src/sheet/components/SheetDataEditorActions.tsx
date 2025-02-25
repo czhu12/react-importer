@@ -28,6 +28,7 @@ interface Props {
   removeRows: (payload: RemoveRowsPayload) => void;
   addEmptyRow: () => void;
   sheetValidationErrors: ImporterValidationError[];
+  rowValidationSummary: Record<SheetViewMode, number>;
 }
 
 export default function SheetDataEditorActions({
@@ -42,6 +43,7 @@ export default function SheetDataEditorActions({
   removeRows,
   addEmptyRow,
   sheetValidationErrors,
+  rowValidationSummary,
 }: Props) {
   const { t } = useTranslations();
 
@@ -83,7 +85,7 @@ export default function SheetDataEditorActions({
   const viewModeButtons: ButtonGroupType[] = [
     {
       value: 'all',
-      label: t('sheet.all'),
+      label: t('sheet.all') + ` (${rowValidationSummary.all})`,
       onClick: () => {
         setSelectedRows([]);
         setViewMode('all');
@@ -92,7 +94,7 @@ export default function SheetDataEditorActions({
     },
     {
       value: 'valid',
-      label: t('sheet.valid'),
+      label: t('sheet.valid') + ` (${rowValidationSummary.valid})`,
       onClick: () => {
         setSelectedRows([]);
         setViewMode('valid');
@@ -101,7 +103,7 @@ export default function SheetDataEditorActions({
     },
     {
       value: 'errors',
-      label: t('sheet.invalid'),
+      label: t('sheet.invalid') + ` (${rowValidationSummary.errors})`,
       onClick: () => {
         setSelectedRows([]);
         setViewMode('errors');
