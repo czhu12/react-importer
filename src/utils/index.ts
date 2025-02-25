@@ -13,3 +13,15 @@ export const filterEmptyRows = (state: SheetState) => {
 export const isEmptyCell = (value: any) => {
   return isUndefinedOrNull(value) || value === '';
 };
+
+export const removeDuplicates = (array: any[]) => {
+  return [...new Set(array)];
+};
+
+export function normalizeString(str: string | undefined | null) {
+  if (str == null) {
+    return null;
+  }
+
+  return str.toLowerCase().replace('_', '').replace(' ', '');
+}

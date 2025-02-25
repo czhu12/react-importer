@@ -12,21 +12,10 @@ import {
   ImporterValidationError,
   RemoveRowsPayload,
 } from '../../types';
-import {
-  ConfirmationModal,
-  ButtonGroup,
-  ButtonGroupType,
-  Tooltip,
-} from '../../components';
 import SheetDataEditorTable from './SheetDataEditorTable';
-import {
-  TrashIcon,
-  PlusIcon,
-  ArrowDownTrayIcon,
-} from '@heroicons/react/24/outline';
-import { useTranslations } from '../../i18';
 import SheetDataEditorHeader from './SheetDataEditorHeader';
-import { downloadSheetAsCsv } from '../utils';
+import SheetDataEditorActions from './SheetDataEditorActions';
+import { useFilteredRowData } from '../utils';
 
 const columnHelper = createColumnHelper<SheetRow>();
 
@@ -49,67 +38,43 @@ export default function SheetDataEditor({
   removeRows,
   addEmptyRow,
 }: Props) {
-  const { t } = useTranslations();
-
   const [selectedRows, setSelectedRows] = useState<SheetRow[]>([]);
   const [viewMode, setViewMode] = useState<SheetViewMode>('all');
-  const [removeConfirmationModalOpen, setRemoveConfirmationModalOpen] =
-    useState(false);
-
-  const disabledButtonClasses =
-    'pointer-events-none cursor-not-allowed opacity-50';
-
-  const viewModeButtons: ButtonGroupType[] = [
-    {
-      value: 'all',
-      label: t('sheet.all'),
-      onClick: () => {
-        setSelectedRows([]);
-        setViewMode('all');
-      },
-      variant: 'default',
-    },
-    {
-      value: 'valid',
-      label: t('sheet.valid'),
-      onClick: () => {
-        setSelectedRows([]);
-        setViewMode('valid');
-      },
-      variant: 'default',
-    },
-    {
-      value: 'errors',
-      label: t('sheet.invalid'),
-      onClick: () => {
-        setSelectedRows([]);
-        setViewMode('errors');
-      },
-      variant: 'danger',
-    },
-  ];
+  const [searchPhrase, setSearchPhrase] = useState('');
+  const [errorColumnFilter, setErrorColumnFilter] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     setSelectedRows([]); // On changing sheets
     setViewMode('all');
   }, [sheetDefinition]);
 
-  const rowData = useMemo(() => {
-    switch (viewMode) {
-      case 'errors':
-        return data.rows.filter((_, index) =>
-          sheetValidationErrors.some((error) => error.rowIndex === index)
-        );
-      case 'valid':
-        return data.rows.filter(
-          (_, index) =>
-            !sheetValidationErrors.some((error) => error.rowIndex === index)
-        );
-      case 'all':
-      default:
-        return data.rows;
-    }
-  }, [data, viewMode, sheetValidationErrors]);
+  const rowData = useFilteredRowData(
+    data,
+    allData,
+    viewMode,
+    sheetValidationErrors,
+    errorColumnFilter,
+    sheetDefinition,
+    searchPhrase
+  );
+
+  const rowValidationSummary = useMemo(() => {
+    const allRows = data.rows;
+    const validRows = allRows.filter(
+      (_, index) =>
+        !sheetValidationErrors.some((error) => error.rowIndex === index)
+    );
+    const invalidRows = allRows.filter((_, index) =>
+      sheetValidationErrors.some((error) => error.rowIndex === index)
+    );
+    return {
+      all: allRows.length,
+      valid: validRows.length,
+      errors: invalidRows.length,
+    };
+  }, [data, sheetValidationErrors]);
 
   const columns = useMemo(
     () =>
@@ -126,11 +91,6 @@ export default function SheetDataEditor({
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
-  function onRemoveRows() {
-    removeRows({ rows: selectedRows, sheetId: sheetDefinition.id });
-    setSelectedRows([]);
-  }
 
   function onCellValueChanged(
     rowIndex: number,
@@ -149,35 +109,22 @@ export default function SheetDataEditor({
 
   return (
     <div>
-      <div className="my-5 flex items-center">
-        <div className="mr-8">
-          <ButtonGroup activeButton={viewMode} buttons={viewModeButtons} />
-        </div>
-
-        <div className="group relative">
-          <TrashIcon
-            className={`m-2 h-6 w-6 ${
-              selectedRows.length > 0 ? 'cursor-pointer' : disabledButtonClasses
-            }`}
-            onClick={() => setRemoveConfirmationModalOpen(true)}
-          />
-          {selectedRows.length === 0 && (
-            <Tooltip tooltipText={t('sheet.removeRowsTooltip')} />
-          )}
-        </div>
-
-        <PlusIcon
-          className="ml-5 h-6 w-6 cursor-pointer"
-          onClick={addEmptyRow}
-        />
-
-        <ArrowDownTrayIcon
-          className={`ml-5 h-6 w-6 ${
-            data.rows.length > 0 ? 'cursor-pointer' : disabledButtonClasses
-          }`}
-          onClick={() => downloadSheetAsCsv(sheetDefinition, data)}
-        />
-      </div>
+      <SheetDataEditorActions
+        sheetDefinition={sheetDefinition}
+        rowData={rowData}
+        selectedRows={selectedRows}
+        setSelectedRows={setSelectedRows}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
+        searchPhrase={searchPhrase}
+        setSearchPhrase={setSearchPhrase}
+        errorColumnFilter={errorColumnFilter}
+        setErrorColumnFilter={setErrorColumnFilter}
+        removeRows={removeRows}
+        addEmptyRow={addEmptyRow}
+        sheetValidationErrors={sheetValidationErrors}
+        rowValidationSummary={rowValidationSummary}
+      />
 
       <SheetDataEditorTable
         table={table}
@@ -188,18 +135,6 @@ export default function SheetDataEditor({
         onCellValueChanged={onCellValueChanged}
         selectedRows={selectedRows}
         setSelectedRows={setSelectedRows}
-      />
-
-      <ConfirmationModal
-        open={removeConfirmationModalOpen}
-        setOpen={setRemoveConfirmationModalOpen}
-        onConfirm={onRemoveRows}
-        title={t('sheet.removeConfirmationModalTitle')}
-        confirmationText={t('sheet.removeConfirmationModalConfirmationText')}
-        subTitle={t('sheet.removeConfirmationModalSubTitle', {
-          rowsCount: selectedRows.length,
-        })}
-        variant="danger"
       />
     </div>
   );
