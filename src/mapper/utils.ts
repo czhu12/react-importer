@@ -117,12 +117,11 @@ export function getMappingAvailableSelectOptions(
           sheetId: sheetDefinition.id,
           sheetColumnId: column.id,
         },
-        used:
-          currentMapping.some(
-            (mapping) =>
-              mapping.sheetId === sheetDefinition.id &&
-              mapping.sheetColumnId === column.id
-          ) ?? false,
+        used: currentMapping.some(
+          (mapping) =>
+            mapping.sheetId === sheetDefinition.id &&
+            mapping.sheetColumnId === column.id
+        ),
       }))
   );
 }
