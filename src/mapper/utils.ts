@@ -7,6 +7,7 @@ import {
 } from '../types';
 import { fieldIsRequired } from '../validators';
 import { useTranslations } from '../i18';
+import { normalizeString } from '../utils';
 
 function removeMappingDuplicates(mappings: ColumnMapping[]): ColumnMapping[] {
   const uniqueMap = new Map<string, ColumnMapping>();
@@ -18,10 +19,6 @@ function removeMappingDuplicates(mappings: ColumnMapping[]): ColumnMapping[] {
   });
 
   return Array.from(uniqueMap.values());
-}
-
-function normalizeString(str: string) {
-  return str.toLowerCase().replace('_', '').replace(' ', '');
 }
 
 function buildSheetSuggestedHeaderMappings(
