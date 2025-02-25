@@ -3,6 +3,9 @@
     "confirmationModal": {
       "defaultConfirm": "Confirm",
       "cancel": "Cancel"
+    },
+    "select": {
+      "optionPlaceholder": "Select an option"
     }
   },
   "importer": {
@@ -32,7 +35,9 @@
     "numberRowsImported": "{{count}} Rows Imported",
     "back": "Back",
     "confirm": "Confirm",
-    "noData": "No Data"
+    "noData": "No Data",
+    "used": "Used",
+    "unused": "Unused"
   },
   "sheet": {
     "validationPassed": "All rows pass validation!",

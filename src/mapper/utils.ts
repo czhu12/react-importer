@@ -2,11 +2,11 @@ import { NUMBER_OF_EXAMPLES_IN_MAPPING } from '../constants';
 import {
   ColumnMapping,
   CSVParsedData,
-  MapperOption,
   MapperOptionValue,
   SheetDefinition,
 } from '../types';
 import { fieldIsRequired } from '../validators';
+import { useTranslations } from '../i18';
 
 function removeMappingDuplicates(mappings: ColumnMapping[]): ColumnMapping[] {
   const uniqueMap = new Map<string, ColumnMapping>();
@@ -105,10 +105,13 @@ export function calculateMappingExamples(
     .slice(0, NUMBER_OF_EXAMPLES_IN_MAPPING);
 }
 
-export function getMappingAvailableSelectOptions(
-  sheetDefinitions: SheetDefinition[]
+export function useMappingAvailableSelectOptions(
+  sheetDefinitions: SheetDefinition[],
+  currentMapping: ColumnMapping[]
 ) {
-  return sheetDefinitions.flatMap((sheetDefinition) =>
+  const { t } = useTranslations();
+
+  const options = sheetDefinitions.flatMap((sheetDefinition) =>
     sheetDefinition.columns
       .filter((column) => column.type !== 'reference') // Reference columns would be mapped automatically
       .map((column) => ({
@@ -117,22 +120,32 @@ export function getMappingAvailableSelectOptions(
           sheetId: sheetDefinition.id,
           sheetColumnId: column.id,
         },
+        group: currentMapping.some(
+          (mapping) =>
+            mapping.sheetId === sheetDefinition.id &&
+            mapping.sheetColumnId === column.id
+        )
+          ? t('mapper.used')
+          : t('mapper.unused'),
       }))
   );
+
+  return options.sort((a, b) => sortByGroupAndLabel(a, b, t('mapper.unused')));
 }
 
-export function filterAlreadyUsedMappingOptions(
-  mappingOptions: MapperOption[],
-  currentMapping: ColumnMapping[]
+function sortByGroupAndLabel(
+  a: { label: string; group: string },
+  b: { label: string; group: string },
+  unused: string
 ) {
-  return mappingOptions.filter(
-    (option) =>
-      !currentMapping.some(
-        (mapping) =>
-          mapping.sheetId === option.value.sheetId &&
-          mapping.sheetColumnId === option.value.sheetColumnId
-      )
-  );
+  if (a.group === unused && b.group !== unused) {
+    return -1;
+  }
+  if (a.group !== unused && b.group === unused) {
+    return 1;
+  }
+
+  return a.label.localeCompare(b.label);
 }
 
 export function areAllRequiredMappingsSet(
