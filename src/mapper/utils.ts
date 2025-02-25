@@ -2,7 +2,6 @@ import { NUMBER_OF_EXAMPLES_IN_MAPPING } from '../constants';
 import {
   ColumnMapping,
   CSVParsedData,
-  MapperOption,
   MapperOptionValue,
   SheetDefinition,
 } from '../types';
@@ -106,7 +105,8 @@ export function calculateMappingExamples(
 }
 
 export function getMappingAvailableSelectOptions(
-  sheetDefinitions: SheetDefinition[]
+  sheetDefinitions: SheetDefinition[],
+  currentMapping: ColumnMapping[]
 ) {
   return sheetDefinitions.flatMap((sheetDefinition) =>
     sheetDefinition.columns
@@ -117,34 +117,13 @@ export function getMappingAvailableSelectOptions(
           sheetId: sheetDefinition.id,
           sheetColumnId: column.id,
         },
+        used:
+          currentMapping.some(
+            (mapping) =>
+              mapping.sheetId === sheetDefinition.id &&
+              mapping.sheetColumnId === column.id
+          ) ?? false,
       }))
-  );
-}
-
-export function getUnusedMappingOptions(
-  mappingOptions: MapperOption[],
-  currentMapping: ColumnMapping[]
-) {
-  return mappingOptions.filter(
-    (option) =>
-      !currentMapping.some(
-        (mapping) =>
-          mapping.sheetId === option.value.sheetId &&
-          mapping.sheetColumnId === option.value.sheetColumnId
-      )
-  );
-}
-
-export function getUsedMappingOptions(
-  mappingOptions: MapperOption[],
-  currentMapping: ColumnMapping[]
-) {
-  return mappingOptions.filter((option) =>
-    currentMapping.some(
-      (mapping) =>
-        mapping.sheetId === option.value.sheetId &&
-        mapping.sheetColumnId === option.value.sheetColumnId
-    )
   );
 }
 

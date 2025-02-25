@@ -14,8 +14,6 @@ interface Props {
   currentMapping: MapperOptionValue | null;
   setMapping: (header: MapperOptionValue | null) => void;
   mappingSelectionOptions: MapperOption[];
-  usedMappingSelectionOptions: MapperOption[];
-  optionLabel?: string;
 }
 
 export default function HeaderMapperSelection({
@@ -24,8 +22,6 @@ export default function HeaderMapperSelection({
   setMapping,
   currentMapping,
   mappingSelectionOptions,
-  usedMappingSelectionOptions,
-  optionLabel,
 }: Props) {
   const { t } = useTranslations();
 
@@ -53,9 +49,7 @@ export default function HeaderMapperSelection({
             }}
             value={currentMapping}
             options={mappingSelectionOptions}
-            usedOptions={usedMappingSelectionOptions}
             onChange={(mapping) => setMapping(mapping as ColumnMapping | null)}
-            optionLabel={optionLabel}
           />
         </div>
       </div>

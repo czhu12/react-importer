@@ -15,17 +15,16 @@ export interface SelectOption<T> {
   label: string;
   value: T;
   icon?: React.ReactNode;
+  used?: boolean;
 }
 
 interface Props<T> {
   value: T[] | T | null;
   options: SelectOption<T>[];
-  usedOptions?: SelectOption<T>[];
   onChange: (value: T[] | T | null) => void;
   multiple?: boolean;
   compareFunction?: (a: T, b: T) => boolean;
   clearable?: boolean;
-  optionLabel?: string;
 }
 
 export default function Select<T>({
@@ -35,8 +34,6 @@ export default function Select<T>({
   multiple = false,
   compareFunction = (a, b) => a === b,
   clearable = false,
-  usedOptions,
-  optionLabel,
 }: Props<T>) {
   const { t } = useTranslations();
 
@@ -64,9 +61,22 @@ export default function Select<T>({
     }
   };
 
-  const selectedOptions = [...options, ...(usedOptions || [])].filter(
-    (option) => isSelected(option.value)
-  );
+  const selectedOptions = options.filter((option) => isSelected(option.value));
+
+  const hasUsedProperty = options.some((option) => option.used !== undefined);
+
+  const groupedOptions = hasUsedProperty
+    ? [
+        {
+          label: t('mapper.unusedOptions'),
+          items: options.filter((option) => option.used === false),
+        },
+        {
+          label: t('mapper.usedOptions'),
+          items: options.filter((option) => option.used === true),
+        },
+      ].filter((group) => group.items.length > 0)
+    : [{ label: null, items: options }];
 
   return (
     <Listbox value={value} onChange={handleChange} multiple={multiple}>
@@ -103,36 +113,14 @@ export default function Select<T>({
           transition
           className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
         >
-          {optionLabel && options.length > 0 && (
-            <div className="py-2 pr-9 pl-3 text-gray-400">
-              {optionLabel.toUpperCase()}
-            </div>
-          )}
-          {options.map((option) => (
-            <ListboxOption
-              key={option.value as string}
-              value={option.value}
-              className="group data-focus:bg-primary relative flex cursor-default items-center py-2 pr-9 pl-3 text-gray-900 select-none data-focus:text-white data-focus:outline-hidden"
-            >
-              {option.icon}
-
-              <span className="block truncate font-normal group-data-selected:font-semibold">
-                {option.label}
-              </span>
-
-              {isSelected(option.value) && (
-                <span className="text-primary absolute inset-y-0 right-0 flex items-center pr-4 group-data-focus:text-white">
-                  <CheckIcon aria-hidden="true" className="h-5 w-5" />
-                </span>
+          {groupedOptions.map(({ label, items }) => (
+            <div key={label || 'all'}>
+              {label && (
+                <div className="py-2 pr-9 pl-3 text-gray-400 uppercase">
+                  {label}
+                </div>
               )}
-            </ListboxOption>
-          ))}
-          {usedOptions && (
-            <>
-              <div className="py-2 pr-9 pl-3 text-gray-400">
-                {t('mapper.usedOptions').toUpperCase()}
-              </div>
-              {usedOptions?.map((option) => (
+              {items.map((option) => (
                 <ListboxOption
                   key={option.value as string}
                   value={option.value}
@@ -151,8 +139,8 @@ export default function Select<T>({
                   )}
                 </ListboxOption>
               ))}
-            </>
-          )}
+            </div>
+          ))}
         </ListboxOptions>
       </div>
     </Listbox>
