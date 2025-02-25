@@ -14,7 +14,7 @@ import {
 import { useTranslations } from '../../i18';
 import { SheetDefinition, SheetRow, SheetViewMode } from '../types';
 import { ImporterValidationError, RemoveRowsPayload } from '../../types';
-import { removeDupplicates } from '../../utils';
+import { removeDuplicates } from '../../utils';
 
 interface Props {
   sheetDefinition: SheetDefinition;
@@ -56,7 +56,7 @@ export default function SheetDataEditorActions({
       (c) => c.id === columnId
     );
 
-    const count = removeDupplicates(
+    const count = removeDuplicates(
       sheetValidationErrors
         .filter((error) => error.columnId === columnId)
         .map((row) => row.rowIndex)
@@ -68,7 +68,7 @@ export default function SheetDataEditorActions({
     };
   }
 
-  const filterByErrorOptions = removeDupplicates(
+  const filterByErrorOptions = removeDuplicates(
     sheetValidationErrors.map((error) => error.columnId)
   ).map((columnId) => errorFilterOption(columnId));
 

@@ -14,6 +14,6 @@ export const isEmptyCell = (value: any) => {
   return isUndefinedOrNull(value) || value === '';
 };
 
-export const removeDupplicates = (array: any[]) => {
+export const removeDuplicates = (array: any[]) => {
   return [...new Set(array)];
 };
