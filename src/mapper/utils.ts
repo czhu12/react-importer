@@ -111,7 +111,7 @@ export function useMappingAvailableSelectOptions(
 ) {
   const { t } = useTranslations();
 
-  return sheetDefinitions.flatMap((sheetDefinition) =>
+  const options = sheetDefinitions.flatMap((sheetDefinition) =>
     sheetDefinition.columns
       .filter((column) => column.type !== 'reference') // Reference columns would be mapped automatically
       .map((column) => ({
@@ -129,6 +129,19 @@ export function useMappingAvailableSelectOptions(
           : t('mapper.unused'),
       }))
   );
+
+  return options.sort((a, b) => sortByGroupAndLabel(a, b));
+}
+
+function sortByGroupAndLabel(
+  a: { label: string; group: string },
+  b: { label: string; group: string }
+) {
+  if (a.group === b.group) {
+    return a.label.localeCompare(b.label);
+  }
+
+  return a.group.localeCompare(b.group);
 }
 
 export function areAllRequiredMappingsSet(
