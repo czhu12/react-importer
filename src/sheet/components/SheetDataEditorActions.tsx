@@ -132,7 +132,7 @@ export default function SheetDataEditorActions({
       <Input
         value={searchPhrase}
         onChange={setSearchPhrase}
-        placeholder="Search"
+        placeholder={t('sheet.search')}
       />
 
       {/* TODO: Add tooltip when disabled */}

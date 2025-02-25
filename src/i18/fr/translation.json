@@ -49,7 +49,8 @@
     "all": "Toutes",
     "valid": "Valides",
     "invalid": "Invalides",
-    "filterByError": "Filtrer par erreur"
+    "filterByError": "Filtrer par erreur",
+    "search": "Recherche"
   },
   "validators": {
     "includes": "La valeur n'est pas dans la liste des valeurs autorisées",
