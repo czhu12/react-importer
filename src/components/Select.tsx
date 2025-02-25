@@ -85,7 +85,7 @@ export default function Select<T>({
           <span className="col-start-1 row-start-1 truncate pr-6">
             {selectedOptions.length > 0
               ? selectedOptions.map((o) => o.label).join(', ')
-              : 'Select an option'}
+              : t('components.select.optionPlaceholder')}
           </span>
 
           {clearable && selectedOptions.length > 0 && (

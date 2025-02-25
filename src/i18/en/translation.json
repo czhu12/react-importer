@@ -3,6 +3,9 @@
     "confirmationModal": {
       "defaultConfirm": "Confirm",
       "cancel": "Cancel"
+    },
+    "select": {
+      "optionPlaceholder": "Select an option"
     }
   },
   "importer": {
