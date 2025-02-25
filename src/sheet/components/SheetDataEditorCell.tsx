@@ -4,7 +4,7 @@ import {
   SheetColumnDefinition,
   SheetState,
 } from '../../types';
-import { Select, Tooltip } from '../../components';
+import { Input, Select, Tooltip } from '../../components';
 import { extractReferenceColumnPossibleValues } from '../utils';
 import { useTranslations } from '../../i18';
 
@@ -111,12 +111,11 @@ export default function SheetDataEditorCell({
   }
 
   return (
-    <input
-      ref={inputRef}
-      type="text"
+    <Input
+      classes="block w-full "
       value={value}
-      className="focus:outline-primary block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
-      onBlur={(e) => updateValue((e.target as HTMLInputElement)?.value ?? '')}
+      onBlur={updateValue}
+      ref={inputRef}
     />
   );
 }

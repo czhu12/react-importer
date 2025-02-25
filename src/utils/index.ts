@@ -17,3 +17,7 @@ export const isEmptyCell = (value: any) => {
 export const removeDuplicates = (array: any[]) => {
   return [...new Set(array)];
 };
+
+export function normalizeString(str: string) {
+  return str.toLowerCase().replace('_', '').replace(' ', '');
+}

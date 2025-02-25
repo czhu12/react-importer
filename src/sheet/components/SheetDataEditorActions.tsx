@@ -3,6 +3,7 @@ import {
   ButtonGroup,
   ButtonGroupType,
   ConfirmationModal,
+  Input,
   Select,
 } from '../../components';
 import { downloadSheetAsCsv } from '../utils';
@@ -23,6 +24,8 @@ interface Props {
   setSelectedRows: (rows: SheetRow[]) => void;
   viewMode: SheetViewMode;
   setViewMode: (mode: SheetViewMode) => void;
+  searchPhrase: string;
+  setSearchPhrase: (searchPhrase: string) => void;
   errorColumnFilter: string | null;
   setErrorColumnFilter: (mode: string | null) => void;
   removeRows: (payload: RemoveRowsPayload) => void;
@@ -37,9 +40,12 @@ export default function SheetDataEditorActions({
   selectedRows,
   setSelectedRows,
   viewMode,
+
+  setViewMode,
+  searchPhrase,
+  setSearchPhrase,
   errorColumnFilter,
   setErrorColumnFilter,
-  setViewMode,
   removeRows,
   addEmptyRow,
   sheetValidationErrors,
@@ -119,9 +125,15 @@ export default function SheetDataEditorActions({
 
   return (
     <div className="my-5 flex items-center">
-      <div>
+      <div className="mr-5">
         <ButtonGroup activeButton={viewMode} buttons={viewModeButtons} />
       </div>
+
+      <Input
+        value={searchPhrase}
+        onChange={setSearchPhrase}
+        placeholder="Search"
+      />
 
       {/* TODO: Add tooltip when disabled */}
       <TrashIcon

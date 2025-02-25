@@ -1,11 +1,14 @@
-import { isEmptyCell } from '../utils';
+import { isEmptyCell, normalizeString } from '../utils';
 import {
+  ImporterValidationError,
   SheetColumnReferenceDefinition,
   SheetDefinition,
   SheetRow,
   SheetState,
+  SheetViewMode,
 } from '../types';
 import { DOWNLOADED_CSV_SEPARATOR } from '../constants';
+import { useMemo } from 'preact/hooks';
 
 export function extractReferenceColumnPossibleValues(
   columnDefinition: SheetColumnReferenceDefinition,
@@ -55,4 +58,65 @@ export function findRowIndex(
   row: SheetRow
 ) {
   return allData.find((d) => d.sheetId === sheetId)!.rows.indexOf(row);
+}
+
+export function useFilteredRowData(
+  data: SheetState,
+  allData: SheetState[],
+  viewMode: SheetViewMode,
+  sheetValidationErrors: ImporterValidationError[],
+  errorColumnFilter: string | null,
+  sheetDefinition: SheetDefinition,
+  searchPhrase: string
+) {
+  const rowData = useMemo(() => {
+    let rows = data.rows;
+    switch (viewMode) {
+      case 'errors':
+        rows = data.rows.filter((_, index) =>
+          sheetValidationErrors.some((error) => error.rowIndex === index)
+        );
+        break;
+      case 'valid':
+        rows = data.rows.filter(
+          (_, index) =>
+            !sheetValidationErrors.some((error) => error.rowIndex === index)
+        );
+        break;
+      case 'all':
+      default:
+        rows = data.rows;
+    }
+
+    if (errorColumnFilter != null) {
+      rows = rows.filter((row) => {
+        const rowIndex = findRowIndex(allData, sheetDefinition.id, row);
+        const error = sheetValidationErrors.find(
+          (error) =>
+            error.rowIndex === rowIndex && error.columnId === errorColumnFilter
+        );
+        return error != null;
+      });
+    }
+
+    if (searchPhrase.trim() !== '') {
+      rows = rows.filter((row) =>
+        Object.values(row).some((cellValue) =>
+          normalizeString(cellValue).includes(normalizeString(searchPhrase))
+        )
+      );
+    }
+
+    return rows;
+  }, [
+    data,
+    viewMode,
+    sheetValidationErrors,
+    errorColumnFilter,
+    sheetDefinition.id,
+    allData,
+    searchPhrase,
+  ]);
+
+  return rowData;
 }
