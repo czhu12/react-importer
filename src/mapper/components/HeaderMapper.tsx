@@ -5,7 +5,7 @@ import {
   areAllRequiredMappingsSet,
   calculateMappingExamples,
   calculateNewMappingsForCsvColumnMapingChanged,
-  getMappingAvailableSelectOptions,
+  useMappingAvailableSelectOptions,
 } from '../utils';
 import HeaderMapperRow from './HeaderMapperRow';
 
@@ -31,9 +31,10 @@ export default function HeaderMapper({
   const data = parsed.data;
   const csvHeaders = parsed.meta.fields!; // TODO THIS BRANCH: Check why it can be undefined
 
-  const mappingSelectOptions = getMappingAvailableSelectOptions(
+  const mappingSelectOptions = useMappingAvailableSelectOptions(
     sheetDefinitions,
-    currentMapping
+    currentMapping,
+    t
   );
 
   const mapingsValid = areAllRequiredMappingsSet(

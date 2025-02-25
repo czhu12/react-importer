@@ -15,7 +15,7 @@ export interface SelectOption<T> {
   label: string;
   value: T;
   icon?: React.ReactNode;
-  used?: boolean;
+  group?: string;
 }
 
 interface Props<T> {
@@ -63,19 +63,20 @@ export default function Select<T>({
 
   const selectedOptions = options.filter((option) => isSelected(option.value));
 
-  const hasUsedProperty = options.some((option) => option.used !== undefined);
+  const hasGroupProperty = options.some((option) => option.group);
 
-  const groupedOptions = hasUsedProperty
-    ? [
-        {
-          label: t('mapper.unusedOptions'),
-          items: options.filter((option) => option.used === false),
-        },
-        {
-          label: t('mapper.usedOptions'),
-          items: options.filter((option) => option.used === true),
-        },
-      ].filter((group) => group.items.length > 0)
+  const groupedOptions = hasGroupProperty
+    ? Object.entries(
+        options.reduce((acc: Record<string, SelectOption<T>[]>, option) => {
+          const groupKey = option.group || 'ungrouped';
+          acc[groupKey] = acc[groupKey] || [];
+          acc[groupKey].push(option);
+          return acc;
+        }, {})
+      ).map(([group, items]) => ({
+        label: group,
+        items,
+      }))
     : [{ label: null, items: options }];
 
   return (

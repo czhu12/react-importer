@@ -36,8 +36,8 @@
     "back": "Back",
     "confirm": "Confirm",
     "noData": "No Data",
-    "unusedOptions": "Unused",
-    "usedOptions": "Used"
+    "used": "Used",
+    "unused": "Unused"
   },
   "sheet": {
     "validationPassed": "All rows pass validation!",

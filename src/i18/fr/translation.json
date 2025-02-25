@@ -36,8 +36,8 @@
     "back": "Retour",
     "confirm": "Confirmer",
     "noData": "Aucune donnée",
-    "unusedOptions": "Non utilisées",
-    "usedOptions": "Utilisées"
+    "unused": "Non utilisées",
+    "used": "Utilisées"
   },
   "sheet": {
     "validationPassed": "Toutes les lignes passent la validation !",

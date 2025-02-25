@@ -4,6 +4,7 @@ import {
   CSVParsedData,
   MapperOptionValue,
   SheetDefinition,
+  TranslationFunction,
 } from '../types';
 import { fieldIsRequired } from '../validators';
 
@@ -104,9 +105,10 @@ export function calculateMappingExamples(
     .slice(0, NUMBER_OF_EXAMPLES_IN_MAPPING);
 }
 
-export function getMappingAvailableSelectOptions(
+export function useMappingAvailableSelectOptions(
   sheetDefinitions: SheetDefinition[],
-  currentMapping: ColumnMapping[]
+  currentMapping: ColumnMapping[],
+  t: TranslationFunction
 ) {
   return sheetDefinitions.flatMap((sheetDefinition) =>
     sheetDefinition.columns
@@ -117,11 +119,13 @@ export function getMappingAvailableSelectOptions(
           sheetId: sheetDefinition.id,
           sheetColumnId: column.id,
         },
-        used: currentMapping.some(
+        group: currentMapping.some(
           (mapping) =>
             mapping.sheetId === sheetDefinition.id &&
             mapping.sheetColumnId === column.id
-        ),
+        )
+          ? t('mapper.used')
+          : t('mapper.unused'),
       }))
   );
 }
