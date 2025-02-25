@@ -130,18 +130,22 @@ export function useMappingAvailableSelectOptions(
       }))
   );
 
-  return options.sort((a, b) => sortByGroupAndLabel(a, b));
+  return options.sort((a, b) => sortByGroupAndLabel(a, b, t('mapper.unused')));
 }
 
 function sortByGroupAndLabel(
   a: { label: string; group: string },
-  b: { label: string; group: string }
+  b: { label: string; group: string },
+  unused: string
 ) {
-  if (a.group === b.group) {
-    return a.label.localeCompare(b.label);
+  if (a.group === unused && b.group !== unused) {
+    return -1;
+  }
+  if (a.group !== unused && b.group === unused) {
+    return 1;
   }
 
-  return a.group.localeCompare(b.group);
+  return a.label.localeCompare(b.label);
 }
 
 export function areAllRequiredMappingsSet(
