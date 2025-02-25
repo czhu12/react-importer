@@ -48,3 +48,11 @@ export function downloadSheetAsCsv(
   a.click();
   URL.revokeObjectURL(url);
 }
+
+export function findRowIndex(
+  allData: SheetState[],
+  sheetId: string,
+  row: SheetRow
+) {
+  return allData.find((d) => d.sheetId === sheetId)!.rows.indexOf(row);
+}

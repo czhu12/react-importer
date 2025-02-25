@@ -48,7 +48,8 @@
     "editTooltip": "Double-cliquez pour modifier",
     "all": "Toutes",
     "valid": "Valides",
-    "invalid": "Invalides"
+    "invalid": "Invalides",
+    "filterByError": "Filtrer par erreur"
   },
   "validators": {
     "includes": "La valeur n'est pas dans la liste des valeurs autorisées",
