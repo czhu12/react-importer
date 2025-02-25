@@ -121,7 +121,7 @@ export function getMappingAvailableSelectOptions(
   );
 }
 
-export function filterAlreadyUsedMappingOptions(
+export function getUnusedMappingOptions(
   mappingOptions: MapperOption[],
   currentMapping: ColumnMapping[]
 ) {
@@ -132,6 +132,19 @@ export function filterAlreadyUsedMappingOptions(
           mapping.sheetId === option.value.sheetId &&
           mapping.sheetColumnId === option.value.sheetColumnId
       )
+  );
+}
+
+export function getUsedMappingOptions(
+  mappingOptions: MapperOption[],
+  currentMapping: ColumnMapping[]
+) {
+  return mappingOptions.filter((option) =>
+    currentMapping.some(
+      (mapping) =>
+        mapping.sheetId === option.value.sheetId &&
+        mapping.sheetColumnId === option.value.sheetColumnId
+    )
   );
 }
 

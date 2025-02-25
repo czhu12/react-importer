@@ -32,7 +32,9 @@
     "numberRowsImported": "{{count}} Rows Imported",
     "back": "Back",
     "confirm": "Confirm",
-    "noData": "No Data"
+    "noData": "No Data",
+    "unusedOptions": "Unused",
+    "usedOptions": "Used"
   },
   "sheet": {
     "validationPassed": "All rows pass validation!",

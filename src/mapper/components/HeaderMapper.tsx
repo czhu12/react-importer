@@ -5,8 +5,9 @@ import {
   areAllRequiredMappingsSet,
   calculateMappingExamples,
   calculateNewMappingsForCsvColumnMapingChanged,
-  filterAlreadyUsedMappingOptions,
   getMappingAvailableSelectOptions,
+  getUsedMappingOptions,
+  getUnusedMappingOptions,
 } from '../utils';
 import HeaderMapperRow from './HeaderMapperRow';
 
@@ -35,7 +36,12 @@ export default function HeaderMapper({
   const allMapingSelectOptions =
     getMappingAvailableSelectOptions(sheetDefinitions);
 
-  const mappingSelectionOptions = filterAlreadyUsedMappingOptions(
+  const mappingSelectionOptions = getUnusedMappingOptions(
+    allMapingSelectOptions,
+    currentMapping
+  );
+
+  const usedMappingSelectionOptions = getUsedMappingOptions(
     allMapingSelectOptions,
     currentMapping
   );
@@ -58,18 +64,6 @@ export default function HeaderMapper({
           currentMapping.find((mapping) => mapping.csvColumnName === header) ??
           null;
 
-        const selectOptions = [...mappingSelectionOptions];
-        if (headerMapping) {
-          const currentMappingOption = allMapingSelectOptions.find(
-            (option) =>
-              option.value.sheetId === headerMapping.sheetId &&
-              option.value.sheetColumnId === headerMapping.sheetColumnId
-          );
-          if (currentMappingOption) {
-            selectOptions.push(currentMappingOption);
-          }
-        }
-
         return (
           <HeaderMapperRow
             key={columnIndex}
@@ -85,7 +79,9 @@ export default function HeaderMapper({
 
               onMappingsChanged(newMappings);
             }}
-            mappingSelectionOptions={selectOptions}
+            mappingSelectionOptions={mappingSelectionOptions}
+            usedMappingSelectionOptions={usedMappingSelectionOptions}
+            optionLabel={t('mapper.unusedOptions')}
           />
         );
       })}
