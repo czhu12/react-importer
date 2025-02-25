@@ -24,7 +24,7 @@ interface Props<T> {
   compareFunction?: (a: T, b: T) => boolean;
   clearable?: boolean;
   placeholder?: string;
-  minWidth?: string;
+  classes?: string;
   displayPlaceholderWhenSelected?: boolean;
 }
 
@@ -36,7 +36,7 @@ export default function Select<T>({
   compareFunction = (a, b) => a === b,
   clearable = false,
   placeholder,
-  minWidth,
+  classes,
   displayPlaceholderWhenSelected = false,
 }: Props<T>) {
   const isSelected = (valueToCheck: T) => {
@@ -71,7 +71,7 @@ export default function Select<T>({
     <Listbox value={value} onChange={handleChange} multiple={multiple}>
       <div className="relative">
         <ListboxButton
-          className={`${minWidth} focus:outline-primary grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6`}
+          className={`${classes} focus:outline-primary grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6`}
         >
           <span className="col-start-1 row-start-1 truncate pr-6">
             {selectedOptions.length > 0
