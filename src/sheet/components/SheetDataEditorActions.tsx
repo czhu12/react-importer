@@ -138,26 +138,31 @@ export default function SheetDataEditorActions({
         iconBuilder={(props) => <MagnifyingGlassIcon {...props} />}
       />
 
-      <div className="group relative">
+      <Tooltip
+        className="ml-5"
+        tooltipText={t('sheet.removeRowsTooltip')}
+        hidden={selectedRows.length !== 0}
+      >
         <TrashIcon
-          className={`m-2 h-6 w-6 ${
+          className={`h-6 w-6 ${
             selectedRows.length > 0 ? 'cursor-pointer' : disabledButtonClasses
           }`}
           onClick={() => setRemoveConfirmationModalOpen(true)}
         />
-        {selectedRows.length === 0 && (
-          <Tooltip tooltipText={t('sheet.removeRowsTooltip')} />
-        )}
-      </div>
+      </Tooltip>
 
-      <PlusIcon className="ml-5 h-6 w-6 cursor-pointer" onClick={addEmptyRow} />
+      <Tooltip className="ml-5" tooltipText={t('sheet.addRowsTooltip')}>
+        <PlusIcon className="h-6 w-6 cursor-pointer" onClick={addEmptyRow} />
+      </Tooltip>
 
-      <ArrowDownTrayIcon
-        className={`mx-5 h-6 w-6 ${
-          rowData.length > 0 ? 'cursor-pointer' : disabledButtonClasses
-        }`}
-        onClick={() => downloadSheetAsCsv(sheetDefinition, rowData)}
-      />
+      <Tooltip className="mx-5" tooltipText={t('sheet.downloadSheetTooltip')}>
+        <ArrowDownTrayIcon
+          className={`h-6 w-6 ${
+            rowData.length > 0 ? 'cursor-pointer' : disabledButtonClasses
+          }`}
+          onClick={() => downloadSheetAsCsv(sheetDefinition, rowData)}
+        />
+      </Tooltip>
 
       <Select
         clearable

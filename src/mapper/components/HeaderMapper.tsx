@@ -1,4 +1,4 @@
-import { Button } from '../../components';
+import { Button, Tooltip } from '../../components';
 import { useTranslations } from '../../i18';
 import { ColumnMapping, ParsedFile, SheetDefinition } from '../../types';
 import {
@@ -77,9 +77,14 @@ export default function HeaderMapper({
         <Button variant="secondary" outline onClick={onBack}>
           {t('mapper.back')}
         </Button>
-        <Button onClick={onMappingsSet} disabled={!mapingsValid}>
-          {t('mapper.confirm')}
-        </Button>
+        <Tooltip
+          tooltipText={t('mapper.mappingsNotValidTooltip')}
+          hidden={mapingsValid}
+        >
+          <Button onClick={onMappingsSet} disabled={!mapingsValid}>
+            {t('mapper.confirm')}
+          </Button>
+        </Tooltip>
       </div>
     </div>
   );

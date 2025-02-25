@@ -37,7 +37,8 @@
     "confirm": "Confirmer",
     "noData": "Aucune donnée",
     "unused": "Non utilisées",
-    "used": "Utilisées"
+    "used": "Utilisées",
+    "mappingsNotValidTooltip": "Veuillez définir toutes les mappings requis"
   },
   "sheet": {
     "validationPassed": "Toutes les lignes passent la validation !",
@@ -51,7 +52,9 @@
     "invalid": "Invalides",
     "filterByError": "Filtrer par erreur",
     "search": "Recherche",
-    "removeRowsTooltip": "Veuillez sélectionner au moins un enregistrement avant de le supprimer"
+    "removeRowsTooltip": "Veuillez sélectionner au moins un enregistrement avant de le supprimer",
+    "addRowsTooltip": "Ajouter une nouvelle ligne",
+    "downloadSheetTooltip": "Télécharger cette feuille"
   },
   "validators": {
     "includes": "La valeur n'est pas dans la liste des valeurs autorisées",
