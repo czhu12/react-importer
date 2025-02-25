@@ -130,6 +130,7 @@ export default function SheetDataEditorActions({
       </div>
 
       <Input
+        clearable
         value={searchPhrase}
         onChange={setSearchPhrase}
         placeholder={t('sheet.search')}
