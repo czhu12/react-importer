@@ -33,8 +33,7 @@ export default function HeaderMapper({
 
   const mappingSelectOptions = useMappingAvailableSelectOptions(
     sheetDefinitions,
-    currentMapping,
-    t
+    currentMapping
   );
 
   const mapingsValid = areAllRequiredMappingsSet(

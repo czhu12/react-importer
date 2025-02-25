@@ -9,8 +9,3 @@ export type Resources = {
 export type TranslationContextType = {
   t: (key: string, argumentValues?: ArgumentsType) => string;
 };
-
-export type TranslationFunction = (
-  key: string,
-  argumentValues?: ArgumentsType
-) => string;

@@ -4,9 +4,9 @@ import {
   CSVParsedData,
   MapperOptionValue,
   SheetDefinition,
-  TranslationFunction,
 } from '../types';
 import { fieldIsRequired } from '../validators';
+import { useTranslations } from '../i18';
 
 function removeMappingDuplicates(mappings: ColumnMapping[]): ColumnMapping[] {
   const uniqueMap = new Map<string, ColumnMapping>();
@@ -107,9 +107,10 @@ export function calculateMappingExamples(
 
 export function useMappingAvailableSelectOptions(
   sheetDefinitions: SheetDefinition[],
-  currentMapping: ColumnMapping[],
-  t: TranslationFunction
+  currentMapping: ColumnMapping[]
 ) {
+  const { t } = useTranslations();
+
   return sheetDefinitions.flatMap((sheetDefinition) =>
     sheetDefinition.columns
       .filter((column) => column.type !== 'reference') // Reference columns would be mapped automatically
