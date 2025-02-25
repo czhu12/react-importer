@@ -4,6 +4,7 @@ import { SheetDefinition, SheetRow, SheetState } from '../types';
 import { ImporterOutputFieldType, ImporterValidationError } from '../../types';
 import { Checkbox } from '../../components';
 import { useTranslations } from '../../i18';
+import { findRowIndex } from '../utils';
 
 interface Props {
   table: Table<SheetRow>;
@@ -108,9 +109,11 @@ export default function SheetDataEditorTable({
               {row.getVisibleCells().map((cell, cellIndex) => {
                 const columnId = sheetDefinition.columns[cellIndex].id;
                 // TODO: Check if it works correctly for 2 identical rows
-                const rowIndex = allData
-                  .find((d) => d.sheetId === sheetDefinition.id)!
-                  .rows.indexOf(row.original);
+                const rowIndex = findRowIndex(
+                  allData,
+                  sheetDefinition.id,
+                  row.original
+                );
 
                 const cellErrorsText = cellErrors(columnId, rowIndex)
                   .map((e) => t(e.message))

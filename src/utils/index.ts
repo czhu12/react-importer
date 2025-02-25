@@ -13,3 +13,7 @@ export const filterEmptyRows = (state: SheetState) => {
 export const isEmptyCell = (value: any) => {
   return isUndefinedOrNull(value) || value === '';
 };
+
+export const removeDupplicates = (array: any[]) => {
+  return [...new Set(array)];
+};
