@@ -52,10 +52,18 @@ export default function SheetDataEditorActions({
     'pointer-events-none cursor-not-allowed opacity-50';
 
   function errorFilterOption(columnId: string) {
+    const columnDefinition = sheetDefinition.columns.find(
+      (c) => c.id === columnId
+    );
+
+    const count = removeDupplicates(
+      sheetValidationErrors
+        .filter((error) => error.columnId === columnId)
+        .map((row) => row.rowIndex)
+    ).length;
+
     return {
-      label:
-        sheetDefinition.columns.find((c) => c.id === columnId)?.label ||
-        columnId,
+      label: `${columnDefinition?.label || columnId} (${count})`,
       value: columnId,
     };
   }
