@@ -2,6 +2,7 @@ import { isEmptyCell } from '../utils';
 import {
   SheetColumnReferenceDefinition,
   SheetDefinition,
+  SheetRow,
   SheetState,
 } from '../types';
 import { DOWNLOADED_CSV_SEPARATOR } from '../constants';
@@ -25,13 +26,13 @@ export function extractReferenceColumnPossibleValues(
 
 export function downloadSheetAsCsv(
   sheetDefinition: SheetDefinition,
-  data: SheetState
+  data: SheetRow[]
 ) {
   const headers = sheetDefinition.columns
     .map((column) => column.id)
     .join(DOWNLOADED_CSV_SEPARATOR);
 
-  const rows = data.rows.map((row) =>
+  const rows = data.map((row) =>
     sheetDefinition.columns
       .map((column) => row[column.id])
       .join(DOWNLOADED_CSV_SEPARATOR)
