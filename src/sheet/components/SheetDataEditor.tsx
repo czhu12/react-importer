@@ -58,10 +58,26 @@ export default function SheetDataEditor({
   const disabledButtonClasses =
     'pointer-events-none cursor-not-allowed opacity-50';
 
+  const rowValidationSummary = useMemo(() => {
+    const allRows = data.rows;
+    const validRows = allRows.filter(
+      (_, index) =>
+        !sheetValidationErrors.some((error) => error.rowIndex === index)
+    );
+    const invalidRows = allRows.filter((_, index) =>
+      sheetValidationErrors.some((error) => error.rowIndex === index)
+    );
+    return {
+      all: allRows.length,
+      valid: validRows.length,
+      invalid: invalidRows.length,
+    };
+  }, [data, sheetValidationErrors]);
+
   const viewModeButtons: ButtonGroupType[] = [
     {
       value: 'all',
-      label: t('sheet.all'),
+      label: t('sheet.all') + ` (${rowValidationSummary.all})`,
       onClick: () => {
         setSelectedRows([]);
         setViewMode('all');
@@ -70,7 +86,7 @@ export default function SheetDataEditor({
     },
     {
       value: 'valid',
-      label: t('sheet.valid'),
+      label: t('sheet.valid') + ` (${rowValidationSummary.valid})`,
       onClick: () => {
         setSelectedRows([]);
         setViewMode('valid');
@@ -79,7 +95,7 @@ export default function SheetDataEditor({
     },
     {
       value: 'errors',
-      label: t('sheet.invalid'),
+      label: t('sheet.invalid') + ` (${rowValidationSummary.invalid})`,
       onClick: () => {
         setSelectedRows([]);
         setViewMode('errors');
