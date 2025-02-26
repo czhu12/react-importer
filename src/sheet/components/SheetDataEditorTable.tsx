@@ -61,12 +61,13 @@ export default function SheetDataEditorTable({
   }
 
   const headerClass =
-    'sticky top-0 bg-gray-100 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 whitespace-nowrap ';
-  const cellClass = 'text-sm font-medium whitespace-nowrap text-gray-900';
+    'sticky top-0 bg-gray-100 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 whitespace-nowrap border-y border-gray-300';
+  const cellClass =
+    'text-sm font-medium whitespace-nowrap text-gray-900 border-b border-gray-300';
 
   return (
     <div className="max-h-[80vh] overflow-auto">
-      <table className="min-w-full divide-y divide-gray-300 border-y border-gray-300">
+      <table className="min-w-full border-separate border-spacing-0">
         <thead className="sticky top-0 z-10 bg-gray-100">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
