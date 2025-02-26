@@ -41,7 +41,7 @@
     "mappingsNotValidTooltip": "Please set all required mappings",
     "incomingColumn": "Incoming column",
     "destinationColumn": "Destination column",
-    "dataPreview": "Data preview for {{columnName}}"
+    "dataPreview": "Data preview for {{csvHeader}}"
   },
   "sheet": {
     "validationPassed": "All rows pass validation!",

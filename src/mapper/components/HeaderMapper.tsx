@@ -30,7 +30,7 @@ export default function HeaderMapper({
   onBack,
 }: Props) {
   const { t } = useTranslations();
-  const [hoveredHeader, setHoveredHeader] = useState<string | null>(null);
+  const [hoveredCsvHeader, setHoveredCsvHeader] = useState<string | null>(null);
 
   const data = parsed.data;
   const csvHeaders = parsed.meta.fields!; // TODO THIS BRANCH: Check why it can be undefined
@@ -46,9 +46,9 @@ export default function HeaderMapper({
   );
 
   const hoveredExamples = useMemo(() => {
-    if (!hoveredHeader) return [];
-    return calculateMappingExamples(data, hoveredHeader);
-  }, [hoveredHeader, data]);
+    if (!hoveredCsvHeader) return [];
+    return calculateMappingExamples(data, hoveredCsvHeader);
+  }, [hoveredCsvHeader, data]);
 
   return (
     <div>
@@ -82,7 +82,7 @@ export default function HeaderMapper({
                 }}
                 mappingSelectionOptions={mappingSelectOptions}
                 onMouseEnter={() => {
-                  setHoveredHeader(header);
+                  setHoveredCsvHeader(header);
                 }}
               />
             );
@@ -91,7 +91,7 @@ export default function HeaderMapper({
         <div className="flex-1 bg-gray-50">
           <HeaderMapperDataPreview
             examples={hoveredExamples}
-            header={hoveredHeader ?? ''}
+            csvHeader={hoveredCsvHeader ?? ''}
           />
         </div>
       </div>

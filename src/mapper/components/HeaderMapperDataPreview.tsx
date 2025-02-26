@@ -3,14 +3,17 @@ import { useTranslations } from '../../i18';
 
 interface Props {
   examples: ImporterOutputFieldType[] | null;
-  header: string | null;
+  csvHeader: string | null;
 }
 
-export default function HeaderMapperDataPreview({ examples, header }: Props) {
+export default function HeaderMapperDataPreview({
+  examples,
+  csvHeader,
+}: Props) {
   const { t } = useTranslations();
 
   return (
-    header && (
+    csvHeader && (
       <div className="m-4 rounded-sm border border-gray-300 bg-white px-4 sm:px-6 lg:px-8">
         <div className="mt-6 flow-root">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -22,7 +25,7 @@ export default function HeaderMapperDataPreview({ examples, header }: Props) {
                       scope="col"
                       className="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8"
                     >
-                      {t('mapper.dataPreview', { columnName: header })}
+                      {t('mapper.dataPreview', { csvHeader: csvHeader })}
                     </th>
                   </tr>
                 </thead>
