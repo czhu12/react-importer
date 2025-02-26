@@ -1,4 +1,4 @@
-import { Select } from '../../components';
+import { Select, Badge } from '../../components';
 import { ColumnMapping, MapperOption, MapperOptionValue } from '../../types';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
@@ -27,16 +27,21 @@ export default function HeaderMapperSelection({
         )?.value ?? null);
 
   return (
-    <div className="my-5" onMouseEnter={onMouseEnter}>
-      <div className="flex items-center">
+    <div
+      className="hover:bg-tertiary-light rounded-sm"
+      onMouseEnter={onMouseEnter}
+    >
+      <div className="flex items-center py-2.5">
         <div className="mx-2.5 flex flex-1 justify-between">
-          <div>{csvHeader.slice(0, 30)}</div>
+          <div>
+            <Badge variant="primary">{csvHeader.slice(0, 30)}</Badge>
+          </div>
           <div className="mx-5">
             <ArrowRightIcon className="h-4 w-4" />
           </div>
         </div>
 
-        <div className="flex-1">
+        <div className="mx-2.5 flex-1">
           <Select
             // TODO THIS BRANCH: Add back the following props
             // isSearchable
