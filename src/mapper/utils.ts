@@ -114,24 +114,32 @@ function getFilteredExamples(data: CSVParsedData[], csvColumnName: string) {
 }
 
 function padExamples(examples: string[]) {
-  return [
+  const paddedExamples = [
     ...examples,
     ...Array(NUMBER_OF_EXAMPLES_IN_MAPPING - examples.length).fill(''),
   ];
+  return paddedExamples;
 }
 
 function trimExamplesByCharacterLimit(examples: string[]) {
-  let totalCharacters = examples.reduce((acc, curr) => acc + curr.length, 0);
+  const trimmedExamples = [...examples];
+  let totalCharacters = trimmedExamples.reduce(
+    (acc, curr) => acc + curr.length,
+    0
+  );
 
   while (
     totalCharacters > MAX_CHARACTERS_IN_MAPPING_EXAMPLES &&
-    examples.length > 1
+    trimmedExamples.length > 1
   ) {
-    examples.pop();
-    totalCharacters = examples.reduce((acc, curr) => acc + curr.length, 0);
+    trimmedExamples.pop();
+    totalCharacters = trimmedExamples.reduce(
+      (acc, curr) => acc + curr.length,
+      0
+    );
   }
 
-  return examples;
+  return trimmedExamples;
 }
 
 export function useMappingAvailableSelectOptions(
