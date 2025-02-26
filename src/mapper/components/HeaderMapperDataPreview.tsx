@@ -31,7 +31,7 @@ export default function HeaderMapperDataPreview({
                 </thead>
                 <tbody className="divide-y divide-gray-300">
                   {examples?.map((example, idx) => (
-                    <tr key={example}>
+                    <tr key={idx}>
                       <td className="h-12 py-4 pr-3 pl-4 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
                         {example ||
                           (idx === 0 && (
