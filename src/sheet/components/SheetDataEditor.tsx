@@ -83,6 +83,7 @@ export default function SheetDataEditor({
         columnHelper.accessor(column.id, {
           header: () => <SheetDataEditorHeader column={column} />,
           sortUndefined: 'last',
+          sortingFn: 'auto',
         })
       ),
     [sheetDefinition]

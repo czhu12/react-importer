@@ -1,4 +1,4 @@
-import { SheetState } from '../types';
+import { ImporterOutputFieldType, SheetState } from '../types';
 
 export const isUndefinedOrNull = (a: any) => {
   return a === null || a === undefined;
@@ -18,10 +18,12 @@ export const removeDuplicates = (array: any[]) => {
   return [...new Set(array)];
 };
 
-export function normalizeString(str: string | undefined | null) {
-  if (str == null) {
+export function normalizeValue(
+  value: ImporterOutputFieldType | undefined | null
+) {
+  if (value == null) {
     return null;
   }
 
-  return str.toLowerCase().replace('_', '').replace(' ', '');
+  return value.toString().toLowerCase().replace('_', '').replace(' ', '');
 }
