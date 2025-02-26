@@ -99,10 +99,15 @@ export function calculateMappingExamples(
   data: CSVParsedData[],
   csvColumnName: string
 ) {
-  return data
+  const examples = data
     .map((d) => d[csvColumnName])
     .filter((v) => v != null && v.trim() !== '')
     .slice(0, NUMBER_OF_EXAMPLES_IN_MAPPING);
+
+  return [
+    ...examples,
+    ...Array(NUMBER_OF_EXAMPLES_IN_MAPPING - examples.length).fill(''),
+  ];
 }
 
 export function useMappingAvailableSelectOptions(

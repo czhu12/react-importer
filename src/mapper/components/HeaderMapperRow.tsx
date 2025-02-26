@@ -1,22 +1,20 @@
-import { Card } from '../../components';
-import { ImporterOutputFieldType } from '../../types';
 import { ColumnMapping, MapperOption, MapperOptionValue } from '../types';
 import HeaderMapperSelection from './HeaderMapperSelection';
 
 interface Props {
   csvHeader: string;
   mappingSelectionOptions: MapperOption[];
-  examples: ImporterOutputFieldType[];
   currentMapping: ColumnMapping | null;
   setMapping: (mappings: MapperOptionValue | null) => void;
+  onMouseEnter: () => void;
 }
 
 export default function HeaderMapperRow({
   mappingSelectionOptions,
   csvHeader,
-  examples,
   currentMapping,
   setMapping,
+  onMouseEnter,
 }: Props) {
   const currentHeaderOption =
     currentMapping == null
@@ -29,15 +27,13 @@ export default function HeaderMapperRow({
 
   return (
     <div className="my-5">
-      <Card>
-        <HeaderMapperSelection
-          mappingSelectionOptions={mappingSelectionOptions}
-          csvHeader={csvHeader}
-          examples={examples}
-          currentMapping={currentHeaderOption}
-          setMapping={setMapping}
-        />
-      </Card>
+      <HeaderMapperSelection
+        mappingSelectionOptions={mappingSelectionOptions}
+        csvHeader={csvHeader}
+        currentMapping={currentHeaderOption}
+        setMapping={setMapping}
+        onMouseEnter={onMouseEnter}
+      />
     </div>
   );
 }
