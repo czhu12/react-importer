@@ -61,7 +61,7 @@ export default function SheetDataEditorTable({
   }
 
   const headerClass =
-    'sticky top-0 bg-gray-100 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 whitespace-nowrap border-y border-gray-300';
+    'bg-gray-100 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 whitespace-nowrap border-y border-gray-300';
   const cellClass =
     'text-sm font-medium whitespace-nowrap text-gray-900 border-b border-gray-300';
 
