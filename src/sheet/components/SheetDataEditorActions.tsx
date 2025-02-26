@@ -3,13 +3,16 @@ import {
   ButtonGroup,
   ButtonGroupType,
   ConfirmationModal,
+  Input,
   Select,
+  Tooltip,
 } from '../../components';
 import { downloadSheetAsCsv } from '../utils';
 import {
   TrashIcon,
   PlusIcon,
   ArrowDownTrayIcon,
+  MagnifyingGlassIcon,
 } from '@heroicons/react/24/outline';
 import { useTranslations } from '../../i18';
 import { SheetDefinition, SheetRow, SheetViewMode } from '../types';
@@ -23,6 +26,8 @@ interface Props {
   setSelectedRows: (rows: SheetRow[]) => void;
   viewMode: SheetViewMode;
   setViewMode: (mode: SheetViewMode) => void;
+  searchPhrase: string;
+  setSearchPhrase: (searchPhrase: string) => void;
   errorColumnFilter: string | null;
   setErrorColumnFilter: (mode: string | null) => void;
   removeRows: (payload: RemoveRowsPayload) => void;
@@ -37,9 +42,11 @@ export default function SheetDataEditorActions({
   selectedRows,
   setSelectedRows,
   viewMode,
+  setViewMode,
+  searchPhrase,
+  setSearchPhrase,
   errorColumnFilter,
   setErrorColumnFilter,
-  setViewMode,
   removeRows,
   addEmptyRow,
   sheetValidationErrors,
@@ -119,26 +126,43 @@ export default function SheetDataEditorActions({
 
   return (
     <div className="my-5 flex items-center">
-      <div>
+      <div className="mr-5">
         <ButtonGroup activeButton={viewMode} buttons={viewModeButtons} />
       </div>
 
-      {/* TODO: Add tooltip when disabled */}
-      <TrashIcon
-        className={`ml-8 h-6 w-6 ${
-          selectedRows.length > 0 ? 'cursor-pointer' : disabledButtonClasses
-        }`}
-        onClick={() => setRemoveConfirmationModalOpen(true)}
+      <Input
+        clearable
+        value={searchPhrase}
+        onChange={setSearchPhrase}
+        placeholder={t('sheet.search')}
+        iconBuilder={(props) => <MagnifyingGlassIcon {...props} />}
       />
 
-      <PlusIcon className="ml-5 h-6 w-6 cursor-pointer" onClick={addEmptyRow} />
+      <Tooltip
+        className="ml-5"
+        tooltipText={t('sheet.removeRowsTooltip')}
+        hidden={selectedRows.length <= 0}
+      >
+        <TrashIcon
+          className={`h-6 w-6 ${
+            selectedRows.length > 0 ? 'cursor-pointer' : disabledButtonClasses
+          }`}
+          onClick={() => setRemoveConfirmationModalOpen(true)}
+        />
+      </Tooltip>
 
-      <ArrowDownTrayIcon
-        className={`mx-5 h-6 w-6 ${
-          rowData.length > 0 ? 'cursor-pointer' : disabledButtonClasses
-        }`}
-        onClick={() => downloadSheetAsCsv(sheetDefinition, rowData)}
-      />
+      <Tooltip className="ml-5" tooltipText={t('sheet.addRowsTooltip')}>
+        <PlusIcon className="h-6 w-6 cursor-pointer" onClick={addEmptyRow} />
+      </Tooltip>
+
+      <Tooltip className="mx-5" tooltipText={t('sheet.downloadSheetTooltip')}>
+        <ArrowDownTrayIcon
+          className={`h-6 w-6 ${
+            rowData.length > 0 ? 'cursor-pointer' : disabledButtonClasses
+          }`}
+          onClick={() => downloadSheetAsCsv(sheetDefinition, rowData)}
+        />
+      </Tooltip>
 
       <Select
         clearable

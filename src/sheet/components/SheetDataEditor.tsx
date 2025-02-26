@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'preact/compat';
 import {
   createColumnHelper,
   getCoreRowModel,
+  getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 
@@ -15,7 +16,7 @@ import {
 import SheetDataEditorTable from './SheetDataEditorTable';
 import SheetDataEditorHeader from './SheetDataEditorHeader';
 import SheetDataEditorActions from './SheetDataEditorActions';
-import { findRowIndex } from '../utils';
+import { useFilteredRowData } from '../utils';
 
 const columnHelper = createColumnHelper<SheetRow>();
 
@@ -40,6 +41,7 @@ export default function SheetDataEditor({
 }: Props) {
   const [selectedRows, setSelectedRows] = useState<SheetRow[]>([]);
   const [viewMode, setViewMode] = useState<SheetViewMode>('all');
+  const [searchPhrase, setSearchPhrase] = useState('');
   const [errorColumnFilter, setErrorColumnFilter] = useState<string | null>(
     null
   );
@@ -49,45 +51,15 @@ export default function SheetDataEditor({
     setViewMode('all');
   }, [sheetDefinition]);
 
-  const rowData = useMemo(() => {
-    let rows = data.rows;
-    switch (viewMode) {
-      case 'errors':
-        rows = data.rows.filter((_, index) =>
-          sheetValidationErrors.some((error) => error.rowIndex === index)
-        );
-        break;
-      case 'valid':
-        rows = data.rows.filter(
-          (_, index) =>
-            !sheetValidationErrors.some((error) => error.rowIndex === index)
-        );
-        break;
-      case 'all':
-      default:
-        rows = data.rows;
-    }
-
-    if (errorColumnFilter != null) {
-      rows = rows.filter((row) => {
-        const rowIndex = findRowIndex(allData, sheetDefinition.id, row);
-        const error = sheetValidationErrors.find(
-          (error) =>
-            error.rowIndex === rowIndex && error.columnId === errorColumnFilter
-        );
-        return error != null;
-      });
-    }
-
-    return rows;
-  }, [
+  const rowData = useFilteredRowData(
     data,
+    allData,
     viewMode,
     sheetValidationErrors,
     errorColumnFilter,
-    sheetDefinition.id,
-    allData,
-  ]);
+    sheetDefinition,
+    searchPhrase
+  );
 
   const rowValidationSummary = useMemo(() => {
     const allRows = data.rows;
@@ -110,6 +82,7 @@ export default function SheetDataEditor({
       sheetDefinition.columns.map((column) =>
         columnHelper.accessor(column.id, {
           header: () => <SheetDataEditorHeader column={column} />,
+          sortUndefined: 'last',
         })
       ),
     [sheetDefinition]
@@ -119,6 +92,7 @@ export default function SheetDataEditor({
     data: rowData,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   function onCellValueChanged(
@@ -145,6 +119,8 @@ export default function SheetDataEditor({
         setSelectedRows={setSelectedRows}
         viewMode={viewMode}
         setViewMode={setViewMode}
+        searchPhrase={searchPhrase}
+        setSearchPhrase={setSearchPhrase}
         errorColumnFilter={errorColumnFilter}
         setErrorColumnFilter={setErrorColumnFilter}
         removeRows={removeRows}

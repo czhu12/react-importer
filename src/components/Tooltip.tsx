@@ -1,58 +1,39 @@
 import { cva } from 'cva';
 import { ReactNode } from 'preact/compat';
 
-type Variant = 'error' | 'info';
-
 interface Props {
-  variant?: Variant;
-  children?: ReactNode;
-  tooltipText?: string;
+  tooltipText: string;
+  children: ReactNode;
+  className?: string;
+  hidden?: boolean;
 }
 
-const tooltipBaseClasses = cva(
-  'bg-gray-50 text-gray-900 absolute outline top-full w-full whitespace-normal z-20 mb-2 hidden px-2 py-4 text-xs group-focus-within:block group-hover:block',
+const baseClasses = cva(
+  'absolute top-full left-1/2 z-20 hidden w-max -translate-x-1/2 translate-y-3 transform rounded-md bg-gray-900 px-3 py-2 text-xs text-white shadow-lg ',
   {
     variants: {
-      variant: {
-        error: 'outline-danger',
-        info: 'outline-gray-500',
+      hidden: {
+        true: 'hidden',
+        false: 'group-focus-within:block group-hover:block',
       },
-    },
-    defaultVariants: {
-      variant: 'info',
     },
   }
 );
+export default function Tooltip({
+  tooltipText,
+  children,
+  className,
+  hidden = false,
+}: Props) {
+  const componentClassName = baseClasses({ hidden });
 
-const tooltipWrapperBaseClasses = cva('group relative h-full w-full', {
-  variants: {
-    variant: {
-      error: 'focus-within:outline-danger hover:outline-danger',
-      info: 'focus-within:outline-gray-500 hover:outline-gray-500',
-    },
-    withOutline: {
-      true: 'focus-within:outline hover:outline hover:z-20 focus-within:z-20',
-      false: '',
-    },
-  },
-  defaultVariants: {
-    variant: 'info',
-    withOutline: false,
-  },
-});
-
-export default function Tooltip({ variant, children, tooltipText }: Props) {
-  const tooltipClassName = tooltipBaseClasses({ variant });
-  const tooltipWrapperClassName = tooltipWrapperBaseClasses({
-    variant,
-    withOutline: !!tooltipText,
-  });
-
-  // Add tabIndex to make the tooltip focusable
   return (
-    <div className={tooltipWrapperClassName} tabIndex={0}>
+    <div className={`${className} group relative`}>
       {children}
-      {tooltipText && <span className={tooltipClassName}>{tooltipText}</span>}
+      <div className={componentClassName}>
+        {tooltipText}
+        <div className="absolute top-0 left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1 rotate-45 bg-gray-900"></div>
+      </div>
     </div>
   );
 }
