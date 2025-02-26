@@ -17,8 +17,17 @@ export default function HeaderMapperSelection({
   mappingSelectionOptions,
   onMouseEnter,
 }: Props) {
+  const currentHeaderOption =
+    currentMapping == null
+      ? null
+      : (mappingSelectionOptions.find(
+          (option) =>
+            option.value.sheetId === currentMapping.sheetId &&
+            option.value.sheetColumnId === currentMapping.sheetColumnId
+        )?.value ?? null);
+
   return (
-    <div onMouseEnter={onMouseEnter}>
+    <div className="my-5" onMouseEnter={onMouseEnter}>
       <div className="flex items-center">
         <div className="mx-2.5 flex flex-1 justify-between">
           <div>{csvHeader.slice(0, 30)}</div>
@@ -41,7 +50,7 @@ export default function HeaderMapperSelection({
                 a.sheetColumnId === b.sheetColumnId && a.sheetId === b.sheetId
               );
             }}
-            value={currentMapping}
+            value={currentHeaderOption}
             options={mappingSelectionOptions}
             onChange={(mapping) => setMapping(mapping as ColumnMapping | null)}
           />

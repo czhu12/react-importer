@@ -10,7 +10,7 @@ import {
   useMappingAvailableSelectOptions,
 } from '../utils';
 import HeaderMapperDataPreview from './HeaderMapperDataPreview';
-import HeaderMapperRow from './HeaderMapperRow';
+import HeaderMapperSelection from './HeaderMapperSelection';
 
 interface Props {
   parsed: ParsedFile;
@@ -56,8 +56,8 @@ export default function HeaderMapper({
       <div className="flex justify-between space-x-5">
         <div className="flex-2">
           <div className="text-md my-5 flex font-light uppercase">
-            <div className="flex-1">Incoming Columns </div>
-            <div className="flex-1">Destination Columns</div>
+            <div>Incoming Columns</div>
+            <div>Destination Columns</div>
           </div>
           {csvHeaders.map((header, columnIndex) => {
             const headerMapping =
@@ -66,7 +66,7 @@ export default function HeaderMapper({
               ) ?? null;
 
             return (
-              <HeaderMapperRow
+              <HeaderMapperSelection
                 key={columnIndex}
                 csvHeader={header}
                 currentMapping={headerMapping}
