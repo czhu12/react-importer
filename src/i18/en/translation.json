@@ -5,7 +5,8 @@
       "cancel": "Cancel"
     },
     "select": {
-      "optionPlaceholder": "Select an option"
+      "optionPlaceholder": "Select an option",
+      "noOptions": "No options"
     }
   },
   "importer": {

@@ -5,7 +5,8 @@
       "cancel": "Annuler"
     },
     "select": {
-      "optionPlaceholder": "Sélectionnez une option"
+      "optionPlaceholder": "Sélectionnez une option",
+      "noOptions": "Pas d'options"
     }
   },
   "importer": {
