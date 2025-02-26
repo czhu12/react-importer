@@ -141,7 +141,7 @@ export default function SheetDataEditorActions({
       <Tooltip
         className="ml-5"
         tooltipText={t('sheet.removeRowsTooltip')}
-        hidden={selectedRows.length !== 0}
+        hidden={selectedRows.length <= 0}
       >
         <TrashIcon
           className={`h-6 w-6 ${
