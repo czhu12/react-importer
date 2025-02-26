@@ -38,7 +38,10 @@
     "noData": "No preview data",
     "used": "Used",
     "unused": "Unused",
-    "mappingsNotValidTooltip": "Please set all required mappings"
+    "mappingsNotValidTooltip": "Please set all required mappings",
+    "incomingColumn": "Incoming column",
+    "destinationColumn": "Destination column",
+    "dataPreview": "Data preview for {{columnName}}"
   },
   "sheet": {
     "validationPassed": "All rows pass validation!",
