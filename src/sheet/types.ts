@@ -33,7 +33,7 @@ interface SheetColumnStringDefinition extends SheetColumnBaseDefinition {
 
 interface SheetColumnNumberDefinition extends SheetColumnBaseDefinition {
   type: 'number';
-  // TODO THIS BRANCH: Should we add precision here?
+  // TODO: Should we add precision here?
 }
 
 export interface SheetColumnReferenceDefinition

@@ -45,6 +45,10 @@ export default function EmployeeImporter() {
                     validate: 'unique',
                     error: 'This employee ID is not unique',
                   },
+                  {
+                    validate: 'is_integer',
+                    error: 'This value must be a number',
+                  },
                 ],
               },
               {
