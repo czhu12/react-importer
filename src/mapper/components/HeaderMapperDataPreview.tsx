@@ -3,7 +3,7 @@ import { useTranslations } from '../../i18';
 
 interface Props {
   examples: ImporterOutputFieldType[] | null;
-  header: string;
+  header: string | null;
 }
 
 export default function HeaderMapperDataPreview({ examples, header }: Props) {
