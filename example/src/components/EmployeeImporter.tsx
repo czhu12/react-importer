@@ -38,7 +38,7 @@ export default function EmployeeImporter() {
               {
                 label: 'Employee ID',
                 id: 'id',
-                type: 'string',
+                type: 'number',
                 validators: [
                   { validate: 'required' },
                   {

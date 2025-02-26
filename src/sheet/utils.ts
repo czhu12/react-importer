@@ -1,4 +1,4 @@
-import { isEmptyCell, normalizeString } from '../utils';
+import { isEmptyCell, normalizeValue } from '../utils';
 import {
   ImporterValidationError,
   SheetColumnReferenceDefinition,
@@ -102,7 +102,7 @@ export function useFilteredRowData(
     if (searchPhrase.trim() !== '') {
       rows = rows.filter((row) =>
         Object.values(row).some((cellValue) =>
-          normalizeString(cellValue)?.includes(normalizeString(searchPhrase)!)
+          normalizeValue(cellValue)?.includes(normalizeValue(searchPhrase)!)
         )
       );
     }

@@ -10,9 +10,10 @@ import {
   CheckIcon,
 } from '@heroicons/react/20/solid';
 import { useTranslations } from '../i18';
+import { ComponentChildren } from 'preact';
 
 export interface SelectOption<T> {
-  label: string;
+  label: ComponentChildren;
   value: T;
   icon?: React.ReactNode;
   group?: string;

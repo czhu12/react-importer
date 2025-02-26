@@ -50,7 +50,7 @@ export interface ImporterState {
   importProgress: number;
 }
 
-export type ImporterOutputFieldType = string;
+export type ImporterOutputFieldType = string | number;
 
 export interface CellChangedPayload {
   sheetId: string;
