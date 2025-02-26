@@ -5,6 +5,7 @@ import {
   ConfirmationModal,
   Input,
   Select,
+  Tooltip,
 } from '../../components';
 import { downloadSheetAsCsv } from '../utils';
 import {
@@ -137,22 +138,31 @@ export default function SheetDataEditorActions({
         iconBuilder={(props) => <MagnifyingGlassIcon {...props} />}
       />
 
-      {/* TODO: Add tooltip when disabled */}
-      <TrashIcon
-        className={`ml-8 h-6 w-6 ${
-          selectedRows.length > 0 ? 'cursor-pointer' : disabledButtonClasses
-        }`}
-        onClick={() => setRemoveConfirmationModalOpen(true)}
-      />
+      <Tooltip
+        className="ml-5"
+        tooltipText={t('sheet.removeRowsTooltip')}
+        hidden={selectedRows.length <= 0}
+      >
+        <TrashIcon
+          className={`h-6 w-6 ${
+            selectedRows.length > 0 ? 'cursor-pointer' : disabledButtonClasses
+          }`}
+          onClick={() => setRemoveConfirmationModalOpen(true)}
+        />
+      </Tooltip>
 
-      <PlusIcon className="ml-5 h-6 w-6 cursor-pointer" onClick={addEmptyRow} />
+      <Tooltip className="ml-5" tooltipText={t('sheet.addRowsTooltip')}>
+        <PlusIcon className="h-6 w-6 cursor-pointer" onClick={addEmptyRow} />
+      </Tooltip>
 
-      <ArrowDownTrayIcon
-        className={`mx-5 h-6 w-6 ${
-          rowData.length > 0 ? 'cursor-pointer' : disabledButtonClasses
-        }`}
-        onClick={() => downloadSheetAsCsv(sheetDefinition, rowData)}
-      />
+      <Tooltip className="mx-5" tooltipText={t('sheet.downloadSheetTooltip')}>
+        <ArrowDownTrayIcon
+          className={`h-6 w-6 ${
+            rowData.length > 0 ? 'cursor-pointer' : disabledButtonClasses
+          }`}
+          onClick={() => downloadSheetAsCsv(sheetDefinition, rowData)}
+        />
+      </Tooltip>
 
       <Select
         clearable
