@@ -133,7 +133,7 @@ export default function SheetDataEditorActions({
       <Input
         clearable
         value={searchPhrase}
-        onChange={setSearchPhrase}
+        onChange={(v) => setSearchPhrase(v as string)}
         placeholder={t('sheet.search')}
         iconBuilder={(props) => <MagnifyingGlassIcon {...props} />}
       />

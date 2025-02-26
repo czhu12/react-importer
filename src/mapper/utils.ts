@@ -10,7 +10,7 @@ import {
 } from '../types';
 import { fieldIsRequired } from '../validators';
 import { useTranslations } from '../i18';
-import { normalizeString } from '../utils';
+import { normalizeValue } from '../utils';
 
 function removeMappingDuplicates(mappings: ColumnMapping[]): ColumnMapping[] {
   const uniqueMap = new Map<string, ColumnMapping>();
@@ -40,9 +40,9 @@ function buildSheetSuggestedHeaderMappings(
       const keywords = [
         column.id,
         ...(column.suggestedMappingKeywords || []),
-      ].map((k) => normalizeString(k));
+      ].map((k) => normalizeValue(k));
 
-      const normalizedHeader = normalizeString(header);
+      const normalizedHeader = normalizeValue(header);
 
       return keywords.includes(normalizedHeader);
     });

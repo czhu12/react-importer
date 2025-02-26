@@ -39,7 +39,8 @@ export default function SheetDataEditorCell({
     }
   }, [editMode]);
 
-  const valueEmpty = value == null || value.trim() === '';
+  const valueEmpty =
+    value == null || (typeof value === 'string' && value.trim() === '');
   // Use non-breaking space to keep the cell height
   const nonEmptyValue = valueEmpty ? '\u00A0' : value;
   const readOnly = columnDefinition.isReadOnly;
@@ -68,9 +69,18 @@ export default function SheetDataEditorCell({
     );
   }
 
-  function updateValue(value: string) {
+  function updateValue(value: ImporterOutputFieldType) {
     setEditMode(false);
-    onUpdated(value ?? '');
+
+    if (
+      columnDefinition.type === 'number' &&
+      value !== '' &&
+      !isNaN(Number(value))
+    ) {
+      onUpdated(Number(value));
+    } else {
+      onUpdated(value ?? '');
+    }
   }
 
   if (columnDefinition.type === 'reference') {
@@ -112,7 +122,8 @@ export default function SheetDataEditorCell({
 
   return (
     <Input
-      classes="block w-full "
+      type={columnDefinition.type === 'number' ? 'number' : 'text'}
+      classes="block w-full"
       value={value}
       onBlur={updateValue}
       ref={inputRef}

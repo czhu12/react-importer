@@ -10,9 +10,10 @@ import {
   CheckIcon,
 } from '@heroicons/react/20/solid';
 import { useTranslations } from '../i18';
+import { ComponentChildren } from 'preact';
 
 export interface SelectOption<T> {
-  label: string;
+  label: ComponentChildren;
   value: T;
   icon?: React.ReactNode;
   group?: string;
@@ -87,6 +88,8 @@ export default function Select<T>({
       }))
     : [{ label: null, items: options }];
 
+  const hasNoOptions = groupedOptions.every(({ items }) => items.length === 0);
+
   return (
     <Listbox value={value} onChange={handleChange} multiple={multiple}>
       <div className="relative">
@@ -124,6 +127,19 @@ export default function Select<T>({
           transition
           className="absolute z-99 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
         >
+          {hasNoOptions && (
+            <ListboxOption
+              key="no-options"
+              disabled
+              value={null}
+              className="pointer-events-none relative flex items-center justify-center py-2 pr-9 pl-3 text-gray-400 select-none"
+            >
+              <span className="block truncate font-normal">
+                {t('components.select.noOptions')}
+              </span>
+            </ListboxOption>
+          )}
+
           {groupedOptions.map(({ label, items }) => (
             <div key={label || 'all'}>
               {label && (

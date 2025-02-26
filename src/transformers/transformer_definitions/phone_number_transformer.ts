@@ -3,6 +3,8 @@ import { Transformer } from './base';
 
 export class PhoneNumberTransformer extends Transformer {
   parse(value: ImporterOutputFieldType): ImporterOutputFieldType | undefined {
-    return value.replace(/[^0-9]/g, '');
+    if (typeof value === 'string') {
+      return value.replace(/[^0-9]/g, '');
+    }
   }
 }

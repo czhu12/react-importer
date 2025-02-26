@@ -14,6 +14,7 @@ export interface SheetDefinition {
 
 export type SheetColumnDefinition =
   | SheetColumnStringDefinition
+  | SheetColumnNumberDefinition
   | SheetColumnReferenceDefinition
   | SheetColumnEnumDefinition;
 
@@ -28,6 +29,11 @@ interface SheetColumnBaseDefinition {
 
 interface SheetColumnStringDefinition extends SheetColumnBaseDefinition {
   type: 'string';
+}
+
+interface SheetColumnNumberDefinition extends SheetColumnBaseDefinition {
+  type: 'number';
+  // TODO: Should we add precision here?
 }
 
 export interface SheetColumnReferenceDefinition

@@ -7,7 +7,9 @@ import { Transformer } from './base';
 export class CustomTransformer extends Transformer {
   key: string;
 
-  parse: (value: ImporterOutputFieldType) => ImporterOutputFieldType;
+  parse: (
+    value: ImporterOutputFieldType
+  ) => ImporterOutputFieldType | undefined;
 
   constructor(definition: CustomTransformerDefinition) {
     super(definition);

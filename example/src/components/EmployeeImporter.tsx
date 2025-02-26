@@ -38,12 +38,16 @@ export default function EmployeeImporter() {
               {
                 label: 'Employee ID',
                 id: 'id',
-                type: 'string',
+                type: 'number',
                 validators: [
                   { validate: 'required' },
                   {
                     validate: 'unique',
                     error: 'This employee ID is not unique',
+                  },
+                  {
+                    validate: 'is_integer',
+                    error: 'This value must be a number',
                   },
                 ],
               },
