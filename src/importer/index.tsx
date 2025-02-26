@@ -1,4 +1,5 @@
-import { useReducer } from 'preact/compat';
+import { useReducer, useEffect } from 'preact/compat';
+import { useRef } from 'preact/hooks';
 
 import FileUploader from './components/FileUploader';
 import HeaderMapper from '../mapper/components/HeaderMapper';
@@ -32,6 +33,8 @@ function ImporterBody({
 }: ImporterDefinition) {
   const { t } = useTranslations();
 
+  const targetRef = useRef<HTMLDivElement | null>(null);
+
   const [
     {
       mode,
@@ -44,6 +47,17 @@ function ImporterBody({
     },
     dispatch,
   ] = useReducer(reducer, buildInitialState(sheets));
+
+  useEffect(() => {
+    if (targetRef.current) {
+      if (
+        mode === 'mapping' ||
+        (mode === 'preview' && sheetData.some((sheet) => sheet.rows.length > 0))
+      ) {
+        targetRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [mode, sheetData]);
 
   const currentSheetData = sheetData.find(
     (sheet) => sheet.sheetId === currentSheetId
@@ -144,7 +158,7 @@ function ImporterBody({
 
   return (
     <ThemeSetter theme={theme}>
-      <Root>
+      <Root ref={targetRef}>
         {mode === 'mapping' && (
           <HeaderMapper
             parsed={parsedFile!}

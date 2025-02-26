@@ -1,12 +1,16 @@
-import { ReactNode } from 'preact/compat';
+import { ReactNode, forwardRef } from 'preact/compat';
 
 interface Props {
   children?: ReactNode;
 }
 
-export default function Root({ children }: Props) {
+export default forwardRef<HTMLDivElement, Props>(function Root(
+  { children },
+  ref
+) {
   return (
     <div
+      ref={ref}
       style={{
         animation: 'none',
         animationDelay: '0',
@@ -159,4 +163,4 @@ export default function Root({ children }: Props) {
       {children}
     </div>
   );
-}
+});
