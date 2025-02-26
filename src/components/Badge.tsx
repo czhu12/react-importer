@@ -1,6 +1,6 @@
 import { cva } from 'cva';
 import { ReactNode } from 'preact/compat';
-export type BadgeVariant = 'primary';
+
 
 interface Props {
   children?: ReactNode;
