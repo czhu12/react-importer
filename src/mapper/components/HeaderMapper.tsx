@@ -30,9 +30,7 @@ export default function HeaderMapper({
   onBack,
 }: Props) {
   const { t } = useTranslations();
-  const [hoveredHeader, setHoveredHeader] = useState<string | null>(
-    'employee_id' // TODO: Remove this
-  );
+  const [hoveredHeader, setHoveredHeader] = useState<string | null>(null);
 
   const data = parsed.data;
   const csvHeaders = parsed.meta.fields!; // TODO THIS BRANCH: Check why it can be undefined
