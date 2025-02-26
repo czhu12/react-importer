@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'preact/compat';
 import {
   createColumnHelper,
   getCoreRowModel,
+  getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 
@@ -81,6 +82,7 @@ export default function SheetDataEditor({
       sheetDefinition.columns.map((column) =>
         columnHelper.accessor(column.id, {
           header: () => <SheetDataEditorHeader column={column} />,
+          sortUndefined: 'last',
         })
       ),
     [sheetDefinition]
@@ -90,6 +92,7 @@ export default function SheetDataEditor({
     data: rowData,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   function onCellValueChanged(

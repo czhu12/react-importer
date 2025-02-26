@@ -5,6 +5,7 @@ import { ImporterOutputFieldType, ImporterValidationError } from '../../types';
 import { Checkbox } from '../../components';
 import { useTranslations } from '../../i18';
 import { findRowIndex } from '../utils';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid';
 
 interface Props {
   table: Table<SheetRow>;
@@ -79,12 +80,38 @@ export default function SheetDataEditorTable({
 
               {headerGroup.headers.map((header) => (
                 <th key={header.id} className={`z-10 min-w-48 ${headerClass}`}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                  <div
+                    className={`flex ${
+                      header.column.getCanSort()
+                        ? 'cursor-pointer select-none'
+                        : ''
+                    }`}
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+
+                    <span className="ml-2 flex-none rounded-sm bg-gray-500 text-gray-200">
+                      {{
+                        asc: (
+                          <ChevronUpIcon
+                            aria-hidden="true"
+                            className="size-5"
+                          />
+                        ),
+                        desc: (
+                          <ChevronDownIcon
+                            aria-hidden="true"
+                            className="size-5"
+                          />
+                        ),
+                      }[header.column.getIsSorted() as string] ?? null}
+                    </span>
+                  </div>
                 </th>
               ))}
             </tr>
