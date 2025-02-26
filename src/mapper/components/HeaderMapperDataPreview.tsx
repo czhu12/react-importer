@@ -1,12 +1,13 @@
 import { ImporterOutputFieldType } from '../../types';
 import { useTranslations } from '../../i18';
+import { Card } from '../../components';
 
 interface Props {
   examples: ImporterOutputFieldType[] | null;
   header: string;
 }
 
-const headerClass = 'py-4 text-left text-sm';
+const headerClass = 'pb-4 pt-1 text-left text-sm';
 const cellClass = 'text-sm text-gray-900 py-2 border-t border-gray-300 h-10';
 
 export default function HeaderMapperDataPreview({ examples, header }: Props) {
@@ -14,7 +15,7 @@ export default function HeaderMapperDataPreview({ examples, header }: Props) {
 
   return (
     header && (
-      <div className="m-6 rounded-sm border border-gray-300 bg-white px-6 py-4">
+      <Card className="m-6">
         <table className="w-full divide-y divide-gray-300">
           <thead>
             <tr>
@@ -36,7 +37,7 @@ export default function HeaderMapperDataPreview({ examples, header }: Props) {
             ))}
           </tbody>
         </table>
-      </div>
+      </Card>
     )
   );
 }

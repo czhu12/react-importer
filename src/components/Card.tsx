@@ -2,17 +2,15 @@ import { forwardRef } from 'preact/compat';
 import { JSX } from 'preact';
 
 const Card = forwardRef<HTMLDivElement, JSX.HTMLAttributes<HTMLDivElement>>(
-  ({ children, ...props }, ref) => {
-    const componentStyle: React.CSSProperties = {
-      boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
-      padding: '10px',
-      borderRadius: '5px',
-      cursor: props.onClick ? 'pointer' : 'default',
-    };
-
+  ({ children, className, onClick, ...props }, ref) => {
     return (
-      <div ref={ref} style={componentStyle} {...props}>
-        {children}
+      <div
+        ref={ref}
+        onClick={onClick}
+        className={`${className} overflow-hidden rounded-md border border-gray-300 bg-white ${onClick ? 'cursor-pointer' : ''}`}
+        {...props}
+      >
+        <div className="px-4 py-5 sm:p-6">{children}</div>
       </div>
     );
   }
