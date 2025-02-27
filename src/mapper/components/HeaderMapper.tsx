@@ -59,34 +59,36 @@ export default function HeaderMapper({
             <div className="flex-1">{t('mapper.incomingColumn')}</div>
             <div className="flex-1">{t('mapper.destinationColumn')}</div>
           </div>
-          {csvHeaders.map((header, columnIndex) => {
-            const headerMapping =
-              currentMapping.find(
-                (mapping) => mapping.csvColumnName === header
-              ) ?? null;
+          <div className="max-h-[50vh] overflow-y-auto">
+            {csvHeaders.map((header, columnIndex) => {
+              const headerMapping =
+                currentMapping.find(
+                  (mapping) => mapping.csvColumnName === header
+                ) ?? null;
 
-            return (
-              <HeaderMapperSelection
-                key={columnIndex}
-                csvHeader={header}
-                currentMapping={headerMapping}
-                setMapping={(headerMapping) => {
-                  const newMappings =
-                    calculateNewMappingsForCsvColumnMapingChanged(
-                      currentMapping,
-                      header,
-                      headerMapping
-                    );
+              return (
+                <HeaderMapperSelection
+                  key={columnIndex}
+                  csvHeader={header}
+                  currentMapping={headerMapping}
+                  setMapping={(headerMapping) => {
+                    const newMappings =
+                      calculateNewMappingsForCsvColumnMapingChanged(
+                        currentMapping,
+                        header,
+                        headerMapping
+                      );
 
-                  onMappingsChanged(newMappings);
-                }}
-                mappingSelectionOptions={mappingSelectOptions}
-                onMouseEnter={() => {
-                  setHoveredCsvHeader(header);
-                }}
-              />
-            );
-          })}
+                    onMappingsChanged(newMappings);
+                  }}
+                  mappingSelectionOptions={mappingSelectOptions}
+                  onMouseEnter={() => {
+                    setHoveredCsvHeader(header);
+                  }}
+                />
+              );
+            })}
+          </div>
         </div>
         <div className="flex-1 bg-gray-50">
           <HeaderMapperDataPreview
