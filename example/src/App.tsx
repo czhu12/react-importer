@@ -3,9 +3,11 @@ import Header from './components/Header';
 import CodeBlock from './components/CodeBlock';
 import Footer from './components/Footer';
 import { EXAMPLE_CODE } from './constants';
-import EmployeeSheetImporter from './components/EmployeeSheetImporter';
-import EmployeeImporter from './components/EmployeeImporter';
-import WideImporter from './components/WideImporter';
+import {
+  EmployeeSheetImporter,
+  EmployeeImporter,
+  WideImporter,
+} from './components/importers';
 
 const App = () => {
   return (
