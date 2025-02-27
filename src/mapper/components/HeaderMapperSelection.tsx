@@ -43,8 +43,7 @@ export default function HeaderMapperSelection({
 
         <div className="mx-2.5 flex-1">
           <Select
-            // TODO THIS BRANCH: Add back the following props
-            // isSearchable
+            searchable
             clearable
             compareFunction={(a, b) => {
               if (a == null || b == null) {
