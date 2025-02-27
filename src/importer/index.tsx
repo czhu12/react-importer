@@ -49,13 +49,11 @@ function ImporterBody({
   ] = useReducer(reducer, buildInitialState(sheets));
 
   useEffect(() => {
-    if (targetRef.current) {
-      if (
-        mode === 'preview' &&
-        sheetData.some((sheet) => sheet.rows.length > 0)
-      ) {
-        targetRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
+    if (
+      mode === 'preview' &&
+      sheetData.some((sheet) => sheet.rows.length > 0)
+    ) {
+      targetRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [mode, sheetData]);
 
