@@ -113,14 +113,16 @@ export default function Select<T>({
     <Combobox value={value as any} onChange={handleChange} multiple={multiple}>
       <div className="relative">
         {searchable && (
-          <ComboboxInput
-            className={`${classes} focus:outline-primary w-full cursor-default rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm`}
-            displayValue={() => displayValue}
-            onChange={(event) =>
-              setQuery((event.target as HTMLInputElement).value)
-            }
-            placeholder={placeholderValue}
-          />
+          <ComboboxButton className="w-full">
+            <ComboboxInput
+              className={`${classes} focus:outline-primary w-full cursor-default rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm`}
+              displayValue={() => displayValue}
+              onChange={(event) =>
+                setQuery((event.target as HTMLInputElement).value)
+              }
+              placeholder={placeholderValue}
+            />
+          </ComboboxButton>
         )}
 
         {!searchable && (
