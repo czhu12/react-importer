@@ -49,13 +49,15 @@ function ImporterBody({
   ] = useReducer(reducer, buildInitialState(sheets));
 
   useEffect(() => {
+    if (
+      mode === 'preview' &&
+      sheetData.some((sheet) => sheet.rows.length <= 0)
+    ) {
+      return;
+    }
+
     if (targetRef.current) {
-      if (
-        mode === 'mapping' ||
-        (mode === 'preview' && sheetData.some((sheet) => sheet.rows.length > 0))
-      ) {
-        targetRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
+      targetRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [mode, sheetData]);
 
