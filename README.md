@@ -181,7 +181,7 @@ These variables allow you to adjust the color scheme for primary, secondary, and
 
 #### Locales
 
-In order to change locale simply pass it to the Importer. Currently supported locales are
+In order to change locale simply pass it to the Importer. Currently supported locales are:
 
 - en - English (the default one)
 - fr - French
