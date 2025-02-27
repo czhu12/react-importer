@@ -59,7 +59,7 @@ export default function HeaderMapper({
             <div className="flex-1">{t('mapper.incomingColumn')}</div>
             <div className="flex-1">{t('mapper.destinationColumn')}</div>
           </div>
-          <div className="max-h-[50vh] overflow-y-auto">
+          <div className="max-h-[70vh] overflow-y-auto">
             {csvHeaders.map((header, columnIndex) => {
               const headerMapping =
                 currentMapping.find(
