@@ -12,7 +12,7 @@ import {
 } from '@heroicons/react/20/solid';
 import { useTranslations } from '../i18';
 import { ComponentChildren } from 'preact';
-import { useRef, useState } from 'preact/hooks';
+import { useState } from 'preact/hooks';
 
 export interface SelectOption<T> {
   label: ComponentChildren;
@@ -48,7 +48,6 @@ export default function Select<T>({
 }: Props<T>) {
   const { t } = useTranslations();
   const [query, setQuery] = useState('');
-  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const isSelected = (valueToCheck: T) => {
     if (multiple && Array.isArray(value)) {
@@ -150,10 +149,7 @@ export default function Select<T>({
             />
           </span>
         )}
-        <ComboboxButton
-          ref={buttonRef}
-          className="absolute inset-y-0 right-0 flex items-center pr-2"
-        >
+        <ComboboxButton className="absolute inset-y-0 right-0 flex items-center pr-2">
           <ChevronUpDownIcon
             aria-hidden="true"
             className="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4"
