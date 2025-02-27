@@ -36,10 +36,13 @@
     "numberRowsImported": "{{count}} lignes importées",
     "back": "Retour",
     "confirm": "Confirmer",
-    "noData": "Aucune donnée",
+    "noData": "Aucune donnée prévue",
     "unused": "Non utilisées",
     "used": "Utilisées",
-    "mappingsNotValidTooltip": "Veuillez définir toutes les mappings requis"
+    "mappingsNotValidTooltip": "Veuillez définir toutes les mappings requis",
+    "incomingColumn": "Colonne entrante",
+    "destinationColumn": "Colonne de destination",
+    "dataPreview": "Aperçu des données pour {{csvHeader}}"
   },
   "sheet": {
     "validationPassed": "Toutes les lignes passent la validation !",

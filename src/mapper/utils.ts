@@ -1,4 +1,7 @@
-import { NUMBER_OF_EXAMPLES_IN_MAPPING } from '../constants';
+import {
+  NUMBER_OF_EXAMPLES_IN_MAPPING,
+  MAX_CHARACTERS_IN_MAPPING_EXAMPLES,
+} from '../constants';
 import {
   ColumnMapping,
   CSVParsedData,
@@ -96,10 +99,47 @@ export function calculateMappingExamples(
   data: CSVParsedData[],
   csvColumnName: string
 ) {
+  const examples = getFilteredExamples(data, csvColumnName);
+
+  const paddedExamples = padExamples(examples);
+
+  return trimExamplesByCharacterLimit(paddedExamples);
+}
+
+function getFilteredExamples(data: CSVParsedData[], csvColumnName: string) {
   return data
     .map((d) => d[csvColumnName])
     .filter((v) => v != null && v.trim() !== '')
     .slice(0, NUMBER_OF_EXAMPLES_IN_MAPPING);
+}
+
+function padExamples(examples: string[]) {
+  const paddedExamples = [
+    ...examples,
+    ...Array(NUMBER_OF_EXAMPLES_IN_MAPPING - examples.length).fill(''),
+  ];
+  return paddedExamples;
+}
+
+function trimExamplesByCharacterLimit(examples: string[]) {
+  const trimmedExamples = [...examples];
+  let totalCharacters = trimmedExamples.reduce(
+    (acc, curr) => acc + curr.length,
+    0
+  );
+
+  while (
+    totalCharacters > MAX_CHARACTERS_IN_MAPPING_EXAMPLES &&
+    trimmedExamples.length > 1
+  ) {
+    trimmedExamples.pop();
+    totalCharacters = trimmedExamples.reduce(
+      (acc, curr) => acc + curr.length,
+      0
+    );
+  }
+
+  return trimmedExamples;
 }
 
 export function useMappingAvailableSelectOptions(

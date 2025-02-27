@@ -1,39 +1,47 @@
-import { Select } from '../../components';
-import { useTranslations } from '../../i18';
-import {
-  ColumnMapping,
-  ImporterOutputFieldType,
-  MapperOption,
-  MapperOptionValue,
-} from '../../types';
+import { Select, Badge } from '../../components';
+import { ColumnMapping, MapperOption, MapperOptionValue } from '../../types';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
 interface Props {
   csvHeader: string;
-  examples: ImporterOutputFieldType[];
   currentMapping: MapperOptionValue | null;
   setMapping: (header: MapperOptionValue | null) => void;
   mappingSelectionOptions: MapperOption[];
+  onMouseEnter: () => void;
 }
 
 export default function HeaderMapperSelection({
   csvHeader,
-  examples,
   setMapping,
   currentMapping,
   mappingSelectionOptions,
+  onMouseEnter,
 }: Props) {
-  const { t } = useTranslations();
+  const currentHeaderOption =
+    currentMapping == null
+      ? null
+      : (mappingSelectionOptions.find(
+          (option) =>
+            option.value.sheetId === currentMapping.sheetId &&
+            option.value.sheetColumnId === currentMapping.sheetColumnId
+        )?.value ?? null);
 
   return (
-    <div>
-      <div className="my-5 flex items-center">
-        <div className="mx-2.5 flex-1">{csvHeader.slice(0, 30)}</div>
-        <div className="mx-5">
-          <ArrowRightIcon className="4" />
+    <div
+      className="hover:bg-tertiary-light rounded-sm"
+      onMouseEnter={onMouseEnter}
+    >
+      <div className="flex items-center py-2.5">
+        <div className="mx-2.5 flex flex-1 justify-between">
+          <div>
+            <Badge variant="primary">{csvHeader.slice(0, 30)}</Badge>
+          </div>
+          <div className="mx-5">
+            <ArrowRightIcon className="h-4 w-4" />
+          </div>
         </div>
 
-        <div className="flex-4">
+        <div className="mx-2.5 flex-1">
           <Select
             // TODO THIS BRANCH: Add back the following props
             // isSearchable
@@ -47,34 +55,12 @@ export default function HeaderMapperSelection({
                 a.sheetColumnId === b.sheetColumnId && a.sheetId === b.sheetId
               );
             }}
-            value={currentMapping}
+            value={currentHeaderOption}
             options={mappingSelectionOptions}
             onChange={(mapping) => setMapping(mapping as ColumnMapping | null)}
           />
         </div>
       </div>
-      <table className="w-full border border-black">
-        <tbody>
-          {examples.map((e, idx) => {
-            return (
-              <tr key={idx}>
-                <td
-                  style={{
-                    backgroundColor: '#ecf0f1',
-                    textAlign: 'center',
-                    width: '40px',
-                  }}
-                >
-                  {idx}
-                </td>
-                <td style={{ padding: '10px 20px' }}>
-                  {e || <i>{t('mapper.noData')}</i>}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
     </div>
   );
 }
