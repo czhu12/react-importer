@@ -1,8 +1,9 @@
 import {
-  Listbox,
-  ListboxButton,
-  ListboxOption,
-  ListboxOptions,
+  Combobox,
+  ComboboxButton,
+  ComboboxOption,
+  ComboboxOptions,
+  ComboboxInput,
 } from '@headlessui/react';
 import {
   ChevronUpDownIcon,
@@ -11,6 +12,7 @@ import {
 } from '@heroicons/react/20/solid';
 import { useTranslations } from '../i18';
 import { ComponentChildren } from 'preact';
+import { useRef, useState } from 'preact/hooks';
 
 export interface SelectOption<T> {
   label: ComponentChildren;
@@ -26,6 +28,7 @@ interface Props<T> {
   multiple?: boolean;
   compareFunction?: (a: T, b: T) => boolean;
   clearable?: boolean;
+  searchable?: boolean;
   placeholder?: string;
   classes?: string;
   displayPlaceholderWhenSelected?: boolean;
@@ -38,11 +41,14 @@ export default function Select<T>({
   multiple = false,
   compareFunction = (a, b) => a === b,
   clearable = false,
+  searchable = false,
   placeholder,
   classes,
   displayPlaceholderWhenSelected = false,
 }: Props<T>) {
   const { t } = useTranslations();
+  const [query, setQuery] = useState('');
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const isSelected = (valueToCheck: T) => {
     if (multiple && Array.isArray(value)) {
@@ -52,6 +58,7 @@ export default function Select<T>({
   };
 
   const handleChange = (selected: T | T[]) => {
+    setQuery('');
     if (multiple) {
       const selectedArray = Array.isArray(selected) ? selected : [selected];
       onChange(selectedArray);
@@ -61,6 +68,7 @@ export default function Select<T>({
   };
 
   const clear = () => {
+    setQuery('');
     if (multiple) {
       onChange([]);
     } else {
@@ -69,66 +77,95 @@ export default function Select<T>({
   };
 
   const selectedOptions = options.filter((option) => isSelected(option.value));
+  const displayValue = selectedOptions.map((o) => o.label).join(', ');
+
+  const filteredOptions =
+    query && searchable
+      ? options.filter((option) =>
+          String(option.label).toLowerCase().includes(query.toLowerCase())
+        )
+      : options;
 
   const placeholderValue =
     placeholder ?? t('components.select.optionPlaceholder');
-  const hasGroupProperty = options.some((option) => option.group);
+  const hasGroupProperty = filteredOptions.some((option) => option.group);
 
   const groupedOptions = hasGroupProperty
     ? Object.entries(
-        options.reduce((acc: Record<string, SelectOption<T>[]>, option) => {
-          const groupKey = option.group || 'ungrouped';
-          acc[groupKey] = acc[groupKey] || [];
-          acc[groupKey].push(option);
-          return acc;
-        }, {})
+        filteredOptions.reduce(
+          (acc: Record<string, SelectOption<T>[]>, option) => {
+            const groupKey = option.group || 'ungrouped';
+            acc[groupKey] = acc[groupKey] || [];
+            acc[groupKey].push(option);
+            return acc;
+          },
+          {}
+        )
       ).map(([group, items]) => ({
         label: group,
         items,
       }))
-    : [{ label: null, items: options }];
+    : [{ label: null, items: filteredOptions }];
 
   const hasNoOptions = groupedOptions.every(({ items }) => items.length === 0);
+  const clearButtonDisplayed = clearable && selectedOptions.length > 0;
 
   return (
-    <Listbox value={value} onChange={handleChange} multiple={multiple}>
+    <Combobox value={value as any} onChange={handleChange} multiple={multiple}>
       <div className="relative">
-        <ListboxButton
-          className={`${classes} focus:outline-primary grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6`}
-        >
-          <span className="col-start-1 row-start-1 truncate pr-6">
-            {selectedOptions.length > 0
-              ? `${displayPlaceholderWhenSelected ? `${placeholderValue}: ` : ''}${selectedOptions.map((o) => o.label).join(', ')}`
-              : placeholderValue}
-          </span>
+        {searchable && (
+          <ComboboxInput
+            className={`${classes} focus:outline-primary w-full cursor-default rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm`}
+            displayValue={() => displayValue}
+            onChange={(event) =>
+              setQuery((event.target as HTMLInputElement).value)
+            }
+            placeholder={placeholderValue}
+          />
+        )}
 
-          {clearable && selectedOptions.length > 0 && (
-            <span
-              onClick={(e) => {
-                e.stopPropagation();
-                clear();
-              }}
-              className="col-start-2 row-start-1 flex cursor-pointer items-center justify-self-end pr-2"
-            >
-              <XMarkIcon
-                className="h-5 w-5 text-gray-500 hover:text-gray-700"
-                aria-hidden="true"
-              />
+        {!searchable && (
+          <ComboboxButton
+            className={`${classes} ${clearButtonDisplayed ? 'pr-8' : 'pr-2'} focus:outline-primary grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6`}
+          >
+            <span className="col-start-1 row-start-1 truncate pr-6">
+              {selectedOptions.length > 0
+                ? `${displayPlaceholderWhenSelected ? `${placeholderValue}: ` : ''}${selectedOptions.map((o) => o.label).join(', ')}`
+                : placeholderValue}
             </span>
-          )}
+          </ComboboxButton>
+        )}
 
+        {clearButtonDisplayed && (
+          <span
+            onClick={(e) => {
+              e.stopPropagation();
+              clear();
+            }}
+            className="absolute inset-y-0 right-8 flex cursor-pointer items-center text-gray-500 hover:text-gray-700"
+          >
+            <XMarkIcon
+              className="h-5 w-5 text-gray-500 hover:text-gray-700"
+              aria-hidden="true"
+            />
+          </span>
+        )}
+        <ComboboxButton
+          ref={buttonRef}
+          className="absolute inset-y-0 right-0 flex items-center pr-2"
+        >
           <ChevronUpDownIcon
             aria-hidden="true"
             className="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4"
           />
-        </ListboxButton>
+        </ComboboxButton>
 
-        <ListboxOptions
+        <ComboboxOptions
           transition
           className="absolute z-99 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
         >
           {hasNoOptions && (
-            <ListboxOption
+            <ComboboxOption
               key="no-options"
               disabled
               value={null}
@@ -137,9 +174,8 @@ export default function Select<T>({
               <span className="block truncate font-normal">
                 {t('components.select.noOptions')}
               </span>
-            </ListboxOption>
+            </ComboboxOption>
           )}
-
           {groupedOptions.map(({ label, items }) => (
             <div key={label || 'all'}>
               {label && (
@@ -148,7 +184,7 @@ export default function Select<T>({
                 </div>
               )}
               {items.map((option) => (
-                <ListboxOption
+                <ComboboxOption
                   key={option.value as string}
                   value={option.value}
                   className="group data-focus:bg-primary relative flex cursor-default items-center py-2 pr-9 pl-3 text-gray-900 select-none data-focus:text-white data-focus:outline-hidden"
@@ -164,12 +200,12 @@ export default function Select<T>({
                       <CheckIcon aria-hidden="true" className="h-5 w-5" />
                     </span>
                   )}
-                </ListboxOption>
+                </ComboboxOption>
               ))}
             </div>
           ))}
-        </ListboxOptions>
+        </ComboboxOptions>
       </div>
-    </Listbox>
+    </Combobox>
   );
 }
