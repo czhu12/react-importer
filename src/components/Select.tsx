@@ -129,7 +129,7 @@ export default function Select<T>({
           >
             <span className="col-start-1 row-start-1 truncate pr-6">
               {selectedOptions.length > 0
-                ? `${displayPlaceholderWhenSelected ? `${placeholderValue}: ` : ''}${selectedOptions.map((o) => o.label).join(', ')}`
+                ? `${displayPlaceholderWhenSelected ? `${placeholderValue}: ` : ''}${displayValue}`
                 : placeholderValue}
             </span>
           </ComboboxButton>
