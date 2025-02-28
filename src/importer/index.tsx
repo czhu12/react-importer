@@ -33,6 +33,7 @@ function ImporterBody({
 }: ImporterDefinition) {
   const { t } = useTranslations();
 
+  const isInitialRender = useRef(true);
   const targetRef = useRef<HTMLDivElement | null>(null);
 
   const [
@@ -49,12 +50,12 @@ function ImporterBody({
   ] = useReducer(reducer, buildInitialState(sheets));
 
   useEffect(() => {
-    if (
-      mode !== 'preview' ||
-      (mode === 'preview' && sheetData.some((sheet) => sheet.rows.length > 0))
-    ) {
-      targetRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
     }
+
+    targetRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [mode]);
 
   const currentSheetData = sheetData.find(
