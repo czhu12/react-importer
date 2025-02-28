@@ -50,8 +50,8 @@ function ImporterBody({
 
   useEffect(() => {
     if (
-      mode === 'preview' &&
-      sheetData.some((sheet) => sheet.rows.length > 0)
+      mode !== 'preview' ||
+      (mode === 'preview' && sheetData.some((sheet) => sheet.rows.length > 0))
     ) {
       targetRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
