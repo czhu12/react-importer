@@ -161,7 +161,7 @@ export default function Select<T>({
         </ComboboxButton>
 
         <ComboboxOptions
-          anchor={displayOutsideContainer ? 'bottom' : undefined}
+          anchor={displayOutsideContainer && 'bottom'}
           transition
           className={`${displayOutsideContainer ? 'w-[var(--input-width)]' : 'w-full'} absolute z-99 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm`}
         >
