@@ -32,7 +32,6 @@ interface Props<T> {
   placeholder?: string;
   classes?: string;
   displayPlaceholderWhenSelected?: boolean;
-  displayOutsideContainer?: boolean;
 }
 
 export default function Select<T>({
@@ -46,7 +45,6 @@ export default function Select<T>({
   placeholder,
   classes,
   displayPlaceholderWhenSelected = false,
-  displayOutsideContainer = false,
 }: Props<T>) {
   const { t } = useTranslations();
   const [query, setQuery] = useState('');
@@ -128,14 +126,17 @@ export default function Select<T>({
         )}
 
         {!searchable && (
-          <ComboboxButton
-            className={`${classes} ${clearButtonDisplayed ? 'pr-8' : 'pr-2'} focus:outline-primary grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6`}
-          >
-            <span className="col-start-1 row-start-1 truncate pr-6">
-              {selectedOptions.length > 0
-                ? `${displayPlaceholderWhenSelected ? `${placeholderValue}: ` : ''}${displayValue}`
-                : placeholderValue}
-            </span>
+          <ComboboxButton className="w-full">
+            <ComboboxInput
+              className={`${classes} focus:outline-primary w-full cursor-default rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm`}
+              displayValue={() =>
+                selectedOptions.length > 0
+                  ? `${displayPlaceholderWhenSelected ? `${placeholderValue}: ` : ''}${displayValue}`
+                  : placeholderValue
+              }
+              placeholder={placeholderValue}
+              readOnly
+            />
           </ComboboxButton>
         )}
 
@@ -161,9 +162,9 @@ export default function Select<T>({
         </ComboboxButton>
 
         <ComboboxOptions
-          anchor={displayOutsideContainer && 'bottom'}
+          anchor="bottom"
           transition
-          className={`${displayOutsideContainer ? 'w-[var(--input-width)]' : 'w-full'} absolute z-99 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm`}
+          className="absolute z-99 mt-1 max-h-60 w-[var(--input-width)] overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
         >
           {hasNoOptions && (
             <ComboboxOption
