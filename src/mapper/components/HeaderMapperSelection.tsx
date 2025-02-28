@@ -45,6 +45,7 @@ export default function HeaderMapperSelection({
           <Select
             searchable
             clearable
+            displayOutsideContainer
             compareFunction={(a, b) => {
               if (a == null || b == null) {
                 return false;
