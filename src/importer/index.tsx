@@ -21,7 +21,7 @@ import { applyTransformations } from '../transformers';
 import { buildSuggestedHeaderMappings } from '../mapper/utils';
 import { NUMBER_OF_EMPTY_ROWS_FOR_MANUAL_DATA_INPUT } from '../constants';
 import SheetsSwitcher from '../sheet/components/SheetsSwitcher';
-import { Button, Root } from '../components';
+import { Button, Root, Tooltip } from '../components';
 import { TranslationProvider, useTranslations } from '../i18';
 import BackToMappingButton from './components/BackToMappingButton';
 
@@ -30,6 +30,7 @@ function ImporterBody({
   onComplete,
   sheets,
   onDataColumnsMapped,
+  preventUploadOnValidationErrors,
 }: ImporterDefinition) {
   const { t } = useTranslations();
 
@@ -65,6 +66,13 @@ function ImporterBody({
   const currentSheetDefinition = sheets.find(
     (sheet) => sheet.id === currentSheetId
   )!;
+
+  const preventUploadOnErrors =
+    typeof preventUploadOnValidationErrors === 'function'
+      ? (preventUploadOnValidationErrors?.(validationErrors) ?? false)
+      : (preventUploadOnValidationErrors ?? false);
+
+  const preventUpload = preventUploadOnErrors && validationErrors.length > 0;
 
   function onFileUploaded(file: File) {
     parseCsv({
@@ -196,9 +204,14 @@ function ImporterBody({
                     <BackToMappingButton onBackToMapping={onBackToMapping} />
                   )}
                 </div>
-                <div>
-                  <Button onClick={onSubmit}>{t('importer.upload')}</Button>
-                </div>
+                <Tooltip
+                  tooltipText={t('importer.uploadBlocked')}
+                  hidden={!preventUpload}
+                >
+                  <Button onClick={onSubmit} disabled={preventUpload}>
+                    {t('importer.upload')}
+                  </Button>
+                </Tooltip>
               </div>
             )}
 

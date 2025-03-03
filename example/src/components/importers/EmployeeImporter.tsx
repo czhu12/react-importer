@@ -99,6 +99,7 @@ export default function EmployeeImporter() {
           return dataColumns;
         }}
         onComplete={onComplete}
+        preventUploadOnValidationErrors
       />
       {ready && (
         <div style={{ margin: '0 auto', maxWidth: '1200px' }}>
