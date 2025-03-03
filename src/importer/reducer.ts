@@ -34,6 +34,8 @@ const reducer = (
     }
     case 'FILE_PARSED':
       return { ...state, parsedFile: action.payload.parsed, mode: 'mapping' };
+    case 'UPLOAD':
+      return { ...state, mode: 'upload' };
     case 'COLUMN_MAPPING_CHANGED': {
       return {
         ...state,
