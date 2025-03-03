@@ -11,6 +11,7 @@
   },
   "importer": {
     "upload": "Télécharger",
+    "uploadBlocked": "Vos données comportent des erreurs de validation. Corrigez-les avant de les télécharger.",
     "back": "Retour",
     "loader": {
       "failed": "Quelque chose a mal tourné",

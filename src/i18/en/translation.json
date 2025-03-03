@@ -11,6 +11,7 @@
   },
   "importer": {
     "upload": "Upload",
+    "uploadBlocked": "Your data has validation errors. Fix them before uploading.",
     "back": "Back",
     "loader": {
       "failed": "Something went wrong",
