@@ -156,7 +156,6 @@ function ImporterBody({
     dispatch({ type: 'MAPPING' });
   }
 
-  console.log(mode);
   return (
     <ThemeSetter theme={theme}>
       <Root ref={targetRef}>
