@@ -241,6 +241,7 @@ function ImporterBody({
             progress={importProgress}
             onRetry={onSubmit}
             onBackToPreview={onBackToPreview}
+            resetState={resetState}
           />
         )}
       </Root>

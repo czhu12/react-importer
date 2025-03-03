@@ -61,6 +61,7 @@
     "removeRowsTooltipNoRowsSelected": "Please select at least one record in order to delete it",
     "addRowsTooltip": "Add a new row",
     "downloadSheetTooltip": "Download this sheet",
+    "reset": "Start over",
     "resetTooltip": "Start over",
     "resetConfirmationModalTitle": "Start over",
     "resetConfirmationModalConfirmationText": "Start over",

@@ -9,6 +9,7 @@ interface Props {
   mode: Mode;
   onRetry: () => void;
   onBackToPreview: () => void;
+  resetState: () => void;
 }
 
 export default function Completed({
@@ -16,6 +17,7 @@ export default function Completed({
   mode,
   onRetry,
   onBackToPreview,
+  resetState,
 }: Props) {
   const failed = mode === 'failed';
   const pending = mode === 'submit';
@@ -23,5 +25,7 @@ export default function Completed({
   if (failed) {
     return <Failed onRetry={onRetry} onBackToPreview={onBackToPreview} />;
   }
-  return <Uploading progress={progress} pending={pending} />;
+  return (
+    <Uploading progress={progress} pending={pending} resetState={resetState} />
+  );
 }
