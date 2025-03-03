@@ -60,7 +60,11 @@
     "removeRowsTooltip": "Supprimer les lignes",
     "removeRowsTooltipNoRowsSelected": "Veuillez sélectionner au moins un enregistrement avant de le supprimer",
     "addRowsTooltip": "Ajouter une nouvelle ligne",
-    "downloadSheetTooltip": "Télécharger cette feuille"
+    "downloadSheetTooltip": "Télécharger cette feuille",
+    "resetTooltip": "Recommencer",
+    "resetConfirmationModalTitle": "Recommencer",
+    "resetConfirmationModalConfirmationText": "Recommencer",
+    "resetConfirmationModalSubTitle": "Êtes-vous sûr de vouloir recommencer ? Cela supprimera toutes les données et réinitialisera la feuille à son état initial."
   },
   "validators": {
     "includes": "La valeur n'est pas dans la liste des valeurs autorisées",

@@ -126,6 +126,8 @@ const reducer = (
       return { ...state, mode: 'preview' };
     case 'MAPPING':
       return { ...state, mode: 'mapping' };
+    case 'RESET':
+      return buildInitialState(state.sheetDefinitions);
     default:
       return state;
   }
