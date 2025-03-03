@@ -170,7 +170,7 @@ export default function SheetDataEditorActions({
         clearable
         displayPlaceholderWhenSelected
         placeholder={t('sheet.filterByError')}
-        classes="min-w-72"
+        classes="min-w-48"
         options={filterByErrorOptions}
         value={errorColumnFilter}
         onChange={(value) => setErrorColumnFilter(value as string)}
