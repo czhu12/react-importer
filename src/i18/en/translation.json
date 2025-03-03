@@ -11,6 +11,7 @@
   },
   "importer": {
     "upload": "Upload",
+    "uploadBlocked": "Your data has validation errors. Fix them before uploading.",
     "back": "Back",
     "loader": {
       "failed": "Something went wrong",
@@ -56,7 +57,8 @@
     "invalid": "Invalid",
     "filterByError": "Filter by error",
     "search": "Search",
-    "removeRowsTooltip": "Please select at least one record in order to delete it",
+    "removeRowsTooltip": "Remove rows",
+    "removeRowsTooltipNoRowsSelected": "Please select at least one record in order to delete it",
     "addRowsTooltip": "Add a new row",
     "downloadSheetTooltip": "Download this sheet"
   },
