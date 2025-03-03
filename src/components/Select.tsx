@@ -128,7 +128,7 @@ export default function Select<T>({
         <ComboboxButton className="w-full">
           <ComboboxInput
             className={`${classes} focus:outline-primary block w-full cursor-default truncate rounded-md bg-white py-1.5 ${clearButtonDisplayed ? 'pr-12' : 'pr-2'} pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm`}
-            displayValue={() => getDisplayValue()}
+            displayValue={getDisplayValue}
             onChange={(event) =>
               searchable && setQuery((event.target as HTMLInputElement).value)
             }
