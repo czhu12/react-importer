@@ -97,7 +97,7 @@ export default function Select<T>({
         ? `${placeholderValue}: ${baseDisplayValue}`
         : baseDisplayValue;
     }
-    return placeholderValue;
+    return '';
   };
 
   const hasGroupProperty = filteredOptions.some((option) => option.group);
