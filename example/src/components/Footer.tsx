@@ -1,5 +1,5 @@
 import { BookOpenIcon } from '@heroicons/react/24/outline';
-import { YouTubeIcon, GitHubIcon } from './Icons';
+import { GitHubIcon } from './Icons';
 const navigation = {
   main: [
     { name: 'About', href: '#' },
@@ -20,11 +20,6 @@ const navigation = {
       name: 'GitHub',
       href: '#',
       icon: (props: any) => <GitHubIcon {...props} />,
-    },
-    {
-      name: 'YouTube', // TODO: Include a YouTube video here on how to use
-      href: '#',
-      icon: (props: any) => <YouTubeIcon {...props} />,
     },
   ],
 };
