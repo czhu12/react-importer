@@ -143,10 +143,10 @@ export default function Select<T>({
               e.stopPropagation();
               clear();
             }}
-            className="absolute inset-y-0 right-7 flex cursor-pointer items-center text-gray-500 hover:text-gray-700"
+            className="absolute inset-y-0 right-6 flex cursor-pointer items-center text-gray-500 hover:text-gray-700"
           >
             <XMarkIcon
-              className="h-4 w-4 text-gray-500 hover:text-gray-700"
+              className="h-5 w-5 text-gray-500 hover:text-gray-700"
               aria-hidden="true"
             />
           </span>
