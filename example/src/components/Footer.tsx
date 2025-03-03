@@ -1,5 +1,5 @@
 import { BookOpenIcon } from '@heroicons/react/24/outline';
-import { YouTubeIcon, GitHubIcon } from './Icons';
+import { GitHubIcon } from './Icons';
 const navigation = {
   main: [
     { name: 'About', href: '#' },
@@ -21,11 +21,6 @@ const navigation = {
       href: '#',
       icon: (props: any) => <GitHubIcon {...props} />,
     },
-    {
-      name: 'YouTube', // TODO: Include a YouTube video here on how to use
-      href: '#',
-      icon: (props: any) => <YouTubeIcon {...props} />,
-    },
   ],
 };
 
@@ -33,9 +28,6 @@ export default function Footer() {
   return (
     <div
       className="bg-slate-800 bg-cover bg-center text-white"
-      style={{
-        clipPath: 'polygon(0 15%, 100% 0%, 100% 100%, 0 100%)',
-      }}
     >
       <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
         <nav

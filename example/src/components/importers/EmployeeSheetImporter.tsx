@@ -9,7 +9,7 @@ const COMPANY_SHEET: SheetDefinition = {
   label: 'Companies',
   columns: [
     {
-      label: 'Name',
+      label: 'Company Name',
       id: 'company_name',
       type: 'string',
       validators: [{ validate: 'required' }],
@@ -20,7 +20,11 @@ const COMPANY_SHEET: SheetDefinition = {
       type: 'enum',
       typeArguments: {
         values: [
-          { label: 'Tech', value: 'tech' },
+          { label: 'Healthcare', value: 'healthcare' },
+          { label: 'Construction', value: 'construction' },
+          { label: 'Environmental Services', value: 'environmental_services' },
+          { label: 'Education', value: 'education' },
+          { label: 'Technology', value: 'technology' },
           { label: 'Finance', value: 'finance' },
         ],
       },
@@ -77,7 +81,7 @@ const EMPLOYEE_SHEET: SheetDefinition = {
       type: 'reference',
       typeArguments: {
         sheetId: 'companies',
-        sheetColumnId: 'company',
+        sheetColumnId: 'company_name',
       },
       validators: [{ validate: 'required' }],
     },

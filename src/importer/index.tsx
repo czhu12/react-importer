@@ -28,6 +28,7 @@ import BackToMappingButton from './components/BackToMappingButton';
 function ImporterBody({
   theme,
   onComplete,
+  allowManualDataEntry,
   sheets,
   onDataColumnsMapped,
   preventUploadOnValidationErrors,
@@ -180,6 +181,21 @@ function ImporterBody({
             onBack={onBackToPreview}
           />
         )}
+        {mode === 'upload' && (
+          <div className="mt-5">
+            <FileUploader setFile={onFileUploaded} />
+            {allowManualDataEntry && (
+              <div className="mt-10 mb-2.5">
+                <p
+                  onClick={onEnterDataManually}
+                  className="text-primary hover:text-primary cursor-pointer decoration-2 opacity-90 hover:underline focus:underline focus:outline-none"
+                >
+                  {t('importer.uploader.enterManually')}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
         {mode === 'preview' && (
           <>
             <SheetsSwitcher
@@ -217,20 +233,6 @@ function ImporterBody({
                     {t('importer.upload')}
                   </Button>
                 </Tooltip>
-              </div>
-            )}
-
-            {currentSheetData.rows.length <= 0 && (
-              <div className="mt-5">
-                <FileUploader setFile={onFileUploaded} />
-                <div className="mt-10 mb-2.5">
-                  <p
-                    onClick={onEnterDataManually}
-                    className="text-primary hover:text-primary cursor-pointer decoration-2 opacity-90 hover:underline focus:underline focus:outline-none"
-                  >
-                    {t('importer.uploader.enterManually')}
-                  </p>
-                </div>
               </div>
             )}
           </>

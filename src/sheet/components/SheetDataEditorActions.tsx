@@ -131,8 +131,8 @@ export default function SheetDataEditorActions({
 
   return (
     <div className="my-5 flex items-center">
-      <div className="flex grow items-center">
-        <div className="mr-5">
+      <div className="my-5 flex flex-wrap items-center gap-5">
+        <div>
           <ButtonGroup activeButton={viewMode} buttons={viewModeButtons} />
         </div>
 
@@ -145,7 +145,6 @@ export default function SheetDataEditorActions({
         />
 
         <Tooltip
-          className="ml-5"
           tooltipText={t(
             selectedRows.length <= 0
               ? 'sheet.removeRowsTooltipNoRowsSelected'
@@ -160,11 +159,11 @@ export default function SheetDataEditorActions({
           />
         </Tooltip>
 
-        <Tooltip className="ml-5" tooltipText={t('sheet.addRowsTooltip')}>
+        <Tooltip tooltipText={t('sheet.addRowsTooltip')}>
           <PlusIcon className="h-6 w-6 cursor-pointer" onClick={addEmptyRow} />
         </Tooltip>
 
-        <Tooltip className="mx-5" tooltipText={t('sheet.downloadSheetTooltip')}>
+        <Tooltip tooltipText={t('sheet.downloadSheetTooltip')}>
           <ArrowDownTrayIcon
             className={`h-6 w-6 ${
               rowData.length > 0 ? 'cursor-pointer' : disabledButtonClasses
@@ -201,6 +200,7 @@ export default function SheetDataEditorActions({
           onClick={() => setResetConfirmationModalOpen(true)}
         />
       </Tooltip>
+
       <ConfirmationModal
         open={resetConfirmationModalOpen}
         setOpen={setResetConfirmationModalOpen}
