@@ -18,6 +18,7 @@ export interface ImporterDefinition {
   theme?: ThemeVariant;
   // Called after the columns are mapped to sheet definitions by the user
   onDataColumnsMapped?: OnDataColumnsMappedCallback;
+  allowManualDataEntry?: boolean,
   onComplete: (
     data: SheetState[],
     onProgress: (progress: number) => void
@@ -36,6 +37,7 @@ export interface ImporterDefinition {
  * failed - the import process failed
  */
 export type ImporterMode =
+  | 'upload'
   | 'mapping'
   | 'preview'
   | 'submit'

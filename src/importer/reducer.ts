@@ -6,7 +6,7 @@ function buildInitialState(sheetDefinitions: SheetDefinition[]): ImporterState {
   return {
     sheetDefinitions,
     currentSheetId: sheetDefinitions[0].id,
-    mode: 'preview',
+    mode: 'upload',
     validationErrors: [],
     sheetData: sheetDefinitions.map((sheet) => ({
       sheetId: sheet.id,
