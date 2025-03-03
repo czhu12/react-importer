@@ -18,7 +18,7 @@ export interface ImporterDefinition {
   theme?: ThemeVariant;
   // Called after the columns are mapped to sheet definitions by the user
   onDataColumnsMapped?: OnDataColumnsMappedCallback;
-  allowManualDataEntry?: boolean,
+  allowManualDataEntry?: boolean;
   onComplete: (
     data: SheetState[],
     onProgress: (progress: number) => void
@@ -76,6 +76,7 @@ export type ImporterAction =
       };
     } // Changes the mode to 'preview'
   | { type: 'FILE_PARSED'; payload: { parsed: ParsedFile } } // Sets the parsed file and changes the mode to 'mapping'
+  | { type: 'UPLOAD' } // Changes the mode to 'upload' - used when going back from in the mapping screen
   | { type: 'COLUMN_MAPPING_CHANGED'; payload: { mappings: ColumnMapping[] } } // Sets the proper mappings
   | { type: 'DATA_MAPPED'; payload: { mappedData: MappedData } } // Sets mapped data as sheetData, optionally runs onDataColumnsMapped callback calls validations, changes the mode to 'preview'
   | {

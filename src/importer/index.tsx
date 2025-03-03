@@ -160,6 +160,10 @@ function ImporterBody({
     dispatch({ type: 'PREVIEW' });
   }
 
+  function onBackToUpload() {
+    dispatch({ type: 'UPLOAD' });
+  }
+
   function onBackToMapping() {
     dispatch({ type: 'MAPPING' });
   }
@@ -167,16 +171,6 @@ function ImporterBody({
   return (
     <ThemeSetter theme={theme}>
       <Root ref={targetRef}>
-        {mode === 'mapping' && (
-          <HeaderMapper
-            parsed={parsedFile!}
-            sheetDefinitions={sheets}
-            currentMapping={columnMappings ?? []}
-            onMappingsChanged={onMappingsChanged}
-            onMappingsSet={onMappingsSet}
-            onBack={onBackToPreview}
-          />
-        )}
         {mode === 'upload' && (
           <div className="mt-5">
             <FileUploader setFile={onFileUploaded} />
@@ -192,6 +186,18 @@ function ImporterBody({
             )}
           </div>
         )}
+
+        {mode === 'mapping' && (
+          <HeaderMapper
+            parsed={parsedFile!}
+            sheetDefinitions={sheets}
+            currentMapping={columnMappings ?? []}
+            onMappingsChanged={onMappingsChanged}
+            onMappingsSet={onMappingsSet}
+            onBack={onBackToUpload}
+          />
+        )}
+
         {mode === 'preview' && (
           <>
             <SheetsSwitcher
@@ -232,6 +238,7 @@ function ImporterBody({
             )}
           </>
         )}
+
         {(mode === 'submit' || mode === 'failed' || mode === 'completed') && (
           <Completed
             mode={mode}
