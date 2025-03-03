@@ -131,7 +131,7 @@ export default function SheetDataEditorActions({
 
   return (
     <div className="my-5 flex items-center">
-      <div className="my-5 flex flex-wrap items-center gap-5">
+      <div className="flex grow flex-wrap items-center gap-5">
         <div>
           <ButtonGroup activeButton={viewMode} buttons={viewModeButtons} />
         </div>
