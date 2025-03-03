@@ -76,7 +76,7 @@ export default function Select<T>({
   };
 
   const selectedOptions = options.filter((option) => isSelected(option.value));
-  const displayValue = selectedOptions.map((o) => o.label).join(', ');
+  const baseDisplayValue = selectedOptions.map((o) => o.label).join(', ');
 
   const filteredOptions =
     query && searchable
@@ -87,6 +87,19 @@ export default function Select<T>({
 
   const placeholderValue =
     placeholder ?? t('components.select.optionPlaceholder');
+
+  const getDisplayValue = () => {
+    if (searchable) {
+      return baseDisplayValue;
+    }
+    if (selectedOptions.length > 0) {
+      return displayPlaceholderWhenSelected
+        ? `${placeholderValue}: ${baseDisplayValue}`
+        : baseDisplayValue;
+    }
+    return placeholderValue;
+  };
+
   const hasGroupProperty = filteredOptions.some((option) => option.group);
 
   const groupedOptions = hasGroupProperty
@@ -112,33 +125,17 @@ export default function Select<T>({
   return (
     <Combobox value={value as any} onChange={handleChange} multiple={multiple}>
       <div className="relative">
-        {searchable && (
-          <ComboboxButton className="w-full">
-            <ComboboxInput
-              className={`${classes} focus:outline-primary w-full cursor-default rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm`}
-              displayValue={() => displayValue}
-              onChange={(event) =>
-                setQuery((event.target as HTMLInputElement).value)
-              }
-              placeholder={placeholderValue}
-            />
-          </ComboboxButton>
-        )}
-
-        {!searchable && (
-          <ComboboxButton className="w-full">
-            <ComboboxInput
-              className={`${classes} focus:outline-primary w-full cursor-default rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm`}
-              displayValue={() =>
-                selectedOptions.length > 0
-                  ? `${displayPlaceholderWhenSelected ? `${placeholderValue}: ` : ''}${displayValue}`
-                  : placeholderValue
-              }
-              placeholder={placeholderValue}
-              readOnly
-            />
-          </ComboboxButton>
-        )}
+        <ComboboxButton className="w-full">
+          <ComboboxInput
+            className={`${classes} focus:outline-primary w-full cursor-default rounded-md bg-white py-1.5 ${clearButtonDisplayed ? 'pr-12' : 'pr-2'} pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm`}
+            displayValue={() => getDisplayValue()}
+            onChange={(event) =>
+              searchable && setQuery((event.target as HTMLInputElement).value)
+            }
+            placeholder={placeholderValue}
+            readOnly={!searchable}
+          />
+        </ComboboxButton>
 
         {clearButtonDisplayed && (
           <span
@@ -146,10 +143,10 @@ export default function Select<T>({
               e.stopPropagation();
               clear();
             }}
-            className="absolute inset-y-0 right-8 flex cursor-pointer items-center text-gray-500 hover:text-gray-700"
+            className="absolute inset-y-0 right-7 flex cursor-pointer items-center text-gray-500 hover:text-gray-700"
           >
             <XMarkIcon
-              className="h-5 w-5 text-gray-500 hover:text-gray-700"
+              className="h-4 w-4 text-gray-500 hover:text-gray-700"
               aria-hidden="true"
             />
           </span>
