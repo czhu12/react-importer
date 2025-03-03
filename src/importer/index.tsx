@@ -133,6 +133,10 @@ function ImporterBody({
     dispatch({ type: 'ADD_EMPTY_ROW' });
   }
 
+  function resetState() {
+    dispatch({ type: 'RESET' });
+  }
+
   async function onSubmit() {
     dispatch({ type: 'PROGRESS', payload: { progress: 0 } });
     dispatch({ type: 'SUBMIT' });
@@ -218,6 +222,7 @@ function ImporterBody({
               setRowData={onCellChanged}
               removeRows={onRemoveRows}
               addEmptyRow={addEmptyRow}
+              resetState={resetState}
             />
             {currentSheetData.rows.length > 0 && (
               <div className="my-5 flex justify-between">
@@ -245,6 +250,7 @@ function ImporterBody({
             progress={importProgress}
             onRetry={onSubmit}
             onBackToPreview={onBackToPreview}
+            resetState={resetState}
           />
         )}
       </Root>

@@ -60,7 +60,12 @@
     "removeRowsTooltip": "Remove rows",
     "removeRowsTooltipNoRowsSelected": "Please select at least one record in order to delete it",
     "addRowsTooltip": "Add a new row",
-    "downloadSheetTooltip": "Download this sheet"
+    "downloadSheetTooltip": "Download this sheet",
+    "reset": "Start over",
+    "resetTooltip": "Start over",
+    "resetConfirmationModalTitle": "Start over",
+    "resetConfirmationModalConfirmationText": "Start over",
+    "resetConfirmationModalSubTitle": "Are you sure you want to start over? This will remove all data and reset the sheet to its initial state."
   },
   "validators": {
     "includes": "Value is not in the list of allowed values",

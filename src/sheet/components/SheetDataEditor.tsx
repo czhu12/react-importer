@@ -28,6 +28,7 @@ interface Props {
   setRowData: (payload: CellChangedPayload) => void;
   removeRows: (payload: RemoveRowsPayload) => void;
   addEmptyRow: () => void;
+  resetState: () => void;
 }
 
 export default function SheetDataEditor({
@@ -38,6 +39,7 @@ export default function SheetDataEditor({
   setRowData,
   removeRows,
   addEmptyRow,
+  resetState,
 }: Props) {
   const [selectedRows, setSelectedRows] = useState<SheetRow[]>([]);
   const [viewMode, setViewMode] = useState<SheetViewMode>('all');
@@ -128,6 +130,7 @@ export default function SheetDataEditor({
         addEmptyRow={addEmptyRow}
         sheetValidationErrors={sheetValidationErrors}
         rowValidationSummary={rowValidationSummary}
+        resetState={resetState}
       />
 
       <SheetDataEditorTable
