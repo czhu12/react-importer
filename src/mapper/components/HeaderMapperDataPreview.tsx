@@ -1,6 +1,6 @@
 import { ImporterOutputFieldType } from '../../types';
 import { useTranslations } from '../../i18';
-
+import { Badge } from '../../../src/components';
 interface Props {
   examples: ImporterOutputFieldType[] | null;
   csvHeader: string | null;
@@ -26,11 +26,7 @@ export default function HeaderMapperDataPreview({
                       className="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8"
                     >
                       {tHtml('mapper.dataPreview', {
-                        csvHeader: (
-                          <div className="inline-flex items-center rounded-md px-1.5 py-0.5 bg-primary-extra-light text-xs font-medium">
-                            {csvHeader}
-                          </div>
-                        ),
+                        csvHeader: <Badge variant="primary">{csvHeader}</Badge>,
                       })}
                     </th>
                   </tr>
