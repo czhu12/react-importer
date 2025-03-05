@@ -39,10 +39,16 @@ export default function SheetDataEditorCell({
     }
   }, [editMode]);
 
+  const extractedValue =
+    columnDefinition.type === 'enum'
+      ? columnDefinition.typeArguments.values.find((e) => e.value === value)
+          ?.label
+      : value;
   const valueEmpty =
-    value == null || (typeof value === 'string' && value.trim() === '');
+    extractedValue == null ||
+    (typeof extractedValue === 'string' && extractedValue.trim() === '');
   // Use non-breaking space to keep the cell height
-  const nonEmptyValue = valueEmpty ? '\u00A0' : value;
+  const nonEmptyValue = valueEmpty ? '\u00A0' : extractedValue;
   const readOnly = columnDefinition.isReadOnly;
 
   const cellBackgroundColor = errorsText
