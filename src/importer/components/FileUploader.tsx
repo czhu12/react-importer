@@ -45,7 +45,8 @@ export default function FileUploader({ setFile }: Props) {
 
           <p className="mb-3">{t('importer.uploader.dragAndDrop')}</p>
           <div className="text-sm text-gray-500">
-            {t('importer.uploader.fileSizeLimit', { limit: '20MB' })} • CSV
+            {t('importer.uploader.fileSizeLimit', { limit: <b>{'20MB'}</b> })} •
+            CSV
           </div>
 
           <div className="mt-3">

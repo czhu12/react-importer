@@ -32,11 +32,23 @@ function extractTranslation(currentLocale: string, key: string) {
 
 function replaceArguments(translation: string, argumentValues: ArgumentsType) {
   // Mathing {{key}} in the translation string
-  return translation.replace(/{{([^}]+)}}/g, (_, match) => {
-    const value = argumentValues[match] ?? `{${match}}`;
+  const argumentMatches = translation.split(/({{[^}]+}})/g);
 
-    return `${value}`;
-  });
+  return (
+    <span>
+      {argumentMatches.map((argument) => {
+        const argumentMatch = argument.match(/{{([^}]+)}}/);
+        if (argumentMatch) {
+          const key = argumentMatch[1];
+          const argumentValue = argumentValues[key];
+
+          return argumentValue ?? `{${key}}`;
+        }
+
+        return argument;
+      })}
+    </span>
+  );
 }
 
 const TranslationContext = createContext<TranslationContextType>(
@@ -52,7 +64,7 @@ export function TranslationProvider({
 }) {
   const locale = selectedLocale ?? defaultLocale;
 
-  function t(key: string, argumentValues: ArgumentsType = {}): string {
+  function t(key: string, argumentValues: ArgumentsType = {}): ReactNode {
     const translation = extractTranslation(locale, key);
 
     return replaceArguments(translation, argumentValues);
