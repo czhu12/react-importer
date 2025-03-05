@@ -127,7 +127,7 @@ export default function Select<T>({
       <div className="relative">
         <ComboboxButton className="w-full">
           <ComboboxInput
-            className={`${classes} cursor-pointer focus:cursor-text focus:outline-primary block w-full truncate rounded-md bg-white py-1.5 ${clearButtonDisplayed ? 'pr-12' : 'pr-2'} pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm`}
+            className={`${classes} focus:outline-primary block w-full cursor-pointer truncate rounded-md bg-white py-1.5 focus:cursor-text ${clearButtonDisplayed ? 'pr-12' : 'pr-2'} pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm`}
             displayValue={getDisplayValue}
             onChange={(event) =>
               searchable && setQuery((event.target as HTMLInputElement).value)
@@ -151,7 +151,7 @@ export default function Select<T>({
             />
           </span>
         )}
-        <ComboboxButton className="absolute inset-y-0 right-0 flex items-center pr-2">
+        <ComboboxButton className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-2">
           <ChevronUpDownIcon
             aria-hidden="true"
             className="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4"
