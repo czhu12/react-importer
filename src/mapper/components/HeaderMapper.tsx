@@ -55,7 +55,7 @@ export default function HeaderMapper({
       <div className="text-2xl">Review and confirm each mapping</div>
       <div className="flex justify-between space-x-5">
         <div className="flex-2">
-          <div className="text-md my-5 flex font-light uppercase">
+          <div className="text-sm my-5 flex font-light uppercase">
             <div className="flex-1">{t('mapper.incomingColumn')}</div>
             <div className="flex-1">{t('mapper.destinationColumn')}</div>
           </div>
