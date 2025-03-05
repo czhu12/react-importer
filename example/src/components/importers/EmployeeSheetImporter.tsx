@@ -10,7 +10,7 @@ const COMPANY_SHEET: SheetDefinition = {
   columns: [
     {
       label: 'Company Name',
-      id: 'company_name',
+      id: 'company',
       type: 'string',
       validators: [{ validate: 'required' }],
     },
@@ -39,7 +39,7 @@ const EMPLOYEE_SHEET: SheetDefinition = {
   columns: [
     {
       label: 'Employee ID',
-      id: 'id',
+      id: 'employee_id',
       type: 'string',
       validators: [
         { validate: 'required' },
@@ -63,7 +63,7 @@ const EMPLOYEE_SHEET: SheetDefinition = {
     },
     {
       label: 'Phone Number',
-      id: 'phone_number',
+      id: 'phone',
       type: 'string',
       validators: [{ validate: 'required' }],
     },
@@ -81,7 +81,7 @@ const EMPLOYEE_SHEET: SheetDefinition = {
       type: 'reference',
       typeArguments: {
         sheetId: 'companies',
-        sheetColumnId: 'company_name',
+        sheetColumnId: 'company',
       },
       validators: [{ validate: 'required' }],
     },
@@ -124,8 +124,8 @@ export default function StudentsImporter() {
           const seen = new Set();
           sheet.rows = [...sheet.rows].filter((row: SheetRow) => {
             // Remove duplicate names, don't validate yet...
-            const hasSeen = !seen.has(row.company_name);
-            seen.add(row.company_name);
+            const hasSeen = !seen.has(row.company);
+            seen.add(row.company);
             return hasSeen;
           });
           return sheets;
