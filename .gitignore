@@ -9,7 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist/*
-!dist/index.es.js
+!dist/index.*.js
 !dist/react-importer.css
 dist-ssr
 *.local

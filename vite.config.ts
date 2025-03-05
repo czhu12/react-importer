@@ -12,15 +12,13 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'react-importer',
-      formats: ['es', 'cjs'],
+      formats: ['es', 'umd'],
       fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
-      external: ['preact'],
       output: {
-        globals: {
-          preact: 'Preact',
-        },
+        inlineDynamicImports: true,
+        manualChunks: undefined,
       },
     },
     outDir: 'dist',
