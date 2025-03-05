@@ -10,7 +10,7 @@ export default function HeaderMapperDataPreview({
   examples,
   csvHeader,
 }: Props) {
-  const { t } = useTranslations();
+  const { t, tHtml } = useTranslations();
 
   return (
     csvHeader && (
@@ -24,10 +24,15 @@ export default function HeaderMapperDataPreview({
                     <th
                       scope="col"
                       className="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8"
-                      dangerouslySetInnerHTML={{
-                        __html: t('mapper.dataPreview', { csvHeader: `<div class="inline-flex items-center rounded-md px-1.5 py-0.5 bg-primary-extra-light text-xs font-medium">${csvHeader}</div>` })
-                      }}
-                    />
+                    >
+                      {tHtml('mapper.dataPreview', {
+                        csvHeader: (
+                          <div className="inline-flex items-center rounded-md px-1.5 py-0.5 bg-primary-extra-light text-xs font-medium">
+                            {csvHeader}
+                          </div>
+                        ),
+                      })}
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-300">
