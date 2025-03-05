@@ -1,6 +1,7 @@
 import { ImporterOutputFieldType } from '../../types';
 import { useTranslations } from '../../i18';
 import { Badge } from '../../../src/components';
+
 interface Props {
   examples: ImporterOutputFieldType[] | null;
   csvHeader: string | null;
