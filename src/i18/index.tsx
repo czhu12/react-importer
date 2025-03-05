@@ -3,7 +3,13 @@ import enTranslation from './en/translation.json';
 import frTranslation from './fr/translation.json';
 import { useContext } from 'preact/hooks';
 import { ReactNode } from 'preact/compat';
-import { ArgumentsType, Resources, TranslationContextType } from './types';
+import {
+  ArgumentsType,
+  ArgumentsTypeHtml,
+  ArgumentsTypeText,
+  Resources,
+  TranslationContextType,
+} from './types';
 
 /// Writing a custom translations module to reduce the size of the package
 
@@ -30,7 +36,22 @@ function extractTranslation(currentLocale: string, key: string) {
   return typeof result === 'string' ? result : key;
 }
 
-function replaceArguments(translation: string, argumentValues: ArgumentsType) {
+function replaceArguments(
+  translation: string,
+  argumentValues: ArgumentsType<string | number>
+) {
+  // Mathing {{key}} in the translation string
+  return translation.replace(/{{([^}]+)}}/g, (_, match) => {
+    const value = argumentValues[match] ?? `{${match}}`;
+
+    return `${value}`;
+  });
+}
+
+function replaceArgumentsHtml(
+  translation: string,
+  argumentValues: ArgumentsType<ReactNode>
+) {
   // Mathing {{key}} in the translation string
   const argumentMatches = translation.split(/({{[^}]+}})/g);
 
@@ -64,14 +85,23 @@ export function TranslationProvider({
 }) {
   const locale = selectedLocale ?? defaultLocale;
 
-  function t(key: string, argumentValues: ArgumentsType = {}): ReactNode {
+  function t(key: string, argumentValues: ArgumentsTypeText = {}): string {
     const translation = extractTranslation(locale, key);
 
     return replaceArguments(translation, argumentValues);
   }
 
+  function tHtml(
+    key: string,
+    argumentValues: ArgumentsTypeHtml = {}
+  ): ReactNode {
+    const translation = extractTranslation(locale, key);
+
+    return replaceArgumentsHtml(translation, argumentValues);
+  }
+
   return (
-    <TranslationContext.Provider value={{ t }}>
+    <TranslationContext.Provider value={{ t, tHtml }}>
       {children}
     </TranslationContext.Provider>
   );
