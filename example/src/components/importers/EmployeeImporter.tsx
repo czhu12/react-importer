@@ -37,7 +37,7 @@ export default function EmployeeImporter() {
             columns: [
               {
                 label: 'Employee ID',
-                id: 'id',
+                id: 'employee_id',
                 type: 'number',
                 validators: [
                   { validate: 'required' },
