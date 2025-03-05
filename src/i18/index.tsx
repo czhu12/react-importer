@@ -4,7 +4,6 @@ import frTranslation from './fr/translation.json';
 import { useContext } from 'preact/hooks';
 import { ReactNode } from 'preact/compat';
 import {
-  ArgumentsType,
   ArgumentsTypeHtml,
   ArgumentsTypeText,
   Resources,
@@ -38,7 +37,7 @@ function extractTranslation(currentLocale: string, key: string) {
 
 function replaceArguments(
   translation: string,
-  argumentValues: ArgumentsType<string | number>
+  argumentValues: ArgumentsTypeText
 ) {
   // Mathing {{key}} in the translation string
   return translation.replace(/{{([^}]+)}}/g, (_, match) => {
@@ -50,7 +49,7 @@ function replaceArguments(
 
 function replaceArgumentsHtml(
   translation: string,
-  argumentValues: ArgumentsType<ReactNode>
+  argumentValues: ArgumentsTypeHtml
 ) {
   // Mathing {{key}} in the translation string
   const argumentMatches = translation.split(/({{[^}]+}})/g);
