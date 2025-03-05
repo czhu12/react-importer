@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function FileUploader({ setFile }: Props) {
-  const { t } = useTranslations();
+  const { t, tHtml } = useTranslations();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -45,7 +45,10 @@ export default function FileUploader({ setFile }: Props) {
 
           <p className="mb-3">{t('importer.uploader.dragAndDrop')}</p>
           <div className="text-sm text-gray-500">
-            {t('importer.uploader.fileSizeLimit', { limit: '20MB' })} • CSV
+            {tHtml('importer.uploader.fileSizeLimit', {
+              limit: <b>{'20MB'}</b>,
+            })}{' '}
+            • CSV
           </div>
 
           <div className="mt-3">
