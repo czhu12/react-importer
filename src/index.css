@@ -1,4 +1,20 @@
-@import "tailwindcss";
+@layer theme {
+    @import 'tailwindcss/theme.css';
+}
+  
+@layer base {
+    .csv-importer {
+        @import 'tailwindcss/preflight.css';
+    }
+}
+
+@layer components;
+
+@layer utilities {
+    .csv-importer {
+        @import 'tailwindcss/utilities.css';
+    }
+}
 
 @theme {
     --color-primary: var(--csv-importer-color-primary);
