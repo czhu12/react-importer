@@ -9413,7 +9413,17 @@ function mm(e, t) {
     };
   });
 }
-function hm(e, t, n) {
+function hm(e, t) {
+  if (t.type === "enum") {
+    const n = t.typeArguments.values.find(
+      (r) => r.label === e
+    );
+    if (n != null)
+      return n.value;
+  }
+  return e;
+}
+function vm(e, t, n) {
   const r = n.data, o = e.map((i) => {
     const l = [], s = t.filter(
       (a) => a.sheetId === i.id
@@ -9424,7 +9434,10 @@ function hm(e, t, n) {
         const p = s.find(
           (f) => f.sheetColumnId === c.id
         );
-        p != null && (u[p.sheetColumnId] = a[p.csvColumnName]);
+        p != null && (u[p.sheetColumnId] = hm(
+          a[p.csvColumnName],
+          c
+        ));
       }), l.push(u);
     }), {
       sheetId: i.id,
@@ -9433,7 +9446,7 @@ function hm(e, t, n) {
   });
   return mm(e, o);
 }
-function vm({
+function wm({
   title: e,
   titleId: t,
   ...n
@@ -9454,8 +9467,8 @@ function vm({
     clipRule: "evenodd"
   }));
 }
-const wm = /* @__PURE__ */ ge(vm);
-function ym({
+const ym = /* @__PURE__ */ ge(wm);
+function bm({
   sheetDefinitions: e,
   activeSheetId: t,
   onSheetChange: n,
@@ -9467,14 +9480,14 @@ function ym({
       tabs: e.map((o) => ({
         label: o.label,
         value: o.id,
-        icon: r.some((i) => i.sheetId === o.id) ? /* @__PURE__ */ y(wm, { className: "mr-3 h-4 w-4" }) : void 0
+        icon: r.some((i) => i.sheetId === o.id) ? /* @__PURE__ */ y(ym, { className: "mr-3 h-4 w-4" }) : void 0
       })),
       activeTab: t,
       onTabChange: n
     }
   );
 }
-function bm({ onBackToMapping: e }) {
+function _m({ onBackToMapping: e }) {
   const { t } = ke(), [n, r] = j(!1);
   return /* @__PURE__ */ y(ve, { children: [
     /* @__PURE__ */ y(
@@ -9502,7 +9515,7 @@ function bm({ onBackToMapping: e }) {
     )
   ] });
 }
-function _m({
+function xm({
   theme: e,
   onComplete: t,
   allowManualDataEntry: n,
@@ -9567,7 +9580,7 @@ function _m({
     });
   }
   async function w() {
-    const F = hm(r, f ?? [], d), A = o != null ? await o(F) : F;
+    const F = vm(r, f ?? [], d), A = o != null ? await o(F) : F;
     v({ type: "DATA_MAPPED", payload: { mappedData: A } });
   }
   function h(F) {
@@ -9632,7 +9645,7 @@ function _m({
     ),
     u === "preview" && /* @__PURE__ */ y(ve, { children: [
       /* @__PURE__ */ y(
-        ym,
+        bm,
         {
           activeSheetId: c,
           sheetDefinitions: r,
@@ -9656,7 +9669,7 @@ function _m({
         }
       ),
       b.rows.length > 0 && /* @__PURE__ */ y("div", { className: "my-5 flex justify-between", children: [
-        /* @__PURE__ */ y("div", { children: f != null && /* @__PURE__ */ y(bm, { onBackToMapping: K }) }),
+        /* @__PURE__ */ y("div", { children: f != null && /* @__PURE__ */ y(_m, { onBackToMapping: K }) }),
         /* @__PURE__ */ y(
           Ot,
           {
@@ -9679,9 +9692,9 @@ function _m({
     )
   ] }) });
 }
-function Rm(e) {
-  return /* @__PURE__ */ y(Yf, { selectedLocale: e.locale, children: /* @__PURE__ */ y(_m, { ...e }) });
+function $m(e) {
+  return /* @__PURE__ */ y(Yf, { selectedLocale: e.locale, children: /* @__PURE__ */ y(xm, { ...e }) });
 }
 export {
-  Rm as default
+  $m as default
 };
