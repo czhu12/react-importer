@@ -12,6 +12,7 @@ dist/*
 !dist/index.es.js
 !dist/index.cjs.js
 !dist/index.umd.js
+!dist/react-importer.css
 dist-ssr
 *.local
 
