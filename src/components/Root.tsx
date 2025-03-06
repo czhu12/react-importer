@@ -11,6 +11,7 @@ export default forwardRef<HTMLDivElement, Props>(function Root(
   return (
     <div
       ref={ref}
+      className="csv-importer"
       style={{
         animation: 'none',
         animationDelay: '0',
