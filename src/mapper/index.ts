@@ -1,4 +1,10 @@
-import { ParsedFile, SheetDefinition, SheetRow } from '../types';
+import {
+  CSVCell,
+  ParsedFile,
+  SheetColumnDefinition,
+  SheetDefinition,
+  SheetRow,
+} from '../types';
 import { ColumnMapping, MappedData } from './types';
 
 export { default as HeaderMapper } from './components/HeaderMapper';
@@ -47,6 +53,24 @@ function mapReferenceColumns(
   });
 }
 
+/// Checks to see if CSV value doesn't match the enum label, if so converts it into enum value
+function mapEnumLabelValues(
+  csvColumnValue: CSVCell,
+  columnDefinition: SheetColumnDefinition
+): CSVCell {
+  if (columnDefinition.type === 'enum') {
+    const enumDefinition = columnDefinition.typeArguments.values.find(
+      (definition) => definition.label === csvColumnValue
+    );
+
+    if (enumDefinition != null) {
+      return enumDefinition.value;
+    }
+  }
+
+  return csvColumnValue;
+}
+
 export function getMappedData(
   sheetDefinitions: SheetDefinition[],
   mappings: ColumnMapping[],
@@ -70,7 +94,10 @@ export function getMappedData(
         );
 
         if (mapping != null) {
-          newRow[mapping.sheetColumnId] = row[mapping.csvColumnName];
+          newRow[mapping.sheetColumnId] = mapEnumLabelValues(
+            row[mapping.csvColumnName],
+            column
+          );
         }
       });
 
