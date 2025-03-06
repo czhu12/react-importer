@@ -8,6 +8,15 @@ import tailwindcss from '@tailwindcss/vite';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [tailwindcss(), preact(), dts()],
+  define: {
+    'process.env.NODE_ENV': JSON.stringify('production'),
+    'process.env': JSON.stringify({}),
+    'process': JSON.stringify({
+      env: {
+        NODE_ENV: 'production'
+      }
+    })
+  },
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
