@@ -182,7 +182,7 @@ function ImporterBody({
               <div className="mt-10 mb-2.5">
                 <p
                   onClick={onEnterDataManually}
-                  className="text-primary hover:text-primary cursor-pointer decoration-2 opacity-90 hover:underline focus:underline focus:outline-none"
+                  className="text-csv-importer-primary hover:text-csv-importer-primary cursor-pointer decoration-2 opacity-90 hover:underline focus:underline focus:outline-none"
                 >
                   {t('importer.uploader.enterManually')}
                 </p>

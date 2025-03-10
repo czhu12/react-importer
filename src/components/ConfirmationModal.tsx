@@ -41,12 +41,12 @@ export default function ConfirmationModal({
     danger: {
       icon: (
         <ExclamationTriangleIcon
-          className="text-danger size-6"
+          className="text-csv-importer-danger size-6"
           aria-hidden="true"
         />
       ),
       btnVariant: 'danger',
-      bgColor: 'bg-danger-extra-light',
+      bgColor: 'bg-csv-importer-danger-extra-light',
     },
     default: {
       btnVariant: 'primary',
