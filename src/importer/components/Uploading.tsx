@@ -5,7 +5,7 @@ import { Button } from '../../components';
 
 function SuccessIcon() {
   return (
-    <CheckIcon className="text-success absolute inset-0 m-auto h-12 w-12 stroke-4" />
+    <CheckIcon className="text-csv-importer-success absolute inset-0 m-auto h-12 w-12 stroke-4" />
   );
 }
 

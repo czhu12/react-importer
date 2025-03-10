@@ -52,7 +52,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange?.(getParsedValue(e))}
-          className={`${classes} ${iconBuilder != null ? 'pl-10' : ''} ${clearable ? 'pr-10' : ''} focus:outline-primary col-start-1 row-start-1 block rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6`}
+          className={`${classes} ${iconBuilder != null ? 'pl-10' : ''} ${clearable ? 'pr-10' : ''} focus:outline-csv-importer-primary col-start-1 row-start-1 block rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6`}
           onBlur={(e) => onBlur?.(getParsedValue(e))}
         />
         {iconBuilder?.({

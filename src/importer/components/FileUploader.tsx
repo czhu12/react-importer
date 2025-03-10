@@ -41,7 +41,7 @@ export default function FileUploader({ setFile }: Props) {
     >
       <div className="p-7.5">
         <div className="flex flex-col items-center justify-center">
-          <CloudArrowUpIcon className="text-primary mb-3 h-12 w-12" />
+          <CloudArrowUpIcon className="text-csv-importer-primary mb-3 h-12 w-12" />
 
           <p className="mb-3">{t('importer.uploader.dragAndDrop')}</p>
           <div className="text-sm text-gray-500">
