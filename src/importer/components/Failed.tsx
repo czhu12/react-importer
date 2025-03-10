@@ -17,7 +17,7 @@ export default function Failed({ onRetry, onBackToPreview }: Props) {
   return (
     <div className="my-16 text-center">
       <div className="relative mx-auto h-24 w-24">
-        <ExclamationCircleIcon className="text-danger" />
+        <ExclamationCircleIcon className="text-csv-importer-danger" />
       </div>
       <p className="mb-8 text-2xl">{t('importer.loader.failed')}</p>
 

@@ -6,20 +6,37 @@
   "license": "MIT",
   "repository": "czhu12/react-importer",
   "type": "module",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.es.js",
   "source": "src/index.ts",
-  "types": "dist/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "watch": "tsc -b && vite build --watch",
+    "build:peer": "tsc -b && vite build --mode peer",
+    "build:bundled": "tsc -b && vite build --mode bundled",
+    "build": "npm-run-all --parallel build:peer build:bundled",
+    "watch:peer": "tsc -b && vite build --watch --mode peer",
+    "watch:bundled": "tsc -b && vite build --watch --mode bundled",
+    "watch": "npm-run-all --parallel watch:peer watch:bundled",
     "test": "vitest",
     "preview": "vite preview",
     "prepare": "tsc --emitDeclarationOnly",
     "prepublishOnly": "npm run build",
     "predeploy": "cd example && npm install && npm run build",
-    "deploy": "gh-pages -d example/dist"
+    "deploy": "gh-pages -d example/dist",
+    "postpublish": "npm run deploy"
+  },
+  "exports": {
+    "./peer": {
+      "import": "./dist/peer/index.es.js",
+      "require": "./dist/peer/index.cjs.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./peer/index.css": "./dist/peer/react-importer.css",
+    "./bundled": {
+      "import": "./dist/bundled/index.es.js",
+      "require": "./dist/bundled/index.cjs.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./bundled/index.css": "./dist/bundled/react-importer.css"
   },
   "peerDependencies": {
     "preact": "^10.25.4"
