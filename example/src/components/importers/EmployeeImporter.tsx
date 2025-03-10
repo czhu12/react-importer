@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import Importer, { SheetState } from 'react-importer';
+import Importer, { SheetState } from 'react-importer/peer';
 
 export default function EmployeeImporter() {
   const [ready, setReady] = useState(false);

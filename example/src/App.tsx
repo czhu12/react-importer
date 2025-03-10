@@ -1,4 +1,4 @@
-import 'react-importer/dist/react-importer.css';
+import 'react-importer/peer/index.css';
 import Header from './components/Header';
 import CodeBlock from './components/CodeBlock';
 import Footer from './components/Footer';
