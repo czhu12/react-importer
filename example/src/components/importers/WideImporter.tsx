@@ -3,7 +3,8 @@ import Importer, {
   SheetState,
   SheetDefinition,
   SheetRow,
-} from 'react-importer';
+} from 'react-importer/peer';
+
 const SCHOOLS_SHEET: SheetDefinition = {
   id: 'schools',
   label: 'Schools',
