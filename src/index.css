@@ -17,18 +17,18 @@
 }
 
 @theme {
-    --color-primary: var(--csv-importer-color-primary);
-    --color-primary-light: var(--csv-importer-color-primary-light);
-    --color-primary-extra-light: var(--csv-importer-color-primary-extra-light);
-    --color-secondary: var(--csv-importer-color-secondary);
-    --color-tertiary: var(--csv-importer-color-tertiary);
-    --color-tertiary-light: var(--csv-importer-color-tertiary-light);
-    --color-success: var(--csv-importer-color-success);
-    --color-danger: var(--csv-importer-color-danger);
-    --color-danger-light: var(--csv-importer-color-danger-light);
-    --color-danger-extra-light: var(--csv-importer-color-danger-extra-light);
-    --color-warning: var(--csv-importer-color-warning);
-    --color-info: var(--csv-importer-color-info);
+    --color-csv-importer-primary: var(--csv-importer-color-primary);
+    --color-csv-importer-primary-light: var(--csv-importer-color-primary-light);
+    --color-csv-importer-primary-extra-light: var(--csv-importer-color-primary-extra-light);
+    --color-csv-importer-secondary: var(--csv-importer-color-secondary);
+    --color-csv-importer-tertiary: var(--csv-importer-color-tertiary);
+    --color-csv-importer-tertiary-light: var(--csv-importer-color-tertiary-light);
+    --color-csv-importer-success: var(--csv-importer-color-success);
+    --color-csv-importer-danger: var(--csv-importer-color-danger);
+    --color-csv-importer-danger-light: var(--csv-importer-color-danger-light);
+    --color-csv-importer-danger-extra-light: var(--csv-importer-color-danger-extra-light);
+    --color-csv-importer-warning: var(--csv-importer-color-warning);
+    --color-csv-importer-info: var(--csv-importer-color-info);
 }
 
 @layer base {

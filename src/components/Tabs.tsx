@@ -28,7 +28,7 @@ export default function Tabs({ tabs, activeTab, onTabChange }: Props) {
                 onClick={() => onTabChange(tab.value)}
                 className={` ${
                   tab.value === activeTab
-                    ? 'border-primary text-primary'
+                    ? 'border-csv-importer-primary text-csv-importer-primary'
                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                 } flex cursor-pointer items-center border-b-2 px-1 py-4 text-sm font-medium whitespace-nowrap`}
               >

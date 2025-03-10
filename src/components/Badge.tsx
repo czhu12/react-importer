@@ -11,7 +11,7 @@ interface Props {
 const baseClasses = cva('inline-flex items-center rounded-md px-1.5 py-0.5', {
   variants: {
     variant: {
-      primary: 'bg-primary-extra-light text-xs font-medium',
+      primary: 'bg-csv-importer-primary-extra-light text-xs font-medium',
     },
     defaultVariants: {
       variant: 'primary',

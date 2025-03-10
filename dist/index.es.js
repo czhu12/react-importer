@@ -560,12 +560,12 @@ const Lo = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, Do = Xs, D
 }, Zs = Dt("text-center inline-block font-semibold", {
   variants: {
     variant: {
-      primary: "shadow-xs bg-primary text-white",
-      secondary: "bg-white text-primary ring-1 shadow-xs ring-bg-primary ring-inset",
-      tertiary: "bg-white text-gray-900 ring-1 shadow-xs ring-tertiary ring-inset",
-      success: "shadow-xs bg-success text-white",
-      danger: "shadow-xs bg-danger text-white",
-      warning: "shadow-xs bg-warning text-white"
+      primary: "shadow-xs bg-csv-importer-primary text-white",
+      secondary: "bg-white text-csv-importer-primary ring-1 shadow-xs ring-bg-csv-importer-primary ring-inset",
+      tertiary: "bg-white text-gray-900 ring-1 shadow-xs ring-csv-importer-tertiary ring-inset",
+      success: "shadow-xs bg-csv-importer-success text-white",
+      danger: "shadow-xs bg-csv-importer-danger text-white",
+      warning: "shadow-xs bg-csv-importer-warning text-white"
     },
     size: {
       xs: "px-2 py-1 rounded-sm text-xs",
@@ -583,27 +583,27 @@ const Lo = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, Do = Xs, D
     {
       variant: "primary",
       disabled: !1,
-      className: "hover:bg-primary-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      className: "hover:bg-csv-importer-primary-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-csv-importer-primary"
     },
     {
       variant: "secondary",
       disabled: !1,
-      className: "hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+      className: "hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-csv-importer-secondary"
     },
     {
       variant: "tertiary",
       disabled: !1,
-      className: "hover:bg-tertiary-light"
+      className: "hover:bg-csv-importer-tertiary-light"
     },
     {
       variant: "success",
       disabled: !1,
-      className: "hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-success"
+      className: "hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-csv-importer-success"
     },
     {
       variant: "danger",
       disabled: !1,
-      className: "hover:bg-danger-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-danger"
+      className: "hover:bg-csv-importer-danger-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-csv-importer-danger"
     },
     {
       variant: "warning",
@@ -648,7 +648,7 @@ function Vo({ id: e, checked: t, setChecked: n, label: r }) {
           onChange: (o) => n(o.target.checked),
           id: e,
           type: "checkbox",
-          className: "checked:border-primary checked:bg-primary indeterminate:border-primary indeterminate:bg-primary focus-visible:outline-primary col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white focus-visible:outline-2 focus-visible:outline-offset-2 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+          className: "checked:border-csv-importer-primary checked:bg-csv-importer-primary indeterminate:border-csv-importer-primary indeterminate:bg-csv-importer-primary focus-visible:outline-csv-importer-csv-importer-primary col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white focus-visible:outline-2 focus-visible:outline-offset-2 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
         }
       ),
       /* @__PURE__ */ y(
@@ -5248,12 +5248,12 @@ function Vr({
       icon: /* @__PURE__ */ y(
         Ef,
         {
-          className: "text-danger size-6",
+          className: "text-csv-importer-danger size-6",
           "aria-hidden": "true"
         }
       ),
       btnVariant: "danger",
-      bgColor: "bg-danger-extra-light"
+      bgColor: "bg-csv-importer-danger-extra-light"
     },
     default: {
       btnVariant: "primary"
@@ -5610,7 +5610,7 @@ const us = /* @__PURE__ */ ge(lp), cs = ge(
           placeholder: r,
           value: e,
           onChange: (p) => n == null ? void 0 : n(c(p)),
-          className: `${i} ${o != null ? "pl-10" : ""} ${l ? "pr-10" : ""} focus:outline-primary col-start-1 row-start-1 block rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6`,
+          className: `${i} ${o != null ? "pl-10" : ""} ${l ? "pr-10" : ""} focus:outline-csv-importer-primary col-start-1 row-start-1 block rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6`,
           onBlur: (p) => t == null ? void 0 : t(c(p))
         }
       ),
@@ -5675,7 +5675,7 @@ function sn({
     /* @__PURE__ */ y(Nr, { className: "w-full", children: /* @__PURE__ */ y(
       ql,
       {
-        className: `${a} focus:outline-primary block w-full cursor-pointer truncate rounded-md bg-white py-1.5 focus:cursor-text ${w ? "pr-12" : "pr-2"} pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm`,
+        className: `${a} focus:outline-csv-importer-primary block w-full cursor-pointer truncate rounded-md bg-white py-1.5 focus:cursor-text ${w ? "pr-12" : "pr-2"} pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 sm:text-sm`,
         displayValue: R,
         onChange: (h) => l && f(h.target.value),
         placeholder: x,
@@ -5728,11 +5728,11 @@ function sn({
               Lr,
               {
                 value: E.value,
-                className: "group data-focus:bg-primary relative flex cursor-default items-center py-2 pr-9 pl-3 text-gray-900 select-none data-focus:text-white data-focus:outline-hidden",
+                className: "group data-focus:bg-csv-importer-primary relative flex cursor-default items-center py-2 pr-9 pl-3 text-gray-900 select-none data-focus:text-white data-focus:outline-hidden",
                 children: [
                   E.icon,
                   /* @__PURE__ */ y("span", { className: "block truncate font-normal group-data-selected:font-semibold", children: E.label }),
-                  d(E.value) && /* @__PURE__ */ y("span", { className: "text-primary absolute inset-y-0 right-0 flex items-center pr-4 group-data-focus:text-white", children: /* @__PURE__ */ y(Jf, { "aria-hidden": "true", className: "h-5 w-5" }) })
+                  d(E.value) && /* @__PURE__ */ y("span", { className: "text-csv-importer-primary absolute inset-y-0 right-0 flex items-center pr-4 group-data-focus:text-white", children: /* @__PURE__ */ y(Jf, { "aria-hidden": "true", className: "h-5 w-5" }) })
                 ]
               },
               E.value
@@ -5758,7 +5758,7 @@ function sp({ tabs: e, activeTab: t, onTabChange: n }) {
       {
         "aria-current": r.value === t ? "page" : void 0,
         onClick: () => n(r.value),
-        className: ` ${r.value === t ? "border-primary text-primary" : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"} flex cursor-pointer items-center border-b-2 px-1 py-4 text-sm font-medium whitespace-nowrap`,
+        className: ` ${r.value === t ? "border-csv-importer-primary text-csv-importer-primary" : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"} flex cursor-pointer items-center border-b-2 px-1 py-4 text-sm font-medium whitespace-nowrap`,
         children: [
           r.icon,
           r.label
@@ -5773,7 +5773,7 @@ const ap = Dt(
   {
     variants: {
       variant: {
-        error: "outline-danger",
+        error: "outline-csv-importer-danger",
         info: "outline-gray-500"
       }
     },
@@ -5784,7 +5784,7 @@ const ap = Dt(
 ), up = Dt("group relative h-full w-full", {
   variants: {
     variant: {
-      error: "focus-within:outline-danger hover:outline-danger",
+      error: "focus-within:outline-csv-importer-danger hover:outline-csv-importer-danger",
       info: "focus-within:outline-gray-500 hover:outline-gray-500"
     },
     withOutline: {
@@ -5821,7 +5821,7 @@ const dp = Dt(
       },
       variant: {
         default: "",
-        danger: "text-danger"
+        danger: "text-csv-importer-danger"
       },
       location: {
         left: "rounded-l-md",
@@ -5838,7 +5838,7 @@ const dp = Dt(
       {
         active: !0,
         variant: "danger",
-        className: "bg-danger text-white"
+        className: "bg-csv-importer-danger text-white"
       },
       {
         active: !1,
@@ -5848,7 +5848,7 @@ const dp = Dt(
       {
         active: !1,
         variant: "danger",
-        className: "text-danger"
+        className: "text-csv-importer-danger"
       }
     ]
   }
@@ -5898,7 +5898,7 @@ function It({
 const gp = Dt("inline-flex items-center rounded-md px-1.5 py-0.5", {
   variants: {
     variant: {
-      primary: "bg-primary-extra-light text-xs font-medium"
+      primary: "bg-csv-importer-primary-extra-light text-xs font-medium"
     },
     defaultVariants: {
       variant: "primary"
@@ -5936,7 +5936,7 @@ function vp({ setFile: e }) {
       },
       children: [
         /* @__PURE__ */ y("div", { className: "p-7.5", children: /* @__PURE__ */ y("div", { className: "flex flex-col items-center justify-center", children: [
-          /* @__PURE__ */ y(_f, { className: "text-primary mb-3 h-12 w-12" }),
+          /* @__PURE__ */ y(_f, { className: "text-csv-importer-primary mb-3 h-12 w-12" }),
           /* @__PURE__ */ y("p", { className: "mb-3", children: t("importer.uploader.dragAndDrop") }),
           /* @__PURE__ */ y("div", { className: "text-sm text-gray-500", children: [
             n("importer.uploader.fileSizeLimit", {
@@ -6348,7 +6348,7 @@ function Kp({
   return /* @__PURE__ */ y(
     "div",
     {
-      className: "hover:bg-tertiary-light rounded-sm",
+      className: "hover:bg-csv-importer-tertiary-light rounded-sm",
       onMouseEnter: o,
       children: /* @__PURE__ */ y("div", { className: "flex items-center py-2.5", children: [
         /* @__PURE__ */ y("div", { className: "mx-2.5 flex flex-1 justify-between", children: [
@@ -8197,7 +8197,7 @@ function jg({
   oe(() => {
     s && (o(), u.current && u.current.focus());
   }, [s]);
-  const c = e.type === "enum" ? ((v = e.typeArguments.values.find((b) => b.value === t)) == null ? void 0 : v.label) ?? t : t, f = c == null || typeof c == "string" && c.trim() === "" ? " " : c, d = e.isReadOnly, g = i ? "bg-danger-extra-light" : d ? "bg-gray-100" : "";
+  const c = e.type === "enum" ? ((v = e.typeArguments.values.find((b) => b.value === t)) == null ? void 0 : v.label) ?? t : t, f = c == null || typeof c == "string" && c.trim() === "" ? " " : c, d = e.isReadOnly, g = i ? "bg-csv-importer-danger-extra-light" : d ? "bg-gray-100" : "";
   if (!s)
     return /* @__PURE__ */ y(
       cp,
@@ -8632,7 +8632,7 @@ function Yg({
   }, [e]), i ? /* @__PURE__ */ y("div", { className: "flex justify-center", children: /* @__PURE__ */ y(
     "div",
     {
-      className: `border-success h-22 w-22 rounded-full border-10 ${t && "animate-spin border-t-transparent"}`
+      className: `border-csv-importer-success h-22 w-22 rounded-full border-10 ${t && "animate-spin border-t-transparent"}`
     }
   ) }) : /* @__PURE__ */ y("svg", { className: "mx-auto h-24 w-24 rotate-[-90deg]", width: "100", height: "100", children: [
     /* @__PURE__ */ y(
@@ -8657,13 +8657,13 @@ function Yg({
         strokeWidth: "10",
         strokeDasharray: r,
         strokeDashoffset: o,
-        className: "stroke-success transition-[stroke-dashoffset] duration-500"
+        className: "stroke-csv-importer-success transition-[stroke-dashoffset] duration-500"
       }
     )
   ] });
 }
 function Xg() {
-  return /* @__PURE__ */ y(yf, { className: "text-success absolute inset-0 m-auto h-12 w-12 stroke-4" });
+  return /* @__PURE__ */ y(yf, { className: "text-csv-importer-success absolute inset-0 m-auto h-12 w-12 stroke-4" });
 }
 function Zg({ progress: e, pending: t, resetState: n }) {
   const { t: r } = Ae();
@@ -8689,7 +8689,7 @@ function Zg({ progress: e, pending: t, resetState: n }) {
 function Qg({ onRetry: e, onBackToPreview: t }) {
   const { t: n } = Ae();
   return /* @__PURE__ */ y("div", { className: "my-16 text-center", children: [
-    /* @__PURE__ */ y("div", { className: "relative mx-auto h-24 w-24", children: /* @__PURE__ */ y(Cf, { className: "text-danger" }) }),
+    /* @__PURE__ */ y("div", { className: "relative mx-auto h-24 w-24", children: /* @__PURE__ */ y(Cf, { className: "text-csv-importer-danger" }) }),
     /* @__PURE__ */ y("p", { className: "mb-8 text-2xl", children: n("importer.loader.failed") }),
     /* @__PURE__ */ y(Ke, { onClick: e, variant: "primary", children: /* @__PURE__ */ y("div", { className: "flex items-center", children: [
       /* @__PURE__ */ y(vf, { className: "mr-3 h-4 w-4" }),
@@ -9646,7 +9646,7 @@ function xm({
         "p",
         {
           onClick: M,
-          className: "text-primary hover:text-primary cursor-pointer decoration-2 opacity-90 hover:underline focus:underline focus:outline-none",
+          className: "text-csv-importer-primary hover:text-csv-importer-primary cursor-pointer decoration-2 opacity-90 hover:underline focus:underline focus:outline-none",
           children: l("importer.uploader.enterManually")
         }
       ) })
