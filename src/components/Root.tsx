@@ -1,4 +1,5 @@
-import { ReactNode, forwardRef } from 'preact/compat';
+import { ReactNode, forwardRef, useEffect } from 'preact/compat';
+import { HEALDESS_UI_PORTAL_ROOT_ID, ROOT_CLASS } from '../constants';
 
 interface Props {
   children?: ReactNode;
@@ -8,159 +9,30 @@ export default forwardRef<HTMLDivElement, Props>(function Root(
   { children },
   ref
 ) {
+  useEffect(() => {
+    /// We need to add a class to the portal root to style the dropdown
+    /// that is because we have our css scoped to componenents within element with class csv-importer
+    ///
+    /// HeadlesUI doesn't seem to provide an API to manipulate Portal root, so we do it this hacky way
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        mutation.addedNodes.forEach((node) => {
+          if (
+            node.nodeType === Node.ELEMENT_NODE &&
+            (node as HTMLElement).id === HEALDESS_UI_PORTAL_ROOT_ID
+          ) {
+            (node as HTMLElement).classList.add(ROOT_CLASS);
+          }
+        });
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: false });
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div
-      ref={ref}
-      className="csv-importer"
-      style={{
-        animation: 'none',
-        animationDelay: '0',
-        animationDirection: 'normal',
-        animationDuration: '0',
-        animationFillMode: 'none',
-        animationIterationCount: '1',
-        animationName: 'none',
-        animationPlayState: 'running',
-        animationTimingFunction: 'ease',
-        backfaceVisibility: 'visible',
-        background: '0',
-        backgroundAttachment: 'scroll',
-        backgroundClip: 'border-box',
-        backgroundColor: 'transparent',
-        backgroundImage: 'none',
-        backgroundOrigin: 'padding-box',
-        backgroundPosition: '0 0',
-        backgroundPositionX: '0',
-        backgroundPositionY: '0',
-        backgroundRepeat: 'repeat',
-        backgroundSize: 'auto auto',
-        border: '0',
-        borderStyle: 'none',
-        borderWidth: 'medium',
-        borderColor: 'inherit',
-        borderBottom: '0',
-        borderBottomColor: 'inherit',
-        borderBottomLeftRadius: '0',
-        borderBottomRightRadius: '0',
-        borderBottomStyle: 'none',
-        borderBottomWidth: 'medium',
-        borderCollapse: 'separate',
-        borderImage: 'none',
-        borderLeft: '0',
-        borderLeftColor: 'inherit',
-        borderLeftStyle: 'none',
-        borderLeftWidth: 'medium',
-        borderRadius: '0',
-        borderRight: '0',
-        borderRightColor: 'inherit',
-        borderRightStyle: 'none',
-        borderRightWidth: 'medium',
-        borderSpacing: '0',
-        borderTop: '0',
-        borderTopColor: 'inherit',
-        borderTopLeftRadius: '0',
-        borderTopRightRadius: '0',
-        borderTopStyle: 'none',
-        borderTopWidth: 'medium',
-        bottom: 'auto',
-        boxShadow: 'none',
-        boxSizing: 'content-box',
-        captionSide: 'top',
-        clear: 'none',
-        clip: 'auto',
-        color: 'inherit',
-        columns: 'auto',
-        columnCount: 'auto',
-        columnFill: 'balance',
-        columnGap: 'normal',
-        columnRule: 'medium none currentColor',
-        columnRuleColor: 'currentColor',
-        columnRuleStyle: 'none',
-        columnRuleWidth: 'none',
-        columnSpan: 'inherit',
-        columnWidth: 'auto',
-        content: 'normal',
-        counterIncrement: 'none',
-        counterReset: 'none',
-        cursor: 'auto',
-        direction: 'ltr',
-        display: 'inline',
-        emptyCells: 'show',
-        float: 'none',
-        font: 'normal',
-        fontFamily: 'inherit',
-        fontSize: '16px !important',
-        fontStyle: 'normal',
-        fontVariant: 'normal',
-        fontWeight: 'normal',
-        height: 'auto',
-        hyphens: 'none',
-        left: 'auto',
-        letterSpacing: 'normal',
-        lineHeight: 'normal',
-        listStyle: 'none',
-        listStyleImage: 'none',
-        listStylePosition: 'outside',
-        listStyleType: 'disc',
-        margin: '0',
-        marginBottom: '0',
-        marginLeft: '0',
-        marginRight: '0',
-        marginTop: '0',
-        maxHeight: 'none',
-        maxWidth: 'none',
-        minHeight: '0',
-        minWidth: '0',
-        opacity: '1',
-        orphans: 'inherit',
-        outline: '0',
-        outlineColor: 'invert',
-        outlineStyle: 'none',
-        outlineWidth: 'medium',
-        overflow: 'visible',
-        overflowX: 'visible',
-        overflowY: 'visible',
-        padding: '0',
-        paddingBottom: '0',
-        paddingLeft: '0',
-        paddingRight: '0',
-        paddingTop: '0',
-        pageBreakAfter: 'auto',
-        pageBreakBefore: 'auto',
-        pageBreakInside: 'auto',
-        perspective: 'none',
-        perspectiveOrigin: '50% 50%',
-        position: 'static',
-        right: 'auto',
-        tabSize: '8',
-        tableLayout: 'auto',
-        textAlign: 'inherit',
-        textAlignLast: 'auto',
-        textDecoration: 'none',
-        textDecorationColor: 'inherit',
-        textDecorationLine: 'none',
-        textDecorationStyle: 'solid',
-        textIndent: '0',
-        textShadow: 'none',
-        textTransform: 'none',
-        top: 'auto',
-        transform: 'none',
-        transformStyle: 'flat',
-        transition: 'none',
-        transitionDelay: '0s',
-        transitionDuration: '0s',
-        transitionProperty: 'none',
-        transitionTimingFunction: 'ease',
-        unicodeBidi: 'normal',
-        verticalAlign: 'baseline',
-        visibility: 'visible',
-        whiteSpace: 'normal',
-        widows: 'inherit',
-        width: 'auto',
-        wordSpacing: 'normal',
-        zIndex: 'auto',
-      }}
-    >
+    <div ref={ref} className={ROOT_CLASS}>
       {children}
     </div>
   );
