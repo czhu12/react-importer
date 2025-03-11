@@ -1,8 +1,13 @@
-import { defineConfig } from 'vite'
-import preact from '@preact/preset-vite'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig, UserConfig } from 'vite';
+import preact from '@preact/preset-vite';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [preact(), tailwindcss()],
-})
+export default defineConfig(({ mode }): UserConfig => {
+  const base = mode === 'gh-pages' ? '/react-importer/' : '/';
+
+  return {
+    plugins: [preact(), tailwindcss()],
+    base,
+  };
+});
