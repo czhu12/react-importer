@@ -202,3 +202,7 @@ MIT © [czhu12](https://github.com/czhu12)
 
 - Run `npm i && npm run watch` - this watches for changes in main plugin and rebuilds if needed
 - Run `cd example && npm i && npm run dev` - this runs example application
+
+To run no build example you could run
+
+- `npx http-server .`
