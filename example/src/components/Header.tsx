@@ -2,13 +2,14 @@ import 'tippy.js/dist/tippy.css'; // optional for styling
 import tippy from 'tippy.js';
 import { CloudArrowUpIcon, TableCellsIcon } from '@heroicons/react/24/outline';
 import { GitHubIcon } from './Icons';
+import rainbow from '../assets/images/rainbow.jpg';
 
 export default function Header() {
   return (
     <div
       className="bg-cover bg-center text-white"
       style={{
-        backgroundImage: "url('/images/backdrops/rainbow.jpg')",
+        backgroundImage: `url(${rainbow})`,
         overflow: 'hidden',
         clipPath: 'polygon(0 0, 100% 0%, 115% 85%, 0 100%)',
       }}

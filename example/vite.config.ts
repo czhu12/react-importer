@@ -9,5 +9,8 @@ export default defineConfig(({ mode }): UserConfig => {
   return {
     plugins: [preact(), tailwindcss()],
     base,
+    resolve: {
+      dedupe: ['preact'],
+    },
   };
 });
