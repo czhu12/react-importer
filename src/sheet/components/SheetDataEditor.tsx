@@ -114,35 +114,39 @@ export default function SheetDataEditor({
   }
 
   return (
-    <div>
-      <SheetDataEditorActions
-        sheetDefinition={sheetDefinition}
-        rowData={rowData}
-        selectedRows={selectedRows}
-        setSelectedRows={setSelectedRows}
-        viewMode={viewMode}
-        setViewMode={setViewMode}
-        searchPhrase={searchPhrase}
-        setSearchPhrase={setSearchPhrase}
-        errorColumnFilter={errorColumnFilter}
-        setErrorColumnFilter={setErrorColumnFilter}
-        removeRows={removeRows}
-        addEmptyRow={addEmptyRow}
-        sheetValidationErrors={sheetValidationErrors}
-        rowValidationSummary={rowValidationSummary}
-        resetState={resetState}
-      />
+    <div className="flex h-full flex-col">
+      <div className="flex-none">
+        <SheetDataEditorActions
+          sheetDefinition={sheetDefinition}
+          rowData={rowData}
+          selectedRows={selectedRows}
+          setSelectedRows={setSelectedRows}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
+          searchPhrase={searchPhrase}
+          setSearchPhrase={setSearchPhrase}
+          errorColumnFilter={errorColumnFilter}
+          setErrorColumnFilter={setErrorColumnFilter}
+          removeRows={removeRows}
+          addEmptyRow={addEmptyRow}
+          sheetValidationErrors={sheetValidationErrors}
+          rowValidationSummary={rowValidationSummary}
+          resetState={resetState}
+        />
+      </div>
 
-      <SheetDataEditorTable
-        table={table}
-        sheetDefinition={sheetDefinition}
-        visibleData={rowData}
-        allData={allData}
-        sheetValidationErrors={sheetValidationErrors}
-        onCellValueChanged={onCellValueChanged}
-        selectedRows={selectedRows}
-        setSelectedRows={setSelectedRows}
-      />
+      <div className="min-h-0 flex-1 overflow-auto">
+        <SheetDataEditorTable
+          table={table}
+          sheetDefinition={sheetDefinition}
+          visibleData={rowData}
+          allData={allData}
+          sheetValidationErrors={sheetValidationErrors}
+          onCellValueChanged={onCellValueChanged}
+          selectedRows={selectedRows}
+          setSelectedRows={setSelectedRows}
+        />
+      </div>
     </div>
   );
 }
