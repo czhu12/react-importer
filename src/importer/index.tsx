@@ -176,7 +176,7 @@ function ImporterBody({
     <ThemeSetter theme={theme}>
       <Root ref={targetRef}>
         {mode === 'upload' && (
-          <div className="mx-5 mt-5">
+          <div className="h-full p-10">
             <FileUploader setFile={onFileUploaded} />
             {allowManualDataEntry && (
               <div className="mt-10 mb-2.5">
