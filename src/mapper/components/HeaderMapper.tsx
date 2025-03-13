@@ -92,7 +92,7 @@ export default function HeaderMapper({
               })}
             </div>
           </div>
-          <div className="flex-1 bg-gray-50">
+          <div className="flex-1 overflow-y-auto bg-gray-50">
             <HeaderMapperDataPreview
               examples={hoveredExamples}
               csvHeader={hoveredCsvHeader ?? ''}
