@@ -38,18 +38,17 @@ function ImporterBody({
   const isInitialRender = useRef(true);
   const targetRef = useRef<HTMLDivElement | null>(null);
 
-  const [
-    {
-      mode,
-      currentSheetId,
-      sheetData,
-      columnMappings,
-      parsedFile,
-      validationErrors,
-      importProgress,
-    },
-    dispatch,
-  ] = useReducer(reducer, buildInitialState(sheets));
+  const [state, dispatch] = useReducer(reducer, buildInitialState(sheets));
+
+  const {
+    mode,
+    currentSheetId,
+    sheetData,
+    columnMappings,
+    parsedFile,
+    validationErrors,
+    importProgress,
+  } = state;
 
   useEffect(() => {
     if (isInitialRender.current) {
@@ -76,6 +75,8 @@ function ImporterBody({
   const preventUpload = preventUploadOnErrors && validationErrors.length > 0;
 
   function onFileUploaded(file: File) {
+    dispatch({ type: 'FILE_UPLOADED', payload: { file } });
+
     parseCsv({
       file,
       onCompleted: (newParsed) => {
@@ -147,7 +148,7 @@ function ImporterBody({
         sheetData.map((d) => ({ ...d, rows: filterEmptyRows(d) }))
       );
 
-      await onComplete(data, (progress) => {
+      await onComplete({ ...state, sheetData: data }, (progress) => {
         dispatch({ type: 'PROGRESS', payload: { progress } });
       });
     } catch (e) {
