@@ -76,7 +76,7 @@ export type ImporterAction =
         amountOfEmptyRowsToAdd: number;
       };
     } // Changes the mode to 'preview'
-  | { type: 'FILE_UPLOADED'; payload: { file: File } } // Sets the parsed file and changes the mode to 'mapping'
+  | { type: 'FILE_UPLOADED'; payload: { file: File } } // Sets the row file
   | { type: 'FILE_PARSED'; payload: { parsed: ParsedFile } } // Sets the parsed file and changes the mode to 'mapping'
   | { type: 'UPLOAD' } // Changes the mode to 'upload' - used when going back from in the mapping screen
   | { type: 'COLUMN_MAPPING_CHANGED'; payload: { mappings: ColumnMapping[] } } // Sets the proper mappings
