@@ -40,7 +40,6 @@
     "noData": "No preview data",
     "used": "Used",
     "unused": "Unused",
-    "mappingsNotValidTooltip": "Please set all required mappings",
     "incomingColumn": "Incoming column",
     "destinationColumn": "Destination column",
     "dataPreview": "Data preview for {{csvHeader}}"
