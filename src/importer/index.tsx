@@ -84,7 +84,6 @@ function ImporterBody({
       return `${heightClass} ${widthClass} overflow-auto`;
     };
     const containerClasses = getParentDimensions();
-    console.log('containerClasses', containerClasses);
 
     setContainerClasses(containerClasses);
   }, []);
