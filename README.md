@@ -1,11 +1,6 @@
 # react-importer
 
-> A modern CSV importer written in React
-
-# TODOS
-
-- Notify progress & notify errors on import
-- React - we can use this in connect
+> A modern CSV importer written in Preact
 
 [![NPM](https://img.shields.io/npm/v/react-importer.svg)](https://www.npmjs.com/package/react-importer) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Build Status](https://github.com/czhu12/react-importer/actions/workflows/ci.yml/badge.svg)](https://github.com/czhu12/react-importer/actions/workflows/ci.yml) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -58,7 +53,8 @@ export default defineConfig({
 ### Usage
 
 ```jsx
-import Importer from 'react-importer';
+import Importer from 'react-importer/peer';
+import 'react-importer/peer/index.css';
 
 <Importer
   sheets={[
@@ -146,7 +142,105 @@ import Importer from 'react-importer';
 
 ### Documentation
 
-(TODO)
+#### Props
+
+| Prop Name                       | Default Value | Available Values                                                                | Required | Description                                                                                                                                |
+| ------------------------------- | ------------- | ------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| sheets                          | -             | `SheetDefinition[]`                                                             | Yes      | Array of sheet definitions that describe the structure of data to be imported                                                              |
+| onComplete                      | -             | `(data: SheetState[], onProgress: (progress: number) => void) => Promise<void>` | Yes      | Callback function called when the import process is completed. Receives the final data and a progress callback                             |
+| theme                           | 'default'     | 'default' \| 'theme-1' \| 'theme-2'                                             | No       | Visual theme variant for the importer component                                                                                            |
+| onDataColumnsMapped             | -             | `(data: SheetState) => Promise<SheetState> \| SheetState`                       | No       | Callback function called after columns are mapped to sheet definitions by the user                                                         |
+| allowManualDataEntry            | false         | boolean                                                                         | No       | Whether to allow users to manually enter data during the preview phase                                                                     |
+| locale                          | en            | 'en' \| 'fr'                                                                    | No       | Locale string for internationalization                                                                                                     |
+| preventUploadOnValidationErrors | false         | boolean \| `(errors: ImporterValidationError[]) => boolean`                     | No       | Controls whether to prevent upload when validation errors occur. Can be a boolean or a function that returns a boolean based on the errors |
+
+##### SheetDefinition Props
+
+| Prop Name | Default Value | Available Values          | Required | Description                                                               |
+| --------- | ------------- | ------------------------- | -------- | ------------------------------------------------------------------------- |
+| id        | -             | string                    | Yes      | Unique identifier for the sheet                                           |
+| label     | -             | string                    | Yes      | Display name for the sheet                                                |
+| columns   | -             | `SheetColumnDefinition[]` | Yes      | Array of column definitions that describe the structure of the sheet data |
+
+##### Column Types
+
+| Type      | Description                                                                                                                                       | Additional Props                                            |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| string    | Basic string column                                                                                                                               | -                                                           |
+| number    | Numeric column                                                                                                                                    | -                                                           |
+| reference | References data from another sheet. Referenced columns are automatically filled and are not available for the user to select in the mapping phase | `typeArguments: { sheetId: string, sheetColumnId: string }` |
+| enum      | Column with predefined values                                                                                                                     | `typeArguments: { values: SelectOption<string>[] }`         |
+
+##### Common Column Props
+
+All column types share these base properties:
+
+- `id: string` - Unique identifier for the column
+- `type: ColumnType` - Type of the column (described above)
+- `label: string` - Display name for the column
+- `suggestedMappingKeywords?: string[]` - Keywords to help with automatic column mapping
+- `isReadOnly?: boolean` - Whether the column can be edited
+- `validators?: ImporterValidatorDefinition[]` - Array of validation rules
+- `transformers?: ImporterTransformerDefinition[]` - Array of data transformation rules
+
+##### SheetState Props
+
+| Prop Name | Default Value | Available Values | Required | Description                                                                  |
+| --------- | ------------- | ---------------- | -------- | ---------------------------------------------------------------------------- |
+| sheetId   | -             | string           | Yes      | Unique identifier matching the corresponding SheetDefinition                 |
+| rows      | -             | `SheetRow[]`     | Yes      | Array of data rows, where each row is a record of column IDs to their values |
+
+##### Validators
+
+| Type           | Description                                                                                                                                                            | Additional Props                                                                                           | Example                                                                                                    |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| required       | Ensures the field is not empty                                                                                                                                         | `error?: string`                                                                                           | `{ validate: 'required', error: 'This field is required' }`                                                |
+| unique         | Ensures the value is unique across all rows                                                                                                                            | `error?: string`                                                                                           | `{ validate: 'unique', error: 'This value must be unique' }`                                               |
+| regex_matches  | Validates against a regular expression                                                                                                                                 | `regex: string \| RegExp, error?: string`                                                                  | `{ validate: 'regex_matches', regex: /^[A-Z]+$/, error: 'Must be uppercase' }`                             |
+| includes       | Checks if value is in a predefined list                                                                                                                                | `values: ImporterOutputFieldType[], error?: string`                                                        | `{ validate: 'includes', values: ['A', 'B', 'C'] }`                                                        |
+| multi_includes | Checks if all values in a delimited string are in a predefined list                                                                                                    | `values: ImporterOutputFieldType[], delimiter?: string \| RegExp, error?: string`                          | `{ validate: 'multi_includes', values: ['A', 'B'], delimiter: ',' }`                                       |
+| is_integer     | Validates that the value is an integer                                                                                                                                 | `error?: string`                                                                                           | `{ validate: 'is_integer' }`                                                                               |
+| phone_number   | Validates phone number format                                                                                                                                          | `error?: string`                                                                                           | `{ validate: 'phone_number' }`                                                                             |
+| email          | Validates email format                                                                                                                                                 | `error?: string`                                                                                           | `{ validate: 'email' }`                                                                                    |
+| postal_code    | Validates postal code format                                                                                                                                           | `error?: string`                                                                                           | `{ validate: 'postal_code' }`                                                                              |
+| custom         | Custom validation function. Returning string means the validation failed and the string returned is the message. Returning null/undefined means that validation passed | `key: string, validateFn: (fieldValue: ImporterOutputFieldType, row: SheetRow) => ImporterValidatorOutput` | `{ validate: 'custom', key: 'myValidator', validateFn: (value) => value.length > 5 ? null : 'Too short' }` |
+
+##### Transformers
+
+| Type         | Description                                | Example                                                                                        |
+| ------------ | ------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| phone_number | Formats phone numbers to a standard format | `{ transformer: 'phone_number' }`                                                              |
+| postal_code  | Formats postal codes to a standard format  | `{ transformer: 'postal_code' }`                                                               |
+| state_code   | Formats state codes to a standard format   | `{ transformer: 'state_code' }`                                                                |
+| strip        | Removes leading and trailing whitespace    | `{ transformer: 'strip' }`                                                                     |
+| custom       | Custom transformation function             | `{ transformer: 'custom', key: 'myTransformer', transformFn: (value) => value.toUpperCase() }` |
+
+##### ImporterValidationError
+
+| Prop Name | Type   | Required | Description                                                    |
+| --------- | ------ | -------- | -------------------------------------------------------------- |
+| sheetId   | string | Yes      | ID of the sheet where the validation error occurred            |
+| rowIndex  | number | Yes      | Index of the row where the validation error occurred (0-based) |
+| columnId  | string | Yes      | ID of the column where the validation error occurred           |
+| message   | string | Yes      | Error message describing what went wrong                       |
+
+Example:
+
+```typescript
+{
+  sheetId: "employees",
+  rowIndex: 2,
+  columnId: "email",
+  message: "Invalid email format"
+}
+```
+
+#### Peer vs Bundled
+
+This package ships with 2 versions you can use:
+
+- `/peer` - this version is meant to be used with React/Preact - it defines `preact` as peer dependency
+- `/bundled` - this version is meant to be used without React/Preact - it ships with `preact` bundled. The user should then use `renderImporter` function, exported as named export
 
 #### Custom Themes
 
