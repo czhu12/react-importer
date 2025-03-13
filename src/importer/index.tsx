@@ -226,10 +226,6 @@ function ImporterBody({
                 removeRows={onRemoveRows}
                 addEmptyRow={addEmptyRow}
                 resetState={resetState}
-                preventUpload={preventUpload}
-                columnMappings={columnMappings ?? []}
-                onBackToMapping={onBackToMapping}
-                onSubmit={onSubmit}
               />
             </div>
             <div className="flex-none">
