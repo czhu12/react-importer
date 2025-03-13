@@ -1,8 +1,8 @@
 import { useState } from 'preact/hooks';
 import Importer, {
-  SheetState,
   SheetDefinition,
   SheetRow,
+  ImporterState,
 } from 'react-importer/peer';
 
 const SCHOOLS_SHEET: SheetDefinition = {
@@ -151,7 +151,7 @@ export default function ComplexImporter() {
   const [ready, setReady] = useState(false);
 
   const onComplete = async (
-    data: SheetState[],
+    data: ImporterState,
     onProgress: (progress: number) => void
   ) => {
     await new Promise((resolve) => setTimeout(resolve, 200));

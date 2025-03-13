@@ -1,11 +1,11 @@
 import { useState } from 'preact/hooks';
-import Importer, { SheetState } from 'react-importer/peer';
+import Importer, { ImporterState } from 'react-importer/peer';
 
 export default function EmployeeImporter() {
   const [ready, setReady] = useState(false);
 
   const onComplete = async (
-    data: SheetState[],
+    data: ImporterState,
     onProgress: (progress: number) => void
   ) => {
     await new Promise((resolve) => setTimeout(resolve, 200));
