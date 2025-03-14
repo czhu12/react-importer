@@ -32,6 +32,8 @@ const reducer = (
 
       return { ...state, mode: 'preview', sheetData: emptyData };
     }
+    case 'FILE_UPLOADED':
+      return { ...state, rowFile: action.payload.file };
     case 'FILE_PARSED':
       return { ...state, parsedFile: action.payload.parsed, mode: 'mapping' };
     case 'UPLOAD':

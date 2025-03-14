@@ -20,7 +20,7 @@ export interface ImporterDefinition {
   onDataColumnsMapped?: OnDataColumnsMappedCallback;
   allowManualDataEntry?: boolean;
   onComplete: (
-    data: SheetState[],
+    state: ImporterState,
     onProgress: (progress: number) => void
   ) => Promise<void>;
   locale?: string;
@@ -51,6 +51,7 @@ export interface ImporterState {
   validationErrors: ImporterValidationError[];
   sheetData: SheetState[];
   parsedFile?: ParsedFile;
+  rowFile?: File;
   columnMappings?: ColumnMapping[];
   importProgress: number;
 }
@@ -75,6 +76,7 @@ export type ImporterAction =
         amountOfEmptyRowsToAdd: number;
       };
     } // Changes the mode to 'preview'
+  | { type: 'FILE_UPLOADED'; payload: { file: File } } // Sets the row file
   | { type: 'FILE_PARSED'; payload: { parsed: ParsedFile } } // Sets the parsed file and changes the mode to 'mapping'
   | { type: 'UPLOAD' } // Changes the mode to 'upload' - used when going back from in the mapping screen
   | { type: 'COLUMN_MAPPING_CHANGED'; payload: { mappings: ColumnMapping[] } } // Sets the proper mappings

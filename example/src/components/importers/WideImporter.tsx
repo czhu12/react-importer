@@ -1,8 +1,8 @@
 import { useState } from 'preact/hooks';
 import Importer, {
-  SheetState,
   SheetDefinition,
   SheetRow,
+  ImporterState,
 } from 'react-importer/peer';
 import studnentsAndSchoolsExample from '../../assets/datasets/students_and_schools.csv?url';
 
@@ -152,7 +152,7 @@ export default function ComplexImporter() {
   const [ready, setReady] = useState(false);
 
   const onComplete = async (
-    data: SheetState[],
+    data: ImporterState,
     onProgress: (progress: number) => void
   ) => {
     await new Promise((resolve) => setTimeout(resolve, 200));
