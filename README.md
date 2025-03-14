@@ -303,14 +303,6 @@ You can further customize theme styles by overriding the following CSS variables
 
 These variables allow you to adjust the color scheme for primary, secondary, and tertiary elements, as well as status indicators such as success, danger, warning, and info.
 
-### Roadmap
-
-- Make readme and documentation better
-- Support existing data
-- Add support for callbacks
-- Add support for themeing
-- Animated progress bar
-
 ## License
 
 MIT © [czhu12](https://github.com/czhu12)
