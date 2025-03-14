@@ -4,8 +4,6 @@
 
 [![NPM](https://img.shields.io/npm/v/react-importer.svg)](https://www.npmjs.com/package/react-importer) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Build Status](https://github.com/czhu12/react-importer/actions/workflows/ci.yml/badge.svg)](https://github.com/czhu12/react-importer/actions/workflows/ci.yml) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-![Demo](https://github.com/czhu12/react-importer/raw/master/example/public/demo.gif)
-
 # Contents
 
 - [Why?](#why)
@@ -13,7 +11,6 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Documentation](#documentation)
-- [Roadmap](#roadmap)
 
 ### Why?
 
@@ -279,7 +276,7 @@ This package ships with 2 versions you can use:
 You can customize the dimensions by setting `height`, `max-height`, `width`, or `max-width`. To ensure proper scaling and responsiveness, it's important to include `flex`.
 
 ```jsx
-<div className="flex h-[800px]">
+<div style={{ display: 'flex', height: '80vh' }}>
   <Importer .../>
 </div>
 ```
