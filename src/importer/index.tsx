@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useState } from 'preact/compat';
+import { useReducer, useEffect } from 'preact/compat';
 import { useRef } from 'preact/hooks';
 
 import FileUploader from './components/FileUploader';
@@ -37,7 +37,6 @@ function ImporterBody({
 
   const isInitialRender = useRef(true);
   const targetRef = useRef<HTMLDivElement | null>(null);
-  const [containerClasses, setContainerClasses] = useState<string>('');
 
   const [
     {
@@ -60,34 +59,6 @@ function ImporterBody({
 
     targetRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [mode]);
-
-  useEffect(() => {
-    const getParentDimensions = () => {
-      if (!targetRef.current) return 'h-screen w-full overflow-auto';
-
-      const parent = targetRef.current.closest('.csv-importer')?.parentElement;
-
-      if (!parent) return 'h-screen w-full overflow-auto';
-
-      const computedStyle = window.getComputedStyle(parent);
-
-      const height = computedStyle.getPropertyValue('max-height').trim();
-
-      const width = computedStyle.getPropertyValue('max-width').trim();
-      console.log('width', width);
-
-      const heightClass =
-        height && height !== 'none' ? `h-[${height}]` : 'h-screen';
-
-      const widthClass = width && width !== 'none' ? `w-[${width}]` : 'w-full';
-
-      return `${heightClass} ${widthClass} overflow-auto`;
-    };
-    const containerClasses = getParentDimensions();
-    console.log('containerClasses', containerClasses);
-
-    setContainerClasses(containerClasses);
-  }, []);
 
   const currentSheetData = sheetData.find(
     (sheet) => sheet.sheetId === currentSheetId
@@ -205,7 +176,7 @@ function ImporterBody({
     <ThemeSetter theme={theme}>
       <Root ref={targetRef}>
         {mode === 'upload' && (
-          <div className="mx-5 mt-5">
+          <div className="h-full p-10">
             <FileUploader setFile={onFileUploaded} />
             {allowManualDataEntry && (
               <div className="mt-10 mb-2.5">
@@ -221,66 +192,60 @@ function ImporterBody({
         )}
 
         {mode === 'mapping' && (
-          <div className={containerClasses}>
-            <HeaderMapper
-              parsed={parsedFile!}
-              sheetDefinitions={sheets}
-              currentMapping={columnMappings ?? []}
-              onMappingsChanged={onMappingsChanged}
-              onMappingsSet={onMappingsSet}
-              onBack={onBackToUpload}
-            />
-          </div>
+          <HeaderMapper
+            parsed={parsedFile!}
+            sheetDefinitions={sheets}
+            currentMapping={columnMappings ?? []}
+            onMappingsChanged={onMappingsChanged}
+            onMappingsSet={onMappingsSet}
+            onBack={onBackToUpload}
+          />
         )}
         {mode === 'preview' && (
           // TODO: Move these to separate component in future PR
-          <div className={containerClasses}>
-            <div className="flex h-full flex-col">
-              <div className="flex-none">
-                <SheetsSwitcher
-                  activeSheetId={currentSheetId}
-                  sheetDefinitions={sheets}
-                  onSheetChange={(sheetId) =>
-                    dispatch({ type: 'SHEET_CHANGED', payload: { sheetId } })
-                  }
-                  validationErrors={validationErrors}
-                />
-              </div>
-              <div className="flex-1 overflow-auto">
-                <SheetDataEditor
-                  data={currentSheetData}
-                  allData={sheetData}
-                  sheetDefinition={currentSheetDefinition}
-                  sheetValidationErrors={validationErrors.filter(
-                    (error) => error.sheetId === currentSheetDefinition?.id
-                  )}
-                  setRowData={onCellChanged}
-                  removeRows={onRemoveRows}
-                  addEmptyRow={addEmptyRow}
-                  resetState={resetState}
-                />
-              </div>
-              <div className="flex-none">
-                {currentSheetData.rows.length > 0 && (
-                  <div className="my-5 flex justify-between">
-                    <div>
-                      {columnMappings != null && (
-                        <BackToMappingButton
-                          onBackToMapping={onBackToMapping}
-                        />
-                      )}
-                    </div>
-                    <Tooltip
-                      tooltipText={t('importer.uploadBlocked')}
-                      hidden={!preventUpload}
-                    >
-                      <Button onClick={onSubmit} disabled={preventUpload}>
-                        {t('importer.upload')}
-                      </Button>
-                    </Tooltip>
-                  </div>
+          <div className="flex h-full flex-col">
+            <div className="flex-none">
+              <SheetsSwitcher
+                activeSheetId={currentSheetId}
+                sheetDefinitions={sheets}
+                onSheetChange={(sheetId) =>
+                  dispatch({ type: 'SHEET_CHANGED', payload: { sheetId } })
+                }
+                validationErrors={validationErrors}
+              />
+            </div>
+            <div className="flex-1 overflow-auto">
+              <SheetDataEditor
+                data={currentSheetData}
+                allData={sheetData}
+                sheetDefinition={currentSheetDefinition}
+                sheetValidationErrors={validationErrors.filter(
+                  (error) => error.sheetId === currentSheetDefinition?.id
                 )}
-              </div>
+                setRowData={onCellChanged}
+                removeRows={onRemoveRows}
+                addEmptyRow={addEmptyRow}
+                resetState={resetState}
+              />
+            </div>
+            <div className="flex-none">
+              {currentSheetData.rows.length > 0 && (
+                <div className="my-5 flex justify-between">
+                  <div>
+                    {columnMappings != null && (
+                      <BackToMappingButton onBackToMapping={onBackToMapping} />
+                    )}
+                  </div>
+                  <Tooltip
+                    tooltipText={t('importer.uploadBlocked')}
+                    hidden={!preventUpload}
+                  >
+                    <Button onClick={onSubmit} disabled={preventUpload}>
+                      {t('importer.upload')}
+                    </Button>
+                  </Tooltip>
+                </div>
+              )}
             </div>
           </div>
         )}
