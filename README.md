@@ -279,8 +279,10 @@ This package ships with 2 versions you can use:
 You can customize the dimensions by setting `height`, `max-height`, `width`, or `max-width`. To ensure proper scaling and responsiveness, it's important to include `flex`.
 
 ```jsx
-<div className="flex h-[800px]">
+<div style={{ display: 'flex', height: '100vh' }}>
+  <Header />
   <Importer .../>
+  <Footer />
 </div>
 ```
 
