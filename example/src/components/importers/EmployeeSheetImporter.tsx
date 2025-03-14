@@ -117,7 +117,7 @@ export default function StudentsImporter() {
         </a>
         .
       </h1>
-      <div className="h-[800px]">
+      <div className="flex h-[800px]">
         <Importer
           sheets={[EMPLOYEE_SHEET, COMPANY_SHEET]}
           onDataColumnsMapped={(sheets) => {
@@ -135,12 +135,12 @@ export default function StudentsImporter() {
           }}
           onComplete={onComplete}
         />
-        {ready && (
-          <div style={{ margin: '0 auto', maxWidth: '1200px' }}>
-            <h4>Check the console for the output!</h4>
-          </div>
-        )}
       </div>
+      {ready && (
+        <div>
+          <h4>Check the console for the output!</h4>
+        </div>
+      )}
     </div>
   );
 }

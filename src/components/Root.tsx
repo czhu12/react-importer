@@ -3,10 +3,11 @@ import { HEALDESS_UI_PORTAL_ROOT_ID, ROOT_CLASS } from '../constants';
 
 interface Props {
   children?: ReactNode;
+  className?: string;
 }
 
 export default forwardRef<HTMLDivElement, Props>(function Root(
-  { children },
+  { children, className },
   ref
 ) {
   useEffect(() => {
@@ -32,7 +33,10 @@ export default forwardRef<HTMLDivElement, Props>(function Root(
   }, []);
 
   return (
-    <div ref={ref} className={ROOT_CLASS + ' min-h-0 w-full overflow-auto'}>
+    <div
+      ref={ref}
+      className={`${ROOT_CLASS} min-h-0 w-full overflow-auto${className ? ` ${className}` : ''}`}
+    >
       {children}
     </div>
   );

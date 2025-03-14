@@ -102,12 +102,12 @@ export default function EmployeeImporter() {
           onComplete={onComplete}
           preventUploadOnValidationErrors
         />
-        {ready && (
-          <div style={{ margin: '0 auto', maxWidth: '1200px' }}>
-            <h4>Check the console for the output!</h4>
-          </div>
-        )}
       </div>
+      {ready && (
+        <div>
+          <h4>Check the console for the output!</h4>
+        </div>
+      )}
     </div>
   );
 }

@@ -174,7 +174,10 @@ function ImporterBody({
 
   return (
     <ThemeSetter theme={theme}>
-      <Root ref={targetRef}>
+      <Root
+        ref={targetRef}
+        className={`${mode !== 'preview' && mode !== 'mapping' ? 'h-full' : ''}`}
+      >
         {mode === 'upload' && (
           <div className="h-full p-10">
             <FileUploader setFile={onFileUploaded} />
