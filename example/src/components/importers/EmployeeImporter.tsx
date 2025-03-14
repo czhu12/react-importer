@@ -1,11 +1,12 @@
 import { useState } from 'preact/hooks';
-import Importer, { SheetState } from 'react-importer/peer';
+import Importer, { ImporterState } from 'react-importer/peer';
+import example1 from '../../assets/datasets/example-1.csv?url';
 
 export default function EmployeeImporter() {
   const [ready, setReady] = useState(false);
 
   const onComplete = async (
-    data: SheetState[],
+    data: ImporterState,
     onProgress: (progress: number) => void
   ) => {
     await new Promise((resolve) => setTimeout(resolve, 200));
@@ -21,10 +22,7 @@ export default function EmployeeImporter() {
     <div className="content">
       <h1>
         Want to see a demo? Try uploading{' '}
-        <a
-          className="text-blue-500 hover:text-blue-600"
-          href="/datasets/example-1.csv"
-        >
+        <a className="text-blue-500 hover:text-blue-600" href={example1}>
           this file
         </a>
         .

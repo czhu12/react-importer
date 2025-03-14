@@ -1,9 +1,11 @@
 import { useState } from 'preact/hooks';
 import Importer, {
-  SheetState,
   SheetDefinition,
   SheetRow,
+  ImporterState,
 } from 'react-importer/peer';
+import example2 from '../../assets/datasets/example-2.csv?url';
+
 const COMPANY_SHEET: SheetDefinition = {
   id: 'companies',
   label: 'Companies',
@@ -92,7 +94,7 @@ export default function StudentsImporter() {
   const [ready, setReady] = useState(false);
 
   const onComplete = async (
-    data: SheetState[],
+    data: ImporterState,
     onProgress: (progress: number) => void
   ) => {
     await new Promise((resolve) => setTimeout(resolve, 200));
@@ -109,10 +111,7 @@ export default function StudentsImporter() {
     <div className="content">
       <h1>
         Want to see a demo? Try uploading{' '}
-        <a
-          className="text-blue-500 hover:text-blue-600"
-          href="/datasets/example-2.csv"
-        >
+        <a className="text-blue-500 hover:text-blue-600" href={example2}>
           this file
         </a>
         .
