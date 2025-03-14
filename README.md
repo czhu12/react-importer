@@ -272,15 +272,19 @@ This package ships with 2 versions you can use:
 - `/peer` - this version is meant to be used with React/Preact - it defines `preact` as peer dependency
 - `/bundled` - this version is meant to be used without React/Preact - it ships with `preact` bundled. The user should then use `renderImporter` function, exported as named export
 
-#### Custom Themes
+#### Customization
 
-We currently support three themes: `default`, `theme-1`, and `theme-2`. You can apply a theme by passing the theme prop to the Importer component:
+##### Height and Width
+
+You can customize the dimensions by setting `height`, `max-height`, `width`, or `max-width`. To ensure proper scaling and responsiveness, it's important to include `flex`.
 
 ```jsx
-<Importer theme="theme-1" />
+<div className="flex h-[800px]">
+  <Importer .../>
+</div>
 ```
 
-##### Customization
+##### Theme Styles
 
 You can further customize theme styles by overriding the following CSS variables in your `index.css` file:
 
