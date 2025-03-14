@@ -29,7 +29,7 @@ export default function EmployeeImporter() {
         </a>
         .
       </h1>
-      <div className="h-[500px]">
+      <div className="flex max-h-[800px]">
         <Importer
           sheets={[
             {
