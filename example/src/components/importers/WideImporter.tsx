@@ -4,7 +4,7 @@ import Importer, {
   SheetRow,
   ImporterState,
 } from 'react-importer/peer';
-import studnentsAndSchoolsExample from '../../assets/datasets/students_and_schools.csv?url';
+import studentsAndSchoolsExample from '../../assets/datasets/students_and_schools.csv?url';
 
 const SCHOOLS_SHEET: SheetDefinition = {
   id: 'schools',
@@ -171,7 +171,7 @@ export default function ComplexImporter() {
         Want to see a demo? Try uploading{' '}
         <a
           className="text-blue-500 hover:text-blue-600"
-          href={studnentsAndSchoolsExample}
+          href={studentsAndSchoolsExample}
         >
           this file
         </a>
