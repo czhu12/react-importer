@@ -117,7 +117,7 @@ export default function StudentsImporter() {
         </a>
         .
       </h1>
-      <div className="max-h-[800px]">
+      <div className="h-[800px]">
         <Importer
           sheets={[EMPLOYEE_SHEET, COMPANY_SHEET]}
           onDataColumnsMapped={(sheets) => {
