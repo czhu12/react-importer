@@ -175,9 +175,12 @@ function ImporterBody({
 
   return (
     <ThemeSetter theme={theme}>
-      <Root ref={targetRef}>
+      <Root
+        ref={targetRef}
+        className={`${mode !== 'preview' && mode !== 'mapping' ? 'h-full' : ''}`}
+      >
         {mode === 'upload' && (
-          <div className="mt-5">
+          <div className="h-full p-10">
             <FileUploader setFile={onFileUploaded} />
             {allowManualDataEntry && (
               <div className="mt-10 mb-2.5">
@@ -202,47 +205,53 @@ function ImporterBody({
             onBack={onBackToUpload}
           />
         )}
-
         {mode === 'preview' && (
-          <>
-            <SheetsSwitcher
-              activeSheetId={currentSheetId}
-              sheetDefinitions={sheets}
-              onSheetChange={(sheetId) =>
-                dispatch({ type: 'SHEET_CHANGED', payload: { sheetId } })
-              }
-              validationErrors={validationErrors}
-            />
-            <SheetDataEditor
-              data={currentSheetData}
-              allData={sheetData}
-              sheetDefinition={currentSheetDefinition}
-              sheetValidationErrors={validationErrors.filter(
-                (error) => error.sheetId === currentSheetDefinition?.id
-              )}
-              setRowData={onCellChanged}
-              removeRows={onRemoveRows}
-              addEmptyRow={addEmptyRow}
-              resetState={resetState}
-            />
-            {currentSheetData.rows.length > 0 && (
-              <div className="my-5 flex justify-between">
-                <div>
-                  {columnMappings != null && (
-                    <BackToMappingButton onBackToMapping={onBackToMapping} />
-                  )}
+          // TODO: Move these to separate component in future PR
+          <div className="flex h-full flex-col">
+            <div className="flex-none">
+              <SheetsSwitcher
+                activeSheetId={currentSheetId}
+                sheetDefinitions={sheets}
+                onSheetChange={(sheetId) =>
+                  dispatch({ type: 'SHEET_CHANGED', payload: { sheetId } })
+                }
+                validationErrors={validationErrors}
+              />
+            </div>
+            <div className="flex-1 overflow-auto">
+              <SheetDataEditor
+                data={currentSheetData}
+                allData={sheetData}
+                sheetDefinition={currentSheetDefinition}
+                sheetValidationErrors={validationErrors.filter(
+                  (error) => error.sheetId === currentSheetDefinition?.id
+                )}
+                setRowData={onCellChanged}
+                removeRows={onRemoveRows}
+                addEmptyRow={addEmptyRow}
+                resetState={resetState}
+              />
+            </div>
+            <div className="flex-none">
+              {currentSheetData.rows.length > 0 && (
+                <div className="my-5 flex justify-between">
+                  <div>
+                    {columnMappings != null && (
+                      <BackToMappingButton onBackToMapping={onBackToMapping} />
+                    )}
+                  </div>
+                  <Tooltip
+                    tooltipText={t('importer.uploadBlocked')}
+                    hidden={!preventUpload}
+                  >
+                    <Button onClick={onSubmit} disabled={preventUpload}>
+                      {t('importer.upload')}
+                    </Button>
+                  </Tooltip>
                 </div>
-                <Tooltip
-                  tooltipText={t('importer.uploadBlocked')}
-                  hidden={!preventUpload}
-                >
-                  <Button onClick={onSubmit} disabled={preventUpload}>
-                    {t('importer.upload')}
-                  </Button>
-                </Tooltip>
-              </div>
-            )}
-          </>
+              )}
+            </div>
+          </div>
         )}
 
         {(mode === 'submit' || mode === 'failed' || mode === 'completed') && (

@@ -27,80 +27,82 @@ export default function EmployeeImporter() {
         </a>
         .
       </h1>
-      <Importer
-        sheets={[
-          {
-            id: 'employees',
-            label: 'Employees',
-            columns: [
-              {
-                label: 'Employee ID',
-                id: 'employee_id',
-                type: 'number',
-                validators: [
-                  { validate: 'required' },
-                  {
-                    validate: 'unique',
-                    error: 'This employee ID is not unique',
-                  },
-                  {
-                    validate: 'is_integer',
-                    error: 'This value must be a number',
-                  },
-                ],
-              },
-              {
-                label: 'Email',
-                id: 'email',
-                type: 'string',
-                validators: [
-                  { validate: 'required' },
-                  { validate: 'unique', error: 'This email is not unique' },
-                  {
-                    validate: 'regex_matches',
-                    regex:
-                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    error: 'This email is not valid',
-                  },
-                ],
-              },
-              {
-                label: 'Phone Number',
-                id: 'phone_number',
-                type: 'string',
-                validators: [{ validate: 'required' }],
-              },
-              {
-                label: 'Address',
-                id: 'address',
-                type: 'string',
-                validators: [{ validate: 'required' }],
-              },
-              { label: 'City', id: 'city', type: 'string' },
-              {
-                label: 'State',
-                id: 'state',
-                type: 'string',
-                transformers: [{ transformer: 'state_code' }],
-              },
-              {
-                label: 'Zip Code',
-                id: 'zip_code',
-                type: 'string',
-                validators: [{ validate: 'required' }],
-              },
-            ],
-          },
-        ]}
-        onDataColumnsMapped={(dataColumns) => {
-          console.log(dataColumns);
-          return dataColumns;
-        }}
-        onComplete={onComplete}
-        preventUploadOnValidationErrors
-      />
+      <div className="flex max-h-[800px]">
+        <Importer
+          sheets={[
+            {
+              id: 'employees',
+              label: 'Employees',
+              columns: [
+                {
+                  label: 'Employee ID',
+                  id: 'employee_id',
+                  type: 'number',
+                  validators: [
+                    { validate: 'required' },
+                    {
+                      validate: 'unique',
+                      error: 'This employee ID is not unique',
+                    },
+                    {
+                      validate: 'is_integer',
+                      error: 'This value must be a number',
+                    },
+                  ],
+                },
+                {
+                  label: 'Email',
+                  id: 'email',
+                  type: 'string',
+                  validators: [
+                    { validate: 'required' },
+                    { validate: 'unique', error: 'This email is not unique' },
+                    {
+                      validate: 'regex_matches',
+                      regex:
+                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      error: 'This email is not valid',
+                    },
+                  ],
+                },
+                {
+                  label: 'Phone Number',
+                  id: 'phone_number',
+                  type: 'string',
+                  validators: [{ validate: 'required' }],
+                },
+                {
+                  label: 'Address',
+                  id: 'address',
+                  type: 'string',
+                  validators: [{ validate: 'required' }],
+                },
+                { label: 'City', id: 'city', type: 'string' },
+                {
+                  label: 'State',
+                  id: 'state',
+                  type: 'string',
+                  transformers: [{ transformer: 'state_code' }],
+                },
+                {
+                  label: 'Zip Code',
+                  id: 'zip_code',
+                  type: 'string',
+                  validators: [{ validate: 'required' }],
+                },
+              ],
+            },
+          ]}
+          onDataColumnsMapped={(dataColumns) => {
+            console.log(dataColumns);
+            return dataColumns;
+          }}
+          onComplete={onComplete}
+          preventUploadOnValidationErrors
+        />
+      </div>
       {ready && (
-        <div style={{ margin: '0 auto', maxWidth: '1200px' }}>
+        <div>
           <h4>Check the console for the output!</h4>
         </div>
       )}

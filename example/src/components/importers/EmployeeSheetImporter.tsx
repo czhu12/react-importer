@@ -116,23 +116,27 @@ export default function StudentsImporter() {
         </a>
         .
       </h1>
-      <Importer
-        sheets={[EMPLOYEE_SHEET, COMPANY_SHEET]}
-        onDataColumnsMapped={(sheets) => {
-          const sheet = sheets.find((sheet) => sheet.sheetId === 'companies')!;
-          const seen = new Set();
-          sheet.rows = [...sheet.rows].filter((row: SheetRow) => {
-            // Remove duplicate names, don't validate yet...
-            const hasSeen = !seen.has(row.company);
-            seen.add(row.company);
-            return hasSeen;
-          });
-          return sheets;
-        }}
-        onComplete={onComplete}
-      />
+      <div className="flex h-[800px]">
+        <Importer
+          sheets={[EMPLOYEE_SHEET, COMPANY_SHEET]}
+          onDataColumnsMapped={(sheets) => {
+            const sheet = sheets.find(
+              (sheet) => sheet.sheetId === 'companies'
+            )!;
+            const seen = new Set();
+            sheet.rows = [...sheet.rows].filter((row: SheetRow) => {
+              // Remove duplicate names, don't validate yet...
+              const hasSeen = !seen.has(row.company);
+              seen.add(row.company);
+              return hasSeen;
+            });
+            return sheets;
+          }}
+          onComplete={onComplete}
+        />
+      </div>
       {ready && (
-        <div style={{ margin: '0 auto', maxWidth: '1200px' }}>
+        <div>
           <h4>Check the console for the output!</h4>
         </div>
       )}
