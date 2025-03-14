@@ -32,10 +32,7 @@ export default forwardRef<HTMLDivElement, Props>(function Root(
   }, []);
 
   return (
-    <div
-      ref={ref}
-      className={ROOT_CLASS + ' h-screen max-h-full min-h-full overflow-auto'}
-    >
+    <div ref={ref} className={ROOT_CLASS + ' min-h-0 w-full overflow-auto'}>
       {children}
     </div>
   );
