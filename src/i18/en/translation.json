@@ -40,7 +40,7 @@
     "noData": "No preview data",
     "used": "Used",
     "unused": "Unused",
-    "incomingColumn": "Incoming column",
+    "importedColumn": "Imported column",
     "destinationColumn": "Destination column",
     "dataPreview": "Data preview for {{csvHeader}}"
   },
