@@ -32,6 +32,7 @@ function ImporterBody({
   sheets,
   onDataColumnsMapped,
   preventUploadOnValidationErrors,
+  importerInformation,
 }: ImporterDefinition) {
   const { t } = useTranslations();
 
@@ -187,6 +188,7 @@ function ImporterBody({
             onFileUploaded={onFileUploaded}
             onEnterDataManually={onEnterDataManually}
             allowManualDataEntry={allowManualDataEntry}
+            importerInformation={importerInformation}
           />
         )}
 

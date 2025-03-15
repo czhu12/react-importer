@@ -1,8 +1,10 @@
 import { ImporterRequirementsType } from '../types';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { Tooltip } from '../../components/index';
+import Alert from '../../components/Alert';
 interface Props {
   importerRequirements: ImporterRequirementsType;
+  importerInformation?: string;
 }
 
 const RequirementInfo = ({
@@ -16,7 +18,7 @@ const RequirementInfo = ({
         <div className="my-2 text-sm font-light uppercase">
           {groupName} Columns
         </div>
-        <div className="my-2">
+        <div className="my-2 me-3">
           {requirements.map((requirement) => (
             <div
               key={requirement.columnId}
@@ -25,15 +27,15 @@ const RequirementInfo = ({
               <div className="text-xs font-medium">
                 {requirement.columnLabel}
               </div>
-              <div className="me-3 text-xs font-light">
+              <div className="text-xs font-light">
                 {/* TODO: Fix tooltip since it goes behind the column next to it */}
                 <Tooltip
                   tooltipText={
-                    requirement?.requirementInformation ||
+                    requirement?.importerInformation ||
                     `This column is ${groupName}`
                   }
                 >
-                  <InformationCircleIcon className="size-6 text-gray-400" />
+                  <InformationCircleIcon className="size-5 text-gray-400" />
                 </Tooltip>
               </div>
             </div>
@@ -44,10 +46,18 @@ const RequirementInfo = ({
   </div>
 );
 
-export default function ImporterRequirements({ importerRequirements }: Props) {
+export default function ImporterRequirements({
+  importerRequirements,
+  importerInformation,
+}: Props) {
   return (
     <div className="flex h-full flex-col space-y-5">
-      <div>Info box that is customizable</div>
+      <div className="me-3">
+        <Alert>
+          {importerInformation ||
+            'Make sure your file includes all the required columns.'}
+        </Alert>
+      </div>
       <div className="flex min-h-0 flex-1 overflow-hidden">
         <RequirementInfo importerRequirements={importerRequirements} />
       </div>

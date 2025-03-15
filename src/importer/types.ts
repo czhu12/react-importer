@@ -24,6 +24,7 @@ export interface ImporterDefinition {
     onProgress: (progress: number) => void
   ) => Promise<void>;
   locale?: string;
+  importerInformation?: string;
   preventUploadOnValidationErrors?:
     | boolean
     | ((errors: ImporterValidationError[]) => boolean);

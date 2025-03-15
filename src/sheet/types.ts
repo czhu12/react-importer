@@ -25,7 +25,7 @@ interface SheetColumnBaseDefinition {
   isReadOnly?: boolean;
   validators?: ImporterValidatorDefinition[];
   transformers?: ImporterTransformerDefinition[];
-  requirementInformation?: string;
+  importerInformation?: string;
 }
 
 interface SheetColumnStringDefinition extends SheetColumnBaseDefinition {
