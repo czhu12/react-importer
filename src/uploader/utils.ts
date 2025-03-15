@@ -15,6 +15,7 @@ export function getImporterRequirements(
         sheetId: sheet.id,
         columnId: column.id,
         columnLabel: column.label,
+        requirementInformation: column.requirementInformation,
       };
 
       if (

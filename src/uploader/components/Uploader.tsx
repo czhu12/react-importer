@@ -18,17 +18,16 @@ export default function Uploader({
 }: Props) {
   // TODO: Add translations
   const importerRequirements = getImporterRequirements(sheets);
-  console.log(importerRequirements);
+
   return (
     <div className="flex h-full flex-col space-y-4">
       <div className="flex-none text-2xl">Upload a file</div>
       <div className="min-h-0 flex-auto">
-        {/* TODO: Check this on mobile again */}
-        <div className="flex h-full flex-col justify-between space-y-4 md:flex-row md:space-y-0 md:space-x-4">
-          <div className="md:flex-none lg:flex-1">
+        <div className="flex h-full flex-col-reverse gap-5 md:flex-row">
+          <div className="h-full flex-1 lg:flex-1">
             <ImporterRequirements importerRequirements={importerRequirements} />
           </div>
-          <div className="md:flex-none lg:flex-2">
+          <div className="flex-1 lg:flex-2">
             <FileUploader
               setFile={onFileUploaded}
               allowManualDataEntry={allowManualDataEntry}
