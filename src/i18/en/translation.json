@@ -33,6 +33,14 @@
       "cancelText": "No, stay here"
     }
   },
+  "uploader": {
+    "uploadAFile": "Upload a file",
+    "requiredColumns": "Required columns",
+    "optionalColumns": "Optional columns",
+    "requiredColumnsTooltip": "These columns are required for the import",
+    "optionalColumnsTooltip": "These columns are optional for the import",
+    "importerInformation": "Make sure your file includes all the required columns."
+  },
   "mapper": {
     "numberRowsImported": "{{count}} Rows Imported",
     "back": "Back",

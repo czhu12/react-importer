@@ -2,6 +2,7 @@ import { SheetDefinition } from '../../types';
 import ImporterRequirements from './ImporterRequirements';
 import FileUploader from './FileUploader';
 import { getImporterRequirements } from '../utils';
+import { useTranslations } from '../../i18';
 
 interface Props {
   sheets: SheetDefinition[];
@@ -18,12 +19,11 @@ export default function Uploader({
   allowManualDataEntry,
   importerInformation,
 }: Props) {
-  // TODO: Add translations
   const importerRequirements = getImporterRequirements(sheets);
-
+  const { t } = useTranslations();
   return (
     <div className="flex h-full flex-col space-y-4">
-      <div className="flex-none text-2xl">Upload a file</div>
+      <div className="flex-none text-2xl">{t('uploader.uploadAFile')}</div>
       <div className="min-h-0 flex-auto">
         <div className="flex h-full flex-col-reverse gap-5 md:flex-row">
           <div className="h-full flex-1 lg:flex-1">
