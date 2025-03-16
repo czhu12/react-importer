@@ -28,7 +28,7 @@ export default function HeaderMapperSelection({
 
   return (
     <div
-      className="hover:bg-csv-importer-tertiary-light rounded-sm"
+      className="hover:bg-csv-importer-muted rounded-sm"
       onMouseEnter={onMouseEnter}
     >
       <div className="flex items-center py-2.5">

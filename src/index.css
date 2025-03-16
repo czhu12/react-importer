@@ -16,6 +16,7 @@
     }
 }
 
+/* TODO: Follow shadcn/ui colors with text as foreground and background as background https://ui.shadcn.com/docs/theming#base-colors */
 @theme {
     --color-csv-importer-primary: var(--csv-importer-color-primary);
     --color-csv-importer-primary-light: var(--csv-importer-color-primary-light);
@@ -47,6 +48,7 @@
         --csv-importer-color-warning: theme(colors.yellow.400);
         --csv-importer-color-info: theme(colors.indigo.500);
         --csv-importer-color-info-light: theme(colors.indigo.100);
+        --csv-importer-color-muted: theme(colors.gray.50);
     }
 
     [csv-importer-data-theme="theme-1"] {
@@ -63,6 +65,7 @@
         --csv-importer-color-warning: theme(colors.orange.400);
         --csv-importer-color-info: theme(colors.sky.400);
         --csv-importer-color-info-light: theme(colors.sky.100);
+        --csv-importer-color-muted: theme(colors.gray.50);
     }
 
     [csv-importer-data-theme="theme-2"] {
@@ -79,5 +82,6 @@
         --csv-importer-color-warning: theme(colors.yellow.600);
         --csv-importer-color-info: theme(colors.sky.700);
         --csv-importer-color-info-light: theme(colors.sky.200);
+        --csv-importer-color-muted: theme(colors.gray.50);
     }
 }

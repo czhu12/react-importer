@@ -14,7 +14,7 @@ const baseClasses = cva(
     variants: {
       variant: {
         default: 'bg-white',
-        gray: 'bg-gray-50',
+        gray: 'bg-csv-importer-muted',
       },
     },
     defaultVariants: {
