@@ -60,8 +60,6 @@ function ImporterBody({
     targetRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [mode]);
 
-  console.log(sheets);
-
   const currentSheetData = sheetData.find(
     (sheet) => sheet.sheetId === currentSheetId
   )!;
