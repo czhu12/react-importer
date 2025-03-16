@@ -6,6 +6,7 @@ interface Props {
   tooltipText: string;
   children: ReactNode;
   className?: string;
+  hidden?: boolean;
 }
 
 const baseClasses = cva(
@@ -16,11 +17,20 @@ const baseClasses = cva(
         true: 'opacity-100',
         false: 'opacity-0 pointer-events-none',
       },
+      hidden: {
+        true: 'hidden',
+        false: '',
+      },
     },
   }
 );
 
-export default function Tooltip({ tooltipText, children, className }: Props) {
+export default function Tooltip({
+  tooltipText,
+  children,
+  className,
+  hidden = true,
+}: Props) {
   const [isVisible, setIsVisible] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -64,7 +74,7 @@ export default function Tooltip({ tooltipText, children, className }: Props) {
         createPortal(
           <div
             ref={tooltipRef}
-            className={baseClasses({ visible: isVisible })}
+            className={baseClasses({ visible: isVisible, hidden })}
             style={{
               position: 'absolute',
               top: `${position.top}px`,
