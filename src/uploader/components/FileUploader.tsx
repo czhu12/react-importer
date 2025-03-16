@@ -40,7 +40,7 @@ export default function FileUploader({
   };
 
   return (
-    <Card className="h-full">
+    <Card variant="gray" className="h-full">
       <div className="flex h-full flex-col">
         <div
           onClick={() => fileInputRef.current?.click()}
