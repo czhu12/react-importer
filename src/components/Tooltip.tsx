@@ -29,7 +29,7 @@ export default function Tooltip({
   tooltipText,
   children,
   className,
-  hidden = true,
+  hidden,
 }: Props) {
   const [isVisible, setIsVisible] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
