@@ -31,6 +31,7 @@
     --color-csv-importer-warning: var(--csv-importer-color-warning);
     --color-csv-importer-info: var(--csv-importer-color-info);
     --color-csv-importer-info-light: var(--csv-importer-color-info-light);
+    --color-csv-importer-muted: var(--csv-importer-color-muted);
 }
 
 @layer base {
