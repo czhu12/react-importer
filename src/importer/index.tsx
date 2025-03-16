@@ -178,7 +178,7 @@ function ImporterBody({
     <ThemeSetter theme={theme}>
       <Root
         ref={targetRef}
-        className={`${mode !== 'preview' && mode !== 'mapping' ? 'h-full' : ''}`}
+        className={`${mode === 'submit' || mode === 'failed' || mode === 'completed' ? 'h-full' : ''}`}
       >
         {mode === 'upload' && (
           <Uploader
