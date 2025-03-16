@@ -34,7 +34,7 @@ export default function HeaderMapperSelection({
       <div className="flex items-center py-2.5">
         <div className="mx-2.5 flex flex-1 justify-between">
           <div>
-            <Badge variant="primary">{csvHeader.slice(0, 30)}</Badge>
+            <Badge>{csvHeader.slice(0, 30)}</Badge>
           </div>
           <div className="mx-5">
             <ArrowRightIcon className="h-4 w-4" />
