@@ -1,4 +1,4 @@
-import { ImporterRequirementsType } from '../types';
+import { ImporterRequirementsType } from '../../types';
 import Alert from '../../components/Alert';
 import { useTranslations } from '../../i18';
 import RequirementsList from './RequirementsList';

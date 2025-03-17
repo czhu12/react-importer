@@ -1,4 +1,4 @@
-import { ImporterRequirementsType } from '../types';
+import { ImporterRequirementsType } from '../../types';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { Tooltip } from '../../components/index';
 import { useTranslations } from '../../i18';
