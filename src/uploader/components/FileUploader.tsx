@@ -50,15 +50,15 @@ export default function FileUploader({
         >
           <div className="flex flex-1 flex-col items-center justify-center">
             <CloudArrowUpIcon className="text-csv-importer-primary mb-3 h-12 w-12" />
-            <p className="mb-3">{t('importer.uploader.dragAndDrop')}</p>
+            <p className="mb-3">{t('uploader.dragAndDrop')}</p>
             <div className="text-sm text-gray-500">
-              {tHtml('importer.uploader.fileSizeLimit', {
+              {tHtml('uploader.fileSizeLimit', {
                 limit: <b>{'20MB'}</b>,
               })}{' '}
               • CSV
             </div>
             <div className="mt-3">
-              <Button>{t('importer.uploader.browseFiles')}</Button>
+              <Button>{t('uploader.browseFiles')}</Button>
             </div>
             {allowManualDataEntry && (
               <div className="mt-3 text-sm">
@@ -66,7 +66,7 @@ export default function FileUploader({
                   onClick={onEnterDataManually}
                   className="text-csv-importer-primary hover:text-csv-importer-primary cursor-pointer decoration-2 opacity-90 hover:underline focus:underline focus:outline-none"
                 >
-                  {t('importer.uploader.enterManually')}
+                  {t('uploader.enterManually')}
                 </p>
               </div>
             )}

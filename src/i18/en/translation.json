@@ -20,12 +20,6 @@
       "retry": "Try again",
       "backToPreview": "Back to edit"
     },
-    "uploader": {
-      "dragAndDrop": "Drag and drop your file here",
-      "fileSizeLimit": "Limit {{limit}}",
-      "browseFiles": "Browse Files",
-      "enterManually": "Or just manually enter your data"
-    },
     "backToMappingConfirmation": {
       "title": "Are you sure?",
       "subTitle": "This will discard all changes made after the data was mapped",
@@ -39,7 +33,11 @@
     "optionalColumns": "Optional columns",
     "requiredColumnsTooltip": "These columns are required for the import",
     "optionalColumnsTooltip": "These columns are optional for the import",
-    "importerInformation": "Make sure your file includes all the required columns."
+    "importerInformation": "Make sure your file includes all the required columns.",
+    "dragAndDrop": "Drag and drop your file here",
+    "fileSizeLimit": "Limit {{limit}}",
+    "browseFiles": "Browse Files",
+    "enterManually": "Or just manually enter your data"
   },
   "mapper": {
     "numberRowsImported": "{{count}} Rows Imported",

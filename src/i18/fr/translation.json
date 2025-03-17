@@ -20,12 +20,6 @@
       "retry": "Réessayer",
       "backToPreview": "Retour à modifier"
     },
-    "uploader": {
-      "dragAndDrop": "Glissez et déposez votre fichier ici",
-      "fileSizeLimit": "Limite {{limit}}",
-      "browseFiles": "Parcourir les fichiers",
-      "enterManually": "Ou saisissez vos données manuellement"
-    },
     "backToMappingConfirmation": {
       "title": "Êtes-vous sûr ?",
       "subTitle": "Cela annulera toutes les modifications effectuées après le mappage des données",
@@ -39,7 +33,11 @@
     "optionalColumns": "Colonnes optionnelles",
     "requiredColumnsTooltip": "Ces colonnes sont requises pour l'importation",
     "optionalColumnsTooltip": "Ces colonnes sont optionnelles pour l'importation",
-    "importerInformation": "Assurez-vous que votre fichier inclut toutes les colonnes requises."
+    "importerInformation": "Assurez-vous que votre fichier inclut toutes les colonnes requises.",
+    "dragAndDrop": "Glissez et déposez votre fichier ici",
+    "fileSizeLimit": "Limite {{limit}}",
+    "browseFiles": "Parcourir les fichiers",
+    "enterManually": "Ou saisissez vos données manuellement"
   },
   "mapper": {
     "numberRowsImported": "{{count}} lignes importées",
