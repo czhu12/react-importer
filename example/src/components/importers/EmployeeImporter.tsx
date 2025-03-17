@@ -9,14 +9,21 @@ export default function EmployeeImporter() {
     data: ImporterState,
     onProgress: (progress: number) => void
   ) => {
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    onProgress(20);
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    onProgress(50);
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    onProgress(100);
-    console.log(data);
-    setReady(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      onProgress(20);
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      onProgress(50);
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      onProgress(100);
+      console.log(data);
+      throw new Error('Failed to import orders');
+      setReady(true);
+    } catch (error) {
+      console.error('Error during import:', error);
+      alert('There was an error importing the orders. Please try again.');
+      throw error;
+    }
   };
   return (
     <div className="content">
@@ -58,9 +65,7 @@ export default function EmployeeImporter() {
                     { validate: 'required' },
                     { validate: 'unique', error: 'This email is not unique' },
                     {
-                      validate: 'regex_matches',
-                      regex:
-                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      validate: 'email',
                       error: 'This email is not valid',
                     },
                   ],
@@ -69,7 +74,10 @@ export default function EmployeeImporter() {
                   label: 'Phone Number',
                   id: 'phone_number',
                   type: 'string',
-                  validators: [{ validate: 'required' }],
+                  validators: [
+                    { validate: 'required' },
+                    { validate: 'phone_number' },
+                  ],
                 },
                 {
                   label: 'Address',
@@ -88,7 +96,10 @@ export default function EmployeeImporter() {
                   label: 'Zip Code',
                   id: 'zip_code',
                   type: 'string',
-                  validators: [{ validate: 'required' }],
+                  validators: [
+                    { validate: 'required' },
+                    { validate: 'postal_code' },
+                  ],
                 },
               ],
             },
