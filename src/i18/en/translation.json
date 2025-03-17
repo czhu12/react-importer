@@ -50,7 +50,8 @@
     "unused": "Unused",
     "importedColumn": "Imported column",
     "destinationColumn": "Destination column",
-    "dataPreview": "Data preview for {{csvHeader}}"
+    "dataPreview": "Data preview for {{csvHeader}}",
+    "mappingsNotValid": "Please set all required mappings"
   },
   "sheet": {
     "validationPassed": "All rows pass validation!",

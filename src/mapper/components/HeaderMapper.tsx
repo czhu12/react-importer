@@ -53,7 +53,6 @@ export default function HeaderMapper({
   return (
     <div className="flex h-full flex-col">
       <div className="flex-none text-2xl">Review and confirm each mapping</div>
-      {/* TODO: Add error message here if mappings not valid */}
       <div className="min-h-0 flex-auto">
         <div className="flex h-full justify-between space-x-5">
           <div className="flex flex-2 flex-col">
@@ -105,9 +104,16 @@ export default function HeaderMapper({
           <Button variant="secondary" outline onClick={onBack}>
             {t('mapper.back')}
           </Button>
-          <Button onClick={onMappingsSet} disabled={!mapingsValid}>
-            {t('mapper.confirm')}
-          </Button>
+          <div className="flex items-center gap-3">
+            {!mapingsValid && (
+              <div className="text-csv-importer-danger text-sm">
+                {t('mapper.mappingsNotValid')}
+              </div>
+            )}
+            <Button onClick={onMappingsSet} disabled={!mapingsValid}>
+              {t('mapper.confirm')}
+            </Button>
+          </div>
         </div>
       </div>
     </div>
