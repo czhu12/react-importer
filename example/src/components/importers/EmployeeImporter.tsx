@@ -9,21 +9,14 @@ export default function EmployeeImporter() {
     data: ImporterState,
     onProgress: (progress: number) => void
   ) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 200));
-      onProgress(20);
-      await new Promise((resolve) => setTimeout(resolve, 200));
-      onProgress(50);
-      await new Promise((resolve) => setTimeout(resolve, 200));
-      onProgress(100);
-      console.log(data);
-      throw new Error('Failed to import orders');
-      setReady(true);
-    } catch (error) {
-      console.error('Error during import:', error);
-      alert('There was an error importing the orders. Please try again.');
-      throw error;
-    }
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    onProgress(20);
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    onProgress(50);
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    onProgress(100);
+    console.log(data);
+    setReady(true);
   };
   return (
     <div className="content">
