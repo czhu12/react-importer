@@ -1,5 +1,6 @@
 import { SheetDefinition } from '../types';
 import { ImporterRequirementsType } from './types';
+import { fieldIsRequired } from '../validators';
 
 export function getImporterRequirements(
   sheets: SheetDefinition[]
@@ -17,13 +18,9 @@ export function getImporterRequirements(
         importerInformation: column.importerInformation,
       };
 
-      if (
-        column.validators?.some(
-          (validator) => validator.validate === 'required'
-        )
-      ) {
+      if (fieldIsRequired(column)) {
         groups.required.push(requirement);
-      } else if (column.suggestedMappingKeywords) {
+      } else {
         groups.optional.push(requirement);
       }
     });
