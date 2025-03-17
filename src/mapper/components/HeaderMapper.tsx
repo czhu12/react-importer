@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'preact/compat';
-import { Button } from '../../components';
+import { Button, Alert } from '../../components';
 import { useTranslations } from '../../i18';
 import { ColumnMapping, ParsedFile, SheetDefinition } from '../../types';
 import {
