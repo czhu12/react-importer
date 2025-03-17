@@ -4,7 +4,7 @@ import { forwardRef, ReactNode } from 'preact/compat';
 interface Props {
   className?: string;
   children?: ReactNode;
-  variant?: 'default' | 'gray';
+  variant?: 'default' | 'muted';
 }
 
 const baseClasses = cva(
@@ -13,7 +13,7 @@ const baseClasses = cva(
     variants: {
       variant: {
         default: 'bg-white',
-        gray: 'bg-csv-importer-muted',
+        muted: 'bg-csv-importer-muted',
       },
     },
     defaultVariants: {
@@ -23,15 +23,11 @@ const baseClasses = cva(
 );
 
 const Card = forwardRef<HTMLDivElement, Props>(
-  ({ children, className, variant, ...props }, ref) => {
+  ({ children, className, variant }, ref) => {
     const componentClassName = baseClasses({ variant });
 
     return (
-      <div
-        ref={ref}
-        className={`${componentClassName} ${className}`}
-        {...props}
-      >
+      <div ref={ref} className={`${componentClassName} ${className}`}>
         {children}
       </div>
     );
@@ -39,3 +35,4 @@ const Card = forwardRef<HTMLDivElement, Props>(
 );
 
 export default Card;
+z;
