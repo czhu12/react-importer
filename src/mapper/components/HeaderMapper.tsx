@@ -52,7 +52,7 @@ export default function HeaderMapper({
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex-none text-2xl">Review and confirm each mapping</div>
+      <div className="flex-none text-2xl">{t('mapper.reviewAndConfirm')}</div>
       <div className="min-h-0 flex-auto">
         <div className="flex h-full justify-between space-x-5">
           <div className="flex flex-2 flex-col">

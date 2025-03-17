@@ -51,7 +51,8 @@
     "importedColumn": "Colonne importée",
     "destinationColumn": "Colonne de destination",
     "dataPreview": "Aperçu des données pour {{csvHeader}}",
-    "mappingsNotValid": "Veuillez définir toutes les mappings requis"
+    "mappingsNotValid": "Veuillez définir toutes les mappings requis",
+    "reviewAndConfirm": "Revoir et confirmer chaque mapping"
   },
   "sheet": {
     "validationPassed": "Toutes les lignes passent la validation !",
