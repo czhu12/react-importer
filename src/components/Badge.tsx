@@ -1,7 +1,7 @@
 import { cva } from 'cva';
 import { ReactNode } from 'preact/compat';
 
-type BadgeVariant = 'info';
+type BadgeVariant = 'primary';
 
 interface Props {
   children?: ReactNode;
@@ -11,11 +11,11 @@ interface Props {
 const baseClasses = cva('inline-flex items-center rounded-md px-1.5 py-0.5', {
   variants: {
     variant: {
-      info: 'bg-csv-importer-info text-xs font-medium',
+      primary: 'bg-csv-importer-primary-extra-light text-xs font-medium',
     },
   },
   defaultVariants: {
-    variant: 'info',
+    variant: 'primary',
   },
 });
 
