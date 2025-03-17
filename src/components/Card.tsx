@@ -35,4 +35,3 @@ const Card = forwardRef<HTMLDivElement, Props>(
 );
 
 export default Card;
-z;
