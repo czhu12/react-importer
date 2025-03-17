@@ -3,7 +3,7 @@ import { RegexValidator } from './regex_validator';
 export class PhoneNumberValidator extends RegexValidator {
   constructor() {
     super({
-      regex: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+      regex: /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/,
       validate: 'phone_number',
     });
   }
