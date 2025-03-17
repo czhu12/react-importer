@@ -1,6 +1,5 @@
 import { cva } from 'cva';
-import { forwardRef } from 'preact/compat';
-import { ReactNode } from 'preact/compat';
+import { forwardRef, ReactNode } from 'preact/compat';
 
 interface Props {
   className?: string;
