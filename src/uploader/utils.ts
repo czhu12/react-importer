@@ -41,10 +41,3 @@ export const formatFileSize = (bytes: number): string => {
 
   return `${Math.round(size)} ${units[unitIndex]}`;
 };
-
-export const isFileBelowMaxSize = (
-  fileSize: number,
-  maxSize: number
-): boolean => {
-  return fileSize <= maxSize;
-};

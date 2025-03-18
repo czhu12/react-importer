@@ -3,7 +3,7 @@ import { Button, Card } from '../../components';
 import { CloudArrowUpIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from '../../i18';
 import { SUPPORTED_FILE_MIME_TYPES } from '../../constants';
-import { formatFileSize, isFileBelowMaxSize } from '../utils';
+import { formatFileSize } from '../utils';
 
 interface Props {
   setFile: (file: File) => void;
@@ -27,7 +27,7 @@ export default function FileUploader({
     if (!SUPPORTED_FILE_MIME_TYPES.includes(file.type)) {
       return;
     }
-    if (isFileBelowMaxSize(file.size, maxFileSizeInBytes)) {
+    if (file.size <= maxFileSizeInBytes) {
       setFile(file);
     }
   };
