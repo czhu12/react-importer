@@ -229,7 +229,7 @@ function ImporterBody({
             </div>
             <div className="flex-none">
               {currentSheetData.rows.length > 0 && (
-                <div className="my-5 flex justify-between">
+                <div className="mt-5 flex justify-between">
                   <div>
                     {columnMappings != null && (
                       <BackToMappingButton onBackToMapping={onBackToMapping} />

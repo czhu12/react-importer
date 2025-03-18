@@ -104,7 +104,7 @@ export default function HeaderMapper({
         </div>
       )}
       <div className="mt-auto flex-none">
-        <div className="my-5 flex justify-between">
+        <div className="mt-5 flex justify-between">
           <Button variant="secondary" outline onClick={onBack}>
             {t('mapper.back')}
           </Button>

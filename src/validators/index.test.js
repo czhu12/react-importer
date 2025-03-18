@@ -1,4 +1,3 @@
-import { formatData } from '../utils';
 import { describe, it, expect } from 'vitest';
 import { applyValidations, fieldIsRequired } from './';
 import {
@@ -91,28 +90,45 @@ describe('IntegerValidator', () => {
   });
 });
 
-describe('applyValidation', () => {
-  const headerMappings = {
-    0: {
-      columnIndex: 0,
-      selectedField: { value: 'name' },
-      name: 'Name',
-      confirmed: true,
-    },
-    1: {
-      columnIndex: 1,
-      selectedField: { value: 'email' },
-      name: 'Email',
-      confirmed: true,
-    },
-    2: {
-      columnIndex: 2,
-      selectedField: { value: 'phone_number' },
-      name: 'Phone Number',
-      confirmed: true,
-    },
-  };
+describe('PostalCodeValidator', () => {
+  it('validates postal code', () => {
+    const validator = buildValidatorFromDefinition({ validate: 'postal_code' });
+    expect(validator.isValid('12345')).toEqual(undefined);
+    expect(validator.isValid('12345-1234')).toEqual(undefined);
+    expect(validator.isValid('12345-12345')).toEqual('validators.regex');
+    expect(validator.isValid('12345-123456')).toEqual('validators.regex');
+    expect(validator.isValid('12345-1234567')).toEqual('validators.regex');
+    expect(validator.isValid('12345-12345678')).toEqual('validators.regex');
+    expect(validator.isValid('12345-123456789')).toEqual('validators.regex');
+  });
+});
 
+describe('PhoneNumberValidator', () => {
+  it('validates phone number', () => {
+    const validator = buildValidatorFromDefinition({
+      validate: 'phone_number',
+    });
+    expect(validator.isValid('123-456-7890')).toEqual(undefined);
+    expect(validator.isValid('(123) 456-7890')).toEqual(undefined);
+    expect(validator.isValid('1234567890')).toEqual(undefined);
+    expect(validator.isValid('invalid')).toEqual('validators.regex');
+    expect(validator.isValid('123-45-678')).toEqual('validators.regex');
+    expect(validator.isValid('')).toEqual('validators.regex');
+  });
+});
+
+describe('EmailValidator', () => {
+  it('validates email', () => {
+    const validator = buildValidatorFromDefinition({ validate: 'email' });
+    expect(validator.isValid('test@example.com')).toEqual(undefined);
+    expect(validator.isValid('test@example')).toEqual('validators.regex');
+    expect(validator.isValid('test@')).toEqual('validators.regex');
+    expect(validator.isValid('test')).toEqual('validators.regex');
+    expect(validator.isValid('')).toEqual('validators.regex');
+  });
+});
+
+describe('applyValidation', () => {
   const sheetDefinitions = [
     {
       id: 'a',
