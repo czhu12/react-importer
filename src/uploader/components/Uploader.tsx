@@ -21,6 +21,7 @@ export default function Uploader({
 }: Props) {
   const importerRequirements = getImporterRequirements(sheets);
   const { t } = useTranslations();
+
   return (
     <div className="flex h-full flex-col space-y-4">
       <div className="flex-none text-2xl">{t('uploader.uploadAFile')}</div>
