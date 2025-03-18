@@ -1,17 +1,33 @@
-import { forwardRef } from 'preact/compat';
-import { JSX } from 'preact';
+import { cva } from 'cva';
+import { forwardRef, ReactNode } from 'preact/compat';
 
-const Card = forwardRef<HTMLDivElement, JSX.HTMLAttributes<HTMLDivElement>>(
-  ({ children, ...props }, ref) => {
-    const componentStyle: React.CSSProperties = {
-      boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
-      padding: '10px',
-      borderRadius: '5px',
-      cursor: props.onClick ? 'pointer' : 'default',
-    };
+interface Props {
+  className?: string;
+  children?: ReactNode;
+  variant?: 'default' | 'muted';
+}
+
+const baseClasses = cva(
+  'overflow-hidden rounded-md border border-gray-200 px-4 py-5 sm:p-6',
+  {
+    variants: {
+      variant: {
+        default: 'bg-white',
+        muted: 'bg-csv-importer-muted',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  }
+);
+
+const Card = forwardRef<HTMLDivElement, Props>(
+  ({ children, className, variant }, ref) => {
+    const componentClassName = baseClasses({ variant });
 
     return (
-      <div ref={ref} style={componentStyle} {...props}>
+      <div ref={ref} className={`${componentClassName} ${className}`}>
         {children}
       </div>
     );

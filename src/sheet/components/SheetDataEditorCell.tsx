@@ -54,7 +54,7 @@ export default function SheetDataEditorCell({
   const cellBackgroundColor = errorsText
     ? 'bg-csv-importer-danger-extra-light'
     : readOnly
-      ? 'bg-gray-100'
+      ? 'bg-csv-importer-muted'
       : '';
 
   if (!editMode) {

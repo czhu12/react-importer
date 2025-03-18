@@ -20,18 +20,24 @@
       "retry": "Réessayer",
       "backToPreview": "Retour à modifier"
     },
-    "uploader": {
-      "dragAndDrop": "Glissez et déposez votre fichier ici",
-      "fileSizeLimit": "Limite {{limit}}",
-      "browseFiles": "Parcourir les fichiers",
-      "enterManually": "Ou saisissez vos données manuellement"
-    },
     "backToMappingConfirmation": {
       "title": "Êtes-vous sûr ?",
       "subTitle": "Cela annulera toutes les modifications effectuées après le mappage des données",
       "confirmationText": "Oui, revenir en arrière",
       "cancelText": "Non, rester ici"
     }
+  },
+  "uploader": {
+    "uploadAFile": "Télécharger un fichier",
+    "requiredColumns": "Colonnes requises",
+    "optionalColumns": "Colonnes optionnelles",
+    "requiredColumnsTooltip": "Cette colonne est requise pour l'importation",
+    "optionalColumnsTooltip": "Cette colonne est optionnelle pour l'importation",
+    "importerInformation": "Assurez-vous que votre fichier inclut toutes les colonnes requises.",
+    "dragAndDrop": "Glissez et déposez votre fichier ici",
+    "maxFileSizeInBytes": "Limite {{size}}",
+    "browseFiles": "Parcourir les fichiers",
+    "enterManually": "Ou saisissez vos données manuellement"
   },
   "mapper": {
     "numberRowsImported": "{{count}} lignes importées",
@@ -42,7 +48,9 @@
     "used": "Utilisées",
     "importedColumn": "Colonne importée",
     "destinationColumn": "Colonne de destination",
-    "dataPreview": "Aperçu des données pour {{csvHeader}}"
+    "dataPreview": "Aperçu des données pour {{csvHeader}}",
+    "mappingsNotValid": "Veuillez définir toutes les mappings requis",
+    "reviewAndConfirm": "Revoir et confirmer chaque mapping"
   },
   "sheet": {
     "validationPassed": "Toutes les lignes passent la validation !",

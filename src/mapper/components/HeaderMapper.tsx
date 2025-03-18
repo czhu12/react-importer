@@ -1,6 +1,5 @@
-import { useMemo } from 'preact/compat';
-import { useState } from 'preact/compat';
-import { Button } from '../../components';
+import { useMemo, useState } from 'preact/compat';
+import { Button, Error } from '../../components';
 import { useTranslations } from '../../i18';
 import { ColumnMapping, ParsedFile, SheetDefinition } from '../../types';
 import {
@@ -52,8 +51,7 @@ export default function HeaderMapper({
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex-none text-2xl">Review and confirm each mapping</div>
-      {/* TODO: Add error message here if mappings not valid */}
+      <div className="flex-none text-2xl">{t('mapper.reviewAndConfirm')}</div>
       <div className="min-h-0 flex-auto">
         <div className="flex h-full justify-between space-x-5">
           <div className="flex flex-2 flex-col">
@@ -92,7 +90,7 @@ export default function HeaderMapper({
               })}
             </div>
           </div>
-          <div className="flex-1 overflow-y-auto bg-gray-50">
+          <div className="bg-csv-importer-muted flex-1 overflow-y-auto">
             <HeaderMapperDataPreview
               examples={hoveredExamples}
               csvHeader={hoveredCsvHeader ?? ''}
@@ -100,6 +98,11 @@ export default function HeaderMapper({
           </div>
         </div>
       </div>
+      {!mapingsValid && (
+        <div className="mt-5 flex justify-end">
+          <Error>{t('mapper.mappingsNotValid')}</Error>
+        </div>
+      )}
       <div className="mt-auto flex-none">
         <div className="mt-5 flex justify-between">
           <Button variant="secondary" outline onClick={onBack}>

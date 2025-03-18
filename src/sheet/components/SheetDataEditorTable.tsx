@@ -61,13 +61,13 @@ export default function SheetDataEditorTable({
   }
 
   const headerClass =
-    'bg-gray-100 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 whitespace-nowrap border-y border-gray-300';
+    'bg-csv-importer-muted py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 whitespace-nowrap border-y border-gray-300';
   const cellClass =
     'text-sm font-medium whitespace-nowrap text-gray-900 border-b border-gray-300';
 
   return (
     <table className="min-w-full border-separate border-spacing-0">
-      <thead className="sticky top-0 z-10 bg-gray-100">
+      <thead className="bg-csv-importer-muted sticky top-0 z-10">
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             <th className={`${headerClass} sticky left-0 z-20`}>
@@ -119,7 +119,7 @@ export default function SheetDataEditorTable({
         {table.getRowModel().rows.map((row) => (
           <tr key={row.id}>
             <td
-              className={`bg-gray-100 ${cellClass} sticky left-0 z-5 py-3.5 pr-3 pl-4`}
+              className={`bg-csv-importer-muted ${cellClass} sticky left-0 z-20 py-3.5 pr-3 pl-4`}
             >
               <Checkbox
                 // TODO: Check if it works correctly for 2 idnetical rows

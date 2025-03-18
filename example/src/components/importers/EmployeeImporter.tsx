@@ -29,6 +29,7 @@ export default function EmployeeImporter() {
       </h1>
       <div className="flex max-h-[800px]">
         <Importer
+          maxFileSizeInBytes={10 * 1024 * 1024} // 10MB
           sheets={[
             {
               id: 'employees',

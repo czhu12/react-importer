@@ -20,18 +20,24 @@
       "retry": "Try again",
       "backToPreview": "Back to edit"
     },
-    "uploader": {
-      "dragAndDrop": "Drag and drop your file here",
-      "fileSizeLimit": "Limit {{limit}}",
-      "browseFiles": "Browse Files",
-      "enterManually": "Or just manually enter your data"
-    },
     "backToMappingConfirmation": {
       "title": "Are you sure?",
       "subTitle": "This will discard all changes made after the data was mapped",
       "confirmationText": "Yes, go back",
       "cancelText": "No, stay here"
     }
+  },
+  "uploader": {
+    "uploadAFile": "Upload a file",
+    "requiredColumns": "Required columns",
+    "optionalColumns": "Optional columns",
+    "requiredColumnsTooltip": "This column is required for the import",
+    "optionalColumnsTooltip": "This column is optional for the import",
+    "importerInformation": "Make sure your file includes all the required columns.",
+    "dragAndDrop": "Drag and drop your file here",
+    "maxFileSizeInBytes": "Limit {{size}}",
+    "browseFiles": "Browse Files",
+    "enterManually": "Or just manually enter your data"
   },
   "mapper": {
     "numberRowsImported": "{{count}} Rows Imported",
@@ -42,7 +48,9 @@
     "unused": "Unused",
     "importedColumn": "Imported column",
     "destinationColumn": "Destination column",
-    "dataPreview": "Data preview for {{csvHeader}}"
+    "dataPreview": "Data preview for {{csvHeader}}",
+    "mappingsNotValid": "Please set all required mappings",
+    "reviewAndConfirm": "Review and confirm each mapping"
   },
   "sheet": {
     "validationPassed": "All rows pass validation!",

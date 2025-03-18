@@ -1,7 +1,6 @@
 import { useReducer, useEffect } from 'preact/compat';
 import { useRef } from 'preact/hooks';
 
-import FileUploader from './components/FileUploader';
 import HeaderMapper from '../mapper/components/HeaderMapper';
 import SheetDataEditor from '../sheet/components/SheetDataEditor';
 import Completed from './components/Completed';
@@ -24,6 +23,7 @@ import SheetsSwitcher from '../sheet/components/SheetsSwitcher';
 import { Button, Root, Tooltip } from '../components';
 import { TranslationProvider, useTranslations } from '../i18';
 import BackToMappingButton from './components/BackToMappingButton';
+import { Uploader } from '../uploader';
 
 function ImporterBody({
   theme,
@@ -32,6 +32,7 @@ function ImporterBody({
   sheets,
   onDataColumnsMapped,
   preventUploadOnValidationErrors,
+  maxFileSizeInBytes = 20 * 1024 * 1024, // 20MB
 }: ImporterDefinition) {
   const { t } = useTranslations();
 
@@ -177,22 +178,16 @@ function ImporterBody({
     <ThemeSetter theme={theme}>
       <Root
         ref={targetRef}
-        className={`${mode !== 'preview' && mode !== 'mapping' ? 'h-full' : ''}`}
+        className={`${mode === 'submit' || mode === 'failed' || mode === 'completed' ? 'h-full' : ''}`}
       >
         {mode === 'upload' && (
-          <div className="h-full p-10">
-            <FileUploader setFile={onFileUploaded} />
-            {allowManualDataEntry && (
-              <div className="mt-10 mb-2.5">
-                <p
-                  onClick={onEnterDataManually}
-                  className="text-csv-importer-primary hover:text-csv-importer-primary cursor-pointer decoration-2 opacity-90 hover:underline focus:underline focus:outline-none"
-                >
-                  {t('importer.uploader.enterManually')}
-                </p>
-              </div>
-            )}
-          </div>
+          <Uploader
+            sheets={sheets}
+            onFileUploaded={onFileUploaded}
+            onEnterDataManually={onEnterDataManually}
+            allowManualDataEntry={allowManualDataEntry}
+            maxFileSizeInBytes={maxFileSizeInBytes}
+          />
         )}
 
         {mode === 'mapping' && (

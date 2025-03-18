@@ -141,15 +141,16 @@ import 'react-importer/peer/index.css';
 
 #### Props
 
-| Prop Name                       | Default Value | Available Values                                                                 | Required | Description                                                                                                                                |
-| ------------------------------- | ------------- | -------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| sheets                          | -             | `SheetDefinition[]`                                                              | Yes      | Array of sheet definitions that describe the structure of data to be imported                                                              |
-| onComplete                      | -             | `(data: ImporterState, onProgress: (progress: number) => void) => Promise<void>` | Yes      | Callback function called when the import process is completed. Receives the final data and a progress callback                             |
-| theme                           | 'default'     | 'default' \| 'theme-1' \| 'theme-2'                                              | No       | Visual theme variant for the importer component                                                                                            |
-| onDataColumnsMapped             | -             | `(data: SheetState) => Promise<SheetState> \| SheetState`                        | No       | Callback function called after columns are mapped to sheet definitions by the user                                                         |
-| allowManualDataEntry            | false         | boolean                                                                          | No       | Whether to allow users to manually enter data during the preview phase                                                                     |
-| locale                          | en            | 'en' \| 'fr'                                                                     | No       | Locale string for internationalization                                                                                                     |
-| preventUploadOnValidationErrors | false         | boolean \| `(errors: ImporterValidationError[]) => boolean`                      | No       | Controls whether to prevent upload when validation errors occur. Can be a boolean or a function that returns a boolean based on the errors |
+| Prop Name                       | Default Value   | Available Values                                                                 | Required | Description                                                                                                                                |
+| ------------------------------- | --------------- | -------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| sheets                          | -               | `SheetDefinition[]`                                                              | Yes      | Array of sheet definitions that describe the structure of data to be imported                                                              |
+| onComplete                      | -               | `(data: ImporterState, onProgress: (progress: number) => void) => Promise<void>` | Yes      | Callback function called when the import process is completed. Receives the final data and a progress callback                             |
+| theme                           | 'default'       | 'default' \| 'theme-1' \| 'theme-2'                                              | No       | Visual theme variant for the importer component                                                                                            |
+| onDataColumnsMapped             | -               | `(data: SheetState) => Promise<SheetState> \| SheetState`                        | No       | Callback function called after columns are mapped to sheet definitions by the user                                                         |
+| allowManualDataEntry            | false           | boolean                                                                          | No       | Whether to allow users to manually enter data during the preview phase                                                                     |
+| locale                          | en              | 'en' \| 'fr'                                                                     | No       | Locale string for internationalization                                                                                                     |
+| preventUploadOnValidationErrors | false           | boolean \| `(errors: ImporterValidationError[]) => boolean`                      | No       | Controls whether to prevent upload when validation errors occur. Can be a boolean or a function that returns a boolean based on the errors |
+| maxFileSizeInBytes              | 20971520 (20MB) | number                                                                           | No       | Maximum allowed file size in bytes (optional). When specified, files larger than this size will be rejected. Example: 204800 for 200KB     |
 
 ##### SheetDefinition Props
 
@@ -299,6 +300,7 @@ You can further customize theme styles by overriding the following CSS variables
   --csv-importer-color-danger-extra-light: #f8d7da;
   --csv-importer-color-warning: #ffc107;
   --csv-importer-color-info: #17a2b8;
+  --csv-importer-color-muted: #f9fafb;
 }
 ```
 
