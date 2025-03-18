@@ -15,7 +15,7 @@ export default function FileUploader({
   allowManualDataEntry = true,
   onEnterDataManually,
 }: Props) {
-  const { t, tHtml } = useTranslations();
+  const { t } = useTranslations();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -51,12 +51,6 @@ export default function FileUploader({
           <div className="flex flex-1 flex-col items-center justify-center">
             <CloudArrowUpIcon className="text-csv-importer-primary mb-3 h-12 w-12" />
             <p className="mb-3">{t('uploader.dragAndDrop')}</p>
-            <div className="text-sm text-gray-500">
-              {tHtml('uploader.fileSizeLimit', {
-                limit: <b>{'20MB'}</b>,
-              })}{' '}
-              • CSV
-            </div>
             <div className="mt-3">
               <Button>{t('uploader.browseFiles')}</Button>
             </div>

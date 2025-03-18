@@ -35,7 +35,6 @@
     "optionalColumnsTooltip": "Cette colonne est optionnelle pour l'importation",
     "importerInformation": "Assurez-vous que votre fichier inclut toutes les colonnes requises.",
     "dragAndDrop": "Glissez et déposez votre fichier ici",
-    "fileSizeLimit": "Limite {{limit}}",
     "browseFiles": "Parcourir les fichiers",
     "enterManually": "Ou saisissez vos données manuellement"
   },
