@@ -3,11 +3,11 @@ import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { Tooltip } from '../../components/index';
 import { useTranslations } from '../../i18';
 
-export default function RequirementsList({
-  importerRequirements,
-}: {
+interface Props {
   importerRequirements: ImporterRequirementsType;
-}) {
+}
+
+export default function RequirementsList({ importerRequirements }: Props) {
   const { t } = useTranslations();
 
   return (
