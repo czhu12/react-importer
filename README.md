@@ -150,7 +150,7 @@ import 'react-importer/peer/index.css';
 | allowManualDataEntry            | false                                                    | boolean                                                                          | No       | Whether to allow users to manually enter data during the preview phase                                                                     |
 | locale                          | en                                                       | 'en' \| 'fr'                                                                     | No       | Locale string for internationalization                                                                                                     |
 | preventUploadOnValidationErrors | false                                                    | boolean \| `(errors: ImporterValidationError[]) => boolean`                      | No       | Controls whether to prevent upload when validation errors occur. Can be a boolean or a function that returns a boolean based on the errors |
-| guidelines                      | 'Make sure your file includes all the required columns.' | string                                                                           | No       | Customizable information that appears on the first screen in the importer                                                                  |
+| importerInformation             | 'Make sure your file includes all the required columns.' | string                                                                           | No       | Customizable information that appears on the first screen in the importer                                                                  |
 
 ##### SheetDefinition Props
 
@@ -180,7 +180,7 @@ All column types share these base properties:
 - `isReadOnly?: boolean` - Whether the column can be edited
 - `validators?: ImporterValidatorDefinition[]` - Array of validation rules
 - `transformers?: ImporterTransformerDefinition[]` - Array of data transformation rules
-- `importerInformation?:` - String that provides the user with information about the requirements for this column
+- `guidelines?:` - String that provides the user with information about the requirements for this column
 
 ##### ImporterState
 
