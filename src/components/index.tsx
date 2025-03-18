@@ -12,3 +12,4 @@ export type { ButtonGroupType } from './ButtonGroup';
 export { default as Tooltip } from './Tooltip';
 export { default as Badge } from './Badge';
 export { default as Alert } from './Alert';
+export { default as Error } from './Error';

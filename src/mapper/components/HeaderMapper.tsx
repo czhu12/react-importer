@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'preact/compat';
-import { Button } from '../../components';
+import { Button, Error } from '../../components';
 import { useTranslations } from '../../i18';
 import { ColumnMapping, ParsedFile, SheetDefinition } from '../../types';
 import {
@@ -98,21 +98,19 @@ export default function HeaderMapper({
           </div>
         </div>
       </div>
+      {!mapingsValid && (
+        <div className="mt-5 flex justify-end">
+          <Error>{t('mapper.mappingsNotValid')}</Error>
+        </div>
+      )}
       <div className="mt-auto flex-none">
         <div className="my-5 flex justify-between">
           <Button variant="secondary" outline onClick={onBack}>
             {t('mapper.back')}
           </Button>
-          <div className="flex items-center gap-3">
-            {!mapingsValid && (
-              <div className="text-csv-importer-danger text-sm">
-                {t('mapper.mappingsNotValid')}
-              </div>
-            )}
-            <Button onClick={onMappingsSet} disabled={!mapingsValid}>
-              {t('mapper.confirm')}
-            </Button>
-          </div>
+          <Button onClick={onMappingsSet} disabled={!mapingsValid}>
+            {t('mapper.confirm')}
+          </Button>
         </div>
       </div>
     </div>
