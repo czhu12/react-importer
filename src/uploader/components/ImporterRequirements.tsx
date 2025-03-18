@@ -1,5 +1,5 @@
 import { ImporterRequirementsType } from '../../types';
-import Alert from '../../components/Alert';
+import { Alert } from '../../components';
 import { useTranslations } from '../../i18';
 import RequirementsList from './RequirementsList';
 interface Props {
