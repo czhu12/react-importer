@@ -178,26 +178,28 @@ export default function ComplexImporter() {
         .
       </h1>
 
-      <Importer
-        sheets={[STUDENTS_SHEET, SCHOOLS_SHEET]}
-        onDataColumnsMapped={(sheets) => {
-          const sheet = sheets.find((sheet) => sheet.sheetId === 'schools')!;
-          const seen = new Set();
-          sheet.rows = [...sheet.rows].filter((row: SheetRow) => {
-            // Remove duplicate names, don't validate yet...
-            const hasSeen = !seen.has(row.school_name);
-            seen.add(row.school_name);
-            return hasSeen;
-          });
-          return sheets;
-        }}
-        onComplete={onComplete}
-      />
-      {ready && (
-        <div style={{ margin: '0 auto', maxWidth: '1200px' }}>
-          <h4>Check the console for the output!</h4>
-        </div>
-      )}
+      <div className="flex h-[800px] bg-white p-6 px-8 mt-4 border border-gray-200 rounded-lg">
+        <Importer
+          sheets={[STUDENTS_SHEET, SCHOOLS_SHEET]}
+          onDataColumnsMapped={(sheets) => {
+            const sheet = sheets.find((sheet) => sheet.sheetId === 'schools')!;
+            const seen = new Set();
+            sheet.rows = [...sheet.rows].filter((row: SheetRow) => {
+              // Remove duplicate names, don't validate yet...
+              const hasSeen = !seen.has(row.school_name);
+              seen.add(row.school_name);
+              return hasSeen;
+            });
+            return sheets;
+          }}
+          onComplete={onComplete}
+        />
+        {ready && (
+          <div style={{ margin: '0 auto', maxWidth: '1200px' }}>
+            <h4>Check the console for the output!</h4>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
