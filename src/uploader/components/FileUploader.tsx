@@ -22,6 +22,7 @@ export default function FileUploader({
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  // TODO: Add error handling
   const validateAndSetFile = (file: File, maxFileSize?: number) => {
     if (!SUPPORTED_FILE_MIME_TYPES.includes(file.type)) {
       return;
