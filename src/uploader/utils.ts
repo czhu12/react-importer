@@ -13,6 +13,7 @@ export function getImporterRequirements(
   sheets.forEach((sheet) => {
     sheet.columns.forEach((column) => {
       const requirement = {
+        sheetId: sheet.id,
         columnId: column.id,
         columnLabel: column.label,
         guidelines: column.guidelines,

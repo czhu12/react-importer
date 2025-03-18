@@ -22,7 +22,7 @@ export default function RequirementsList({ importerRequirements }: Props) {
             <div className="mt-4">
               {requirements.map((requirement) => (
                 <div
-                  key={requirement.columnId}
+                  key={`${requirement.sheetId}-${requirement.columnId}`}
                   className="my-3 flex justify-between"
                 >
                   <div className="text-xs">{requirement.columnLabel}</div>
