@@ -44,9 +44,7 @@ export const formatFileSize = (bytes: number): string => {
 
 export const isFileBelowMaxSize = (
   fileSize: number,
-  maxSize?: number
+  maxSize: number
 ): boolean => {
-  if (!maxSize) return true;
-
   return fileSize <= maxSize;
 };

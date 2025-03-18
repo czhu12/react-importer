@@ -32,7 +32,7 @@ function ImporterBody({
   sheets,
   onDataColumnsMapped,
   preventUploadOnValidationErrors,
-  maxFileSize,
+  maxFileSizeInBytes = 20971520, // 20mb
 }: ImporterDefinition) {
   const { t } = useTranslations();
 
@@ -186,7 +186,7 @@ function ImporterBody({
             onFileUploaded={onFileUploaded}
             onEnterDataManually={onEnterDataManually}
             allowManualDataEntry={allowManualDataEntry}
-            maxFileSize={maxFileSize}
+            maxFileSizeInBytes={maxFileSizeInBytes}
           />
         )}
 

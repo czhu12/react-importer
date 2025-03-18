@@ -150,7 +150,7 @@ import 'react-importer/peer/index.css';
 | allowManualDataEntry            | false         | boolean                                                                          | No       | Whether to allow users to manually enter data during the preview phase                                                                     |
 | locale                          | en            | 'en' \| 'fr'                                                                     | No       | Locale string for internationalization                                                                                                     |
 | preventUploadOnValidationErrors | false         | boolean \| `(errors: ImporterValidationError[]) => boolean`                      | No       | Controls whether to prevent upload when validation errors occur. Can be a boolean or a function that returns a boolean based on the errors |
-| maxFileSize                     | -             | number                                                                           | No       | Maximum allowed file size in bytes (optional). When specified, files larger than this size will be rejected. Example: 204800 for 200KB     |
+| maxFileSizeInBytes              | 20971520      | number                                                                           | No       | Maximum allowed file size in bytes (optional). When specified, files larger than this size will be rejected. Example: 204800 for 200KB     |
 
 ##### SheetDefinition Props
 

@@ -27,7 +27,7 @@ export interface ImporterDefinition {
   preventUploadOnValidationErrors?:
     | boolean
     | ((errors: ImporterValidationError[]) => boolean);
-  maxFileSize?: number;
+  maxFileSizeInBytes?: number;
 }
 
 /**

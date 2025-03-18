@@ -9,25 +9,25 @@ interface Props {
   setFile: (file: File) => void;
   allowManualDataEntry?: boolean;
   onEnterDataManually?: () => void;
-  maxFileSize?: number;
+  maxFileSizeInBytes: number;
 }
 
 export default function FileUploader({
   setFile,
   allowManualDataEntry = true,
   onEnterDataManually,
-  maxFileSize,
+  maxFileSizeInBytes,
 }: Props) {
   const { t, tHtml } = useTranslations();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   // TODO: Add error handling
-  const validateAndSetFile = (file: File, maxFileSize?: number) => {
+  const validateAndSetFile = (file: File, maxFileSizeInBytes: number) => {
     if (!SUPPORTED_FILE_MIME_TYPES.includes(file.type)) {
       return;
     }
-    if (isFileBelowMaxSize(file.size, maxFileSize)) {
+    if (isFileBelowMaxSize(file.size, maxFileSizeInBytes)) {
       setFile(file);
     }
   };
@@ -35,14 +35,14 @@ export default function FileUploader({
   const handleFileSelect = (event: Event) => {
     const input = event.target as HTMLInputElement;
     if (input.files?.length) {
-      validateAndSetFile(input.files[0], maxFileSize);
+      validateAndSetFile(input.files[0], maxFileSizeInBytes);
     }
   };
 
   const handleDrop = (event: DragEvent) => {
     event.preventDefault();
     if (event.dataTransfer?.files.length) {
-      validateAndSetFile(event.dataTransfer.files[0], maxFileSize);
+      validateAndSetFile(event.dataTransfer.files[0], maxFileSizeInBytes);
     }
   };
 
@@ -58,14 +58,12 @@ export default function FileUploader({
           <div className="flex flex-1 flex-col items-center justify-center">
             <CloudArrowUpIcon className="text-csv-importer-primary h-12 w-12" />
             <p className="mt-3">{t('uploader.dragAndDrop')}</p>
-            {maxFileSize && (
-              <div className="mt-3 text-sm text-gray-500">
-                {tHtml('uploader.maxFileSize', {
-                  size: <b>{formatFileSize(maxFileSize)}</b>,
-                })}{' '}
-                • CSV
-              </div>
-            )}
+            <div className="mt-3 text-sm text-gray-500">
+              {tHtml('uploader.maxFileSizeInBytes', {
+                size: <b>{formatFileSize(maxFileSizeInBytes)}</b>,
+              })}{' '}
+              • CSV
+            </div>
             <div className="mt-3">
               <Button>{t('uploader.browseFiles')}</Button>
             </div>
