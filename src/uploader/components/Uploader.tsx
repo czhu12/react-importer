@@ -9,7 +9,6 @@ interface Props {
   onFileUploaded: (file: File) => void;
   onEnterDataManually: () => void;
   allowManualDataEntry?: boolean;
-  importerInformation?: string;
 }
 
 export default function Uploader({
@@ -17,7 +16,6 @@ export default function Uploader({
   onFileUploaded,
   onEnterDataManually,
   allowManualDataEntry,
-  importerInformation,
 }: Props) {
   const importerRequirements = getImporterRequirements(sheets);
   const { t } = useTranslations();
@@ -28,10 +26,7 @@ export default function Uploader({
       <div className="flex-auto md:min-h-0">
         <div className="flex h-full flex-col-reverse gap-5 md:flex-row">
           <div className="h-full flex-1 lg:flex-1">
-            <ImporterRequirements
-              importerRequirements={importerRequirements}
-              importerInformation={importerInformation}
-            />
+            <ImporterRequirements importerRequirements={importerRequirements} />
           </div>
           <div className="flex-1 lg:flex-2">
             <FileUploader

@@ -141,16 +141,15 @@ import 'react-importer/peer/index.css';
 
 #### Props
 
-| Prop Name                       | Default Value                                            | Available Values                                                                 | Required | Description                                                                                                                                |
-| ------------------------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| sheets                          | -                                                        | `SheetDefinition[]`                                                              | Yes      | Array of sheet definitions that describe the structure of data to be imported                                                              |
-| onComplete                      | -                                                        | `(data: ImporterState, onProgress: (progress: number) => void) => Promise<void>` | Yes      | Callback function called when the import process is completed. Receives the final data and a progress callback                             |
-| theme                           | 'default'                                                | 'default' \| 'theme-1' \| 'theme-2'                                              | No       | Visual theme variant for the importer component                                                                                            |
-| onDataColumnsMapped             | -                                                        | `(data: SheetState) => Promise<SheetState> \| SheetState`                        | No       | Callback function called after columns are mapped to sheet definitions by the user                                                         |
-| allowManualDataEntry            | false                                                    | boolean                                                                          | No       | Whether to allow users to manually enter data during the preview phase                                                                     |
-| locale                          | en                                                       | 'en' \| 'fr'                                                                     | No       | Locale string for internationalization                                                                                                     |
-| preventUploadOnValidationErrors | false                                                    | boolean \| `(errors: ImporterValidationError[]) => boolean`                      | No       | Controls whether to prevent upload when validation errors occur. Can be a boolean or a function that returns a boolean based on the errors |
-| importerInformation             | 'Make sure your file includes all the required columns.' | string                                                                           | No       | Customizable information that appears on the first screen in the importer                                                                  |
+| Prop Name                       | Default Value | Available Values                                                                 | Required | Description                                                                                                                                |
+| ------------------------------- | ------------- | -------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| sheets                          | -             | `SheetDefinition[]`                                                              | Yes      | Array of sheet definitions that describe the structure of data to be imported                                                              |
+| onComplete                      | -             | `(data: ImporterState, onProgress: (progress: number) => void) => Promise<void>` | Yes      | Callback function called when the import process is completed. Receives the final data and a progress callback                             |
+| theme                           | 'default'     | 'default' \| 'theme-1' \| 'theme-2'                                              | No       | Visual theme variant for the importer component                                                                                            |
+| onDataColumnsMapped             | -             | `(data: SheetState) => Promise<SheetState> \| SheetState`                        | No       | Callback function called after columns are mapped to sheet definitions by the user                                                         |
+| allowManualDataEntry            | false         | boolean                                                                          | No       | Whether to allow users to manually enter data during the preview phase                                                                     |
+| locale                          | en            | 'en' \| 'fr'                                                                     | No       | Locale string for internationalization                                                                                                     |
+| preventUploadOnValidationErrors | false         | boolean \| `(errors: ImporterValidationError[]) => boolean`                      | No       | Controls whether to prevent upload when validation errors occur. Can be a boolean or a function that returns a boolean based on the errors |
 
 ##### SheetDefinition Props
 
@@ -180,7 +179,6 @@ All column types share these base properties:
 - `isReadOnly?: boolean` - Whether the column can be edited
 - `validators?: ImporterValidatorDefinition[]` - Array of validation rules
 - `transformers?: ImporterTransformerDefinition[]` - Array of data transformation rules
-- `guidelines?:` - String that provides the user with information about the requirements for this column
 
 ##### ImporterState
 

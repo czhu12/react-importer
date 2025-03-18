@@ -28,10 +28,7 @@ export default function RequirementsList({ importerRequirements }: Props) {
                   <div className="text-xs">{requirement.columnLabel}</div>
                   <div className="text-xs font-light">
                     <Tooltip
-                      tooltipText={
-                        requirement?.guidelines ||
-                        t(`uploader.${groupName}ColumnsTooltip`)
-                      }
+                      tooltipText={t(`uploader.${groupName}ColumnsTooltip`)}
                     >
                       <InformationCircleIcon className="size-5 text-gray-500" />
                     </Tooltip>
