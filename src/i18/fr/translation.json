@@ -37,7 +37,9 @@
     "dragAndDrop": "Glissez et déposez votre fichier ici",
     "fileSizeLimit": "Limite {{limit}}",
     "browseFiles": "Parcourir les fichiers",
-    "enterManually": "Ou saisissez vos données manuellement"
+    "enterManually": "Ou saisissez vos données manuellement",
+    "sampleFile": "Fichier exemple",
+    "downloadSampleFile": "Télécharger le fichier joint pour l'utiliser comme modèle pour votre importation."
   },
   "mapper": {
     "numberRowsImported": "{{count}} lignes importées",

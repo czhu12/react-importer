@@ -33,6 +33,7 @@ function ImporterBody({
   onDataColumnsMapped,
   preventUploadOnValidationErrors,
   importerInformation,
+  sampleFileUrl,
 }: ImporterDefinition) {
   const { t } = useTranslations();
 
@@ -187,6 +188,7 @@ function ImporterBody({
             onEnterDataManually={onEnterDataManually}
             allowManualDataEntry={allowManualDataEntry}
             importerInformation={importerInformation}
+            sampleFileUrl={sampleFileUrl}
           />
         )}
 

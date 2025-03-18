@@ -37,7 +37,9 @@
     "dragAndDrop": "Drag and drop your file here",
     "fileSizeLimit": "Limit {{limit}}",
     "browseFiles": "Browse Files",
-    "enterManually": "Or just manually enter your data"
+    "enterManually": "Or just manually enter your data",
+    "sampleFile": "Sample file",
+    "downloadSampleFile": "Download the attached file to use as a template for your import."
   },
   "mapper": {
     "numberRowsImported": "{{count}} Rows Imported",

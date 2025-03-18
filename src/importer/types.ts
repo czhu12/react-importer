@@ -28,6 +28,7 @@ export interface ImporterDefinition {
   preventUploadOnValidationErrors?:
     | boolean
     | ((errors: ImporterValidationError[]) => boolean);
+  sampleFileUrl?: string;
 }
 
 /**
