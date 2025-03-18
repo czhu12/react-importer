@@ -17,6 +17,7 @@ interface Props {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   onClick?: () => void;
   style?: CSSProperties;
+  shape?: 'default' | 'circle';
 }
 
 const baseClasses = cva('text-center inline-block font-semibold', {
@@ -32,15 +33,19 @@ const baseClasses = cva('text-center inline-block font-semibold', {
       warning: 'shadow-xs bg-csv-importer-warning text-white',
     },
     size: {
-      xs: 'px-2 py-1 rounded-sm text-xs',
-      sm: 'px-2 py-1 rounded-sm text-sm',
-      md: 'px-2.5 py-1.5 rounded-md text-sm',
-      lg: 'px-3 py-2 rounded-md text-sm',
-      xl: 'px-3.5 py-2.5 rounded-md text-sm',
+      xs: 'text-xs',
+      sm: 'text-sm',
+      md: 'text-sm',
+      lg: 'text-sm',
+      xl: 'text-sm',
     },
     disabled: {
       true: 'opacity-50 cursor-not-allowed pointer-events-none',
       false: 'cursor-pointer',
+    },
+    shape: {
+      circle: 'rounded-full',
+      default: '',
     },
   },
   compoundVariants: [
@@ -79,11 +84,34 @@ const baseClasses = cva('text-center inline-block font-semibold', {
       className:
         'hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:opacity-80',
     },
+    { size: 'xs', shape: 'circle', className: 'p-1' },
+    { size: 'sm', shape: 'circle', className: 'p-1.5' },
+    { size: 'md', shape: 'circle', className: 'p-2' },
+    { size: 'lg', shape: 'circle', className: 'p-2.5' },
+    { size: 'xl', shape: 'circle', className: 'p-3' },
+    { size: 'xs', shape: 'default', className: 'px-2 py-1 rounded-sm' },
+    { size: 'sm', shape: 'default', className: 'px-2 py-1 rounded-sm' },
+    {
+      size: 'md',
+      shape: 'default',
+      className: 'px-2.5 py-1.5 rounded-md',
+    },
+    {
+      size: 'lg',
+      shape: 'default',
+      className: 'px-3 py-2 rounded-md',
+    },
+    {
+      size: 'xl',
+      shape: 'default',
+      className: 'px-3.5 py-2.5 rounded-md',
+    },
   ],
   defaultVariants: {
     size: 'lg',
     variant: 'primary',
     disabled: false,
+    shape: 'default',
   },
 });
 
@@ -93,8 +121,9 @@ export default function Button({
   disabled,
   onClick,
   size,
+  shape,
 }: Props) {
-  const componentClassName = baseClasses({ variant, disabled, size });
+  const componentClassName = baseClasses({ variant, disabled, size, shape });
 
   return (
     <div className={componentClassName} onClick={onClick}>
