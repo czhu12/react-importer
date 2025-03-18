@@ -55,10 +55,10 @@ export default function FileUploader({
           className="flex h-full flex-col"
         >
           <div className="flex flex-1 flex-col items-center justify-center">
-            <CloudArrowUpIcon className="text-csv-importer-primary mb-3 h-12 w-12" />
-            <p className="mb-3">{t('uploader.dragAndDrop')}</p>
+            <CloudArrowUpIcon className="text-csv-importer-primary h-12 w-12" />
+            <p className="mt-3">{t('uploader.dragAndDrop')}</p>
             {maxFileSize && (
-              <div className="text-sm text-gray-500">
+              <div className="mt-3 text-sm text-gray-500">
                 {tHtml('uploader.maxFileSize', {
                   size: <b>{formatFileSize(maxFileSize)}</b>,
                 })}{' '}
