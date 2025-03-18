@@ -1,4 +1,4 @@
-import { formatData, filterEmptyRows } from './';
+import { formatData, filterEmptyRows, normalizeValue } from './';
 import { describe, it, expect } from 'vitest';
 
 const headerMappings = {
@@ -59,3 +59,11 @@ describe('filterEmptyRows', () => {
     expect(filterEmptyRows({ rows: [] }).length).toEqual(0);
   });
 });
+
+
+describe('normalizeValue', () => {
+  it('normalizes a value', () => {
+    expect(normalizeValue('patient.data-SEX_AT_BIRTH')).toEqual('patientdatasexatbirth');
+  });
+});
+

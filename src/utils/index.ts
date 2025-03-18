@@ -25,5 +25,9 @@ export function normalizeValue(
     return null;
   }
 
-  return value.toString().toLowerCase().replace('_', '').replace(' ', '');
+  const charsToRemove = ['_', ' ', '.', '-', '/'];
+  return value.toString().toLowerCase().replace(
+    new RegExp(charsToRemove.map(char => `\\${char}`).join('|'), 'g'),
+    ''
+  );
 }
