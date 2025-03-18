@@ -9,6 +9,7 @@ interface Props {
   onFileUploaded: (file: File) => void;
   onEnterDataManually: () => void;
   allowManualDataEntry?: boolean;
+  maxFileSize?: number;
 }
 
 export default function Uploader({
@@ -16,6 +17,7 @@ export default function Uploader({
   onFileUploaded,
   onEnterDataManually,
   allowManualDataEntry,
+  maxFileSize,
 }: Props) {
   const importerRequirements = getImporterRequirements(sheets);
   const { t } = useTranslations();
@@ -33,6 +35,7 @@ export default function Uploader({
               setFile={onFileUploaded}
               allowManualDataEntry={allowManualDataEntry}
               onEnterDataManually={onEnterDataManually}
+              maxFileSize={maxFileSize}
             />
           </div>
         </div>

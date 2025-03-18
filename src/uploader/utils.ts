@@ -28,3 +28,25 @@ export function getImporterRequirements(
 
   return groups;
 }
+
+export const formatFileSize = (bytes: number): string => {
+  const units = ['B', 'KB', 'MB', 'GB'];
+  let size = bytes;
+  let unitIndex = 0;
+
+  while (size >= 1024 && unitIndex < units.length - 1) {
+    size /= 1024;
+    unitIndex++;
+  }
+
+  return `${Math.round(size)} ${units[unitIndex]}`;
+};
+
+export const isFileBelowMaxSize = (
+  fileSize: number,
+  maxSize?: number
+): boolean => {
+  if (!maxSize) return true;
+
+  return fileSize <= maxSize;
+};
