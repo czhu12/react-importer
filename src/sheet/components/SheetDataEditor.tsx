@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'preact/compat';
 import {
-  createColumnHelper,
+  ColumnDef,
   getCoreRowModel,
   getSortedRowModel,
   useReactTable,
@@ -17,8 +17,6 @@ import SheetDataEditorTable from './SheetDataEditorTable';
 import SheetDataEditorHeader from './SheetDataEditorHeader';
 import SheetDataEditorActions from './SheetDataEditorActions';
 import { useFilteredRowData } from '../utils';
-
-const columnHelper = createColumnHelper<SheetRow>();
 
 interface Props {
   sheetDefinition: SheetDefinition;
@@ -79,15 +77,15 @@ export default function SheetDataEditor({
     };
   }, [data, sheetValidationErrors]);
 
-  const columns = useMemo(
+  const columns = useMemo<ColumnDef<SheetRow>[]>(
     () =>
-      sheetDefinition.columns.map((column) =>
-        columnHelper.accessor(column.id, {
-          header: () => <SheetDataEditorHeader column={column} />,
-          sortUndefined: 'last',
-          sortingFn: 'auto',
-        })
-      ),
+      sheetDefinition.columns.map((column) => ({
+        id: column.id,
+        accessorFn: (row) => row[column.id],
+        header: () => <SheetDataEditorHeader column={column} />,
+        sortUndefined: 'last',
+        sortingFn: 'auto',
+      })),
     [sheetDefinition]
   );
 
