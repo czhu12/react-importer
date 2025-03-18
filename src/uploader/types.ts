@@ -1,7 +1,7 @@
 export type ImporterRequirementType = {
   columnId: string;
   columnLabel: string;
-  importerInformation?: string;
+  guidelines?: string;
 };
 
 export type ImporterRequirementsType = {

@@ -150,7 +150,7 @@ import 'react-importer/peer/index.css';
 | allowManualDataEntry            | false                                                    | boolean                                                                          | No       | Whether to allow users to manually enter data during the preview phase                                                                     |
 | locale                          | en                                                       | 'en' \| 'fr'                                                                     | No       | Locale string for internationalization                                                                                                     |
 | preventUploadOnValidationErrors | false                                                    | boolean \| `(errors: ImporterValidationError[]) => boolean`                      | No       | Controls whether to prevent upload when validation errors occur. Can be a boolean or a function that returns a boolean based on the errors |
-| importerInformation             | 'Make sure your file includes all the required columns.' | string                                                                           | No       | Customizable information that appears on the first screen in the importer                                                                  |
+| guidelines                      | 'Make sure your file includes all the required columns.' | string                                                                           | No       | Customizable information that appears on the first screen in the importer                                                                  |
 
 ##### SheetDefinition Props
 

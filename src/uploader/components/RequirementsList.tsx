@@ -29,7 +29,7 @@ export default function RequirementsList({
                   <div className="text-xs font-light">
                     <Tooltip
                       tooltipText={
-                        requirement?.importerInformation ||
+                        requirement?.guidelines ||
                         t(`uploader.${groupName}ColumnsTooltip`)
                       }
                     >

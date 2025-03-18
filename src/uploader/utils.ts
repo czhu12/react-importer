@@ -15,7 +15,7 @@ export function getImporterRequirements(
       const requirement = {
         columnId: column.id,
         columnLabel: column.label,
-        importerInformation: column.importerInformation,
+        guidelines: column.guidelines,
       };
 
       if (fieldIsRequired(column)) {
