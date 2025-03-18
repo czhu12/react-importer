@@ -180,6 +180,7 @@ All column types share these base properties:
 - `isReadOnly?: boolean` - Whether the column can be edited
 - `validators?: ImporterValidatorDefinition[]` - Array of validation rules
 - `transformers?: ImporterTransformerDefinition[]` - Array of data transformation rules
+- `importerInformation?:` - String that provides the user with information about the requirements for this column
 
 ##### ImporterState
 
