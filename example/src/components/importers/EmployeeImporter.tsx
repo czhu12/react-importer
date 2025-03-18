@@ -27,7 +27,7 @@ export default function EmployeeImporter() {
         </a>
         .
       </h1>
-      <div className="flex max-h-[800px] bg-white p-6 px-8 mt-4 border border-gray-200 rounded-lg">
+      <div className="mt-4 flex max-h-[800px] rounded-lg border border-gray-200 bg-white p-6 px-8">
         <Importer
           maxFileSizeInBytes={10 * 1024 * 1024} // 10MB
           sheets={[
@@ -37,7 +37,7 @@ export default function EmployeeImporter() {
               columns: [
                 {
                   label: 'Employee ID',
-                  id: 'employee_id',
+                  id: 'employee.id',
                   type: 'number',
                   validators: [
                     { validate: 'required' },
