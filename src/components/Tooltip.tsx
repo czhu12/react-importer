@@ -76,7 +76,6 @@ export default function Tooltip({
             ref={tooltipRef}
             className={baseClasses({ visible: isVisible, hidden })}
             style={{
-              position: 'absolute',
               top: `${position.top}px`,
               left: `${position.left}px`,
               transform: 'translateX(-50%)',
