@@ -119,7 +119,7 @@ export default function SheetDataEditorTable({
         {table.getRowModel().rows.map((row) => (
           <tr key={row.id}>
             <td
-              className={`bg-csv-importer-muted ${cellClass} sticky left-0 z-20 py-3.5 pr-3 pl-4`}
+              className={`bg-csv-importer-muted ${cellClass} sticky left-0 z-6 py-3.5 pr-3 pl-4`}
             >
               <Checkbox
                 // TODO: Check if it works correctly for 2 idnetical rows
