@@ -67,7 +67,8 @@ export default function SheetDataEditorCell({
       >
         <div
           onClick={(e) => !readOnly && e.detail > 1 && setEditMode(true)}
-          className={`h-full w-full py-4 pr-3 pl-4 ${cellBackgroundColor}`}
+          className={`h-full w-full py-4 pr-3 pl-4 ${cellBackgroundColor} truncate overflow-hidden whitespace-nowrap`}
+          title={`${nonEmptyValue}`}
         >
           {nonEmptyValue}
         </div>

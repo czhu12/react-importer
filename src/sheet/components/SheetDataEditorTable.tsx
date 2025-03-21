@@ -63,7 +63,7 @@ export default function SheetDataEditorTable({
   const headerClass =
     'bg-csv-importer-muted py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 whitespace-nowrap border-y border-gray-300';
   const cellClass =
-    'text-sm font-medium whitespace-nowrap text-gray-900 border-b border-gray-300';
+    'text-sm font-medium whitespace-nowrap text-gray-900 border-b border-gray-300 max-w-[350px]';
 
   return (
     <table className="min-w-full border-separate border-spacing-0">
@@ -79,7 +79,7 @@ export default function SheetDataEditorTable({
             </th>
 
             {headerGroup.headers.map((header) => (
-              <th key={header.id} className={`z-10 min-w-48 ${headerClass}`}>
+              <th key={header.id} className={`z-10 ${headerClass}`}>
                 <div
                   className={`flex ${
                     header.column.getCanSort()
