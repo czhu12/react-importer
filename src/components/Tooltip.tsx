@@ -1,6 +1,7 @@
 import { cva } from 'cva';
 import { ReactNode, createPortal } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { ROOT_CLASS } from '../constants';
 
 interface Props {
   tooltipText: string;
@@ -40,6 +41,7 @@ export default function Tooltip({
 
   useEffect(() => {
     const div = document.createElement('div');
+    div.classList.add(ROOT_CLASS);
     document.body.appendChild(div);
     setTooltipContainer(div);
 
