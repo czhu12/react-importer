@@ -11,6 +11,7 @@ import {
 import { fieldIsRequired } from '../validators';
 import { useTranslations } from '../i18';
 import { normalizeValue } from '../utils';
+import { allowUserToMapColumn } from '.';
 
 function removeMappingDuplicates(mappings: ColumnMapping[]): ColumnMapping[] {
   const uniqueMap = new Map<string, ColumnMapping>();
@@ -32,8 +33,7 @@ function buildSheetSuggestedHeaderMappings(
 
   csvHeaders.forEach((header) => {
     const foundField = sheet.columns.find((column) => {
-      if (column.type === 'reference') {
-        // Reference columns are filled automatically so they shouldn't be mapped by hand
+      if (!allowUserToMapColumn(column)) {
         return false;
       }
 
@@ -150,7 +150,7 @@ export function useMappingAvailableSelectOptions(
 
   const options = sheetDefinitions.flatMap((sheetDefinition) =>
     sheetDefinition.columns
-      .filter((column) => column.type !== 'reference') // Reference columns would be mapped automatically
+      .filter((column) => allowUserToMapColumn(column))
       .map((column) => ({
         label: `${column.label}${fieldIsRequired(column) ? ' *' : ''}`,
         value: {
@@ -191,8 +191,7 @@ export function areAllRequiredMappingsSet(
 ) {
   for (const sheet of sheetDefinitions) {
     for (const column of sheet.columns) {
-      // Reference columns are filled automatically so they shouldn't be required to map by hand
-      if (fieldIsRequired(column) && column.type !== 'reference') {
+      if (fieldIsRequired(column) && allowUserToMapColumn(column)) {
         const mapping = mappings.find(
           (m) => m.sheetId === sheet.id && m.sheetColumnId === column.id
         );

@@ -112,3 +112,9 @@ export function getMappedData(
 
   return mapReferenceColumns(sheetDefinitions, mappedData);
 }
+
+export function allowUserToMapColumn(
+  columnDefinition: SheetColumnDefinition
+): boolean {
+  return columnDefinition.type !== 'reference';
+}
