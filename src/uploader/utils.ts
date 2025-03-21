@@ -1,6 +1,7 @@
 import { SheetDefinition } from '../types';
 import { ImporterRequirementsType } from './types';
 import { fieldIsRequired } from '../validators';
+import { allowUserToMapColumn } from '../mapper';
 
 export function getImporterRequirements(
   sheets: SheetDefinition[]
@@ -11,19 +12,21 @@ export function getImporterRequirements(
   };
 
   sheets.forEach((sheet) => {
-    sheet.columns.forEach((column) => {
-      const requirement = {
-        sheetId: sheet.id,
-        columnId: column.id,
-        columnLabel: column.label,
-      };
+    sheet.columns
+      .filter((column) => allowUserToMapColumn(column))
+      .forEach((column) => {
+        const requirement = {
+          sheetId: sheet.id,
+          columnId: column.id,
+          columnLabel: column.label,
+        };
 
-      if (fieldIsRequired(column)) {
-        groups.required.push(requirement);
-      } else {
-        groups.optional.push(requirement);
-      }
-    });
+        if (fieldIsRequired(column)) {
+          groups.required.push(requirement);
+        } else {
+          groups.optional.push(requirement);
+        }
+      });
   });
 
   return groups;
