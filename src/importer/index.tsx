@@ -32,7 +32,8 @@ function ImporterBody({
   sheets,
   onDataColumnsMapped,
   preventUploadOnValidationErrors,
-  maxFileSizeInBytes = 20 * 1024 * 1024, // 20MB
+  maxFileSizeInBytes = 20 * 1024 * 1024, // 20MB,
+  customSuggestedMapper,
 }: ImporterDefinition) {
   const { t } = useTranslations();
 
@@ -80,16 +81,20 @@ function ImporterBody({
 
     parseCsv({
       file,
-      onCompleted: (newParsed) => {
+      onCompleted: async (newParsed) => {
+        const csvHeaders = newParsed.meta.fields!;
+
+        const suggestedMappings =
+          customSuggestedMapper != null
+            ? await customSuggestedMapper(sheets, csvHeaders)
+            : buildSuggestedHeaderMappings(sheets, csvHeaders);
+
         dispatch({ type: 'FILE_PARSED', payload: { parsed: newParsed } });
 
         dispatch({
           type: 'COLUMN_MAPPING_CHANGED',
           payload: {
-            mappings: buildSuggestedHeaderMappings(
-              sheets,
-              newParsed.meta.fields! // TODO THIS BRANCH: Check why it can be undefined
-            ),
+            mappings: suggestedMappings,
           },
         });
       },
