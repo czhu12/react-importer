@@ -178,7 +178,7 @@ export default function ComplexImporter() {
         .
       </h1>
 
-      <div className="flex h-[800px] bg-white p-6 px-8 mt-4 border border-gray-200 rounded-lg">
+      <div className="mt-4 flex h-[800px] rounded-lg border border-gray-200 bg-white p-6 px-8">
         <Importer
           sheets={[STUDENTS_SHEET, SCHOOLS_SHEET]}
           onDataColumnsMapped={(sheets) => {

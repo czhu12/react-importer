@@ -16,7 +16,8 @@ export type SheetColumnDefinition =
   | SheetColumnStringDefinition
   | SheetColumnNumberDefinition
   | SheetColumnReferenceDefinition
-  | SheetColumnEnumDefinition;
+  | SheetColumnEnumDefinition
+  | SheetColumnCalculatedDefinition;
 
 interface SheetColumnBaseDefinition {
   id: string;
@@ -49,6 +50,15 @@ interface SheetColumnEnumDefinition extends SheetColumnBaseDefinition {
   type: 'enum';
   typeArguments: {
     values: SelectOption<string>[];
+  };
+}
+
+interface SheetColumnCalculatedDefinition
+  // Calculated columns are always readOnly
+  extends Omit<SheetColumnBaseDefinition, 'isReadOnly'> {
+  type: 'calculated';
+  typeArguments: {
+    getValue: (row: SheetRow) => ImporterOutputFieldType;
   };
 }
 

@@ -1,5 +1,6 @@
 import {
   CSVCell,
+  CSVParsedData,
   ParsedFile,
   SheetColumnDefinition,
   SheetDefinition,
@@ -9,9 +10,15 @@ import { ColumnMapping, MappedData } from './types';
 
 export { default as HeaderMapper } from './components/HeaderMapper';
 
-function mapReferenceColumns(
+function mapAutomaticColumns(
   sheetDefinitions: SheetDefinition[],
-  mappedData: MappedData
+  mappedData: MappedData,
+  mapper: (
+    columns: SheetColumnDefinition[],
+    newRow: SheetRow,
+    row: SheetRow,
+    rowIndex: number
+  ) => void
 ): MappedData {
   return mappedData.map((sheetData) => {
     const sheetDefinition = sheetDefinitions.find(
@@ -25,7 +32,27 @@ function mapReferenceColumns(
     const rows = sheetData.rows.map((row, rowIndex) => {
       const newRow: SheetRow = { ...row };
 
-      sheetDefinition.columns
+      mapper(sheetDefinition.columns, newRow, row, rowIndex);
+
+      return newRow;
+    });
+
+    return {
+      ...sheetData,
+      rows,
+    };
+  });
+}
+
+function mapReferenceColumns(
+  sheetDefinitions: SheetDefinition[],
+  mappedData: MappedData
+): MappedData {
+  return mapAutomaticColumns(
+    sheetDefinitions,
+    mappedData,
+    (columns, newRow, _, rowIndex) => {
+      columns
         .filter((column) => column.type === 'reference')
         .forEach((column) => {
           const referenceSheetData = mappedData.find(
@@ -42,19 +69,29 @@ function mapReferenceColumns(
             newRow[column.id] = referenceValue;
           }
         });
+    }
+  );
+}
 
-      return newRow;
-    });
-
-    return {
-      ...sheetData,
-      rows,
-    };
-  });
+function mapCalculatedColumns(
+  sheetDefinitions: SheetDefinition[],
+  mappedData: MappedData
+): MappedData {
+  return mapAutomaticColumns(
+    sheetDefinitions,
+    mappedData,
+    (columns, newRow, row) => {
+      columns
+        .filter((column) => column.type === 'calculated')
+        .forEach((column) => {
+          newRow[column.id] = column.typeArguments.getValue(row);
+        });
+    }
+  );
 }
 
 /// Checks to see if CSV value doesn't match the enum label, if so converts it into enum value
-function mapEnumLabelValues(
+function getCellValue(
   csvColumnValue: CSVCell,
   columnDefinition: SheetColumnDefinition
 ): CSVCell {
@@ -71,14 +108,12 @@ function mapEnumLabelValues(
   return csvColumnValue;
 }
 
-export function getMappedData(
+function mapRegularColumns(
   sheetDefinitions: SheetDefinition[],
   mappings: ColumnMapping[],
-  parsedFile: ParsedFile
+  data: CSVParsedData[]
 ): MappedData {
-  const data = parsedFile.data;
-
-  const mappedData = sheetDefinitions.map((sheetDefinition) => {
+  return sheetDefinitions.map((sheetDefinition) => {
     const rows: SheetRow[] = [];
 
     const sheetMappings = mappings.filter(
@@ -94,7 +129,7 @@ export function getMappedData(
         );
 
         if (mapping != null) {
-          newRow[mapping.sheetColumnId] = mapEnumLabelValues(
+          newRow[mapping.sheetColumnId] = getCellValue(
             row[mapping.csvColumnName],
             column
           );
@@ -109,12 +144,30 @@ export function getMappedData(
       rows,
     };
   });
+}
 
-  return mapReferenceColumns(sheetDefinitions, mappedData);
+export function getMappedData(
+  sheetDefinitions: SheetDefinition[],
+  mappings: ColumnMapping[],
+  parsedFile: ParsedFile
+): MappedData {
+  const data = parsedFile.data;
+
+  const mappedData = mapRegularColumns(sheetDefinitions, mappings, data);
+
+  const mappedDataWithCalculatedColumns = mapCalculatedColumns(
+    sheetDefinitions,
+    mappedData
+  );
+
+  return mapReferenceColumns(sheetDefinitions, mappedDataWithCalculatedColumns);
 }
 
 export function allowUserToMapColumn(
   columnDefinition: SheetColumnDefinition
 ): boolean {
-  return columnDefinition.type !== 'reference';
+  return (
+    columnDefinition.type !== 'reference' &&
+    columnDefinition.type !== 'calculated'
+  );
 }

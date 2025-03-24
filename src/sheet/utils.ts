@@ -1,6 +1,7 @@
 import { isEmptyCell, normalizeValue } from '../utils';
 import {
   ImporterValidationError,
+  SheetColumnDefinition,
   SheetColumnReferenceDefinition,
   SheetDefinition,
   SheetRow,
@@ -119,4 +120,14 @@ export function useFilteredRowData(
   ]);
 
   return rowData;
+}
+
+export function isColumnReadOnly(
+  columnDefinition: SheetColumnDefinition
+): boolean {
+  if (columnDefinition.type === 'calculated') {
+    return true;
+  }
+
+  return !!columnDefinition.isReadOnly;
 }

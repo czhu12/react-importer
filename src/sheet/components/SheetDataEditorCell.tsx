@@ -5,7 +5,10 @@ import {
   SheetState,
 } from '../../types';
 import { Input, Select, SheetTooltip } from '../../components';
-import { extractReferenceColumnPossibleValues } from '../utils';
+import {
+  extractReferenceColumnPossibleValues,
+  isColumnReadOnly,
+} from '../utils';
 import { useTranslations } from '../../i18';
 
 interface Props {
@@ -49,7 +52,7 @@ export default function SheetDataEditorCell({
     (typeof extractedValue === 'string' && extractedValue.trim() === '');
   // Use non-breaking space to keep the cell height
   const nonEmptyValue = valueEmpty ? '\u00A0' : extractedValue;
-  const readOnly = columnDefinition.isReadOnly;
+  const readOnly = isColumnReadOnly(columnDefinition);
 
   const cellBackgroundColor = errorsText
     ? 'bg-csv-importer-danger-extra-light'
