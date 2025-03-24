@@ -14,7 +14,6 @@ import {
 
 export interface ImporterDefinition {
   sheets: SheetDefinition[];
-  // TODO: This probably needs to be some predefined list of themes to pick from
   theme?: ThemeVariant;
   // Called after the columns are mapped to sheet definitions by the user
   onDataColumnsMapped?: OnDataColumnsMappedCallback;
@@ -28,6 +27,10 @@ export interface ImporterDefinition {
     | boolean
     | ((errors: ImporterValidationError[]) => boolean);
   maxFileSizeInBytes?: number;
+  customSuggestedMapper?: (
+    sheetDefinitions: SheetDefinition[],
+    csvHeaders: string[]
+  ) => ColumnMapping[] | Promise<ColumnMapping[]>;
 }
 
 /**

@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'preact/hooks';
 
-export default function CircularProgress({
-  progress,
-  pending,
-}: {
+interface Props {
   progress: number;
   pending?: boolean;
-}) {
+}
+
+export default function CircularProgress({ progress, pending }: Props) {
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (progress / 100) * circumference;
