@@ -1,6 +1,34 @@
 import { applyTransformations } from '../transformers';
-import { ImporterAction, ImporterState, SheetDefinition } from '../types';
+import {
+  CellChangedPayload,
+  ImporterAction,
+  ImporterState,
+  SheetDefinition,
+  SheetRow,
+} from '../types';
 import { applyValidations } from '../validators';
+
+function recalculateCalculatedColumns(
+  row: SheetRow,
+  payload: CellChangedPayload,
+  state: ImporterState
+): SheetRow {
+  const sheetDefinition = state.sheetDefinitions.find(
+    (s) => s.id === payload.sheetId
+  );
+
+  if (sheetDefinition != null) {
+    const calculatedColumns = sheetDefinition.columns.filter(
+      (column) => column.type === 'calculated'
+    );
+
+    calculatedColumns.forEach((column) => {
+      row[column.id] = column.typeArguments.getValue(row);
+    });
+  }
+
+  return row;
+}
 
 function buildInitialState(sheetDefinitions: SheetDefinition[]): ImporterState {
   return {
@@ -65,7 +93,11 @@ const reducer = (
         if (sheet.sheetId === action.payload.sheetId) {
           const newRows = [...sheet.rows];
 
-          newRows[action.payload.rowIndex] = action.payload.value;
+          newRows[action.payload.rowIndex] = recalculateCalculatedColumns(
+            action.payload.value,
+            action.payload,
+            state
+          );
 
           return { ...sheet, rows: newRows };
         } else {

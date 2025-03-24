@@ -95,6 +95,15 @@ export default function EmployeeImporter() {
                     { validate: 'postal_code' },
                   ],
                 },
+                {
+                  label: 'Full address',
+                  id: 'full_address',
+                  type: 'calculated',
+                  typeArguments: {
+                    getValue: (row) =>
+                      `${row.address}, ${row.city}, ${row.state} ${row.zip_code}`,
+                  },
+                },
               ],
             },
           ]}
