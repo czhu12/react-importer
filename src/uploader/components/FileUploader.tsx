@@ -48,9 +48,9 @@ export default function FileUploader({
   };
 
   return (
-    <Card variant="muted" className="h-full">
+    <Card variant="muted" withPadding={false} className="h-full">
       <div
-        className={`flex h-full flex-col transition-colors ${
+        className={`flex h-full flex-col p-5 transition-colors ${
           isDragging ? 'bg-csv-importer-muted-light' : 'bg-csv-importer-muted'
         }`}
         onClick={() => fileInputRef.current?.click()}
