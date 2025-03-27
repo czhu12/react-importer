@@ -30,6 +30,7 @@
     --color-csv-importer-warning: var(--csv-importer-color-warning);
     --color-csv-importer-info: var(--csv-importer-color-info);
     --color-csv-importer-muted: var(--csv-importer-color-muted);
+    --color-csv-importer-muted-light: var(--csv-importer-color-muted-light);
 }
 
 @layer base {
@@ -47,6 +48,7 @@
         --csv-importer-color-warning: theme(colors.yellow.400);
         --csv-importer-color-info: theme(colors.sky.500);
         --csv-importer-color-muted: theme(colors.gray.50);
+        --csv-importer-color-muted-light: theme(colors.gray.100);
     }
 
     [csv-importer-data-theme="theme-1"] {
@@ -79,5 +81,6 @@
         --csv-importer-color-warning: theme(colors.yellow.600);
         --csv-importer-color-info: theme(colors.sky.700);
         --csv-importer-color-muted: theme(colors.gray.50);
+        --csv-importer-color-muted-light: theme(colors.gray.100);
     }
 }
