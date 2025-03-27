@@ -54,7 +54,10 @@ export default function FileUploader({
           isDragging ? 'bg-csv-importer-muted-light' : 'bg-csv-importer-muted'
         }`}
         onClick={() => fileInputRef.current?.click()}
-        onDragOver={(e) => e.preventDefault()}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setIsDragging(true);
+        }}
         onDragEnter={() => setIsDragging(true)}
         onDragLeave={() => setIsDragging(false)}
         onDrop={(e) => handleDrop(e)}
