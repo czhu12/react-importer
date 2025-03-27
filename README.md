@@ -303,7 +303,7 @@ You can further customize theme styles by overriding the following CSS variables
   --csv-importer-color-warning: #ffc107;
   --csv-importer-color-info: #17a2b8;
   --csv-importer-color-muted: #f9fafb;
-  --csv-imported-color-muted-light: #f3f4f6;
+  --csv-importer-color-muted-light: #f3f4f6;
 }
 ```
 
