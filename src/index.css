@@ -65,6 +65,7 @@
         --csv-importer-color-warning: theme(colors.orange.400);
         --csv-importer-color-info: theme(colors.sky.400);
         --csv-importer-color-muted: theme(colors.gray.50);
+        --csv-importer-color-muted-light: theme(colors.gray.100);
     }
 
     [csv-importer-data-theme="theme-2"] {
