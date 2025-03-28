@@ -2,7 +2,7 @@
 
 > A modern CSV importer written in Preact
 
-[![NPM](https://img.shields.io/npm/v/hello-csv.svg)](https://www.npmjs.com/package/hello-csv) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Build Status](https://github.com/HelloCSV/hello-csv/actions/workflows/ci.yml/badge.svg)](https://github.com/HelloCSV/hello-csv/actions/workflows/ci.yml) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![NPM](https://img.shields.io/npm/v/hello-csv.svg)](https://www.npmjs.com/package/hello-csv) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Build Status](https://github.com/HelloCSV/HelloCSV/actions/workflows/ci.yml/badge.svg)](https://github.com/HelloCSV/HelloCSV/actions/workflows/ci.yml) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 # Contents
 
@@ -18,7 +18,7 @@ Every single project I've worked on needed some hacked together CSV importer. Re
 
 ### Demo
 
-Visit [here](https://HelloCSV.github.io/hello-csv/) to see what React Importer looks like in action!
+Visit [here](https://HelloCSV.github.io/HelloCSV/) to see what React Importer looks like in action!
 
 ### Installation
 
