@@ -3,7 +3,7 @@ import Importer, {
   SheetDefinition,
   SheetRow,
   ImporterState,
-} from 'react-importer/peer';
+} from 'hello-csv/peer';
 import studentsAndSchoolsExample from '../../assets/datasets/students_and_schools.csv?url';
 
 const SCHOOLS_SHEET: SheetDefinition = {

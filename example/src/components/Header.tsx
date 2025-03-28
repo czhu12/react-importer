@@ -18,10 +18,10 @@ export default function Header() {
         <div className="mx-auto mt-4 flex max-w-6xl flex-row justify-between px-4">
           <div className="rubik flex flex-row items-center gap-2">
             <TableCellsIcon className="size-6" />
-            OneImport
+            HelloCSV
           </div>
           <a
-            href="https://github.com/czhu12/react-importer"
+            href="https://github.com/HelloCSV/HelloCSV"
             target="_blank"
             rel="noreferrer"
           >
@@ -51,7 +51,7 @@ export default function Header() {
             <button
               className="cursor-pointer rounded-md bg-slate-800 px-4 py-4 text-sm text-white"
               onClick={(e) => {
-                navigator.clipboard.writeText('npm install react-importer');
+                navigator.clipboard.writeText('npm install hello-csv');
                 tippy(e.currentTarget as HTMLElement, {
                   showOnCreate: true,
                   onHidden: (instance) => {
@@ -63,7 +63,7 @@ export default function Header() {
               }}
             >
               <pre>
-                <code>$ npm install react-importer</code>
+                <code>$ npm install hello-csv</code>
               </pre>
             </button>
           </div>
@@ -77,7 +77,7 @@ export default function Header() {
             </button>
             <a
               className="text-md px-4 py-2.5"
-              href="https://github.com/czhu12/react-importer"
+              href="https://github.com/HelloCSV/HelloCSV"
               target="_blank"
               rel="noreferrer"
             >

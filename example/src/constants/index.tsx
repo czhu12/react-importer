@@ -1,5 +1,5 @@
-export const EXAMPLE_CODE = `import Importer from 'react-importer/peer'
-import 'react-importer/peer/index.css'
+export const EXAMPLE_CODE = `import Importer from 'hello-csv/peer'
+import 'hello-csv/peer/index.css'
 
 <Importer
   theme="default"

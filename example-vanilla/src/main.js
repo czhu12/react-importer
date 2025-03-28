@@ -1,5 +1,5 @@
-import { renderImporter } from 'react-importer/bundled';
-import 'react-importer/bundled/index.css';
+import { renderImporter } from 'hello-csv/bundled';
+import 'hello-csv/bundled/index.css';
 
 const onComplete = async (data, onProgress) => {
   await new Promise((resolve) => setTimeout(resolve, 200));

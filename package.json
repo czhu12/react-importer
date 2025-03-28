@@ -1,10 +1,10 @@
 {
-  "name": "react-importer",
-  "version": "0.2.5",
+  "name": "hello-csv",
+  "version": "0.0.3",
   "description": "React Importer",
-  "author": "czhu12",
+  "author": "HelloCSV",
   "license": "MIT",
-  "repository": "czhu12/react-importer",
+  "repository": "HelloCSV/HelloCSV",
   "type": "module",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",
@@ -30,13 +30,13 @@
       "require": "./dist/peer/index.cjs.js",
       "types": "./dist/types/index.d.ts"
     },
-    "./peer/index.css": "./dist/peer/react-importer.css",
+    "./peer/index.css": "./dist/peer/hello-csv.css",
     "./bundled": {
       "import": "./dist/bundled/index.es.js",
       "require": "./dist/bundled/index.cjs.js",
       "types": "./dist/types/index.d.ts"
     },
-    "./bundled/index.css": "./dist/bundled/react-importer.css"
+    "./bundled/index.css": "./dist/bundled/hello-csv.css"
   },
   "peerDependencies": {
     "preact": "^10.25.4"

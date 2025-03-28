@@ -1,11 +1,11 @@
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" href="./dist/bundled/react-importer.css" />
+    <link rel="stylesheet" href="./dist/bundled/hello-csv.css" />
     <script type="importmap">
       {
         "imports": {
-          "react-importer": "./dist/bundled/index.es.js"
+          "hello-csv": "./dist/bundled/index.es.js"
         }
       }
     </script>
@@ -15,7 +15,7 @@
     <div id="app"></div>
 
     <script type="module">
-      import { renderImporter } from 'react-importer';
+      import { renderImporter } from 'hello-csv';
 
       const onComplete = async (data, onProgress) => {
         await new Promise((resolve) => setTimeout(resolve, 200));

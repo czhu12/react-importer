@@ -12,6 +12,6 @@
     "vite": "^6.2.0"
   },
   "dependencies": {
-    "react-importer": "file:.."
+    "hello-csv": "file:.."
   }
 }
