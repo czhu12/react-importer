@@ -21,7 +21,7 @@ export default function Header() {
             OneImport
           </div>
           <a
-            href="https://github.com/HelloCSV/hello-csv"
+            href="https://github.com/HelloCSV/HelloCSV"
             target="_blank"
             rel="noreferrer"
           >
@@ -77,7 +77,7 @@ export default function Header() {
             </button>
             <a
               className="text-md px-4 py-2.5"
-              href="https://github.com/HelloCSV/hello-csv"
+              href="https://github.com/HelloCSV/HelloCSV"
               target="_blank"
               rel="noreferrer"
             >

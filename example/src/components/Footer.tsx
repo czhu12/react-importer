@@ -3,11 +3,11 @@ import { GitHubIcon } from './Icons';
 const navigation = {
   main: [
     { name: 'About', href: '#' },
-    { name: 'Documentation', href: 'https://github.com/HelloCSV/hello-csv' },
-    { name: 'GitHub', href: 'https://github.com/HelloCSV/hello-csv' },
+    { name: 'Documentation', href: 'https://github.com/HelloCSV/HelloCSV' },
+    { name: 'GitHub', href: 'https://github.com/HelloCSV/HelloCSV' },
     {
       name: 'Support',
-      href: 'https://stackoverflow.com/questions/tagged/hello-csv',
+      href: 'https://stackoverflow.com/questions/tagged/HelloCSV',
     }, // TODO: If we change the name to OneImport, we should change this
   ],
   social: [
