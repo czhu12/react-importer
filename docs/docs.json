@@ -1,0 +1,14 @@
+{
+	"name": "Your Company"
+	"logo": {
+		"light": "/logo/light.svg",
+		"dark": "/logo/dark.svg",
+		"href": "https://yourcompany.com"
+	},
+	"favicon": "/favicon.svg",
+	"colors": {
+		"primary": "#2AB673",
+		"light": "#55D799",
+		"dark": "#117866",
+	}
+}
