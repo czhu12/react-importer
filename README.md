@@ -1,8 +1,8 @@
-# react-importer
+# hello-csv
 
 > A modern CSV importer written in Preact
 
-[![NPM](https://img.shields.io/npm/v/react-importer.svg)](https://www.npmjs.com/package/react-importer) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Build Status](https://github.com/czhu12/react-importer/actions/workflows/ci.yml/badge.svg)](https://github.com/czhu12/react-importer/actions/workflows/ci.yml) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![NPM](https://img.shields.io/npm/v/hello-csv.svg)](https://www.npmjs.com/package/hello-csv) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Build Status](https://github.com/HelloCSV/HelloCSV/actions/workflows/ci.yml/badge.svg)](https://github.com/HelloCSV/HelloCSV/actions/workflows/ci.yml) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 # Contents
 
@@ -18,12 +18,12 @@ Every single project I've worked on needed some hacked together CSV importer. Re
 
 ### Demo
 
-Visit [here](https://czhu12.github.io/react-importer/) to see what React Importer looks like in action!
+Visit [here](https://HelloCSV.github.io/HelloCSV/) to see what React Importer looks like in action!
 
 ### Installation
 
 ```bash
-npm install --save react-importer
+npm install --save hello-csv
 ```
 
 #### React and [Vite](https://vite.dev/)
@@ -50,8 +50,8 @@ export default defineConfig({
 ### Usage
 
 ```jsx
-import Importer from 'react-importer/peer';
-import 'react-importer/peer/index.css';
+import Importer from 'hello-csv/peer';
+import 'hello-csv/peer/index.css';
 
 <Importer
   sheets={[
@@ -311,7 +311,7 @@ These variables allow you to adjust the color scheme for primary, secondary, and
 
 ## License
 
-MIT © [czhu12](https://github.com/czhu12)
+MIT © [HelloCSV](https://github.com/HelloCSV)
 
 ## Development setup
 

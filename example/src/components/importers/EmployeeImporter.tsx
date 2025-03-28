@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import Importer, { ImporterState } from 'react-importer/peer';
+import Importer, { ImporterState } from 'hello-csv/peer';
 import example1 from '../../assets/datasets/example-1.csv?url';
 
 export default function EmployeeImporter() {

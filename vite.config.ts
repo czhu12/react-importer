@@ -26,7 +26,7 @@ export default defineConfig(({ mode }): UserConfig => {
     build: {
       lib: {
         entry: resolve(__dirname, 'src/index.ts'),
-        name: 'react-importer',
+        name: 'hello-csv',
         formats: ['es', 'cjs', 'umd'],
         fileName: (format) => `index.${format}.js`,
       },

@@ -3,12 +3,12 @@ import { GitHubIcon } from './Icons';
 const navigation = {
   main: [
     { name: 'About', href: '#' },
-    { name: 'Documentation', href: 'https://github.com/czhu12/react-importer' },
-    { name: 'GitHub', href: 'https://github.com/czhu12/react-importer' },
+    { name: 'Documentation', href: 'https://github.com/HelloCSV/HelloCSV' },
+    { name: 'GitHub', href: 'https://github.com/HelloCSV/HelloCSV' },
     {
       name: 'Support',
-      href: 'https://stackoverflow.com/questions/tagged/react-importer',
-    }, // TODO: If we change the name to OneImport, we should change this
+      href: 'https://stackoverflow.com/questions/tagged/hello-csv',
+    },
   ],
   social: [
     {
@@ -26,9 +26,7 @@ const navigation = {
 
 export default function Footer() {
   return (
-    <div
-      className="bg-slate-800 bg-cover bg-center text-white"
-    >
+    <div className="bg-slate-800 bg-cover bg-center text-white">
       <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
         <nav
           aria-label="Footer"
@@ -57,7 +55,7 @@ export default function Footer() {
           ))}
         </div>
         <p className="mt-10 text-center text-sm/6 text-gray-400">
-          &copy; 2025 OneImport, Inc.
+          &copy; 2025 HelloCSV, Inc.
         </p>
       </div>
     </div>

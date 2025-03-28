@@ -1,4 +1,4 @@
-import 'react-importer/peer/index.css';
+import 'hello-csv/peer/index.css';
 import Header from './components/Header';
 import CodeBlock from './components/CodeBlock';
 import Footer from './components/Footer';
@@ -20,7 +20,7 @@ const App = () => {
             Building a CSV uploader is hard
           </h3>
           <p>
-            {`OneImport is a javascript library that makes it easy to drop in a
+            {`HelloCSV is a javascript library that makes it easy to drop in a
             powerful, intuitive, and elegant CSV uploader. It's just ~130KB
             gzipped, and works with any javascript application.`}
           </p>
