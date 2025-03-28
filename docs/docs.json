@@ -1,5 +1,5 @@
 {
-	"name": "Your Company"
+	"name": "Your Company",
 	"logo": {
 		"light": "/logo/light.svg",
 		"dark": "/logo/dark.svg",
@@ -9,6 +9,6 @@
 	"colors": {
 		"primary": "#2AB673",
 		"light": "#55D799",
-		"dark": "#117866",
+		"dark": "#117866"
 	}
 }
