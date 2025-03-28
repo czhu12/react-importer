@@ -1,0 +1,25 @@
+{
+  "name": "example-preact",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build --mode=gh-pages",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.6",
+    "@heroicons/react": "^2.2.0",
+    "highlight.js": "^11.11.1",
+    "preact": "^10.25.4",
+    "hello-csv": "file:..",
+    "tippy.js": "^6.3.7"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0"
+  }
+}

@@ -1,0 +1,87 @@
+@layer theme {
+    @import 'tailwindcss/theme.css';
+}
+  
+@layer base {
+    .csv-importer {
+        @import 'tailwindcss/preflight.css';
+    }
+}
+
+@layer components;
+
+@layer utilities {
+    .csv-importer {
+        @import 'tailwindcss/utilities.css';
+    }
+}
+
+@theme {
+    --color-csv-importer-primary: var(--csv-importer-color-primary);
+    --color-csv-importer-primary-light: var(--csv-importer-color-primary-light);
+    --color-csv-importer-primary-extra-light: var(--csv-importer-color-primary-extra-light);
+    --color-csv-importer-secondary: var(--csv-importer-color-secondary);
+    --color-csv-importer-tertiary: var(--csv-importer-color-tertiary);
+    --color-csv-importer-tertiary-light: var(--csv-importer-color-tertiary-light);
+    --color-csv-importer-success: var(--csv-importer-color-success);
+    --color-csv-importer-danger: var(--csv-importer-color-danger);
+    --color-csv-importer-danger-light: var(--csv-importer-color-danger-light);
+    --color-csv-importer-danger-extra-light: var(--csv-importer-color-danger-extra-light);
+    --color-csv-importer-warning: var(--csv-importer-color-warning);
+    --color-csv-importer-info: var(--csv-importer-color-info);
+    --color-csv-importer-muted: var(--csv-importer-color-muted);
+    --color-csv-importer-muted-light: var(--csv-importer-color-muted-light);
+}
+
+@layer base {
+    :root {
+        --csv-importer-color-primary: theme(colors.indigo.600);
+        --csv-importer-color-primary-light: theme(colors.indigo.500);
+        --csv-importer-color-primary-extra-light: theme(colors.indigo.100);
+        --csv-importer-color-secondary: theme(colors.sky.600);
+        --csv-importer-color-tertiary: theme(colors.gray.300);
+        --csv-importer-color-tertiary-light: theme(colors.gray.50);
+        --csv-importer-color-success: theme(colors.emerald.500);
+        --csv-importer-color-danger: theme(colors.red.600);
+        --csv-importer-color-danger-light: theme(colors.red.500);
+        --csv-importer-color-danger-extra-light: theme(colors.red.200);
+        --csv-importer-color-warning: theme(colors.yellow.400);
+        --csv-importer-color-info: theme(colors.sky.500);
+        --csv-importer-color-muted: theme(colors.gray.50);
+        --csv-importer-color-muted-light: theme(colors.gray.100);
+    }
+
+    [csv-importer-data-theme="theme-1"] {
+        --csv-importer-color-primary: theme(colors.blue.400);
+        --csv-importer-color-primary-light: theme(colors.blue.300);
+        --csv-importer-color-primary-extra-light: theme(colors.blue.100);
+        --csv-importer-color-secondary: theme(colors.purple.300);
+        --csv-importer-color-tertiary: theme(colors.gray.300);
+        --csv-importer-color-tertiary-light: theme(colors.gray.50);
+        --csv-importer-color-success: theme(colors.green.400);
+        --csv-importer-color-danger: theme(colors.red.500);
+        --csv-importer-color-danger-light: theme(colors.red.400);
+        --csv-importer-color-danger-extra-light: theme(colors.red.100);
+        --csv-importer-color-warning: theme(colors.orange.400);
+        --csv-importer-color-info: theme(colors.sky.400);
+        --csv-importer-color-muted: theme(colors.gray.50);
+        --csv-importer-color-muted-light: theme(colors.gray.100);
+    }
+
+    [csv-importer-data-theme="theme-2"] {
+        --csv-importer-color-primary: theme(colors.slate.600);
+        --csv-importer-color-primary-light: theme(colors.slate.500);
+        --csv-importer-color-primary-extra-light: theme(colors.slate.100);
+        --csv-importer-color-secondary: theme(colors.slate.400);
+        --csv-importer-color-tertiary: theme(colors.slate.300);
+        --csv-importer-color-tertiary-light: theme(colors.slate.50);
+        --csv-importer-color-success: theme(colors.lime.700);
+        --csv-importer-color-danger: theme(colors.red.700);
+        --csv-importer-color-danger-light: theme(colors.red.600);
+        --csv-importer-color-danger-extra-light: theme(colors.red.400);
+        --csv-importer-color-warning: theme(colors.yellow.600);
+        --csv-importer-color-info: theme(colors.sky.700);
+        --csv-importer-color-muted: theme(colors.gray.50);
+        --csv-importer-color-muted-light: theme(colors.gray.100);
+    }
+}

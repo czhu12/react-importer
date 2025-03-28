@@ -1,0 +1,81 @@
+{
+  "name": "hello-csv",
+  "version": "0.0.1",
+  "description": "Awesome CSV Uploader",
+  "author": "HelloCSV",
+  "license": "MIT",
+  "repository": "HelloCSV/hello-csv",
+  "type": "module",
+  "source": "src/index.ts",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build:peer": "tsc -b && vite build --mode peer",
+    "build:bundled": "tsc -b && vite build --mode bundled",
+    "build": "npm-run-all --parallel build:peer build:bundled",
+    "watch:peer": "tsc -b && vite build --watch --mode peer",
+    "watch:bundled": "tsc -b && vite build --watch --mode bundled",
+    "watch": "npm-run-all --parallel watch:peer watch:bundled",
+    "test": "vitest",
+    "preview": "vite preview",
+    "prepare": "tsc --emitDeclarationOnly",
+    "prepublishOnly": "npm run build",
+    "predeploy": "cd example && npm install && npm run build",
+    "deploy": "gh-pages -d example/dist",
+    "postpublish": "npm run deploy"
+  },
+  "exports": {
+    "./peer": {
+      "import": "./dist/peer/index.es.js",
+      "require": "./dist/peer/index.cjs.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./peer/index.css": "./dist/peer/hello-csv.css",
+    "./bundled": {
+      "import": "./dist/bundled/index.es.js",
+      "require": "./dist/bundled/index.cjs.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./bundled/index.css": "./dist/bundled/hello-csv.css"
+  },
+  "peerDependencies": {
+    "preact": "^10.25.4"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.1",
+    "@tailwindcss/vite": "^4.0.4",
+    "@types/dropzone": "^5.7.9",
+    "@types/papaparse": "5.3.15",
+    "@typescript-eslint/eslint-plugin": "5.57.1",
+    "@typescript-eslint/parser": "5.57.1",
+    "cross-env": "^7.0.2",
+    "eslint": "8.38.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-airbnb-typescript": "17.0.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "6.7.1",
+    "eslint-plugin-prettier": "5.2.1",
+    "gh-pages": "^6.3.0",
+    "npm-run-all": "^4.1.5",
+    "preact-render-to-string": "^6.5.13",
+    "prettier": "^3.4.1",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^4.0.4",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0",
+    "vite-plugin-dts": "^4.5.0",
+    "vitest": "^3.0.5"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
+    "@tanstack/react-table": "^8.21.2",
+    "cva": "npm:class-variance-authority@^0.7.1",
+    "papaparse": "^5.4.1"
+  }
+}
